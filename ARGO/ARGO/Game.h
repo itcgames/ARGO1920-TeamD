@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Gamestate.h"
 #include "LevelState.h"
+#include "Sprite.h"
 
 class Game
 {
@@ -27,4 +28,5 @@ private:
 	bool isRunning;
 	SDL_Window* m_window;
 
+	Sprite spriteTemp;
 };

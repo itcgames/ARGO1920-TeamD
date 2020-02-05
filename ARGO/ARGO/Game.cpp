@@ -30,6 +30,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 		isRunning = true;
 	}
+	spriteTemp.loadFromFile("ASSETS/player.bmp", m_renderer);
 }
 
 void Game::handleEvents()
@@ -60,8 +61,13 @@ void Game::update()
 void Game::render()
 {
 	SDL_RenderClear(m_renderer);
-
-	SDL_RenderPresent(m_renderer);
+	//std::string name = "ASSETS/player.bmp";
+	//SDL_Surface* image = SDL_LoadBMP(name.c_str());
+	//SDL_Texture* sdl_texture = SDL_CreateTextureFromSurface(m_renderer, image);
+	//SDL_Rect dstrect = { 0,0, 300, 200 };
+	//SDL_RenderCopy(m_renderer, sdl_texture, NULL, &dstrect);
+	spriteTemp.render(100,100, m_renderer);
+	SDL_RenderPresent(m_renderer); 
 }
 
 void Game::clean()

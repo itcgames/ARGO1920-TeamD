@@ -162,6 +162,8 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="PositionComponent.h" />
     <ClInclude Include="Vector2.h" />
+    <ClInclude Include="Intro.h" />
+    <ClInclude Include="MainMenu.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

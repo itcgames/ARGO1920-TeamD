@@ -42,10 +42,42 @@ void Game::handleEvents()
 		isRunning = false;
 		break;
 	case SDL_KEYDOWN:
-		if (m_event.key.keysym.sym == SDLK_ESCAPE)
+		if (!keyTest)
 		{
-			isRunning = false;
+			keyTest = true;
+			if (m_event.key.keysym.sym == SDLK_ESCAPE)
+			{
+				isRunning = false;
+
+			}
+			if (m_event.key.keysym.sym == SDLK_LEFT)
+			{
+				switch (m_currentMode)
+				{
+				case GameState::intro://no process events for this screen	
+					m_currentMode = GameState::credits;
+					break;
+				case GameState::splash://no process events for this screen	
+					m_currentMode = GameState::intro;
+					break;
+				case GameState::mainMenu://no process events for this screen	
+					m_currentMode = GameState::splash;
+					break;
+				case GameState::options://no process events for this screen	
+					m_currentMode = GameState::mainMenu;
+					break;
+				case GameState::credits://no process events for this screen	
+					m_currentMode = GameState::options;
+					break;
+				default:
+					break;
+				}
+			}
 		}
+		
+		break;
+	case SDL_KEYUP:
+		keyTest = false;
 		break;
 	default:
 		break;
@@ -56,6 +88,26 @@ void Game::update()
 {
 	static int count = 0; count++;
 	std::cout << count << std::endl;
+	switch (m_currentMode)//gamestate
+	{
+	case GameState::intro://no process events for this screen	
+		m_introScr.update();
+		break;
+	case GameState::splash://no process events for this screen	
+		m_splashScr.update();
+		break;
+	case GameState::mainMenu://no process events for this screen	
+		m_mainMenuScr.update();
+		break;
+	case GameState::options://no process events for this screen	
+		m_optionsScr.update();
+		break;
+	case GameState::credits://no process events for this screen	
+		m_creditsScr.update();
+		break;
+	default:
+		break;
+	}
 }
 
 void Game::render()

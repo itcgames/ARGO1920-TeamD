@@ -1,5 +1,6 @@
 #include "Game.h"
-
+GameState Game::m_currentMode{ GameState::intro };
+LevelState Game::m_currentLevel{ LevelState::Level1 };
 Game::Game()
 {
 

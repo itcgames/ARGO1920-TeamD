@@ -2,6 +2,8 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <iostream>
+#include "Gamestate.h"
+#include "LevelState.h"
 
 class Game
 {
@@ -16,7 +18,8 @@ public:
 	void clean();
 
 	bool running() { return isRunning; }
-
+	static GameState m_currentMode;
+	static LevelState m_currentLevel;
 
 	SDL_Renderer* m_renderer;
 	SDL_Event m_event;

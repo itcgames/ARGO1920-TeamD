@@ -28,11 +28,6 @@ void Sprite::setRect(int x, int y, int width, int height)
 
 void Sprite::render(int x, int y, SDL_Renderer* t_screen)
 {
-	SDL_Rect renderQuad = { 0, 0, 300, 200 };
-	if (&fullRect != NULL)
-	{
-		renderQuad.w = fullRect.w;
-		renderQuad.h = fullRect.h;
-	}
-	SDL_RenderCopy(t_screen, m_texture, NULL, &renderQuad);
+	SDL_Rect dstrect = { x,y, m_width, m_height };
+	SDL_RenderCopy(t_screen, m_texture, NULL, &dstrect);
 }

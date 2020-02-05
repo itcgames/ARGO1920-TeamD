@@ -1,5 +1,10 @@
 #include "Entity.h"
 
+Entity::Entity()
+{
+	uniqueID = componentIDCounter++;
+}
+
 bool Entity::getAlive()
 {
 	return alive;
@@ -8,6 +13,11 @@ bool Entity::getAlive()
 void Entity::setAliveFalse()
 {
 	alive = false;
+}
+
+int Entity::getUniqueID()
+{
+	return uniqueID;
 }
 
 void Entity::update()

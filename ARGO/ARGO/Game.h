@@ -1,9 +1,16 @@
 #pragma once
+
 #include <SDL.h>
 #include <SDL_image.h>
 #include <iostream>
 #include "Gamestate.h"
 #include "LevelState.h"
+
+#include "Intro.h"
+#include "Splash.h"
+#include "MainMenu.h"
+#include "Options.h"
+#include "Credits.h"
 
 class Game
 {
@@ -26,5 +33,12 @@ public:
 private:
 	bool isRunning;
 	SDL_Window* m_window;
+	Intro m_introScr;
+	Splash m_splashScr;
+	MainMenu m_mainMenuScr;
+	Options m_optionsScr;
+	Credits m_creditsScr;
+
+	bool keyTest = false;
 
 };

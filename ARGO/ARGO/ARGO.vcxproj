@@ -18,6 +18,29 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Component.cpp" />
+    <ClCompile Include="Credits.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Intro.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="Options.cpp" />
+    <ClCompile Include="Splash.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="Credits.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="Gamestate.h" />
+    <ClInclude Include="Intro.h" />
+    <ClInclude Include="LevelState.h" />
+    <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="Options.h" />
+    <ClInclude Include="Splash.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{0E5674C2-7181-4265-A9B9-FFC7AD3EFE79}</ProjectGuid>
@@ -149,17 +172,6 @@
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Component.cpp" />
-    <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="Main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Component.h" />
-    <ClInclude Include="Entity.h" />
-    <ClInclude Include="Game.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

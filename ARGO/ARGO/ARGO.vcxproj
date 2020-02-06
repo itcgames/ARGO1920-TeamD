@@ -29,6 +29,7 @@
     <ClCompile Include="Options.cpp" />
     <ClCompile Include="Splash.cpp" />
     <ClCompile Include="PositionComponent.cpp" />
+    <ClCompile Include="System.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h" />
@@ -42,6 +43,7 @@
     <ClInclude Include="Options.h" />
     <ClInclude Include="Splash.h" />
     <ClInclude Include="PositionComponent.h" />
+    <ClInclude Include="System.h" />
     <ClInclude Include="Vector2.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

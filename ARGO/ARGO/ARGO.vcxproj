@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BodyComponent.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Credits.cpp" />
     <ClCompile Include="Entity.cpp" />
@@ -34,6 +35,7 @@
     <ClCompile Include="VelocityComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BodyComponent.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Credits.h" />
     <ClInclude Include="Entity.h" />

@@ -30,7 +30,8 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 		isRunning = true;
 	}
-	spriteTemp.loadFromFile("ASSETS/player.bmp", m_renderer);
+	spriteTemp.loadFromFile("ASSETS/IMAGES/flag.bmp", m_renderer);
+	spriteTemp.setSize(150,150);
 }
 
 void Game::handleEvents()
@@ -113,7 +114,7 @@ void Game::update()
 void Game::render()
 {
 	SDL_RenderClear(m_renderer);
-	spriteTemp.render(0,0, m_renderer);
+	spriteTemp.render(200,100, m_renderer);
 	SDL_RenderPresent(m_renderer); 
 }
 

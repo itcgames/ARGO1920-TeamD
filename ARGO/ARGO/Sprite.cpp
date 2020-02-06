@@ -7,9 +7,10 @@ Sprite::Sprite()
 	m_height = 200;
 }
 
-bool Sprite::loadFromFile(std::string path, SDL_Renderer* t_screen)
+bool Sprite::loadFromFile(const char* path, SDL_Renderer* t_screen)
 {
-	loadedSurface = SDL_LoadBMP(path.c_str());
+	//loadedSurface = IMG_Load(path);
+	loadedSurface = SDL_LoadBMP(path);
 	m_texture = SDL_CreateTextureFromSurface(t_screen, loadedSurface);
 	if (m_texture == NULL)
 	{
@@ -21,9 +22,10 @@ bool Sprite::loadFromFile(std::string path, SDL_Renderer* t_screen)
 	}
 }
 
-void Sprite::setRect(int x, int y, int width, int height)
+void Sprite::setSize(int width, int height)
 {
-	fullRect = { x,y,width,height };
+	m_width = width;
+	m_height = height;
 }
 
 void Sprite::render(int x, int y, SDL_Renderer* t_screen)

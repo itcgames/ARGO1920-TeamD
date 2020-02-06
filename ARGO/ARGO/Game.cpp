@@ -3,6 +3,7 @@ GameState Game::m_currentMode{ GameState::intro };
 LevelState Game::m_currentLevel{ LevelState::Level1 };
 Game::Game()
 {
+	
 
 }
 
@@ -16,7 +17,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	int flags = 0;
 	if (fullscreen)
 	{
-		flags = SDL_WINDOW_FULLSCREEN;
+		flags = SDL_WINDOW_BORDERLESS;
 	}
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
@@ -30,6 +31,10 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 		isRunning = true;
 	}
+
+	
+	m_gamePlayScr.init(m_renderer);
+
 }
 
 void Game::handleEvents()
@@ -62,8 +67,11 @@ void Game::handleEvents()
 				case GameState::mainMenu://no process events for this screen	
 					m_currentMode = GameState::splash;
 					break;
-				case GameState::options://no process events for this screen	
+				case GameState::gameplay://no process events for this screen	
 					m_currentMode = GameState::mainMenu;
+					break;
+				case GameState::options://no process events for this screen	
+					m_currentMode = GameState::gameplay;
 					break;
 				case GameState::credits://no process events for this screen	
 					m_currentMode = GameState::options;
@@ -98,6 +106,9 @@ void Game::update()
 	case GameState::mainMenu://no process events for this screen	
 		m_mainMenuScr.update();
 		break;
+	case GameState::gameplay://no process events for this screen	
+		m_gamePlayScr.update();
+		break;
 	case GameState::options://no process events for this screen	
 		m_optionsScr.update();
 		break;
@@ -112,8 +123,31 @@ void Game::update()
 void Game::render()
 {
 	SDL_RenderClear(m_renderer);
-
-	SDL_RenderPresent(m_renderer);
+	switch (m_currentMode)//gamestate
+	{
+	case GameState::intro://no process events for this screen	
+		m_introScr.render(m_renderer);
+		break;
+	case GameState::splash://no process events for this screen	
+		m_splashScr.render(m_renderer);
+		break;
+	case GameState::mainMenu://no process events for this screen	
+		m_mainMenuScr.render(m_renderer);
+		break;
+	case GameState::gameplay://no process events for this screen	
+		m_gamePlayScr.render(m_renderer);
+		break;
+	case GameState::options://no process events for this screen	
+		m_optionsScr.render(m_renderer);
+		break;
+	case GameState::credits://no process events for this screen	
+		m_creditsScr.render(m_renderer);
+		break;
+	default:
+		break;
+	}
+	//spriteTemp.render(0,0, m_renderer);
+	SDL_RenderPresent(m_renderer); 
 }
 
 void Game::clean()

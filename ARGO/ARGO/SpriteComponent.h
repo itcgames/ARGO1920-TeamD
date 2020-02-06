@@ -1,16 +1,16 @@
 #pragma once
 #include <iostream>
-#include <string.h>
 #include <SDL.h>
 #include <SDL_image.h>
-class Sprite
+#include "Component.h"
+class SpriteComponent //: public Component
 {
 public:
-	Sprite();
-	bool loadFromFile(const char* path, SDL_Renderer* t_screen);
+	SpriteComponent();
+	void setPath(std::string path);
 	void setSize(int width, int height);
 	void render(int x, int y, SDL_Renderer* t_screen);
-
+private:
 	SDL_Surface* loadedSurface;
 	SDL_Texture* m_texture;
 	int m_width;

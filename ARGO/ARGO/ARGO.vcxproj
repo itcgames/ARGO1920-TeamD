@@ -30,6 +30,7 @@
     <ClCompile Include="Splash.cpp" />
     <ClCompile Include="PositionComponent.cpp" />
     <ClCompile Include="System.cpp" />
+    <ClCompile Include="VelocityComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h" />
@@ -45,6 +46,7 @@
     <ClInclude Include="PositionComponent.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="Vector2.h" />
+    <ClInclude Include="VelocityComponent.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

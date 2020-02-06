@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BodyComponent.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Credits.cpp" />
     <ClCompile Include="Entity.cpp" />
@@ -32,9 +33,12 @@
     <ClCompile Include="Options.cpp" />
     <ClCompile Include="Splash.cpp" />
     <ClCompile Include="PositionComponent.cpp" />
-    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="SpriteComponent.cpp" />
+    <ClCompile Include="System.cpp" />
+    <ClCompile Include="VelocityComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BodyComponent.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Credits.h" />
     <ClInclude Include="Entity.h" />
@@ -50,7 +54,10 @@
     <ClInclude Include="Options.h" />
     <ClInclude Include="Splash.h" />
     <ClInclude Include="PositionComponent.h" />
+    <ClInclude Include="SpriteComponent.h" />
+    <ClInclude Include="System.h" />
     <ClInclude Include="Vector2.h" />
+    <ClInclude Include="VelocityComponent.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

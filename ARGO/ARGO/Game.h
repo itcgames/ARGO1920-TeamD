@@ -5,6 +5,7 @@
 #include <iostream>
 #include "Gamestate.h"
 #include "LevelState.h"
+#include "SpriteComponent.h"
 
 
 #include "Intro.h"
@@ -44,4 +45,5 @@ private:
 
 	bool keyTest = false;
 
+	SpriteComponent spriteTemp;
 };

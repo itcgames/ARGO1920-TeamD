@@ -1,5 +1,5 @@
 #pragma once
-#include "Sprite.h"
+#include "SpriteComponent.h"
 #include "PositionComponent.h"
 class mapTile
 {
@@ -7,10 +7,10 @@ public:
 	mapTile();
 	~mapTile();
 
-	Sprite m_tile;
+	SpriteComponent m_tile;
 	Vector2 vec;
 	void init(std::string t_spriteToLoad, SDL_Renderer*& t_renderer) {
-		m_tile.loadFromFile(t_spriteToLoad, t_renderer);
+		m_tile.setPath(t_spriteToLoad);
 		//m_tile.setRect(0, 0, 50, 50);
 		
 	}

@@ -11,7 +11,7 @@ Map::~Map()
 }
 void Map::init(SDL_Renderer*& t_renderer)
 {
-	spriteTemp.loadFromFile("ASSETS/player.bmp", t_renderer);
+	
 	catStr = "ASSETS/IMAGES/bananaCat.bmp";
 	flagStr = "ASSETS/IMAGES/flag.bmp";
 	platformStr = "ASSETS/IMAGES/platform.bmp";
@@ -68,7 +68,7 @@ void Map::drawTile(SDL_Renderer*& t_renderer, int i, int j)
 
 void Map::render(SDL_Renderer*& t_renderer, int i, int j)
 {
-	spriteTemp.render(500, 500, t_renderer);
+	
 	if (m_mapHolder.mapDoubleArray[i][j] == 7 ||
 		m_mapHolder.mapDoubleArray[i][j] == 6||
 		m_mapHolder.mapDoubleArray[i][j] == 5||

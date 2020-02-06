@@ -2,8 +2,8 @@
 
 SpriteComponent::SpriteComponent()
 {
-	m_width = 300;
-	m_height = 200;
+	m_width = 50;
+	m_height = 50;
 	loadedSurface = NULL;
 	m_texture = NULL;
 }

@@ -14,5 +14,4 @@ public:
 
 private:
 	Map m_map;
-	Sprite m_sprite;
 };

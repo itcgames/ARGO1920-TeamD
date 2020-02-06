@@ -3,7 +3,6 @@
 void Gameplay::init(SDL_Renderer*& t_renderer)
 {
 	m_map.init(t_renderer);
-	m_sprite.loadFromFile("ASSETS/player.bmp", t_renderer);
 }
 
 void Gameplay::handleEvents(SDL_Event& t_event)

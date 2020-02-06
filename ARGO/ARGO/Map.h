@@ -16,5 +16,5 @@ private:
 	std::string catStr, flagStr, platformStr, wallStr, yarnStr;
 
 	void drawTile(SDL_Renderer*& t_renderer,int i,int j);
-	Sprite spriteTemp;
+	
 };

@@ -30,7 +30,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 		isRunning = true;
 	}
-	spriteTemp.loadFromFile("ASSETS/IMAGES/flag.bmp", m_renderer);
+	spriteTemp.loadFromFile("ASSETS/IMAGES/bananaCat.bmp", m_renderer);
 	spriteTemp.setSize(150,150);
 }
 

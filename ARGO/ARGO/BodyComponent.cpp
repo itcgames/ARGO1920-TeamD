@@ -1,5 +1,13 @@
 #include "BodyComponent.h"
 
+BodyComponent::BodyComponent()
+{
+}
+
+BodyComponent::~BodyComponent()
+{
+}
+
 BodyComponent::BodyComponent(Vector2 size)
 {
 	m_size = size;
@@ -20,5 +28,9 @@ void BodyComponent::init()
 }
 
 void BodyComponent::update()
+{
+}
+
+void BodyComponent::render()
 {
 }

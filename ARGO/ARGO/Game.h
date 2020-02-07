@@ -5,11 +5,13 @@
 #include <iostream>
 #include "Gamestate.h"
 #include "LevelState.h"
-#include "Sprite.h"
+#include "SpriteComponent.h"
+
 
 #include "Intro.h"
 #include "Splash.h"
 #include "MainMenu.h"
+#include "Gameplay.h"
 #include "Options.h"
 #include "Credits.h"
 
@@ -37,10 +39,11 @@ private:
 	Intro m_introScr;
 	Splash m_splashScr;
 	MainMenu m_mainMenuScr;
+	Gameplay m_gamePlayScr;
 	Options m_optionsScr;
 	Credits m_creditsScr;
 
 	bool keyTest = false;
 
-	Sprite spriteTemp;
+	SpriteComponent spriteTemp;
 };

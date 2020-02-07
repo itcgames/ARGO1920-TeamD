@@ -75,6 +75,9 @@ public:
 
 
 	float x, y;
+
+	float X() { return x; };
+	float Y() { return y; };
 };
 
 #endif // !VECTOR2_H

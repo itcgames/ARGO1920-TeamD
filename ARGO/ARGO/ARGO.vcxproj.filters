@@ -1,115 +1,46 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-
   <ItemGroup>
-    <ClCompile Include="Component.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Intro.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Splash.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Credits.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MainMenu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Options.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClCompile Include="BodyComponent.cpp" />
+    <ClCompile Include="Component.cpp" />
+    <ClCompile Include="Credits.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Gameplay.cpp" />
+    <ClCompile Include="Intro.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Map.cpp" />
-      <Filter>Source Files</Filter>
-    <ClCompile Include="PositionComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="System.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VelocityComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SpriteComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BodyComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClCompile Include="MapTile.cpp" />
+    <ClCompile Include="Options.cpp" />
+    <ClCompile Include="Splash.cpp" />
+    <ClCompile Include="PositionComponent.cpp" />
+    <ClCompile Include="SpriteComponent.cpp" />
+    <ClCompile Include="System.cpp" />
+    <ClCompile Include="VelocityComponent.cpp" />
+    <ClCompile Include="EntityManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Component.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Credits.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Gamestate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Intro.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LevelState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MainMenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Options.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Splash.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PositionComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Intro.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MainMenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="System.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VelocityComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SpriteComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BodyComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClInclude Include="BodyComponent.h" />
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="Credits.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="Gameplay.h" />
+    <ClInclude Include="Gamestate.h" />
+    <ClInclude Include="Intro.h" />
+    <ClInclude Include="LevelState.h" />
+    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Map.h" />
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MapHolder.h" />
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MapTile.h" />
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClInclude Include="Options.h" />
+    <ClInclude Include="Splash.h" />
+    <ClInclude Include="PositionComponent.h" />
+    <ClInclude Include="SpriteComponent.h" />
+    <ClInclude Include="System.h" />
+    <ClInclude Include="Vector2.h" />
+    <ClInclude Include="VelocityComponent.h" />
+    <ClInclude Include="EntityManager.h" />
   </ItemGroup>
 </Project>

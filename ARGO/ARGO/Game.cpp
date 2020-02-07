@@ -1,9 +1,12 @@
 #include "Game.h"
 GameState Game::m_currentMode{ GameState::intro };
 LevelState Game::m_currentLevel{ LevelState::Level1 };
+
+EntityManager manager;
+auto& newPlayer(manager.addEntity());
+
 Game::Game()
 {
-
 
 }
 
@@ -33,9 +36,11 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	}
 
 	m_gamePlayScr.init(m_renderer);
-	spriteTemp.setPath("ASSETS/IMAGES/bananaCat.bmp");
-	spriteTemp.setSize(150,150);
 
+	newPlayer.addComponent<PositionComponent>();
+	newPlayer.addComponent<SpriteComponent>(); 
+	newPlayer.getComponent<SpriteComponent>().setPathAndScreen("ASSETS/IMAGES/bananaCat.bmp", m_renderer);
+	newPlayer.getComponent<SpriteComponent>().setPosAndSize(300,300,300,300);
 }
 
 void Game::handleEvents()
@@ -95,7 +100,7 @@ void Game::handleEvents()
 void Game::update()
 {
 	static int count = 0; count++;
-	std::cout << count << std::endl;
+	manager.update();
 	switch (m_currentMode)//gamestate
 	{
 	case GameState::intro://no process events for this screen
@@ -137,6 +142,7 @@ void Game::render()
 		break;
 	case GameState::gameplay://no process events for this screen
 		m_gamePlayScr.render(m_renderer);
+		manager.draw(m_renderer);
 		break;
 	case GameState::options://no process events for this screen
 		m_optionsScr.render(m_renderer);

@@ -22,6 +22,9 @@ void SpriteComponent::setSize(int width, int height)
 void SpriteComponent::render(int x, int y, SDL_Renderer* t_screen)
 {
 	SDL_Rect dstrect = { x,y, m_width, m_height };
-	m_texture = SDL_CreateTextureFromSurface(t_screen, loadedSurface);
+	if (m_texture == NULL)
+	{
+		m_texture = SDL_CreateTextureFromSurface(t_screen, loadedSurface);
+	}
 	SDL_RenderCopy(t_screen, m_texture, NULL, &dstrect);
 }

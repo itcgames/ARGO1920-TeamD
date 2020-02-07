@@ -7,11 +7,12 @@ class Entity
 {
 private:
 	bool alive = true;
-	std::vector<std::unique_ptr<Component>> components;
+	
 	int componentIDCounter = 0;
 	int uniqueID;
 
 public:
+	std::vector<std::unique_ptr<Component>> components;
 	Entity();
 	bool getAlive();
 	void setAliveFalse();

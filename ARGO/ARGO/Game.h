@@ -6,7 +6,8 @@
 #include "Gamestate.h"
 #include "LevelState.h"
 #include "SpriteComponent.h"
-
+#include "PositionComponent.h"
+#include "EntityManager.h"
 
 #include "Intro.h"
 #include "Splash.h"
@@ -44,6 +45,8 @@ private:
 	Credits m_creditsScr;
 
 	bool keyTest = false;
+
+	Entity* m_cat;
 
 	SpriteComponent spriteTemp;
 };

@@ -2,7 +2,7 @@
 
 Entity::Entity()
 {
-	uniqueID = componentIDCounter++;
+	//uniqueID = componentIDCounter++;
 }
 
 bool Entity::getAlive()
@@ -10,22 +10,23 @@ bool Entity::getAlive()
 	return alive;
 }
 
-void Entity::setAliveFalse()
+void Entity::destroy()
 {
 	alive = false;
 }
 
-int Entity::getUniqueID()
-{
-	return uniqueID;
-}
+//int Entity::getUniqueID()
+//{
+//	return uniqueID;
+//}
 
 void Entity::update()
 {
 	for (auto& c : components)c->update();
-	for (auto& c : components)c->render();
+	
 }
 
 void Entity::render()
 {
+	for (auto& c : components)c->render();
 }

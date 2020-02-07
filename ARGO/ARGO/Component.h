@@ -15,4 +15,3 @@ private:
 
 };
 #include "Entity.h"
-

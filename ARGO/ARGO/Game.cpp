@@ -1,6 +1,10 @@
 #include "Game.h"
 GameState Game::m_currentMode{ GameState::intro };
 LevelState Game::m_currentLevel{ LevelState::Level1 };
+
+EntityManager manager;
+auto& newPlayer(manager.addEntity());
+
 Game::Game()
 {
 
@@ -36,6 +40,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	spriteTemp.setPath("ASSETS/IMAGES/bananaCat.bmp");
 	spriteTemp.setSize(150,150);
 
+	newPlayer.addComponent<PositionComponent>();
 }
 
 void Game::handleEvents()
@@ -95,7 +100,7 @@ void Game::handleEvents()
 void Game::update()
 {
 	static int count = 0; count++;
-	std::cout << count << std::endl;
+	manager.update();
 	switch (m_currentMode)//gamestate
 	{
 	case GameState::intro://no process events for this screen

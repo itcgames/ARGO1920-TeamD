@@ -12,6 +12,7 @@ public:
 	void movementLeft();
 	void movementRight();
 
+	void wallCol();
 private:
 	Entity entityArr[100];//Is this the best place for this?
 

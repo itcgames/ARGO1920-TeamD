@@ -132,7 +132,10 @@
     <ClCompile Include="SpriteComponent.cpp" />
     <ClCompile Include="System.cpp" />
     <ClCompile Include="VelocityComponent.cpp" />
+    <ClCompile Include="Wall.cpp" />
+    <ClCompile Include="Joystick.cpp" />
     <ClCompile Include="EntityManager.cpp" />
+    <ClCompile Include="MovementSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BodyComponent.h" />
@@ -155,6 +158,9 @@
     <ClInclude Include="System.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="VelocityComponent.h" />
+    <ClInclude Include="Wall.h" />
+    <ClInclude Include="Joystick.h" />
     <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="MovementSystem.h" />
   </ItemGroup>
 </Project>

@@ -39,3 +39,22 @@ void System::movementRight()
 		//move right
 	}
 }
+
+
+void System::wallCol()
+{
+	for (auto const& Entity : entityArr)
+	{
+		for (auto const& Entity2 : entityArr)
+		{
+			//if (/*pos of Entity2==pos of Entity*/)
+			//{
+
+			//}
+		}
+	}
+}
+//void System::platformCollision()
+//{
+//
+//}

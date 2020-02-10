@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <bitset>
 #include <array>
+#include <SDL.h>
 
 using ComponentID = std::size_t;
 
@@ -40,7 +41,7 @@ public:
 	void destroy();
 	//int getUniqueID();
 	void update();
-	void render();
+	void render(SDL_Renderer* t_screen);
 
 
 	template <typename T> bool hasComponent() const

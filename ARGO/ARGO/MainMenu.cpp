@@ -1,5 +1,17 @@
 #include "MainMenu.h"
 
+MainMenu::MainMenu()
+{
+	m_x = 0;
+	m_y = 0;
+	m_width = 3840;
+	m_height = 2160;
+	loadedSurface = NULL;
+	m_texture = NULL;
+
+	loadedSurface = SDL_LoadBMP("ASSETS/IMAGES/mainmenu.bmp");
+}
+
 void MainMenu::handleEvents(SDL_Event& t_event)
 {
 	switch (t_event.type)
@@ -26,7 +38,12 @@ void MainMenu::update()
 void MainMenu::render(SDL_Renderer* t_renderer)
 {
 	SDL_RenderClear(t_renderer);
-
+	SDL_Rect dstrect = { m_x, m_y, m_width, m_height };
+	if (m_texture == NULL)
+	{
+		m_texture = SDL_CreateTextureFromSurface(t_renderer, loadedSurface);
+	}
+	SDL_RenderCopy(t_renderer, m_texture, NULL, &dstrect);
 	SDL_RenderPresent(t_renderer);
 }
 

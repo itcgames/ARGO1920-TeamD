@@ -1,5 +1,5 @@
 #include "Entity.h"
-
+#include "SpriteComponent.h"
 Entity::Entity()
 {
 	//uniqueID = componentIDCounter++;
@@ -26,7 +26,7 @@ void Entity::update()
 	
 }
 
-void Entity::render()
+void Entity::render(SDL_Renderer* t_screen)
 {
 	for (auto& c : components)c->render();
 }

@@ -60,17 +60,18 @@ void Game::handleEvents()
 		{
 			if (m_event.jaxis.axis == 0)
 			{
-				if (m_event.jaxis.value < -stick.getDeadZone())
+				if (m_event.jaxis.value < -3200)
 				{
 
 					stick.setX(-1);
 				}
-				else if (m_event.jaxis.value > stick.getDeadZone())
+				else if (m_event.jaxis.value > 3200)
 				{
 					stick.setX(1);
 				}
 				else {
 					stick.setX(0);
+					keyTest = true;
 				}
 			}
 			if (m_event.jaxis.axis == 1)
@@ -89,14 +90,11 @@ void Game::handleEvents()
 			}
 		}
 		break;
-	case SDL_KEYUP:
-		keyTest = false;
-		break;
 	default:
 		break;
 	}
 
-	if (stick.X() == -1)
+	if (stick.X() == -1 && keyTest)
 	{
 		switch (m_currentMode)
 		{
@@ -121,6 +119,7 @@ void Game::handleEvents()
 		default:
 			break;
 		}
+		keyTest = false;
 	}
 }
 

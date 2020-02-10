@@ -36,14 +36,13 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	}
 
 	m_gamePlayScr.init(m_renderer);
-	spriteTemp.setPath("ASSETS/IMAGES/bananaCat.bmp");
-	spriteTemp.setSize(150,150);
+	
+	
 	stick.init();
 
 	newPlayer.addComponent<PositionComponent>();
 	newPlayer.addComponent<SpriteComponent>();
-	newPlayer.getComponent<SpriteComponent>().setPathAndScreen("ASSETS/IMAGES/bananaCat.bmp", m_renderer);
-	newPlayer.getComponent<SpriteComponent>().setPosAndSize(300,300,300,300);
+	
 }
 
 void Game::handleEvents()

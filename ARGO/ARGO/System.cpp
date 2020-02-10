@@ -53,8 +53,8 @@ void System::wallCol()
 			//}
 		}
 	}
-
-void System::platformCollision()
-{
-
 }
+//void System::platformCollision()
+//{
+//
+//}

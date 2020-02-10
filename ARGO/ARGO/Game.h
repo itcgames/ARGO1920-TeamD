@@ -15,7 +15,7 @@
 #include "Gameplay.h"
 #include "Options.h"
 #include "Credits.h"
-
+#include "Joystick.h"
 class Game
 {
 public:
@@ -44,6 +44,7 @@ private:
 	Options m_optionsScr;
 	Credits m_creditsScr;
 
+	Joystick stick;
 	bool keyTest = false;
 
 	Entity* m_cat;

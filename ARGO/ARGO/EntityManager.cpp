@@ -8,11 +8,11 @@ void EntityManager::update()
 	}
 }
 
-void EntityManager::draw()
+void EntityManager::draw(SDL_Renderer* t_screen)
 {
 	for (auto& e : entities)
 	{
-		e->render();
+		e->render(t_screen);
 	}
 }
 

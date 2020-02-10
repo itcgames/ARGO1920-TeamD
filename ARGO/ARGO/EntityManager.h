@@ -7,7 +7,7 @@ private:
 
 public:
 	void update();
-	void draw();
+	void draw(SDL_Renderer* t_screen);
 	void refresh();
 	Entity& addEntity();
 };

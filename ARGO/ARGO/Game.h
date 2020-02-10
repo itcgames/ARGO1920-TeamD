@@ -48,6 +48,4 @@ private:
 	bool keyTest = false;
 
 	Entity* m_cat;
-
-	SpriteComponent spriteTemp;
 };

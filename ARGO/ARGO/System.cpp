@@ -40,6 +40,7 @@ void System::movementRight()
 	}
 }
 
+
 void System::wallCol()
 {
 	for (auto const& Entity : entityArr)
@@ -52,4 +53,8 @@ void System::wallCol()
 			//}
 		}
 	}
+
+void System::platformCollision()
+{
+
 }

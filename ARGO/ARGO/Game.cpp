@@ -42,6 +42,8 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 	newPlayer.addComponent<PositionComponent>();
 	newPlayer.addComponent<SpriteComponent>();
+	newPlayer.getComponent< SpriteComponent>().setPathAndScreen("ASSETS/IMAGES/dance.bmp", m_renderer,true);
+	newPlayer.getComponent< SpriteComponent>().setPosAndSize(3100,100,500,500);
 	
 }
 

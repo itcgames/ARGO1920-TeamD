@@ -7,7 +7,7 @@ class SpriteComponent : public Component
 {
 public:
 	SpriteComponent();
-	void setPathAndScreen(std::string path, SDL_Renderer* t_screen);
+	void setPathAndScreen(std::string path, SDL_Renderer* t_screen, bool t_anime = false);
 	void setPosAndSize(int x, int y, int width, int height);
 	void init() override;
 	void update() override;
@@ -20,4 +20,7 @@ private:
 	int m_height;
 	int m_x;
 	int m_y;
+	int xOffset;
+	int timer;
+	int m_animed;
 };

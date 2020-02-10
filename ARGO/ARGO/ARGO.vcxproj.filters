@@ -21,6 +21,7 @@
     <ClCompile Include="Wall.cpp" />
     <ClCompile Include="Joystick.cpp" />
     <ClCompile Include="EntityManager.cpp" />
+    <ClCompile Include="MovementSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BodyComponent.h" />
@@ -46,5 +47,6 @@
     <ClInclude Include="Wall.h" />
     <ClInclude Include="Joystick.h" />
     <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="MovementSystem.h" />
   </ItemGroup>
 </Project>

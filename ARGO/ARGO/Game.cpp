@@ -4,6 +4,7 @@ LevelState Game::m_currentLevel{ LevelState::Level1 };
 
 EntityManager manager;
 auto& newPlayer(manager.addEntity());
+auto& flag(manager.addEntity());
 
 Game::Game()
 {
@@ -41,6 +42,8 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	spriteTemp.setSize(150,150);
 
 	newPlayer.addComponent<PositionComponent>();
+	flag.addComponent<PositionComponent>();
+	flag.getComponent<PositionComponent>().setPosition(Vector2(500, 500));
 }
 
 void Game::handleEvents()
@@ -101,6 +104,9 @@ void Game::update()
 {
 	static int count = 0; count++;
 	manager.update();
+
+	std::cout << "Flag: " << flag.getComponent<PositionComponent>().getPosition().x << ", " << flag.getComponent<PositionComponent>().getPosition().y << std::endl;
+
 	switch (m_currentMode)//gamestate
 	{
 	case GameState::intro://no process events for this screen

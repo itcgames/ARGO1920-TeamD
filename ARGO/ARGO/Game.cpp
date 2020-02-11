@@ -204,7 +204,12 @@ void Game::update()
 {
 	static int count = 0; count++;
 	manager.update();
-	
+	std::vector<std::string> answer = m_gamePlayScr.getChanges();
+	for (auto loop : answer)
+	{
+		std::cout << loop << " : ";
+	}
+	std::cout << std::endl;
 	
 
 	switch (m_currentMode)//gamestate

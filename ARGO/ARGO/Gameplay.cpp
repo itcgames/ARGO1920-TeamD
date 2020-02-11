@@ -35,7 +35,7 @@ void Gameplay::handleEvents(SDL_Event& t_event, Joystick t_stick)
 
 void Gameplay::update()
 {
-	std::cout << "Gameplay";
+	std::cout << "Gameplay" << std::endl;
 	m_pauseMenu.update();
 }
 
@@ -62,4 +62,9 @@ void Gameplay::clean(SDL_Renderer*& t_renderer, SDL_Window* t_window)
 bool Gameplay::isPaused()
 {
 	return paused;
+}
+
+std::vector<std::string> Gameplay::getChanges()
+{
+	return m_pauseMenu.getChanges();
 }

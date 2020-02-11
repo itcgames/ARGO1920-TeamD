@@ -4,6 +4,7 @@ LevelState Game::m_currentLevel{ LevelState::Level1 };
 
 EntityManager manager;
 auto& newPlayer(manager.addEntity());
+auto& flag(manager.addEntity());
 
 Game::Game()
 {
@@ -41,6 +42,11 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	stick.init();
 
 	newPlayer.addComponent<PositionComponent>();
+	flag.addComponent<PositionComponent>();
+	flag.getComponent<PositionComponent>().setPosition(Vector2(500, 500));
+	flag.addComponent<SpriteComponent>();
+	flag.getComponent< SpriteComponent>().setPathAndScreen("ASSETS/IMAGES/flag.bmp", m_renderer);
+	flag.getComponent< SpriteComponent>().setPosAndSize(200, 200, 50, 50);
 	newPlayer.addComponent<SpriteComponent>();
 	newPlayer.getComponent< SpriteComponent>().setPathAndScreen("ASSETS/IMAGES/dance.bmp", m_renderer,true);
 	newPlayer.getComponent< SpriteComponent>().setPosAndSize(3740,2060,100,100);
@@ -150,6 +156,9 @@ void Game::update()
 {
 	static int count = 0; count++;
 	manager.update();
+	flag.getComponent< SpriteComponent>().setPosAndSize(200, 200, 50, 50);
+	std::cout << "Flag: " << flag.getComponent<PositionComponent>().getPosition().x << ", " << flag.getComponent<PositionComponent>().getPosition().y << std::endl;
+
 	switch (m_currentMode)//gamestate
 	{
 	case GameState::intro://no process events for this screen

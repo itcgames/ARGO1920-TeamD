@@ -1,5 +1,5 @@
 #include "Game.h"
-GameState Game::m_currentMode{ GameState::intro };
+GameState Game::m_currentMode{ GameState::gameplay };
 LevelState Game::m_currentLevel{ LevelState::Level1 };
 
 EntityManager manager;
@@ -56,7 +56,7 @@ void Game::handleEvents()
 		isRunning = false;
 		break;
 	case SDL_JOYAXISMOTION:
-		if (SDL_JoystickGetButton(stick.getStick(),0)!=0)
+		if (SDL_JoystickGetButton(stick.getStick(),6)!=0)
 		{
 			isRunning = false;
 		}
@@ -98,7 +98,7 @@ void Game::handleEvents()
 		break;
 	}
 
-	if (stick.X() == -1 && keyTest)
+	if (stick.X() == -1 && keyTest && !m_gamePlayScr.isPaused())
 	{
 		switch (m_currentMode)
 		{
@@ -124,6 +124,25 @@ void Game::handleEvents()
 			break;
 		}
 		keyTest = false;
+	}
+
+	switch (m_currentMode)//gamestate
+	{
+	case GameState::intro:
+		break;
+	case GameState::splash:
+		break;
+	case GameState::mainMenu:
+		break;
+	case GameState::gameplay://no process events for this screen
+		m_gamePlayScr.handleEvents(m_event, stick);
+		break;
+	case GameState::options:
+		break;
+	case GameState::credits:
+		break;
+	default:
+		break;
 	}
 }
 

@@ -7,6 +7,7 @@
 #include "LevelState.h"
 #include "SpriteComponent.h"
 #include "PositionComponent.h"
+#include "BodyComponent.h"
 #include "EntityManager.h"
 
 #include "Intro.h"
@@ -56,4 +57,5 @@ private:
 	/// </summary>
 	MovementSystem m_moveSys;
 	void handleMove(Entity &t_ent, std::string t_str);
+	void initEnts(Entity &t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim);
 };

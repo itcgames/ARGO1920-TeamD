@@ -106,22 +106,7 @@ void Game::handleEvents()
 		{
 			isRunning = false;
 		}
-		if (SDL_JoystickGetButton(stick.getStick(), 6) != 0)
-		{
-			cactus.setComponentString("player");
-		}
-		if (SDL_JoystickGetButton(stick.getStick(), 7) != 0)
-		{
-			rock.setComponentString("player");
-		}
-		if (SDL_JoystickGetButton(stick.getStick(), 8) != 0)
-		{
-			flag.setComponentString("player");
-		}
-		if (SDL_JoystickGetButton(stick.getStick(), 9) != 0)
-		{
-			platform.setComponentString("player");
-		}
+		
 		manager.handleEvents(stick);
 	default:
 		break;
@@ -206,11 +191,19 @@ void Game::update()
 {
 	static int count = 0; count++;
 	manager.update();
-	std::vector<std::string> answer = m_gamePlayScr.getChanges();
+	answer = m_gamePlayScr.getChanges();
 	for (auto loop : answer)
 	{
+		
 		std::cout << loop << " : ";
 	}
+	manager.refresh();
+	
+	newPlayer.setComponentString(answer[1]);
+	rock.setComponentString(answer[3]);
+	platform.setComponentString(answer[5]);
+	flag.setComponentString(answer[7]);
+	cactus.setComponentString(answer[9]);
 	std::cout << std::endl;
 	
 

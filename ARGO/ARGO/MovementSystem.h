@@ -7,7 +7,7 @@ public:
 	MovementSystem();
 	~MovementSystem();
 	
-	void move(PositionComponent &pos, std::string t_dir);
+	Vector2 const move(PositionComponent pos, std::string t_dir);
 	
 
 private:

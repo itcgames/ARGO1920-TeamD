@@ -136,6 +136,7 @@
     <ClCompile Include="Joystick.cpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="MovementSystem.cpp" />
+    <ClCompile Include="PauseMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BodyComponent.h" />
@@ -162,5 +163,6 @@
     <ClInclude Include="Joystick.h" />
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="MovementSystem.h" />
+    <ClInclude Include="PauseMenu.h" />
   </ItemGroup>
 </Project>

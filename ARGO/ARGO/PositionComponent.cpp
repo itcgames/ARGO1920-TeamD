@@ -20,10 +20,7 @@ void PositionComponent::init()
 
 void PositionComponent::update()
 {
-	m_position.x++;
-	m_position.y++;
-
-	std::cout << m_position.x << ", " << m_position.y << std::endl;
+	
 }
 
 void PositionComponent::render()

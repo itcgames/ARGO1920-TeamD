@@ -16,6 +16,7 @@
 #include "Options.h"
 #include "Credits.h"
 #include "Joystick.h"
+#include "MovementSystem.h"
 class Game
 {
 public:
@@ -48,4 +49,11 @@ private:
 	bool keyTest = false;
 
 	Entity* m_cat;
+
+
+	/// <summary>
+	/// Systems
+	/// </summary>
+	MovementSystem m_moveSys;
+	void handleMove(Entity &t_ent, std::string t_str);
 };

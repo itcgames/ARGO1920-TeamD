@@ -42,11 +42,14 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 	newPlayer.addComponent<PositionComponent>();
 	newPlayer.addComponent<SpriteComponent>();
-	
+	newPlayer.getComponent<PositionComponent>().setPosition(Vector2(500, 500));
+	newPlayer.getComponent<SpriteComponent>().setPathAndScreen("ASSETS/IMAGES/bananacat.bmp", m_renderer);
+	newPlayer.getComponent<SpriteComponent>().setPosAndSize(newPlayer.getComponent<PositionComponent>().getPosition().X(), newPlayer.getComponent<PositionComponent>().getPosition().Y(), 50, 50);
 }
 
 void Game::handleEvents()
 {
+	
 	SDL_PollEvent(&m_event);
 	switch (m_event.type)
 	{
@@ -54,27 +57,28 @@ void Game::handleEvents()
 		isRunning = false;
 		break;
 	case SDL_JOYAXISMOTION:
-		if (SDL_JoystickGetButton(stick.getStick(),0)!=0)
-		{
-			isRunning = false;
-		}
+		
+		std::cout << stick.X() << std::endl;
+		
 		if (m_event.jaxis.which == 0)
 		{
 			if (m_event.jaxis.axis == 0)
 			{
-				if (m_event.jaxis.value < -3200)
+				if (m_event.jaxis.value < -20000)
 				{
 
 					stick.setX(-1);
 				}
-				else if (m_event.jaxis.value > 3200)
+				else if (m_event.jaxis.value > 20000)
 				{
 					stick.setX(1);
+
 				}
 				else {
 					stick.setX(0);
 					keyTest = true;
 				}
+				std::cout << m_event.jaxis.value << std::endl;
 			}
 			if (m_event.jaxis.axis == 1)
 			{
@@ -92,10 +96,32 @@ void Game::handleEvents()
 			}
 		}
 		break;
+	case SDL_JOYBUTTONDOWN:
+		
+		if (SDL_JoystickGetButton(stick.getStick(), 5) != 0)
+		{
+			isRunning = false;
+		}
+		else if (SDL_JoystickGetButton(stick.getStick(), 0) != 0)
+		{
+			handleMove(newPlayer, "down");
+		}
+		else if (SDL_JoystickGetButton(stick.getStick(), 1) != 0)
+		{
+			handleMove(newPlayer, "right");
+		}
+		else if (SDL_JoystickGetButton(stick.getStick(), 2) != 0)
+		{
+			handleMove(newPlayer, "left");
+		}
+		else if (SDL_JoystickGetButton(stick.getStick(), 3) != 0)
+		{
+			handleMove(newPlayer, "up");
+		}
 	default:
 		break;
 	}
-
+	
 	if (stick.X() == -1 && keyTest)
 	{
 		switch (m_currentMode)
@@ -117,6 +143,33 @@ void Game::handleEvents()
 			break;
 		case GameState::credits://no process events for this screen
 			m_currentMode = GameState::options;
+			break;
+		default:
+			break;
+		}
+		keyTest = false;
+	}
+	else if (stick.X() == 1 && keyTest)
+	{
+		switch (m_currentMode)
+		{
+		case GameState::intro://no process events for this screen
+			m_currentMode = GameState::splash;
+			break;
+		case GameState::splash://no process events for this screen
+			m_currentMode = GameState::mainMenu;
+			break;
+		case GameState::mainMenu://no process events for this screen
+			m_currentMode = GameState::gameplay;
+			break;
+		case GameState::gameplay://no process events for this screen
+			m_currentMode = GameState::credits;
+			break;
+		case GameState::options://no process events for this screen
+			m_currentMode = GameState::options;
+			break;
+		case GameState::credits://no process events for this screen
+			m_currentMode = GameState::intro;
 			break;
 		default:
 			break;
@@ -181,6 +234,7 @@ void Game::render()
 	default:
 		break;
 	}
+	
 	SDL_RenderPresent(m_renderer);
 }
 
@@ -191,4 +245,12 @@ void Game::clean()
 	SDL_DestroyRenderer(m_renderer);
 	SDL_Quit();
 	std::cout << "Game Cleaned" << std::endl;
+}
+
+void Game::handleMove(Entity &t_ent, std::string t_str)
+{
+	
+	Vector2 tempVec = m_moveSys.move(t_ent.getComponent<PositionComponent>().getPosition(), t_str);
+	t_ent.getComponent<PositionComponent>().setPosition(tempVec);
+	t_ent.getComponent<SpriteComponent>().setPosAndSize(newPlayer.getComponent<PositionComponent>().getPosition().X(), newPlayer.getComponent<PositionComponent>().getPosition().Y(), 50, 50);
 }

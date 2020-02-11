@@ -22,6 +22,7 @@ template<typename T> inline ComponentID getComponentTypeID() noexcept
 	return typeID;
 }
 
+
 constexpr std::size_t maxComponents = 32;
 using ComponentBitSet = std::bitset<maxComponents>;
 using ComponentArray = std::array<Component*, maxComponents>;
@@ -35,6 +36,7 @@ private:
 	//int uniqueID;
 	ComponentArray componentArray;
 	ComponentBitSet componentBitset;
+	std::string ComponentTag;
 public:
 	Entity();
 	bool getAlive();
@@ -68,5 +70,15 @@ public:
 	{
 		auto ptr(componentArray[getComponentTypeID<T>()]);
 		return *static_cast<T*>(ptr);
+	}
+
+	inline std::string getComponentString()
+	{
+		return ComponentTag;
+	}
+
+	inline void setComponentString(std::string t_str)
+	{
+		ComponentTag = t_str;
 	}
 };

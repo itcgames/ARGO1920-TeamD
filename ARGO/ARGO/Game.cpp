@@ -3,11 +3,11 @@ GameState Game::m_currentMode{ GameState::intro };
 LevelState Game::m_currentLevel{ LevelState::Level1 };
 
 EntityManager manager;
-auto& newPlayer(manager.addEntity());
-auto& flag(manager.addEntity());
-auto& platform(manager.addEntity());
-auto& cactus(manager.addEntity());
-auto& rock(manager.addEntity());
+auto& newPlayer(manager.addEntity("player"));
+auto& flag(manager.addEntity("goal"));
+auto& platform(manager.addEntity("stop"));
+auto& cactus(manager.addEntity("spikey"));
+auto& rock(manager.addEntity("move"));
 
 Game::Game()
 {
@@ -21,6 +21,7 @@ Game::~Game()
 
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
+	
 	int flags = 0;
 	if (fullscreen)
 	{
@@ -102,27 +103,28 @@ void Game::handleEvents()
 		}
 		break;
 	case SDL_JOYBUTTONDOWN:
-
+		
 		if (SDL_JoystickGetButton(stick.getStick(), 5) != 0)
 		{
 			isRunning = false;
 		}
-		else if (SDL_JoystickGetButton(stick.getStick(), 0) != 0)
+		if (SDL_JoystickGetButton(stick.getStick(), 6) != 0)
 		{
-			handleMove(newPlayer, "down");
+			cactus.setComponentString("player");
 		}
-		else if (SDL_JoystickGetButton(stick.getStick(), 1) != 0)
+		if (SDL_JoystickGetButton(stick.getStick(), 7) != 0)
 		{
-			handleMove(newPlayer, "right");
+			rock.setComponentString("player");
 		}
-		else if (SDL_JoystickGetButton(stick.getStick(), 2) != 0)
+		if (SDL_JoystickGetButton(stick.getStick(), 8) != 0)
 		{
-			handleMove(newPlayer, "left");
+			flag.setComponentString("player");
 		}
-		else if (SDL_JoystickGetButton(stick.getStick(), 3) != 0)
+		if (SDL_JoystickGetButton(stick.getStick(), 9) != 0)
 		{
-			handleMove(newPlayer, "up");
+			platform.setComponentString("player");
 		}
+		manager.handleEvents(stick);
 	default:
 		break;
 	}
@@ -255,17 +257,10 @@ void Game::clean()
 	std::cout << "Game Cleaned" << std::endl;
 }
 
-void Game::handleMove(Entity &t_ent, std::string t_str)
-{
 
-	Vector2 tempVec = m_moveSys.move(t_ent.getComponent<PositionComponent>().getPosition(), t_str);
-	t_ent.getComponent<PositionComponent>().setPosition(tempVec);
-	t_ent.getComponent<SpriteComponent>().setPosAndSize(t_ent.getComponent<PositionComponent>().getPosition().X(), t_ent.getComponent<PositionComponent>().getPosition().Y(), t_ent.getComponent<BodyComponent>().getSize().X(), t_ent.getComponent<BodyComponent>().getSize().Y());
-}
 
 void Game::initEnts(Entity &t_ent,Vector2 t_pos,Vector2 t_size, std::string t_str, bool t_isAnim)
 {
-	
 	t_ent.addComponent<PositionComponent>();
 	t_ent.addComponent<BodyComponent>();
 	t_ent.addComponent<SpriteComponent>();
@@ -274,7 +269,4 @@ void Game::initEnts(Entity &t_ent,Vector2 t_pos,Vector2 t_size, std::string t_st
 	t_ent.getComponent< SpriteComponent>().setPathAndScreen(t_str, m_renderer, t_isAnim);
 	t_ent.getComponent< SpriteComponent>().setPosAndSize(t_ent.getComponent<PositionComponent>().getPosition().X(), t_ent.getComponent<PositionComponent>().getPosition().Y(),
 		t_ent.getComponent<BodyComponent>().getSize().X(), t_ent.getComponent<BodyComponent>().getSize().Y());
-
-	
-
 }

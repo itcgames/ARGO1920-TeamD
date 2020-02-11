@@ -1,6 +1,5 @@
 #ifndef COLLISIONSYSTEM
 #define COLLISIONSYSTEM
-#include <string>
 #include "PositionComponent.h"
 #include "BodyComponent.h"
 class CollisionSystem

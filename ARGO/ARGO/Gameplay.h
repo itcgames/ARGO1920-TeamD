@@ -14,6 +14,7 @@ public:
 	void render(SDL_Renderer *&t_renderer);
 	void clean(SDL_Renderer*& t_renderer, SDL_Window* t_window);
 	bool isPaused();
+	std::vector<std::string> getChanges();
 private:
 	Map m_map;
 	PauseMenu m_pauseMenu;

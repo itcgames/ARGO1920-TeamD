@@ -2,10 +2,11 @@
 
 enum GameState
 {
-	intro,
 	splash,
+	licence,
 	mainMenu,
 	gameplay,
 	credits,
-	options
+	options,
+	help
 };

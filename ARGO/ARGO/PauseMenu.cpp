@@ -15,17 +15,21 @@ void PauseMenu::init()
 	loadedSurfaceAdjec = SDL_LoadBMP("ASSETS/IMAGES/adjectives.bmp");
 	loadedSurfaceSelect = SDL_LoadBMP("ASSETS/IMAGES/selector.bmp");
 
-	selectBox[0] = Vector2(2650, 250);
-	selectBox[1] = Vector2(3200, 250);
-	selectBox[2] = Vector2(selectBox[0].X(), 800);
-	selectBox[3] = Vector2(selectBox[1].X(), 800);
-	selectBox[4] = Vector2(selectBox[0].X(), 1350);
-	selectBox[5] = Vector2(selectBox[1].X(), 1350);
+	selectBox[0] = Vector2(2650, 200);
+	selectBox[1] = Vector2(3200, 200);
+	selectBox[2] = Vector2(selectBox[0].X(), 500);
+	selectBox[3] = Vector2(selectBox[1].X(), 500);
+	selectBox[4] = Vector2(selectBox[0].X(), 800);
+	selectBox[5] = Vector2(selectBox[1].X(), 800);
+	selectBox[6] = Vector2(selectBox[0].X(), 1100);
+	selectBox[7] = Vector2(selectBox[1].X(), 1100);
+	selectBox[8] = Vector2(selectBox[0].X(), 1400);
+	selectBox[9] = Vector2(selectBox[1].X(), 1400);
 	
 	for (int box = 0; box < NUM_OF_BOXES; box++)
 	{
 		boxSelected[box] = false;
-		srcrect[box] = { 0, 0, 500, 100 };
+		srcrect[box] = { 0, ((box-(box%2))/2)*100, 500, 100 };
 		boxRectSliced[box] = { int(selectBox[box].X()), int(selectBox[box].Y()), 500, 100 };
 		boxRect[box] = { int(selectBox[box].X()), int(selectBox[box].Y()), 500, 500 };
 	}
@@ -37,13 +41,13 @@ void PauseMenu::init()
 
 void PauseMenu::input(SDL_Event& t_event, Joystick t_stick)
 {
-	if (timer == TIME_SPEED)
+	if (timer == MAX_TIME)
 	{
 		if (SDL_JoystickGetButton(t_stick.getStick(), 0) != 0)
 		{
 			for (int box = 0; box < NUM_OF_BOXES; box++)
 			{
-				if (!boxSelected[box] && dstrectSelect.x + 5 == selectBox[box].X() && dstrectSelect.y + 5 == selectBox[box].Y())
+				if (!anyActive() && dstrectSelect.x + 5 == selectBox[box].X() && dstrectSelect.y + 5 == selectBox[box].Y())
 				{
 					boxSelected[box] = true;
 					dstrectSelect.y += srcrect[box].y;
@@ -122,7 +126,7 @@ void PauseMenu::input(SDL_Event& t_event, Joystick t_stick)
 
 void PauseMenu::update()
 {
-	if (timer < TIME_SPEED)
+	if (timer < MAX_TIME)
 	{
 		timer++;
 	}
@@ -147,7 +151,7 @@ void PauseMenu::render(SDL_Renderer*& t_renderer)
 	}
 
 	SDL_Texture* forAllTexture;
-	for (int box = 0; box < NUM_OF_BOXES; box++)
+	for (int box = NUM_OF_BOXES-1; box >= 0; box--)
 	{
 		if (box % 2 == 0)
 		{
@@ -190,4 +194,54 @@ int PauseMenu::getTime()
 void PauseMenu::resetTime()
 {
 	timer = 0;
+}
+
+std::vector<std::string> PauseMenu::getChanges()
+{
+	std::vector<std::string> rules;
+	for (int box = 0; box < NUM_OF_BOXES; box += 2)
+	{
+		if (srcrect[box].y == 0)
+		{
+			rules.push_back("cat");
+		}
+		else if (srcrect[box].y == 100)
+		{
+			rules.push_back("ball");
+		}
+		else if(srcrect[box].y == 200)
+		{
+			rules.push_back("platform");
+		}
+		else if (srcrect[box].y == 300)
+		{
+			rules.push_back("flag");
+		}
+		else
+		{
+			rules.push_back("cactus");
+		}
+		if (srcrect[box + 1].y == 0)
+		{
+			rules.push_back("player");
+		}
+		else if (srcrect[box + 1].y == 100)
+		{
+			rules.push_back("goal");
+		}
+		else if (srcrect[box + 1].y == 200)
+		{
+			rules.push_back("stop");
+		}
+		else if (srcrect[box + 1].y == 300)
+		{
+			rules.push_back("move");
+		}
+		else
+		{
+			rules.push_back("spiky");
+		}
+	}
+
+	return rules;
 }

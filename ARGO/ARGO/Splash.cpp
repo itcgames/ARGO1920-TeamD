@@ -8,7 +8,7 @@ Splash::Splash()
 	m_height = 2160;
 	loadedSurface = NULL;
 	m_texture = NULL;
-
+	m_count = 0;
 	loadedSurface = SDL_LoadBMP("ASSETS/IMAGES/splash.bmp");
 }
 
@@ -28,10 +28,15 @@ void Splash::handleEvents(SDL_Event& t_event)
 	}
 }
 
-void Splash::update()
+void Splash::update(GameState& gamestate)
 {
+	m_count++;
 
-	std::cout << "Splash" << std::endl;
+	if (m_count > 240)
+	{
+		gamestate = GameState::licence;
+	}
+	std::cout << m_count << std::endl;
 
 }
 

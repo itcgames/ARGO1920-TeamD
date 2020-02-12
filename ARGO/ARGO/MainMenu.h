@@ -40,4 +40,5 @@ private:
 
 	ButtonState currentState;
 	bool keyHeld;
+	int count;
 };

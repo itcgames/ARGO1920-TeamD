@@ -14,10 +14,12 @@ MainMenu::MainMenu()
 
 	currentState = ButtonState::play;
 	keyHeld = false;
+	count = 0;
 }
 
 void MainMenu::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t_stick)
 {
+	count++;
 	switch (t_event.type)
 	{
 	case SDL_KEYDOWN:
@@ -67,7 +69,8 @@ void MainMenu::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t
 				break;
 			}
 		}
-		else if (t_event.key.keysym.sym == SDLK_RETURN)
+
+		else if (t_event.key.keysym.sym == SDLK_RETURN && count > 60)
 		{
 			switch (currentState)
 			{
@@ -86,6 +89,7 @@ void MainMenu::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t
 			default:
 				break;
 			}
+			count = 0;
 		}
 		break;
 	case SDL_KEYUP:

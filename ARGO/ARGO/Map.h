@@ -11,6 +11,7 @@ public:
 	mapTile tile[50][50];
 	void init(SDL_Renderer*& t_renderer);
 	void render(SDL_Renderer*& t_renderer, int i, int j);
+	std::vector<Vector2> getMapCorners();
 private:
 	Vector2 mapArr[50][50];
 	std::string catStr, flagStr, platformStr, wallStr, yarnStr;

@@ -104,7 +104,8 @@ void Game::handleEvents()
 		{
 			isRunning = false;
 		}
-		manager.handleEvents(stick);
+		
+		manager.handleEvents(stick, m_gamePlayScr.getMapCorners());
 		break;
 	}
 

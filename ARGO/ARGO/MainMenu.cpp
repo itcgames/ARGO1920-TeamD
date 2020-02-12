@@ -53,20 +53,20 @@ void MainMenu::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t
 			keyHeld = true;
 			switch (currentState)
 			{
-			case ButtonState::play:
-				currentState = ButtonState::quit;
-				break;
-			case ButtonState::quit:
-				currentState = ButtonState::helpBTN;
-				break;
-			case ButtonState::helpBTN:
-				currentState = ButtonState::optionsBTN;
-				break;
-			case ButtonState::optionsBTN:
-				currentState = ButtonState::play;
-				break;
-			default:
-				break;
+				case ButtonState::play:
+					currentState = ButtonState::quit;
+					break;
+				case ButtonState::quit:
+					currentState = ButtonState::helpBTN;
+					break;
+				case ButtonState::helpBTN:
+					currentState = ButtonState::optionsBTN;
+					break;
+				case ButtonState::optionsBTN:
+					currentState = ButtonState::play;
+					break;
+				default:
+					break;
 			}
 		}
 

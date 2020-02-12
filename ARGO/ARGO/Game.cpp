@@ -111,65 +111,65 @@ void Game::handleEvents()
 		break;
 	}
 
-	if (SDL_JoystickGetHat(stick.getStick(), 0) == SDL_HAT_LEFT && keyTest && !m_gamePlayScr.isPaused())
-	{
-		std::cout << "left" << std::endl;
-		switch (m_currentMode)
-		{
-		case GameState::splash://no process events for this screen
-			m_currentMode = GameState::credits;
-			break;
-		case GameState::licence:
-			m_currentMode = GameState::splash;
-			break;
-		case GameState::mainMenu://no process events for this screen
-			m_currentMode = GameState::licence;
-			break;
-		case GameState::gameplay://no process events for this screen
-			m_currentMode = GameState::mainMenu;
-			break;
-		case GameState::options://no process events for this screen
-			m_currentMode = GameState::gameplay;
-			break;
-		case GameState::credits://no process events for this screen
-			m_currentMode = GameState::options;
-			break;
-		default:
-			break;
-		}
-		keyTest = false;
-	}
-	else if (SDL_JoystickGetHat(stick.getStick(), 0) == SDL_HAT_RIGHT && keyTest && !m_gamePlayScr.isPaused())
-	{
-		switch (m_currentMode)
-		{
-			case GameState::splash://no process events for this screen
-				m_currentMode = GameState::licence;
-				break;
-			case GameState::licence:
-				m_currentMode = GameState::mainMenu;
-				break;
-			case GameState::mainMenu://no process events for this screen
-				m_currentMode = GameState::gameplay;
-				break;
-			case GameState::gameplay://no process events for this screen
-				m_currentMode = GameState::options;
-				break;
-			case GameState::options://no process events for this screen
-				m_currentMode = GameState::credits;
-				break;
-			case GameState::credits://no process events for this screen
-				m_currentMode = GameState::splash;
-				break;
-			default:
-				break;
-		}
-		keyTest = false;
-	}
-	else if (SDL_JoystickGetHat(stick.getStick(), 0) == SDL_HAT_CENTERED)
-	{
-		keyTest = true;
-	}
+	//if (SDL_JoystickGetHat(stick.getStick(), 0) == SDL_HAT_LEFT && keyTest && !m_gamePlayScr.isPaused())
+	//{
+	//	std::cout << "left" << std::endl;
+	//	switch (m_currentMode)
+	//	{
+	//	case GameState::splash://no process events for this screen
+	//		m_currentMode = GameState::credits;
+	//		break;
+	//	case GameState::licence:
+	//		m_currentMode = GameState::splash;
+	//		break;
+	//	case GameState::mainMenu://no process events for this screen
+	//		m_currentMode = GameState::licence;
+	//		break;
+	//	case GameState::gameplay://no process events for this screen
+	//		m_currentMode = GameState::mainMenu;
+	//		break;
+	//	case GameState::options://no process events for this screen
+	//		m_currentMode = GameState::gameplay;
+	//		break;
+	//	case GameState::credits://no process events for this screen
+	//		m_currentMode = GameState::options;
+	//		break;
+	//	default:
+	//		break;
+	//	}
+	//	keyTest = false;
+	//}
+	//else if (SDL_JoystickGetHat(stick.getStick(), 0) == SDL_HAT_RIGHT && keyTest && !m_gamePlayScr.isPaused())
+	//{
+	//	switch (m_currentMode)
+	//	{
+	//		case GameState::splash://no process events for this screen
+	//			m_currentMode = GameState::licence;
+	//			break;
+	//		case GameState::licence:
+	//			m_currentMode = GameState::mainMenu;
+	//			break;
+	//		case GameState::mainMenu://no process events for this screen
+	//			m_currentMode = GameState::gameplay;
+	//			break;
+	//		case GameState::gameplay://no process events for this screen
+	//			m_currentMode = GameState::options;
+	//			break;
+	//		case GameState::options://no process events for this screen
+	//			m_currentMode = GameState::credits;
+	//			break;
+	//		case GameState::credits://no process events for this screen
+	//			m_currentMode = GameState::splash;
+	//			break;
+	//		default:
+	//			break;
+	//	}
+	//	keyTest = false;
+	//}
+	//else if (SDL_JoystickGetHat(stick.getStick(), 0) == SDL_HAT_CENTERED)
+	//{
+	//	keyTest = true;
+	//}
 
 	switch (m_currentMode)//gamestate
 	{

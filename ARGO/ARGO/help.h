@@ -1,12 +1,13 @@
 #pragma once
+#pragma once
 #include <SDL.h>
 #include <SDL_image.h>
 #include <iostream>
 #include "Gamestate.h"
-class Options
+class Help
 {
 public:
-	Options();
+	Help();
 	void handleEvents(SDL_Event& t_event, GameState& gamestate);
 	void update();
 	void render(SDL_Renderer* t_renderer);
@@ -17,3 +18,4 @@ private:
 	SDL_Texture* m_backgroundTexture;
 	SDL_Rect m_backgroundRect;
 };
+

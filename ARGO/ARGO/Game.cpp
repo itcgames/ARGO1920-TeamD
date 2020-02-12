@@ -182,7 +182,10 @@ void Game::handleEvents()
 		m_gamePlayScr.handleEvents(m_event, stick);
 		break;
 	case GameState::options:
+		m_optionsScr.handleEvents(m_event, m_currentMode);
 		break;
+	case GameState::help:
+		m_helpScr.handleEvents(m_event, m_currentMode);
 	case GameState::credits:
 		break;
 	default:

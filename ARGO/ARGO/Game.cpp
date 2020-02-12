@@ -114,26 +114,26 @@ void Game::handleEvents()
 		std::cout << "left" << std::endl;
 		switch (m_currentMode)
 		{
-		case GameState::splash://no process events for this screen
-			m_currentMode = GameState::licence;
-			break;
-		case GameState::licence:
-			m_currentMode = GameState::mainMenu;
-			break;
-		case GameState::mainMenu://no process events for this screen
-			m_currentMode = GameState::splash;
-			break;
-		case GameState::gameplay://no process events for this screen
-			m_currentMode = GameState::mainMenu;
-			break;
-		case GameState::options://no process events for this screen
-			m_currentMode = GameState::gameplay;
-			break;
-		case GameState::credits://no process events for this screen
-			m_currentMode = GameState::options;
-			break;
-		default:
-			break;
+			case GameState::splash://no process events for this screen
+				m_currentMode = GameState::licence;
+				break;
+			case GameState::licence:
+				m_currentMode = GameState::mainMenu;
+				break;
+			case GameState::mainMenu://no process events for this screen
+				m_currentMode = GameState::splash;
+				break;
+			case GameState::gameplay://no process events for this screen
+				m_currentMode = GameState::mainMenu;
+				break;
+			case GameState::options://no process events for this screen
+				m_currentMode = GameState::gameplay;
+				break;
+			case GameState::credits://no process events for this screen
+				m_currentMode = GameState::options;
+				break;
+			default:
+				break;
 		}
 		keyTest = false;
 	}
@@ -143,49 +143,53 @@ void Game::handleEvents()
 	{
 		switch (m_currentMode)
 		{
-		case GameState::splash://no process events for this screen
-			m_currentMode = GameState::licence;
-			break;
-		case GameState::licence:
-			m_currentMode = GameState::mainMenu;
-			break;
-		case GameState::mainMenu://no process events for this screen
-			m_currentMode = GameState::gameplay;
-			break;
-		case GameState::gameplay://no process events for this screen
-			m_currentMode = GameState::credits;
-			break;
-		case GameState::options://no process events for this screen
-			m_currentMode = GameState::options;
-			break;
-		case GameState::credits://no process events for this screen
-			m_currentMode = GameState::mainMenu;
-			break;
-		default:
-			break;
+			case GameState::splash://no process events for this screen
+				m_currentMode = GameState::licence;
+				break;
+			case GameState::licence:
+				m_currentMode = GameState::mainMenu;
+				break;
+			case GameState::mainMenu://no process events for this screen
+				m_currentMode = GameState::gameplay;
+				break;
+			case GameState::gameplay://no process events for this screen
+				m_currentMode = GameState::credits;
+				break;
+			case GameState::options://no process events for this screen
+				m_currentMode = GameState::options;
+				break;
+			case GameState::credits://no process events for this screen
+				m_currentMode = GameState::mainMenu;
+				break;
+			default:
+				break;
 		}
 		keyTest = false;
 	}
 
 	switch (m_currentMode)//gamestate
 	{
-	case GameState::splash:
-		break;
-	case GameState::licence:
-		m_licence.handleEvents(m_event, m_currentMode);
-		break;
-	case GameState::mainMenu:
-		m_mainMenuScr.handleEvents(m_event, m_currentMode);
-		break;
-	case GameState::gameplay://no process events for this screen
-		m_gamePlayScr.handleEvents(m_event, stick);
-		break;
-	case GameState::options:
-		break;
-	case GameState::credits:
-		break;
-	default:
-		break;
+		case GameState::splash:
+			break;
+		case GameState::licence:
+			m_licence.handleEvents(m_event, m_currentMode);
+			break;
+		case GameState::mainMenu:
+			m_mainMenuScr.handleEvents(m_event, m_currentMode);
+			break;
+		case GameState::gameplay://no process events for this screen
+			m_gamePlayScr.handleEvents(m_event, stick);
+			break;
+		case GameState::options:
+			m_optionsScr.handleEvents(m_event, m_currentMode);
+			break;
+		case GameState::help:
+			m_helpScr.handleEvents(m_event, m_currentMode);
+			break;
+		case GameState::credits:
+			break;
+		default:
+			break;
 	}
 }
 
@@ -211,26 +215,29 @@ void Game::update()
 
 	switch (m_currentMode)//gamestate
 	{
-	case GameState::splash://no process events for this screen
-		m_splashScr.update(m_currentMode);
-		break;
-	case GameState::licence:
-		m_licence.update(m_currentMode);
-		break;
-	case GameState::mainMenu://no process events for this screen
-		m_mainMenuScr.update();
-		break;
-	case GameState::gameplay://no process events for this screen
-		m_gamePlayScr.update();
-		break;
-	case GameState::options://no process events for this screen
-		m_optionsScr.update();
-		break;
-	case GameState::credits://no process events for this screen
-		m_creditsScr.update();
-		break;
-	default:
-		break;
+		case GameState::splash://no process events for this screen
+			m_splashScr.update(m_currentMode);
+			break;
+		case GameState::licence:
+			m_licence.update(m_currentMode);
+			break;
+		case GameState::mainMenu://no process events for this screen
+			m_mainMenuScr.update();
+			break;
+		case GameState::gameplay://no process events for this screen
+			m_gamePlayScr.update();
+			break;
+		case GameState::options://no process events for this screen
+			m_optionsScr.update();
+			break;
+		case GameState::help:
+			m_helpScr.update();
+			break;
+		case GameState::credits://no process events for this screen
+			m_creditsScr.update();
+			break;
+		default:
+			break;
 	}
 }
 
@@ -254,6 +261,9 @@ void Game::render()
 		break;
 	case GameState::options://no process events for this screen
 		m_optionsScr.render(m_renderer);
+		break;
+	case GameState::help:
+		m_helpScr.render(m_renderer);
 		break;
 	case GameState::credits://no process events for this screen
 		m_creditsScr.render(m_renderer);

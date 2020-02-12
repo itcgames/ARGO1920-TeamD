@@ -8,7 +8,7 @@ enum ButtonState
 {
 	play,
 	optionsBTN,
-	help,
+	helpBTN,
 	quit
 };
 
@@ -37,4 +37,5 @@ private:
 	SDL_Rect m_selectorRect;
 
 	ButtonState currentState;
+	bool keyHeld;
 };

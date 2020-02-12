@@ -82,3 +82,8 @@ void EntityManager::handleStop(Entity &  t_ent, std::string t_str)
 	}*/
 }
 
+//Entity EntityManager::getEnt(int t_arrPos)
+//{
+//	return *entities[t_arrPos];
+//}
+

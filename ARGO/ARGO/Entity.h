@@ -51,6 +51,16 @@ public:
 		return componentBitset[getComponentTypeID<T>()];
 	}
 
+	template <typename T> void deleteComp(T* t) const
+	{
+		
+		components.erase(
+			std::remove_if(components.begin(), components.end(), [t](const T& comp) {
+			return &comp == t;
+		}),
+			components.end()
+			);
+	}
 	template <typename T, typename... TArgs>
 	T& addComponent(TArgs&& ... mArgs)
 	{
@@ -65,7 +75,15 @@ public:
 		c->init();
 		return *c;
 	}
-
+	template <typename T, typename... TArgs>
+	T& addComponent2(TArgs&& ... mArgs)
+	{
+		T* c(new T(std::forward<TArgs>(mArgs)...));
+		c->entity = this;
+		
+		c->init();
+		return *c;
+	}
 	template <typename T> T& getComponent() const
 	{
 		auto ptr(componentArray[getComponentTypeID<T>()]);

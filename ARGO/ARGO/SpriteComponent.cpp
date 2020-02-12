@@ -13,6 +13,19 @@ SpriteComponent::SpriteComponent()
 	m_animed = false;
 }
 
+void SpriteComponent::resetSprite()
+{
+	m_x = 50;
+	m_y = 50;
+	m_width = 50;
+	m_height = 50;
+	loadedSurface = NULL;
+	m_texture = NULL;
+	xOffset = 0;
+	timer = 0;
+	m_animed = false;
+}
+
 void SpriteComponent::setPathAndScreen(std::string path, SDL_Renderer* t_screen, bool t_anime)
 {
 	loadedSurface = SDL_LoadBMP(path.c_str());

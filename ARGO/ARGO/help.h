@@ -1,18 +1,19 @@
 #pragma once
+#pragma once
 #include <SDL.h>
 #include <SDL_image.h>
 #include <iostream>
 #include "Gamestate.h"
 
-enum OptionsButtonState
+enum HelpButtonState
 {
-	optionsBackBtn
+	helpBackBtn
 };
 
-class Options
+class Help
 {
 public:
-	Options();
+	Help();
 	void handleEvents(SDL_Event& t_event, GameState& gamestate);
 	void update();
 	void render(SDL_Renderer* t_renderer);
@@ -27,6 +28,7 @@ private:
 	SDL_Rect m_backBtnRect;
 	SDL_Rect m_selectorRect;
 
-	OptionsButtonState currentState;
+	HelpButtonState currentState;
 	int count;
 };
+

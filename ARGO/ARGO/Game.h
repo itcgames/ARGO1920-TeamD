@@ -12,6 +12,7 @@
 
 #include "Splash.h"
 #include "Licence.h"
+#include "help.h"
 #include "MainMenu.h"
 #include "Gameplay.h"
 #include "Options.h"
@@ -45,7 +46,7 @@ private:
 	Gameplay m_gamePlayScr;
 	Options m_optionsScr;
 	Credits m_creditsScr;
-
+	Help m_helpScr;
 	Joystick stick;
 	bool keyTest = false;
 
@@ -56,6 +57,6 @@ private:
 	/// Systems
 	/// </summary>
 	MovementSystem m_moveSys;
-	void handleMove(Entity &t_ent, std::string t_str);
+	std::vector<std::string> answer;
 	void initEnts(Entity &t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim);
 };

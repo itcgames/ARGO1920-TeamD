@@ -41,7 +41,7 @@ void PauseMenu::init()
 
 void PauseMenu::input(SDL_Event& t_event, Joystick t_stick)
 {
-	if (timer == TIME_SPEED)
+	if (timer == MAX_TIME)
 	{
 		if (SDL_JoystickGetButton(t_stick.getStick(), 0) != 0)
 		{
@@ -126,7 +126,7 @@ void PauseMenu::input(SDL_Event& t_event, Joystick t_stick)
 
 void PauseMenu::update()
 {
-	if (timer < TIME_SPEED)
+	if (timer < MAX_TIME)
 	{
 		timer++;
 	}

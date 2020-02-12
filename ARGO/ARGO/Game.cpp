@@ -3,11 +3,11 @@ GameState Game::m_currentMode{ GameState::gameplay };
 LevelState Game::m_currentLevel{ LevelState::Level1 };
 
 EntityManager manager;
-auto& newPlayer(manager.addEntity());
-auto& flag(manager.addEntity());
-auto& platform(manager.addEntity());
-auto& cactus(manager.addEntity());
-auto& rock(manager.addEntity());
+auto& newPlayer(manager.addEntity("player"));
+auto& flag(manager.addEntity("goal"));
+auto& platform(manager.addEntity("stop"));
+auto& cactus(manager.addEntity("spikey"));
+auto& rock(manager.addEntity("move"));
 
 Game::Game()
 {
@@ -21,6 +21,7 @@ Game::~Game()
 
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
+
 	int flags = 0;
 	if (fullscreen)
 	{
@@ -54,15 +55,14 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 void Game::handleEvents()
 {
-
-	SDL_PollEvent(&m_event);
+	SDL_PollEvent(&m_event); 
 	switch (m_event.type)
 	{
 	case SDL_QUIT:
 		isRunning = false;
 		break;
 	case SDL_JOYAXISMOTION:
-		std::cout << stick.X() << std::endl;
+		std::cout << stick.X() << std::endl; 
 		if (m_event.jaxis.which == 0)
 		{
 			if (m_event.jaxis.axis == 0)
@@ -104,39 +104,23 @@ void Game::handleEvents()
 		{
 			isRunning = false;
 		}
-		else if (SDL_JoystickGetButton(stick.getStick(), 0) != 0)
-		{
-			handleMove(newPlayer, "down");
-		}
-		else if (SDL_JoystickGetButton(stick.getStick(), 1) != 0)
-		{
-			handleMove(newPlayer, "right");
-		}
-		else if (SDL_JoystickGetButton(stick.getStick(), 2) != 0)
-		{
-			handleMove(newPlayer, "left");
-		}
-		else if (SDL_JoystickGetButton(stick.getStick(), 3) != 0)
-		{
-			handleMove(newPlayer, "up");
-		}
-		default:
+		manager.handleEvents(stick);
 		break;
 	}
 
-	if (stick.X() == -1 && keyTest && !m_gamePlayScr.isPaused())
+	if (SDL_JoystickGetHat(stick.getStick(), 0) == SDL_HAT_LEFT && keyTest && !m_gamePlayScr.isPaused())
 	{
 		std::cout << "left" << std::endl;
 		switch (m_currentMode)
 		{
 		case GameState::splash://no process events for this screen
-			m_currentMode = GameState::licence;
+			m_currentMode = GameState::credits;
 			break;
 		case GameState::licence:
-			m_currentMode = GameState::mainMenu;
+			m_currentMode = GameState::splash;
 			break;
 		case GameState::mainMenu://no process events for this screen
-			m_currentMode = GameState::splash;
+			m_currentMode = GameState::licence;
 			break;
 		case GameState::gameplay://no process events for this screen
 			m_currentMode = GameState::mainMenu;
@@ -152,34 +136,36 @@ void Game::handleEvents()
 		}
 		keyTest = false;
 	}
-
-	
-	else if (stick.X() == 1 && keyTest && !m_gamePlayScr.isPaused())
+	else if (SDL_JoystickGetHat(stick.getStick(), 0) == SDL_HAT_RIGHT && keyTest && !m_gamePlayScr.isPaused())
 	{
 		switch (m_currentMode)
 		{
-		case GameState::splash://no process events for this screen
-			m_currentMode = GameState::licence;
-			break;
-		case GameState::licence:
-			m_currentMode = GameState::mainMenu;
-			break;
-		case GameState::mainMenu://no process events for this screen
-			m_currentMode = GameState::gameplay;
-			break;
-		case GameState::gameplay://no process events for this screen
-			m_currentMode = GameState::credits;
-			break;
-		case GameState::options://no process events for this screen
-			m_currentMode = GameState::options;
-			break;
-		case GameState::credits://no process events for this screen
-			m_currentMode = GameState::mainMenu;
-			break;
-		default:
-			break;
+			case GameState::splash://no process events for this screen
+				m_currentMode = GameState::licence;
+				break;
+			case GameState::licence:
+				m_currentMode = GameState::mainMenu;
+				break;
+			case GameState::mainMenu://no process events for this screen
+				m_currentMode = GameState::gameplay;
+				break;
+			case GameState::gameplay://no process events for this screen
+				m_currentMode = GameState::options;
+				break;
+			case GameState::options://no process events for this screen
+				m_currentMode = GameState::credits;
+				break;
+			case GameState::credits://no process events for this screen
+				m_currentMode = GameState::splash;
+				break;
+			default:
+				break;
 		}
 		keyTest = false;
+	}
+	else if (SDL_JoystickGetHat(stick.getStick(), 0) == SDL_HAT_CENTERED)
+	{
+		keyTest = true;
 	}
 
 	switch (m_currentMode)//gamestate
@@ -190,13 +176,16 @@ void Game::handleEvents()
 		m_licence.handleEvents(m_event, m_currentMode);
 		break;
 	case GameState::mainMenu:
-		m_mainMenuScr.handleEvents(m_event, m_currentMode);
+		m_mainMenuScr.handleEvents(m_event, m_currentMode, stick);
 		break;
 	case GameState::gameplay://no process events for this screen
 		m_gamePlayScr.handleEvents(m_event, stick);
 		break;
 	case GameState::options:
+		m_optionsScr.handleEvents(m_event, m_currentMode);
 		break;
+	case GameState::help:
+		m_helpScr.handleEvents(m_event, m_currentMode);
 	case GameState::credits:
 		break;
 	default:
@@ -208,36 +197,42 @@ void Game::update()
 {
 	static int count = 0; count++;
 	manager.update();
-	std::vector<std::string> answer = m_gamePlayScr.getChanges();
-	for (auto loop : answer)
-	{
-		std::cout << loop << " : ";
-	}
+	answer = m_gamePlayScr.getChanges();
+	manager.refresh();
+
+	newPlayer.setComponentString(answer[1]);
+	rock.setComponentString(answer[3]);
+	platform.setComponentString(answer[5]);
+	flag.setComponentString(answer[7]);
+	cactus.setComponentString(answer[9]);
 	std::cout << std::endl;
-	
+
 
 	switch (m_currentMode)//gamestate
 	{
-	case GameState::splash://no process events for this screen
-		m_splashScr.update(m_currentMode);
-		break;
-	case GameState::licence:
-		m_licence.update(m_currentMode);
-		break;
-	case GameState::mainMenu://no process events for this screen
-		m_mainMenuScr.update();
-		break;
-	case GameState::gameplay://no process events for this screen
-		m_gamePlayScr.update();
-		break;
-	case GameState::options://no process events for this screen
-		m_optionsScr.update();
-		break;
-	case GameState::credits://no process events for this screen
-		m_creditsScr.update();
-		break;
-	default:
-		break;
+		case GameState::splash://no process events for this screen
+			m_splashScr.update(m_currentMode);
+			break;
+		case GameState::licence:
+			m_licence.update(m_currentMode);
+			break;
+		case GameState::mainMenu://no process events for this screen
+			m_mainMenuScr.update();
+			break;
+		case GameState::gameplay://no process events for this screen
+			m_gamePlayScr.update();
+			break;
+		case GameState::options://no process events for this screen
+			m_optionsScr.update();
+			break;
+		case GameState::help:
+			m_helpScr.update();
+			break;
+		case GameState::credits://no process events for this screen
+			m_creditsScr.update();
+			break;
+		default:
+			break;
 	}
 }
 
@@ -262,6 +257,9 @@ void Game::render()
 	case GameState::options://no process events for this screen
 		m_optionsScr.render(m_renderer);
 		break;
+	case GameState::help:
+		m_helpScr.render(m_renderer);
+		break;
 	case GameState::credits://no process events for this screen
 		m_creditsScr.render(m_renderer);
 		break;
@@ -281,17 +279,10 @@ void Game::clean()
 	std::cout << "Game Cleaned" << std::endl;
 }
 
-void Game::handleMove(Entity &t_ent, std::string t_str)
-{
 
-	Vector2 tempVec = m_moveSys.move(t_ent.getComponent<PositionComponent>().getPosition(), t_str);
-	t_ent.getComponent<PositionComponent>().setPosition(tempVec);
-	t_ent.getComponent<SpriteComponent>().setPosAndSize(t_ent.getComponent<PositionComponent>().getPosition().X(), t_ent.getComponent<PositionComponent>().getPosition().Y(), t_ent.getComponent<BodyComponent>().getSize().X(), t_ent.getComponent<BodyComponent>().getSize().Y());
-}
 
 void Game::initEnts(Entity &t_ent,Vector2 t_pos,Vector2 t_size, std::string t_str, bool t_isAnim)
 {
-	
 	t_ent.addComponent<PositionComponent>();
 	t_ent.addComponent<BodyComponent>();
 	t_ent.addComponent<SpriteComponent>();
@@ -300,7 +291,4 @@ void Game::initEnts(Entity &t_ent,Vector2 t_pos,Vector2 t_size, std::string t_st
 	t_ent.getComponent< SpriteComponent>().setPathAndScreen(t_str, m_renderer, t_isAnim);
 	t_ent.getComponent< SpriteComponent>().setPosAndSize(t_ent.getComponent<PositionComponent>().getPosition().X(), t_ent.getComponent<PositionComponent>().getPosition().Y(),
 		t_ent.getComponent<BodyComponent>().getSize().X(), t_ent.getComponent<BodyComponent>().getSize().Y());
-
-	
-
 }

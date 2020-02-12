@@ -4,11 +4,12 @@
 #include <SDL_image.h>
 #include <iostream>
 #include "Gamestate.h"
+#include "Joystick.h"
 enum ButtonState
 {
 	play,
 	optionsBTN,
-	help,
+	helpBTN,
 	quit
 };
 
@@ -16,11 +17,12 @@ class MainMenu
 {
 public:
 	MainMenu();
-	void handleEvents(SDL_Event& t_event, GameState &gamestate);
+	void handleEvents(SDL_Event& t_event, GameState &gamestate, Joystick t_stick);
 	void update();
 	void render(SDL_Renderer* t_renderer);
 	void clean(SDL_Renderer& t_renderer, SDL_Window& t_window);
 	void loadSprites(SDL_Renderer* renderer);
+	static const int MAX_TIME = 20;
 private:
 	SDL_Surface* loadedSurface;
 	SDL_Texture* m_backgroundTexture;
@@ -37,4 +39,6 @@ private:
 	SDL_Rect m_selectorRect;
 
 	ButtonState currentState;
+	bool keyHeld;
+	int count;
 };

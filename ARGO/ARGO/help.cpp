@@ -1,6 +1,6 @@
-#include "Options.h"
+#include "help.h"
 
-Options::Options()
+Help::Help()
 {
 	m_backgroundRect = { 0,0, 3840, 2160 };
 	m_backBtnRect = { 3200,1600, 500,500 };
@@ -10,11 +10,11 @@ Options::Options()
 	m_backBtnTexture = NULL;
 	m_selectorTexture = NULL;
 
-	currentState = OptionsButtonState::optionsBackBtn;
+	currentState = HelpButtonState::helpBackBtn;
 	count = 0;
 }
 
-void Options::handleEvents(SDL_Event& t_event, GameState& gamestate)
+void Help::handleEvents(SDL_Event& t_event, GameState& gamestate)
 {
 	count++;
 	switch (t_event.type)
@@ -24,12 +24,12 @@ void Options::handleEvents(SDL_Event& t_event, GameState& gamestate)
 		{
 			SDL_Quit();
 		}
-		
+
 		if (t_event.key.keysym.sym == SDLK_RETURN && count > 60)
 		{
 			switch (currentState)
 			{
-			case OptionsButtonState::optionsBackBtn:
+			case HelpButtonState::helpBackBtn:
 				gamestate = GameState::mainMenu;
 				break;
 			default:
@@ -44,14 +44,11 @@ void Options::handleEvents(SDL_Event& t_event, GameState& gamestate)
 	}
 }
 
-void Options::update()
+void Help::update()
 {
-
-	std::cout << "Options" << std::endl;
-
 }
 
-void Options::render(SDL_Renderer* t_renderer)
+void Help::render(SDL_Renderer* t_renderer)
 {
 	loadSprites(t_renderer);
 	SDL_RenderClear(t_renderer);
@@ -61,16 +58,15 @@ void Options::render(SDL_Renderer* t_renderer)
 	SDL_RenderPresent(t_renderer);
 }
 
-
-void Options::clean(SDL_Renderer& t_renderer, SDL_Window& t_window)
+void Help::clean(SDL_Renderer& t_renderer, SDL_Window& t_window)
 {
 }
 
-void Options::loadSprites(SDL_Renderer* renderer)
+void Help::loadSprites(SDL_Renderer* renderer)
 {
 	if (m_backgroundTexture == NULL)
 	{
-		loadedSurface = SDL_LoadBMP("ASSETS/IMAGES/options.bmp");
+		loadedSurface = SDL_LoadBMP("ASSETS/IMAGES/helpBackground.bmp");
 		m_backgroundTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
 		loadedSurface = SDL_LoadBMP("ASSETS/IMAGES/selector.bmp");
 		m_selectorTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);

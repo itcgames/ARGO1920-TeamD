@@ -7,5 +7,6 @@ enum GameState
 	mainMenu,
 	gameplay,
 	credits,
-	options
+	options,
+	help
 };

@@ -1,5 +1,5 @@
 #include "Game.h"
-GameState Game::m_currentMode{ GameState::gameplay };
+GameState Game::m_currentMode{ GameState::mainMenu };
 LevelState Game::m_currentLevel{ LevelState::Level1 };
 
 EntityManager manager;
@@ -21,7 +21,7 @@ Game::~Game()
 
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
-	
+
 	int flags = 0;
 	if (fullscreen)
 	{
@@ -101,26 +101,24 @@ void Game::handleEvents()
 		}
 		break;
 	case SDL_JOYBUTTONDOWN:
-		
 		if (SDL_JoystickGetButton(stick.getStick(), 5) != 0)
 		{
 			isRunning = false;
 		}
-		
 		manager.handleEvents(stick);
-	default:
 		break;
 	}
 
 	if (stick.X() == -1 && keyTest && !m_gamePlayScr.isPaused())
 	{
+		std::cout << "left" << std::endl;
 		switch (m_currentMode)
 		{
-		case GameState::intro://no process events for this screen
-			m_currentMode = GameState::credits;
-			break;
 		case GameState::splash://no process events for this screen
-			m_currentMode = GameState::intro;
+			m_currentMode = GameState::licence;
+			break;
+		case GameState::licence:
+			m_currentMode = GameState::mainMenu;
 			break;
 		case GameState::mainMenu://no process events for this screen
 			m_currentMode = GameState::splash;
@@ -139,14 +137,16 @@ void Game::handleEvents()
 		}
 		keyTest = false;
 	}
+
+
 	else if (stick.X() == 1 && keyTest && !m_gamePlayScr.isPaused())
 	{
 		switch (m_currentMode)
 		{
-		case GameState::intro://no process events for this screen
-			m_currentMode = GameState::splash;
-			break;
 		case GameState::splash://no process events for this screen
+			m_currentMode = GameState::licence;
+			break;
+		case GameState::licence:
 			m_currentMode = GameState::mainMenu;
 			break;
 		case GameState::mainMenu://no process events for this screen
@@ -159,7 +159,7 @@ void Game::handleEvents()
 			m_currentMode = GameState::options;
 			break;
 		case GameState::credits://no process events for this screen
-			m_currentMode = GameState::intro;
+			m_currentMode = GameState::mainMenu;
 			break;
 		default:
 			break;
@@ -169,11 +169,13 @@ void Game::handleEvents()
 
 	switch (m_currentMode)//gamestate
 	{
-	case GameState::intro:
-		break;
 	case GameState::splash:
 		break;
+	case GameState::licence:
+		m_licence.handleEvents(m_event, m_currentMode);
+		break;
 	case GameState::mainMenu:
+		m_mainMenuScr.handleEvents(m_event, m_currentMode);
 		break;
 	case GameState::gameplay://no process events for this screen
 		m_gamePlayScr.handleEvents(m_event, stick);
@@ -194,26 +196,26 @@ void Game::update()
 	answer = m_gamePlayScr.getChanges();
 	for (auto loop : answer)
 	{
-		
+
 		std::cout << loop << " : ";
 	}
 	manager.refresh();
-	
+
 	newPlayer.setComponentString(answer[1]);
 	rock.setComponentString(answer[3]);
 	platform.setComponentString(answer[5]);
 	flag.setComponentString(answer[7]);
 	cactus.setComponentString(answer[9]);
 	std::cout << std::endl;
-	
+
 
 	switch (m_currentMode)//gamestate
 	{
-	case GameState::intro://no process events for this screen
-		m_introScr.update();
-		break;
 	case GameState::splash://no process events for this screen
-		m_splashScr.update();
+		m_splashScr.update(m_currentMode);
+		break;
+	case GameState::licence:
+		m_licence.update(m_currentMode);
 		break;
 	case GameState::mainMenu://no process events for this screen
 		m_mainMenuScr.update();
@@ -237,8 +239,8 @@ void Game::render()
 	SDL_RenderClear(m_renderer);
 	switch (m_currentMode)//gamestate
 	{
-	case GameState::intro://no process events for this screen
-		m_introScr.render(m_renderer);
+	case GameState::licence://no process events for this screen
+		m_licence.render(m_renderer);
 		break;
 	case GameState::splash://no process events for this screen
 		m_splashScr.render(m_renderer);

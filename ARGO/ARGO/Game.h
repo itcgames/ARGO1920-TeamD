@@ -10,8 +10,8 @@
 #include "BodyComponent.h"
 #include "EntityManager.h"
 
-#include "Intro.h"
 #include "Splash.h"
+#include "Licence.h"
 #include "MainMenu.h"
 #include "Gameplay.h"
 #include "Options.h"
@@ -39,8 +39,8 @@ public:
 private:
 	bool isRunning;
 	SDL_Window* m_window;
-	Intro m_introScr;
 	Splash m_splashScr;
+	Licence m_licence;
 	MainMenu m_mainMenuScr;
 	Gameplay m_gamePlayScr;
 	Options m_optionsScr;

@@ -59,6 +59,9 @@
     </ClCompile>
     <ClCompile Include="CollisionSystem.cpp">
       <Filter>Source Files</Filter>
+      </ClCompile>
+    <ClCompile Include="Licence.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -113,10 +116,14 @@
     <ClInclude Include="Flag.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+
     <ClInclude Include="BoundarySystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CollisionSystem.h">
+      <Filter>Header Files</Filter>
+      </ClInclude>
+    <ClInclude Include="Licence.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

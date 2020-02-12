@@ -26,6 +26,9 @@ void Licence::handleEvents(SDL_Event& t_event, GameState& gamestate)
 		gamestate = GameState::mainMenu;
 		
 		break;
+	case SDL_JOYBUTTONDOWN:
+		gamestate = GameState::mainMenu;
+		break;
 	default:
 		break;
 	}

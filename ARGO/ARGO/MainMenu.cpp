@@ -15,16 +15,12 @@ MainMenu::MainMenu()
 	currentState = ButtonState::play;
 }
 
-void MainMenu::handleEvents(SDL_Event& t_event, GameState& gamestate)
+void MainMenu::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t_stick)
 {
-	switch (t_event.type)
+	if (m_timer == MAX_TIME)
 	{
-	case SDL_KEYDOWN:
-		if (t_event.key.keysym.sym == SDLK_ESCAPE)
-		{
-
-		}
-		if (t_event.key.keysym.sym == SDLK_DOWN)
+		ButtonState startState = currentState;
+		if (t_event.key.keysym.sym == SDLK_DOWN || t_stick.Y() == 1)
 		{
 			switch (currentState)
 			{
@@ -44,8 +40,7 @@ void MainMenu::handleEvents(SDL_Event& t_event, GameState& gamestate)
 				break;
 			}
 		}
-
-		if (t_event.key.keysym.sym == SDLK_UP)
+		else if (t_event.key.keysym.sym == SDLK_UP || t_stick.Y() == -1)
 		{
 			switch (currentState)
 			{
@@ -65,9 +60,10 @@ void MainMenu::handleEvents(SDL_Event& t_event, GameState& gamestate)
 				break;
 			}
 		}
-		break;
-	default:
-		break;
+		if (startState != currentState)
+		{
+			m_timer = 0;
+		}
 	}
 }
 
@@ -90,6 +86,8 @@ void MainMenu::update()
 	default:
 		break;
 	}
+	if(m_timer < MAX_TIME)
+		m_timer++;
 }
 
 void MainMenu::render(SDL_Renderer* t_renderer)

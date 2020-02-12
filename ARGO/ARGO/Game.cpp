@@ -55,15 +55,14 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 void Game::handleEvents()
 {
-
-	SDL_PollEvent(&m_event);
+	SDL_PollEvent(&m_event); 
 	switch (m_event.type)
 	{
 	case SDL_QUIT:
 		isRunning = false;
 		break;
 	case SDL_JOYAXISMOTION:
-		std::cout << stick.X() << std::endl;
+		std::cout << stick.X() << std::endl; 
 		if (m_event.jaxis.which == 0)
 		{
 			if (m_event.jaxis.axis == 0)
@@ -109,19 +108,19 @@ void Game::handleEvents()
 		break;
 	}
 
-	if (stick.X() == -1 && keyTest && !m_gamePlayScr.isPaused())
+	if (SDL_JoystickGetHat(stick.getStick(), 0) == SDL_HAT_LEFT && keyTest && !m_gamePlayScr.isPaused())
 	{
 		std::cout << "left" << std::endl;
 		switch (m_currentMode)
 		{
 		case GameState::splash://no process events for this screen
-			m_currentMode = GameState::licence;
+			m_currentMode = GameState::credits;
 			break;
 		case GameState::licence:
-			m_currentMode = GameState::mainMenu;
+			m_currentMode = GameState::splash;
 			break;
 		case GameState::mainMenu://no process events for this screen
-			m_currentMode = GameState::splash;
+			m_currentMode = GameState::licence;
 			break;
 		case GameState::gameplay://no process events for this screen
 			m_currentMode = GameState::mainMenu;
@@ -137,9 +136,7 @@ void Game::handleEvents()
 		}
 		keyTest = false;
 	}
-
-
-	else if (stick.X() == 1 && keyTest && !m_gamePlayScr.isPaused())
+	else if (SDL_JoystickGetHat(stick.getStick(), 0) == SDL_HAT_RIGHT && keyTest && !m_gamePlayScr.isPaused())
 	{
 		switch (m_currentMode)
 		{
@@ -153,18 +150,22 @@ void Game::handleEvents()
 			m_currentMode = GameState::gameplay;
 			break;
 		case GameState::gameplay://no process events for this screen
-			m_currentMode = GameState::credits;
-			break;
-		case GameState::options://no process events for this screen
 			m_currentMode = GameState::options;
 			break;
+		case GameState::options://no process events for this screen
+			m_currentMode = GameState::credits;
+			break;
 		case GameState::credits://no process events for this screen
-			m_currentMode = GameState::mainMenu;
+			m_currentMode = GameState::splash;
 			break;
 		default:
 			break;
 		}
 		keyTest = false;
+	}
+	else if (SDL_JoystickGetHat(stick.getStick(), 0) == SDL_HAT_CENTERED)
+	{
+		keyTest = true;
 	}
 
 	switch (m_currentMode)//gamestate
@@ -175,7 +176,7 @@ void Game::handleEvents()
 		m_licence.handleEvents(m_event, m_currentMode);
 		break;
 	case GameState::mainMenu:
-		m_mainMenuScr.handleEvents(m_event, m_currentMode);
+		m_mainMenuScr.handleEvents(m_event, m_currentMode, stick);
 		break;
 	case GameState::gameplay://no process events for this screen
 		m_gamePlayScr.handleEvents(m_event, stick);
@@ -194,11 +195,6 @@ void Game::update()
 	static int count = 0; count++;
 	manager.update();
 	answer = m_gamePlayScr.getChanges();
-	for (auto loop : answer)
-	{
-
-		std::cout << loop << " : ";
-	}
 	manager.refresh();
 
 	newPlayer.setComponentString(answer[1]);

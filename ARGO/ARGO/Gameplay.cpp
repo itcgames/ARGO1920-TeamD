@@ -22,7 +22,7 @@ void Gameplay::handleEvents(SDL_Event& t_event, Joystick t_stick)
 	default:
 		break;
 	}
-	if (SDL_JoystickGetButton(t_stick.getStick(), 7) != 0 && m_pauseMenu.getTime() >= m_pauseMenu.TIME_SPEED)
+	if (SDL_JoystickGetButton(t_stick.getStick(), 7) != 0 && m_pauseMenu.getTime() >= m_pauseMenu.MAX_TIME)
 	{
 		paused = !paused;
 		m_pauseMenu.resetTime();

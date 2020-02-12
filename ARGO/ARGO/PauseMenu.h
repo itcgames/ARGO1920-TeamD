@@ -17,7 +17,7 @@ public:
 	int getTime();
 	void resetTime();
 	std::vector<std::string> getChanges();
-	static const int TIME_SPEED = 20;
+	static const int MAX_TIME = 20;
 private:
 	SDL_Surface* loadedSurfaceBack;
 	SDL_Surface* loadedSurfaceObj;

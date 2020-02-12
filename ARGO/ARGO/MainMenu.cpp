@@ -13,28 +13,32 @@ MainMenu::MainMenu()
 	m_backgroundTexture = NULL;
 
 	currentState = ButtonState::play;
+	keyHeld = false;
+	count = 0;
 }
 
-void MainMenu::handleEvents(SDL_Event& t_event, GameState& gamestate)
+void MainMenu::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t_stick)
 {
+	count++;
 	switch (t_event.type)
 	{
 	case SDL_KEYDOWN:
 		if (t_event.key.keysym.sym == SDLK_ESCAPE)
 		{
-
+			SDL_Quit();
 		}
-		if (t_event.key.keysym.sym == SDLK_DOWN)
+		else if (t_event.key.keysym.sym == SDLK_DOWN && keyHeld == false)
 		{
+			keyHeld = true;
 			switch (currentState)
 			{
 			case ButtonState::play:
 				currentState = ButtonState::optionsBTN;
 				break;
 			case ButtonState::optionsBTN:
-				currentState = ButtonState::help;
+				currentState = ButtonState::helpBTN;
 				break;
-			case ButtonState::help:
+			case ButtonState::helpBTN:
 				currentState = ButtonState::quit;
 				break;
 			case ButtonState::quit:
@@ -44,18 +48,18 @@ void MainMenu::handleEvents(SDL_Event& t_event, GameState& gamestate)
 				break;
 			}
 		}
-
-		if (t_event.key.keysym.sym == SDLK_UP)
+		else if (t_event.key.keysym.sym == SDLK_UP && keyHeld == false)
 		{
+			keyHeld = true;
 			switch (currentState)
 			{
 			case ButtonState::play:
 				currentState = ButtonState::quit;
 				break;
 			case ButtonState::quit:
-				currentState = ButtonState::help;
+				currentState = ButtonState::helpBTN;
 				break;
-			case ButtonState::help:
+			case ButtonState::helpBTN:
 				currentState = ButtonState::optionsBTN;
 				break;
 			case ButtonState::optionsBTN:
@@ -64,8 +68,32 @@ void MainMenu::handleEvents(SDL_Event& t_event, GameState& gamestate)
 			default:
 				break;
 			}
+		}
+
+		else if (t_event.key.keysym.sym == SDLK_RETURN && count > 60)
+		{
+			switch (currentState)
+			{
+			case ButtonState::play:
+				gamestate = GameState::gameplay;
+				break;
+			case ButtonState::optionsBTN:
+				gamestate = GameState::options;
+				break;
+			case ButtonState::helpBTN:
+				gamestate = GameState::help;
+				break;
+			case ButtonState::quit:
+				SDL_Quit();
+				break;
+			default:
+				break;
+			}
+			count = 0;
 		}
 		break;
+	case SDL_KEYUP:
+		keyHeld = false;
 	default:
 		break;
 	}
@@ -81,7 +109,7 @@ void MainMenu::update()
 	case ButtonState::optionsBTN:
 		m_selectorRect = m_optionsRect;
 		break;
-	case ButtonState::help:
+	case ButtonState::helpBTN:
 		m_selectorRect = m_helpRect;
 		break;
 	case ButtonState::quit:
@@ -119,7 +147,7 @@ void MainMenu::loadSprites(SDL_Renderer* renderer)
 		m_backgroundTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
 		loadedSurface = SDL_LoadBMP("ASSETS/IMAGES/play.bmp");
 		m_playTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
-		loadedSurface = SDL_LoadBMP("ASSETS/IMAGES/options.bmp");
+		loadedSurface = SDL_LoadBMP("ASSETS/IMAGES/optionsBTN.bmp");
 		m_optionsTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
 		loadedSurface = SDL_LoadBMP("ASSETS/IMAGES/help.bmp");
 		m_helpTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);

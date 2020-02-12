@@ -12,6 +12,7 @@
 
 #include "Splash.h"
 #include "Licence.h"
+#include "help.h"
 #include "MainMenu.h"
 #include "Gameplay.h"
 #include "Options.h"
@@ -45,7 +46,7 @@ private:
 	Gameplay m_gamePlayScr;
 	Options m_optionsScr;
 	Credits m_creditsScr;
-
+	Help m_helpScr;
 	Joystick stick;
 	bool keyTest = false;
 

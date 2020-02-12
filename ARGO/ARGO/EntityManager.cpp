@@ -26,9 +26,7 @@ void EntityManager::handleEvents( Joystick& stick)
 					handleMove(tempE, "up");
 				}
 			}
-		
-	}
-	
+	}	
 }
 
 void EntityManager::update()
@@ -72,9 +70,9 @@ void EntityManager::handleMove(Entity& t_ent, std::string t_str)
 	t_ent.getComponent<SpriteComponent>().setPosAndSize(t_ent.getComponent<PositionComponent>().getPosition().X(), t_ent.getComponent<PositionComponent>().getPosition().Y(), t_ent.getComponent<BodyComponent>().getSize().X(), t_ent.getComponent<BodyComponent>().getSize().Y());
 }
 
-void EntityManager::handleStop(Entity &  t_ent, std::string t_str)
+void EntityManager::handleStop( std::string t_str)
 {
-	/*Entity tempE = t_ent;
+	/*const Entity tempE = t_ent;
 	for (auto& e2 : entities)
 	{
 

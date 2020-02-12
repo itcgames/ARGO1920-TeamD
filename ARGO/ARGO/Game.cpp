@@ -48,11 +48,11 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 	stick.init();
 	//Entity t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim
-	initEnts(newPlayer, Vector2(100, 100), Vector2(50, 50), "ASSETS/IMAGES/dance.bmp", true);
-	initEnts(flag, Vector2(200, 200), Vector2(50, 50), "ASSETS/IMAGES/flag.bmp", false);
-	initEnts(rock, Vector2(300, 300), Vector2(50, 50), "ASSETS/IMAGES/yarn.bmp", false);
-	initEnts(platform, Vector2(400, 400), Vector2(50, 50), "ASSETS/IMAGES/platform.bmp", false);
-	initEnts(cactus, Vector2(500, 500), Vector2(50, 50), "ASSETS/IMAGES/cactus.bmp", false);
+	initEnts(newPlayer, Vector2(100, 100), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true);
+	initEnts(flag, Vector2(200, 200), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", false);
+	initEnts(rock, Vector2(300, 300), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", false);
+	initEnts(platform, Vector2(400, 400), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", false);
+	initEnts(cactus, Vector2(500, 500), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", false);
 
 }
 
@@ -201,11 +201,7 @@ void Game::update()
 	static int count = 0; count++;
 
 	answer = m_gamePlayScr.getChanges();
-	for (auto loop : answer)
-	{
-
-		std::cout << loop << " : ";
-	}
+	
 	//newPlayer.destroy();
 	//flag.destroy();
 
@@ -217,43 +213,35 @@ void Game::update()
 		{
 
 
-			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(50, 50), "ASSETS/IMAGES/dance.bmp", true);
+			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true);
 			entArr[i]->setComponentString(answer[k]);
 		}
 		if (answer[j] == "flag")
 		{
-			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(50, 50), "ASSETS/IMAGES/flag.bmp", false);
+			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", false);
 			entArr[i]->setComponentString(answer[k]);
 
 		}
 		if (answer[j] == "cactus")
 		{
-			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(50, 50), "ASSETS/IMAGES/cactus.bmp", false);
+			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", false);
 			entArr[i]->setComponentString(answer[k]);
 		}
 		if (answer[j] == "ball")
 		{
-			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(50, 50), "ASSETS/IMAGES/yarn.bmp", false);
+			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", false);
 			entArr[i]->setComponentString(answer[k]);
 
 		}
 		if (answer[j] == "platform")
 		{
-			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(50, 50), "ASSETS/IMAGES/platform.bmp", false);
+			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", false);
 			entArr[i]->setComponentString(answer[k]);
 
 		}
 	}
 
 	manager.update();
-	/*newPlayer.setComponentString(answer[1]);
-	rock.setComponentString(answer[3]);
-	platform.setComponentString(answer[5]);
-	flag.setComponentString(answer[7]);
-	cactus.setComponentString(answer[9]);
-	std::cout << std::endl;
-*/
-
 	switch (m_currentMode)//gamestate
 	{
 		case GameState::splash://no process events for this screen

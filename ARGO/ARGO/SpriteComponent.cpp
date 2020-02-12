@@ -2,10 +2,10 @@
 
 SpriteComponent::SpriteComponent()
 {
-	m_x = 50;
-	m_y = 50;
-	m_width = 50;
-	m_height = 50;
+	m_x = 120;
+	m_y = 120;
+	m_width = 120;
+	m_height = 120;
 	loadedSurface = NULL;
 	m_texture = NULL;
 	xOffset = 0;
@@ -15,10 +15,10 @@ SpriteComponent::SpriteComponent()
 
 void SpriteComponent::resetSprite()
 {
-	m_x = 50;
-	m_y = 50;
-	m_width = 50;
-	m_height = 50;
+	m_x = 120;
+	m_y = 120;
+	m_width = 120;
+	m_height = 120;
 	loadedSurface = NULL;
 	m_texture = NULL;
 	xOffset = 0;
@@ -56,13 +56,13 @@ void SpriteComponent::render()
 	if (m_animed && timer > 10)
 	{
 		timer = 0;
-		xOffset += 50;
+		xOffset += 120;
 		if (xOffset == 550)//to be changed for actually spritesheet
 		{
 			xOffset = 0;
 		}
 	}
-	SDL_Rect srcrect = { xOffset, 0, 50, 50 };
+	SDL_Rect srcrect = { xOffset, 0, 120, 120 };
 	if (m_texture == NULL)
 	{
 		m_texture = SDL_CreateTextureFromSurface(m_screen, loadedSurface);

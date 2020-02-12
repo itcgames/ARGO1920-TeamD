@@ -8,11 +8,11 @@ public:
 	~Map();
 	
 	MapHolder m_mapHolder;
-	mapTile tile[50][50];
+	mapTile tile[32][18];
 	void init(SDL_Renderer*& t_renderer);
 	void render(SDL_Renderer*& t_renderer, int i, int j);
 private:
-	Vector2 mapArr[50][50];
+	Vector2 mapArr[32][18];
 	std::string catStr, flagStr, platformStr, wallStr, yarnStr;
 
 	void drawTile(SDL_Renderer*& t_renderer,int i,int j);

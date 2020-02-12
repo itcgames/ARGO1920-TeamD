@@ -14,7 +14,7 @@ public:
 		//m_tile.setRect(0, 0, 50, 50);
 		
 	}
-	void setPos(Vector2 t_vec) { vec = t_vec; m_tile.setPosAndSize(vec.x, vec.y, 50, 50); };
+	void setPos(Vector2 t_vec) { vec = t_vec; m_tile.setPosAndSize(vec.x, vec.y, 120, 120); };
 	void render(SDL_Renderer*& t_renderer) { m_tile.render(); };
 	
 };

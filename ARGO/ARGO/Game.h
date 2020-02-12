@@ -7,15 +7,17 @@
 #include "LevelState.h"
 #include "SpriteComponent.h"
 #include "PositionComponent.h"
+#include "BodyComponent.h"
 #include "EntityManager.h"
 
-#include "Intro.h"
 #include "Splash.h"
+#include "Licence.h"
 #include "MainMenu.h"
 #include "Gameplay.h"
 #include "Options.h"
 #include "Credits.h"
 #include "Joystick.h"
+#include "MovementSystem.h"
 class Game
 {
 public:
@@ -37,8 +39,8 @@ public:
 private:
 	bool isRunning;
 	SDL_Window* m_window;
-	Intro m_introScr;
 	Splash m_splashScr;
+	Licence m_licence;
 	MainMenu m_mainMenuScr;
 	Gameplay m_gamePlayScr;
 	Options m_optionsScr;
@@ -48,4 +50,12 @@ private:
 	bool keyTest = false;
 
 	Entity* m_cat;
+
+
+	/// <summary>
+	/// Systems
+	/// </summary>
+	MovementSystem m_moveSys;
+	void handleMove(Entity &t_ent, std::string t_str);
+	void initEnts(Entity &t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim);
 };

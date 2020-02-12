@@ -29,7 +29,7 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 		handleBoundary(tempE, t_mapsize.at(0), t_mapsize.at(1));
 		
 	}
-	
+
 }
 
 void EntityManager::update()
@@ -73,9 +73,9 @@ void EntityManager::handleMove(Entity& t_ent, std::string t_str)
 	t_ent.getComponent<SpriteComponent>().setPosAndSize(t_ent.getComponent<PositionComponent>().getPosition().X(), t_ent.getComponent<PositionComponent>().getPosition().Y(), t_ent.getComponent<BodyComponent>().getSize().X(), t_ent.getComponent<BodyComponent>().getSize().Y());
 }
 
-void EntityManager::handleStop(Entity &  t_ent, std::string t_str)
+void EntityManager::handleStop( std::string t_str)
 {
-	/*Entity tempE = t_ent;
+	/*const Entity tempE = t_ent;
 	for (auto& e2 : entities)
 	{
 
@@ -83,8 +83,17 @@ void EntityManager::handleStop(Entity &  t_ent, std::string t_str)
 	}*/
 }
 
+
 void EntityManager::handleBoundary(Entity& t_ent, Vector2 t_mapTopLeft, Vector2 t_mapBottomRight)
 {
-	m_boundSys.hitBoundary(t_ent.getComponent<PositionComponent>().getPosition(), t_ent.getComponent<BodyComponent>().getSize(), t_mapTopLeft, t_mapBottomRight);
+	Vector2 tempPos = m_boundSys.hitBoundary(t_ent.getComponent<PositionComponent>().getPosition(), t_ent.getComponent<BodyComponent>().getSize(), t_mapTopLeft, t_mapBottomRight);
+	t_ent.getComponent<PositionComponent>().setPosition(tempPos);
+	t_ent.getComponent<SpriteComponent>().setPosAndSize(t_ent.getComponent<PositionComponent>().getPosition().X(), t_ent.getComponent<PositionComponent>().getPosition().Y(), t_ent.getComponent<BodyComponent>().getSize().X(), t_ent.getComponent<BodyComponent>().getSize().Y());
 }
+
+//Entity EntityManager::getEnt(int t_arrPos)
+//{
+//	return *entities[t_arrPos];
+//}
+
 

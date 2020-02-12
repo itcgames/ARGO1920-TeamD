@@ -3,6 +3,6 @@
 class MapHolder
 {
 public:
-	int m_arrSizeX = 50, m_arSizeY = 50;
-	int mapDoubleArray[50][50];
+	int m_arrSizeX = 32, m_arSizeY = 18;
+	int mapDoubleArray[32][18];
 };

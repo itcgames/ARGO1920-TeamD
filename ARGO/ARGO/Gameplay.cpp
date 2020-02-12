@@ -41,9 +41,9 @@ void Gameplay::update()
 
 void Gameplay::render(SDL_Renderer*& t_renderer)
 {
-	for (int j = 0; j < 50; j++)
+	for (int j = 0; j < 18; j++)
 	{
-		for (int i = 0; i < 50; i++)
+		for (int i = 0; i < 32; i++)
 		{
 			m_map.render(t_renderer, i, j);
 		}

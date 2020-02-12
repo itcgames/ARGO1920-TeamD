@@ -22,7 +22,10 @@ public:
 	void refresh();
 	Entity& addEntity(std::string t_identifier);
 	void handleMove(Entity& t_ent, std::string t_str);
-	void handleStop(Entity& t_ent, std::string t_str);
+
 	void handleBoundary(Entity& t_ent, Vector2 t_mapTopLeft, Vector2 t_mapBottomRight);
+	void handleStop( std::string t_str);
+	//Entity getEnt(int t_arrPos);
+
 };
 

@@ -52,6 +52,7 @@ private:
 
 	Entity* m_cat;
 
+	Entity*  entArr[5];
 
 	/// <summary>
 	/// Systems
@@ -59,4 +60,5 @@ private:
 	MovementSystem m_moveSys;
 	std::vector<std::string> answer;
 	void initEnts(Entity &t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim);
+	void updateEnts(Entity& t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim);
 };

@@ -19,7 +19,7 @@ void SpriteComponent::resetSprite()
 	m_y = 120;
 	m_width = 120;
 	m_height = 120;
-	loadedSurface = NULL;
+	//loadedSurface = NULL;
 	m_texture = NULL;
 	xOffset = 0;
 	timer = 0;
@@ -63,7 +63,7 @@ void SpriteComponent::render()
 		}
 	}
 	SDL_Rect srcrect = { xOffset, 0, 120, 120 };
-	if (m_texture == NULL)
+	if (m_texture == NULL )
 	{
 		m_texture = SDL_CreateTextureFromSurface(m_screen, loadedSurface);
 	}

@@ -54,6 +54,8 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	initEnts(platform, Vector2(400, 400), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", false);
 	initEnts(cactus, Vector2(500, 500), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", false);
 
+	answer = m_gamePlayScr.getChanges();
+	answer2 = answer;
 }
 
 void Game::handleEvents()
@@ -201,46 +203,51 @@ void Game::update()
 {
 	static int count = 0; count++;
 
-	answer = m_gamePlayScr.getChanges();
 	
 	//newPlayer.destroy();
 	//flag.destroy();
 
 	//manager.refresh();
-
-	for (int i = 0, j = 0, k = 1; i < 5; i++, j += 2, k += 2)
-	{
-		if (answer[j] == "cat")
+	answer = m_gamePlayScr.getChanges();
+	
+	
+		for (int i = 0, j = 0, k = 1; i < 5; i++, j += 2, k += 2)
 		{
+			if (answer[j] == "cat")
+			{
 
 
-			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true);
-			entArr[i]->setComponentString(answer[k]);
-		}
-		if (answer[j] == "flag")
-		{
-			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", false);
-			entArr[i]->setComponentString(answer[k]);
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true);
+				entArr[i]->setComponentString(answer[k]);
+			}
+			if (answer[j] == "flag")
+			{
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", false);
+				entArr[i]->setComponentString(answer[k]);
 
-		}
-		if (answer[j] == "cactus")
-		{
-			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", false);
-			entArr[i]->setComponentString(answer[k]);
-		}
-		if (answer[j] == "ball")
-		{
-			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", false);
-			entArr[i]->setComponentString(answer[k]);
+			}
+			if (answer[j] == "cactus")
+			{
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", false);
+				entArr[i]->setComponentString(answer[k]);
+			}
+			if (answer[j] == "ball")
+			{
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", false);
+				entArr[i]->setComponentString(answer[k]);
 
-		}
-		if (answer[j] == "platform")
-		{
-			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", false);
-			entArr[i]->setComponentString(answer[k]);
+			}
+			if (answer[j] == "platform")
+			{
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", false);
+				entArr[i]->setComponentString(answer[k]);
 
+			}
 		}
-	}
+	
+		
+	
+	
 
 	manager.update();
 	switch (m_currentMode)//gamestate

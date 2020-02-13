@@ -70,7 +70,6 @@ void MainMenu::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t
 		if (SDL_JoystickGetButton(t_stick.getStick(), 0) != 0 && count > 30)
 		{
 			count = 0;
-			std::cout << "sup" << std::endl;
 			switch (currentState)
 			{
 			case ButtonState::play:

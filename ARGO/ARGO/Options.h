@@ -3,6 +3,7 @@
 #include <SDL_image.h>
 #include <iostream>
 #include "Gamestate.h"
+#include "Joystick.h"
 
 enum OptionsButtonState
 {
@@ -13,7 +14,7 @@ class Options
 {
 public:
 	Options();
-	void handleEvents(SDL_Event& t_event, GameState& gamestate);
+	void handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t_stick);
 	void update();
 	void render(SDL_Renderer* t_renderer);
 	void clean(SDL_Renderer& t_renderer, SDL_Window& t_window);

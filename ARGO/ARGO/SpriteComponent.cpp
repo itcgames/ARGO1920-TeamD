@@ -6,8 +6,6 @@ SpriteComponent::SpriteComponent()
 	m_y = 120;
 	m_width = 120;
 	m_height = 120;
-	//loadedSurface = NULL;
-	//m_texture = NULL;
 	xOffset = 0;
 	timer = 0;
 	m_animed = false;
@@ -20,8 +18,6 @@ void SpriteComponent::resetSprite()
 	m_y = 120;
 	m_width = 120;
 	m_height = 120;
-	//loadedSurface = NULL;
-	//m_texture = NULL;
 	m_animed = false;
 }
 
@@ -76,6 +72,7 @@ void SpriteComponent::render()
 		}
 	}
 	SDL_Rect srcrect = { xOffset, 0, 120, 120 };
+
 	while (loadedSurface.size() < m_paths.size())
 	{
 		SDL_Surface* newSurface = SDL_LoadBMP(m_paths.at(m_currentTex).c_str());

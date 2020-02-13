@@ -59,6 +59,7 @@ private:
 	/// </summary>
 	MovementSystem m_moveSys;
 	std::vector<std::string> answer;
+	std::vector<std::string> answer2;
 	void initEnts(Entity &t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim);
 	void updateEnts(Entity& t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim);
 };

@@ -39,13 +39,15 @@ void Gameplay::update()
 	m_pauseMenu.update();
 }
 
-void Gameplay::render(SDL_Renderer*& t_renderer)
+void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 {
 	for (int j = 0; j < 18; j++)
 	{
 		for (int i = 0; i < 32; i++)
 		{
 			m_map.render(t_renderer, i, j);
+			Vector2 temp(120, 120);
+			t_entMan.mapCol(m_map.tile[i][j].vec,temp );
 		}
 	}
 	if (paused)

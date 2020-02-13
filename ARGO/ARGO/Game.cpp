@@ -22,6 +22,11 @@ Game::~Game()
 
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
+	initEnts(newPlayer, Vector2(121, 121), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true);
+	initEnts(flag, Vector2(200, 200), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true);
+	initEnts(rock, Vector2(300, 300), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true);
+	initEnts(platform, Vector2(400, 400), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true);
+	initEnts(cactus, Vector2(500, 500), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true);
 	Entity *arr[]{ &newPlayer,&flag,&platform,&cactus,&rock };
 
 	std::copy(std::begin(arr), std::end(arr), std::begin(entArr));
@@ -46,12 +51,6 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	m_gamePlayScr.init(m_renderer);
 
 	stick.init();
-	//Entity t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim
-	initEnts(newPlayer, Vector2(250, 250), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true);
-	initEnts(flag, Vector2(200, 200), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true);
-	initEnts(rock, Vector2(300, 300), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true);
-	initEnts(platform, Vector2(400, 400), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true);
-	initEnts(cactus, Vector2(500, 500), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true);
 	answer = m_gamePlayScr.getChanges();
 	answer2 = answer;
 
@@ -233,7 +232,7 @@ void Game::render()
 		break;
 	case GameState::gameplay://no process events for this screen
 		manager.draw(m_renderer);
-		m_gamePlayScr.render(m_renderer);
+		m_gamePlayScr.render(m_renderer,manager);
 		break;
 	case GameState::options://no process events for this screen
 		m_optionsScr.render(m_renderer);

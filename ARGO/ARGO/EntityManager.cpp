@@ -66,7 +66,23 @@ void EntityManager::draw(SDL_Renderer* t_screen)
 		e->render(t_screen);
 	}
 }
-
+void EntityManager::mapCol(Vector2& t_pos, Vector2& t_size)
+{
+	for (auto& f : entities)
+	{
+		Entity& tempF = *f.get();
+		if (tempF.getComponentString() == "player")
+		{
+			if (m_colSys.collides(t_pos,
+				t_size,
+				tempF.getComponent<PositionComponent>().getPosition(),
+				tempF.getComponent<BodyComponent>().getSize()))
+			{
+				tempF.getComponent<PositionComponent>().setToPreviousPos();
+			}
+		}
+	}
+}
 void EntityManager::refresh()
 {
 	entities.erase(std::remove_if(std::begin(entities), std::end(entities),

@@ -2,7 +2,6 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <iostream>
-#include<SDL_ttf.h>
 class Credits
 {
 public:

@@ -2,7 +2,6 @@
 
 GameState Game::m_currentMode{ GameState::gameplay };
 LevelState Game::m_currentLevel{ LevelState::Level1 };
-
 EntityManager manager;
 auto& newPlayer(manager.addEntity("player"));
 auto& flag(manager.addEntity("goal"));
@@ -233,8 +232,8 @@ void Game::render()
 		m_mainMenuScr.render(m_renderer);
 		break;
 	case GameState::gameplay://no process events for this screen
-		m_gamePlayScr.render(m_renderer);
 		manager.draw(m_renderer);
+		m_gamePlayScr.render(m_renderer);
 		break;
 	case GameState::options://no process events for this screen
 		m_optionsScr.render(m_renderer);

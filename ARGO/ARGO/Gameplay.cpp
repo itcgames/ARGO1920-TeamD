@@ -68,3 +68,8 @@ std::vector<std::string> Gameplay::getChanges()
 {
 	return m_pauseMenu.getChanges();
 }
+
+std::vector<Vector2> Gameplay::getMapCorners()
+{
+	return m_map.getMapCorners();
+}

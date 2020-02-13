@@ -1,36 +1,35 @@
 #include "EntityManager.h"
 
-void EntityManager::handleEvents( Joystick& stick)
+void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsize)
 {
-	
+
 	for (auto& e : entities)
 	{
 		Entity &tempE = *e.get();
-		
-			if (tempE.getComponentString() == "player")
+
+		if (tempE.getComponentString() == "player")
+		{
+			if (SDL_JoystickGetButton(stick.getStick(), 0) != 0)
 			{
-				if (SDL_JoystickGetButton(stick.getStick(), 0) != 0)
-				{
-					handleMove(tempE, "down");
-				}
-				else if (SDL_JoystickGetButton(stick.getStick(), 1) != 0)
-				{
-					handleMove(tempE, "right");
-				}
-				else if (SDL_JoystickGetButton(stick.getStick(), 2) != 0)
-				{
-					handleMove(tempE, "left");
-				}
-				else if (SDL_JoystickGetButton(stick.getStick(), 3) != 0)
-				{
-					handleMove(tempE, "up");
-				}
-				else if (SDL_JoystickGetButton(stick.getStick(), 4) != 0)
-				{
-					tempE.getComponent<PositionComponent>().setToPreviousPos();
-				}
-				handleBoundary(tempE, t_mapsize.at(0), t_mapsize.at(1));
-			}	
+				handleMove(tempE, "down");
+			}
+			else if (SDL_JoystickGetButton(stick.getStick(), 1) != 0)
+			{
+				handleMove(tempE, "right");
+			}
+			else if (SDL_JoystickGetButton(stick.getStick(), 2) != 0)
+			{
+				handleMove(tempE, "left");
+			}
+			else if (SDL_JoystickGetButton(stick.getStick(), 3) != 0)
+			{
+				handleMove(tempE, "up");
+			}
+			else if (SDL_JoystickGetButton(stick.getStick(), 4) != 0)
+			{
+				tempE.getComponent<PositionComponent>().setToPreviousPos();
+			}
+			handleBoundary(tempE, t_mapsize.at(0), t_mapsize.at(1));
 		}
 	}
 }
@@ -88,8 +87,15 @@ void EntityManager::handleStop( std::string t_str)
 	}*/
 }
 
+
+void EntityManager::handleBoundary(Entity& t_ent, Vector2 t_mapTopLeft, Vector2 t_mapBottomRight)
+{
+	Vector2 tempPos = m_boundSys.hitBoundary(t_ent.getComponent<PositionComponent>().getPosition(), t_ent.getComponent<BodyComponent>().getSize(), t_mapTopLeft, t_mapBottomRight);
+	t_ent.getComponent<PositionComponent>().setPosition(tempPos);
+	t_ent.getComponent<SpriteComponent>().setPosAndSize(t_ent.getComponent<PositionComponent>().getPosition().X(), t_ent.getComponent<PositionComponent>().getPosition().Y(), t_ent.getComponent<BodyComponent>().getSize().X(), t_ent.getComponent<BodyComponent>().getSize().Y());
+}
+
 //Entity EntityManager::getEnt(int t_arrPos)
 //{
 //	return *entities[t_arrPos];
 //}
-

@@ -16,16 +16,6 @@ void Licence::handleEvents(SDL_Event& t_event, GameState& gamestate)
 {
 	switch (t_event.type)
 	{
-	case SDL_KEYDOWN:
-		if (t_event.key.keysym.sym == SDLK_ESCAPE)
-		{
-
-
-		}
-
-		gamestate = GameState::mainMenu;
-		
-		break;
 	case SDL_JOYBUTTONDOWN:
 		gamestate = GameState::mainMenu;
 		break;

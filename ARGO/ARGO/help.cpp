@@ -14,29 +14,22 @@ Help::Help()
 	count = 0;
 }
 
-void Help::handleEvents(SDL_Event& t_event, GameState& gamestate)
+void Help::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t_stick)
 {
 	count++;
 	switch (t_event.type)
 	{
-	case SDL_KEYDOWN:
-		if (t_event.key.keysym.sym == SDLK_ESCAPE)
+	case SDL_JOYBUTTONDOWN:
+		if (SDL_JoystickGetButton(t_stick.getStick(), 0) != 0 && count > 30)
 		{
-			SDL_Quit();
-		}
-
-		if (t_event.key.keysym.sym == SDLK_RETURN && count > 60)
-		{
+			count = 0;
 			switch (currentState)
 			{
 			case HelpButtonState::helpBackBtn:
 				gamestate = GameState::mainMenu;
-				break;
 			default:
 				break;
 			}
-
-			count = 0;
 		}
 		break;
 	default:

@@ -45,11 +45,11 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 	stick.init();
 	//Entity t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim
-	initEnts(newPlayer, Vector2(100, 100), Vector2(50, 50), "ASSETS/IMAGES/dance.bmp", true);
-	initEnts(flag, Vector2(200, 200), Vector2(50, 50), "ASSETS/IMAGES/flag.bmp", false);
-	initEnts(rock, Vector2(300, 300), Vector2(50, 50), "ASSETS/IMAGES/yarn.bmp", false);
-	initEnts(platform, Vector2(400, 400), Vector2(50, 50), "ASSETS/IMAGES/platform.bmp", false);
-	initEnts(cactus, Vector2(500, 500), Vector2(50, 50), "ASSETS/IMAGES/cactus.bmp", false);
+	initEnts(newPlayer, Vector2(100, 100), Vector2(50, 50), "ASSETS/IMAGES/dance.bmp", true, "temp.wav");
+	initEnts(flag, Vector2(200, 200), Vector2(50, 50), "ASSETS/IMAGES/flag.bmp", false, "temp.wav");
+	initEnts(rock, Vector2(300, 300), Vector2(50, 50), "ASSETS/IMAGES/yarn.bmp", false, "temp.wav");
+	initEnts(platform, Vector2(400, 400), Vector2(50, 50), "ASSETS/IMAGES/platform.bmp", false, "temp.wav");
+	initEnts(cactus, Vector2(500, 500), Vector2(50, 50), "ASSETS/IMAGES/cactus.bmp", false, "temp.wav");
 
 }
 
@@ -205,6 +205,8 @@ void Game::update()
 	platform.setComponentString(answer[5]);
 	flag.setComponentString(answer[7]);
 	cactus.setComponentString(answer[9]);
+	flag.addComponent<AudioComponent>().playAudio();
+	
 	std::cout << std::endl;
 
 
@@ -281,14 +283,17 @@ void Game::clean()
 
 
 
-void Game::initEnts(Entity &t_ent,Vector2 t_pos,Vector2 t_size, std::string t_str, bool t_isAnim)
+void Game::initEnts(Entity &t_ent,Vector2 t_pos,Vector2 t_size, std::string t_str, bool t_isAnim, const char* t_audioStr)
 {
 	t_ent.addComponent<PositionComponent>();
 	t_ent.addComponent<BodyComponent>();
 	t_ent.addComponent<SpriteComponent>();
+	t_ent.addComponent<AudioComponent>();
 	t_ent.getComponent<PositionComponent>().setPosition(t_pos);
 	t_ent.getComponent<BodyComponent>().setSize(t_size);
 	t_ent.getComponent< SpriteComponent>().setPathAndScreen(t_str, m_renderer, t_isAnim);
 	t_ent.getComponent< SpriteComponent>().setPosAndSize(t_ent.getComponent<PositionComponent>().getPosition().X(), t_ent.getComponent<PositionComponent>().getPosition().Y(),
-		t_ent.getComponent<BodyComponent>().getSize().X(), t_ent.getComponent<BodyComponent>().getSize().Y());
+	t_ent.getComponent<BodyComponent>().getSize().X(), t_ent.getComponent<BodyComponent>().getSize().Y());
+	t_ent.getComponent<AudioComponent>().LoadMusicFile(t_audioStr);
+
 }

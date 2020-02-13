@@ -8,7 +8,7 @@ class CollisionSystem
 public:
 	CollisionSystem();
 	~CollisionSystem();
-	bool const collides(PositionComponent & t_pos1, BodyComponent& t_body1, PositionComponent & t_pos2, BodyComponent & t_body2);
+	bool const collides(PositionComponent t_pos1, BodyComponent t_body1, PositionComponent t_pos2, BodyComponent t_body2);
 private:
 	bool m_isColliding;
 };

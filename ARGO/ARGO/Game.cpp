@@ -47,7 +47,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 	stick.init();
 	//Entity t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim
-	initEnts(newPlayer, Vector2(250, 250), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true);
+	initEnts(newPlayer, Vector2(350, 250), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true);
 	initEnts(flag, Vector2(200, 200), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", false);
 	initEnts(rock, Vector2(300, 300), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", false);
 	initEnts(platform, Vector2(400, 400), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", false);
@@ -233,7 +233,7 @@ void Game::render()
 		break;
 	case GameState::gameplay://no process events for this screen
 		manager.draw(m_renderer);
-		m_gamePlayScr.render(m_renderer);
+		m_gamePlayScr.render(m_renderer,manager);
 		break;
 	case GameState::options://no process events for this screen
 		m_optionsScr.render(m_renderer);

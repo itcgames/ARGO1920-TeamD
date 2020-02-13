@@ -25,6 +25,8 @@ public:
 
 	void handleBoundary(Entity& t_ent, Vector2 t_mapTopLeft, Vector2 t_mapBottomRight);
 	void handleStop( std::string t_str);
+	int handleWin(int t_levelNum);
+	bool handleWinCollsion(Entity& t_player, Entity& t_goal);
 	//Entity getEnt(int t_arrPos);
 
 };

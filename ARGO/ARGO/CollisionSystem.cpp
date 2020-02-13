@@ -9,7 +9,7 @@ CollisionSystem::~CollisionSystem()
 {
 }
 
-bool const CollisionSystem::collides(PositionComponent& t_pos1, BodyComponent& t_body1, PositionComponent& t_pos2, BodyComponent& t_body2)
+bool const CollisionSystem::collides(PositionComponent t_pos1, BodyComponent t_body1, PositionComponent t_pos2, BodyComponent t_body2)
 {
 	if (t_pos1.getPosition().x + t_body1.getSize().x >= t_pos2.getPosition().x && t_pos1.getPosition().x <= t_pos2.getPosition().x + t_body2.getSize().x &&
 		t_pos1.getPosition().y + t_body1.getSize().y >= t_pos2.getPosition().y && t_pos1.getPosition().y <= t_pos2.getPosition().y + t_body2.getSize().y)

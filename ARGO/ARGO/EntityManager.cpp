@@ -25,8 +25,14 @@ void EntityManager::handleEvents( Joystick& stick)
 				{
 					handleMove(tempE, "up");
 				}
-			}
-	}	
+				else if (SDL_JoystickGetButton(stick.getStick(), 4) != 0)
+				{
+					tempE.getComponent<PositionComponent>().setToPreviousPos();
+				}
+				handleBoundary(tempE, t_mapsize.at(0), t_mapsize.at(1));
+			}	
+		}
+	}
 }
 
 void EntityManager::update()
@@ -65,7 +71,9 @@ Entity& EntityManager::addEntity(std::string t_identifier)
 
 void EntityManager::handleMove(Entity& t_ent, std::string t_str)
 {
+
 	Vector2 tempVec = m_moveSys.move(t_ent.getComponent<PositionComponent>().getPosition(), t_str);
+	t_ent.getComponent<PositionComponent>().setPreviousPosition(t_ent.getComponent<PositionComponent>().getPosition());
 	t_ent.getComponent<PositionComponent>().setPosition(tempVec);
 	t_ent.getComponent<SpriteComponent>().setPosAndSize(t_ent.getComponent<PositionComponent>().getPosition().X(), t_ent.getComponent<PositionComponent>().getPosition().Y(), t_ent.getComponent<BodyComponent>().getSize().X(), t_ent.getComponent<BodyComponent>().getSize().Y());
 }

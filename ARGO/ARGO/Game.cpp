@@ -1,5 +1,6 @@
 #include "Game.h"
-GameState Game::m_currentMode{ GameState::mainMenu };
+
+GameState Game::m_currentMode{ GameState::gameplay };
 LevelState Game::m_currentLevel{ LevelState::Level1 };
 
 EntityManager manager;
@@ -187,10 +188,10 @@ void Game::handleEvents()
 		m_gamePlayScr.handleEvents(m_event, stick);
 		break;
 	case GameState::options:
-		m_optionsScr.handleEvents(m_event, m_currentMode);
+		//m_optionsScr.handleEvents(m_event, m_currentMode);
 		break;
 	case GameState::help:
-		m_helpScr.handleEvents(m_event, m_currentMode);
+		//m_helpScr.handleEvents(m_event, m_currentMode);
 	case GameState::credits:
 		break;
 	default:

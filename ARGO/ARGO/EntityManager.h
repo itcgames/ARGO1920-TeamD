@@ -15,6 +15,7 @@ private:
 	MovementSystem m_moveSys;
 	CollisionSystem m_colSys;
 	BoundarySystem m_boundSys;
+	
 public:
 	void handleEvents(Joystick &stick,std::vector<Vector2> t_mapsize);
 	void update();
@@ -22,12 +23,13 @@ public:
 	void refresh();
 	Entity& addEntity(std::string t_identifier);
 	void handleMove(Entity& t_ent, std::string t_str);
+	void mapCol(Vector2& t_pos,Vector2& t_size);
 
 	void handleBoundary(Entity& t_ent, Vector2 t_mapTopLeft, Vector2 t_mapBottomRight);
 	void handleStop( std::string t_str);
 	int handleWin(int t_levelNum);
-	bool handleWinCollsion(Entity& t_player, Entity& t_goal);
 	//Entity getEnt(int t_arrPos);
+	
 
 };
 

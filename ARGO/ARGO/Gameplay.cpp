@@ -39,9 +39,9 @@ void Gameplay::update()
 	m_pauseMenu.update();
 }
 
-void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entman)
+void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 {
-	int newLevel = t_entman.handleWin(m_map.getLevelNum());
+	int newLevel = t_entMan.handleWin(m_map.getLevelNum());
 	if (m_map.getLevelNum() != newLevel)
 	{
 		m_map.init(t_renderer,newLevel);
@@ -51,6 +51,8 @@ void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entman)
 		for (int i = 0; i < 32; i++)
 		{
 			m_map.render(t_renderer, i, j);
+			Vector2 temp(120, 120);
+			t_entMan.mapCol(m_map.tile[i][j].vec,temp );
 		}
 	}
 	if (paused)

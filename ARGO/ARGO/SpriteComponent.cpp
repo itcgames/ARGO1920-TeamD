@@ -66,7 +66,7 @@ void SpriteComponent::render()
 	{
 		timer = 0;
 		xOffset += 120;
-		if (xOffset == 1320)//to be changed for actually spritesheet
+		if (xOffset == 600)//to be changed for actually spritesheet
 		{
 			xOffset = 0;
 		}

@@ -12,7 +12,8 @@ public:
 	void init(SDL_Renderer*& t_renderer);
 	void handleEvents(SDL_Event& t_event, Joystick t_stick);
 	void update();
-	void render(SDL_Renderer *&t_renderer, EntityManager& t_entman);
+	void render(SDL_Renderer *&t_renderer,EntityManager& t_entMan);
+
 	void clean(SDL_Renderer*& t_renderer, SDL_Window* t_window);
 	bool isPaused();
 	std::vector<std::string> getChanges();

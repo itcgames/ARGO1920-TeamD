@@ -10,26 +10,43 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 		if (tempE.getComponentString() == "player")
 		{
 			if (SDL_JoystickGetButton(stick.getStick(), 0) != 0)
+				{
+					handleMove(tempE, "down");
+				}
+				else if (SDL_JoystickGetButton(stick.getStick(), 1) != 0)
+				{
+					handleMove(tempE, "right");
+				}
+				else if (SDL_JoystickGetButton(stick.getStick(), 2) != 0)
+				{
+					handleMove(tempE, "left");
+				}
+				else if (SDL_JoystickGetButton(stick.getStick(), 3) != 0)
+				{
+					handleMove(tempE, "up");
+				}
+				else if (SDL_JoystickGetButton(stick.getStick(), 4) != 0)
+				{
+					tempE.getComponent<PositionComponent>().setToPreviousPos();
+				}
+				handleBoundary(tempE, t_mapsize.at(0), t_mapsize.at(1));
+		}
+		if (tempE.getComponentString() == "stop")
+		{
+			for (auto& f : entities)
 			{
-				handleMove(tempE, "down");
+				Entity& tempF = *f.get();
+				if (tempF.getComponentString() == "player")
+				{
+					if (m_colSys.collides(tempE.getComponent<PositionComponent>().getPosition(),
+						tempE.getComponent<BodyComponent>().getSize(),
+						tempF.getComponent<PositionComponent>().getPosition(),
+						tempF.getComponent<BodyComponent>().getSize()))
+					{
+						tempF.getComponent<PositionComponent>().setToPreviousPos();
+					}
+				}
 			}
-			else if (SDL_JoystickGetButton(stick.getStick(), 1) != 0)
-			{
-				handleMove(tempE, "right");
-			}
-			else if (SDL_JoystickGetButton(stick.getStick(), 2) != 0)
-			{
-				handleMove(tempE, "left");
-			}
-			else if (SDL_JoystickGetButton(stick.getStick(), 3) != 0)
-			{
-				handleMove(tempE, "up");
-			}
-			else if (SDL_JoystickGetButton(stick.getStick(), 4) != 0)
-			{
-				tempE.getComponent<PositionComponent>().setToPreviousPos();
-			}
-			handleBoundary(tempE, t_mapsize.at(0), t_mapsize.at(1));
 		}
 	}
 }
@@ -49,7 +66,23 @@ void EntityManager::draw(SDL_Renderer* t_screen)
 		e->render(t_screen);
 	}
 }
-
+void EntityManager::mapCol(Vector2& t_pos, Vector2& t_size)
+{
+	for (auto& f : entities)
+	{
+		Entity& tempF = *f.get();
+		if (tempF.getComponentString() == "player")
+		{
+			if (m_colSys.collides(t_pos,
+				t_size,
+				tempF.getComponent<PositionComponent>().getPosition(),
+				tempF.getComponent<BodyComponent>().getSize()))
+			{
+				tempF.getComponent<PositionComponent>().setToPreviousPos();
+			}
+		}
+	}
+}
 void EntityManager::refresh()
 {
 	entities.erase(std::remove_if(std::begin(entities), std::end(entities),

@@ -1,5 +1,5 @@
 #include "Game.h"
-GameState Game::m_currentMode{ GameState::mainMenu };
+GameState Game::m_currentMode{ GameState::splash };
 LevelState Game::m_currentLevel{ LevelState::Level1 };
 
 EntityManager manager;

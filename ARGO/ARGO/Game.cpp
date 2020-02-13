@@ -1,5 +1,5 @@
 #include "Game.h"
-GameState Game::m_currentMode{ GameState::mainMenu };
+GameState Game::m_currentMode{ GameState::splash };
 LevelState Game::m_currentLevel{ LevelState::Level1 };
 
 EntityManager manager;
@@ -45,7 +45,6 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 	m_gamePlayScr.init(m_renderer);
 
-
 	stick.init();
 	//Entity t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim
 	initEnts(newPlayer, Vector2(250, 250), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true);
@@ -53,9 +52,9 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	initEnts(rock, Vector2(300, 300), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", false);
 	initEnts(platform, Vector2(400, 400), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", false);
 	initEnts(cactus, Vector2(500, 500), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", false);
-
 	answer = m_gamePlayScr.getChanges();
 	answer2 = answer;
+
 }
 
 void Game::handleEvents()
@@ -109,70 +108,10 @@ void Game::handleEvents()
 		{
 			isRunning = false;
 		}
-		
+
 		manager.handleEvents(stick, m_gamePlayScr.getMapCorners());
 		break;
 	}
-
-	//if (SDL_JoystickGetHat(stick.getStick(), 0) == SDL_HAT_LEFT && keyTest && !m_gamePlayScr.isPaused())
-	//{
-	//	std::cout << "left" << std::endl;
-	//	switch (m_currentMode)
-	//	{
-	//	case GameState::splash://no process events for this screen
-	//		m_currentMode = GameState::credits;
-	//		break;
-	//	case GameState::licence:
-	//		m_currentMode = GameState::splash;
-	//		break;
-	//	case GameState::mainMenu://no process events for this screen
-	//		m_currentMode = GameState::licence;
-	//		break;
-	//	case GameState::gameplay://no process events for this screen
-	//		m_currentMode = GameState::mainMenu;
-	//		break;
-	//	case GameState::options://no process events for this screen
-	//		m_currentMode = GameState::gameplay;
-	//		break;
-	//	case GameState::credits://no process events for this screen
-	//		m_currentMode = GameState::options;
-	//		break;
-	//	default:
-	//		break;
-	//	}
-	//	keyTest = false;
-	//}
-	//else if (SDL_JoystickGetHat(stick.getStick(), 0) == SDL_HAT_RIGHT && keyTest && !m_gamePlayScr.isPaused())
-	//{
-	//	switch (m_currentMode)
-	//	{
-	//		case GameState::splash://no process events for this screen
-	//			m_currentMode = GameState::licence;
-	//			break;
-	//		case GameState::licence:
-	//			m_currentMode = GameState::mainMenu;
-	//			break;
-	//		case GameState::mainMenu://no process events for this screen
-	//			m_currentMode = GameState::gameplay;
-	//			break;
-	//		case GameState::gameplay://no process events for this screen
-	//			m_currentMode = GameState::options;
-	//			break;
-	//		case GameState::options://no process events for this screen
-	//			m_currentMode = GameState::credits;
-	//			break;
-	//		case GameState::credits://no process events for this screen
-	//			m_currentMode = GameState::splash;
-	//			break;
-	//		default:
-	//			break;
-	//	}
-	//	keyTest = false;
-	//}
-	//else if (SDL_JoystickGetHat(stick.getStick(), 0) == SDL_HAT_CENTERED)
-	//{
-	//	keyTest = true;
-	//}
 
 	switch (m_currentMode)//gamestate
 	{
@@ -188,10 +127,10 @@ void Game::handleEvents()
 		m_gamePlayScr.handleEvents(m_event, stick);
 		break;
 	case GameState::options:
-		m_optionsScr.handleEvents(m_event, m_currentMode);
+		m_optionsScr.handleEvents(m_event, m_currentMode, stick);
 		break;
 	case GameState::help:
-		m_helpScr.handleEvents(m_event, m_currentMode);
+		m_helpScr.handleEvents(m_event, m_currentMode, stick);
 	case GameState::credits:
 		break;
 	default:
@@ -203,14 +142,14 @@ void Game::update()
 {
 	static int count = 0; count++;
 
-	
+
 	//newPlayer.destroy();
 	//flag.destroy();
 
 	//manager.refresh();
 	answer = m_gamePlayScr.getChanges();
-	
-	
+
+
 		for (int i = 0, j = 0, k = 1; i < 5; i++, j += 2, k += 2)
 		{
 			if (answer[j] == "cat")
@@ -244,10 +183,10 @@ void Game::update()
 
 			}
 		}
-	
-		
-	
-	
+
+
+
+
 
 	manager.update();
 	switch (m_currentMode)//gamestate
@@ -321,8 +260,6 @@ void Game::clean()
 	std::cout << "Game Cleaned" << std::endl;
 }
 
-
-
 void Game::initEnts(Entity &t_ent,Vector2 t_pos,Vector2 t_size, std::string t_str, bool t_isAnim)
 {
 	t_ent.addComponent<PositionComponent>();
@@ -343,5 +280,5 @@ void Game::updateEnts(Entity& t_ent, Vector2 t_pos, Vector2 t_size, std::string 
 	t_ent.getComponent<BodyComponent>().setSize(t_size);
 	t_ent.getComponent< SpriteComponent>().setPathAndScreen(t_str, m_renderer, t_isAnim);
 	t_ent.getComponent< SpriteComponent>().setPosAndSize(t_ent.getComponent<PositionComponent>().getPosition().X(), t_ent.getComponent<PositionComponent>().getPosition().Y(),
-		t_ent.getComponent<BodyComponent>().getSize().X(), t_ent.getComponent<BodyComponent>().getSize().Y());
+	t_ent.getComponent<BodyComponent>().getSize().X(), t_ent.getComponent<BodyComponent>().getSize().Y());
 }

@@ -15,7 +15,9 @@ private:
 	MovementSystem m_moveSys;
 	CollisionSystem m_colSys;
 	BoundarySystem m_boundSys;
-	
+
+	int timer = 0;
+	bool m_moveThisFrame = false;
 public:
 	void handleEvents(Joystick &stick,std::vector<Vector2> t_mapsize);
 	void update();
@@ -30,6 +32,6 @@ public:
 	int handleWin(int t_levelNum);
 	//Entity getEnt(int t_arrPos);
 	
-
+	static const int MAX_TIME = 10;
 };
 

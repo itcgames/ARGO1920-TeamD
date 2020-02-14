@@ -86,23 +86,22 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 							tempF.getComponent<BodyComponent>().getSize()))
 						{
 
-							if (SDL_JoystickGetButton(stick.getStick(), 0) != 0)
+							if (stick.Y() == 1)
 							{
 								handleMove(tempE, "down");
 							}
-							else if (SDL_JoystickGetButton(stick.getStick(), 1) != 0)
+							else if (stick.X() == 1)
 							{
 								handleMove(tempE, "right");
 							}
-							else if (SDL_JoystickGetButton(stick.getStick(), 2) != 0)
+							else if (stick.X() == -1)
 							{
 								handleMove(tempE, "left");
 							}
-							else if (SDL_JoystickGetButton(stick.getStick(), 3) != 0)
+							else if (stick.Y() == -1)
 							{
 								handleMove(tempE, "up");
 							}
-							
 
 						}
 					}

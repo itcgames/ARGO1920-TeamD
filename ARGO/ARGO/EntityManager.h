@@ -32,6 +32,6 @@ public:
 	int handleWin(int t_levelNum);
 	//Entity getEnt(int t_arrPos);
 	
-	static const int MAX_TIME = 10;
+	static const int MAX_TIME = 7;
 };
 

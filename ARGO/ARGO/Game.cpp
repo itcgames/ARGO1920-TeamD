@@ -1,6 +1,6 @@
 #include "Game.h"
 
-GameState Game::m_currentMode{ GameState::gameplay };
+GameState Game::m_currentMode{ GameState::mainMenu };
 LevelState Game::m_currentLevel{ LevelState::Level1 };
 EntityManager manager;
 auto& newPlayer(manager.addEntity("player"));
@@ -110,10 +110,7 @@ void Game::handleEvents()
 		}
 		break;
 	}
-	if ((m_event.type == SDL_JOYBUTTONDOWN || m_event.type == SDL_JOYAXISMOTION) && !m_gamePlayScr.isPaused())
-	{
-		manager.handleEvents(stick, m_gamePlayScr.getMapCorners());
-	}
+	
 	switch (m_currentMode)//gamestate
 	{
 	case GameState::splash:
@@ -125,7 +122,11 @@ void Game::handleEvents()
 		m_mainMenuScr.handleEvents(m_event, m_currentMode, stick);
 		break;
 	case GameState::gameplay://no process events for this screen
-		m_gamePlayScr.handleEvents(m_event, stick);
+		if ((m_event.type == SDL_JOYBUTTONDOWN || m_event.type == SDL_JOYAXISMOTION) && !m_gamePlayScr.isPaused())
+		{
+			manager.handleEvents(stick, m_gamePlayScr.getMapCorners());
+		}
+		m_gamePlayScr.handleEvents(m_event, m_currentMode, stick);
 		break;
 	case GameState::options:
 		m_optionsScr.handleEvents(m_event, m_currentMode, stick);

@@ -8,19 +8,11 @@ void Gameplay::init(SDL_Renderer*& t_renderer)
 	timer = 0;
 }
 
-void Gameplay::handleEvents(SDL_Event& t_event, Joystick t_stick)
+void Gameplay::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t_stick)
 {
-	switch (t_event.type)
+	if (SDL_JoystickGetButton(t_stick.getStick(), 6) != 0)
 	{
-	case SDL_KEYDOWN:
-		if (t_event.key.keysym.sym == SDLK_ESCAPE)
-		{
-
-
-		}
-		break;
-	default:
-		break;
+		gamestate = GameState::mainMenu;
 	}
 	if (SDL_JoystickGetButton(t_stick.getStick(), 7) != 0 && m_pauseMenu.getTime() >= m_pauseMenu.MAX_TIME)
 	{

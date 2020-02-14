@@ -17,11 +17,11 @@ Vector2 const MovementSystem::move(PositionComponent pos, std::string t_dir)
 	}
 	else if (t_dir == "left")
 	{
-		temp = Vector2(temp.X()- 120, temp.Y());
+		temp = Vector2(temp.X()-120, temp.Y());
 	}
 	else if (t_dir == "right")
 	{
-		temp = Vector2(temp.X()+ 120, temp.Y());
+		temp = Vector2(temp.X()+120, temp.Y());
 	}
 	else if (t_dir == "down")
 	{

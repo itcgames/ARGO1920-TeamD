@@ -26,7 +26,8 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	initEnts(flag, Vector2(240, 240), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true);
 	initEnts(rock, Vector2(360, 360), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true);
 	initEnts(platform, Vector2(240, 480), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true);
-	initEnts(cactus, Vector2(480, 600), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true);
+	initEnts(cactus, Vector2(600, 480), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true);
+
 	Entity *arr[]{ &newPlayer,&flag,&platform,&cactus,&rock };
 
 	std::copy(std::begin(arr), std::end(arr), std::begin(entArr));
@@ -152,36 +153,45 @@ void Game::update()
 
 	for (int i = 0, j = 0, k = 1; i < 5; i++, j += 2, k += 2)
 	{
-		if (answer[j] == "cat")
+
+		if (entArr[i] != NULL)
 		{
-			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true);
-			entArr[i]->setComponentString(answer[k]);
-		}
-		if (answer[j] == "flag")
-		{
-			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true);
-			entArr[i]->setComponentString(answer[k]);
-		}
-		if (answer[j] == "cactus")
-		{
-			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true);
-			entArr[i]->setComponentString(answer[k]);
-		}
-		if (answer[j] == "ball")
-		{
-			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true);
-			entArr[i]->setComponentString(answer[k]);
-		}
-		if (answer[j] == "platform")
-		{
-			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true);
-			entArr[i]->setComponentString(answer[k]);
+			if (answer[j] == "cat")
+			{
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true);
+				entArr[i]->setComponentString(answer[k]);
+			}
+			if (answer[j] == "flag")
+			{
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", false);
+				entArr[i]->setComponentString(answer[k]);
+
+			}
+			if (answer[j] == "cactus")
+			{
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", false);
+				entArr[i]->setComponentString(answer[k]);
+			}
+			if (answer[j] == "ball")
+			{
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", false);
+				entArr[i]->setComponentString(answer[k]);
+
+			}
+			if (answer[j] == "platform")
+			{
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", false);
+				entArr[i]->setComponentString(answer[k]);
+
+
+			}
+
 		}
 	}
 
-	manager.update();
-	switch (m_currentMode)//gamestate
-	{
+		manager.update();
+		switch (m_currentMode)//gamestate
+		{
 		case GameState::splash://no process events for this screen
 			m_splashScr.update(m_currentMode);
 			break;
@@ -205,8 +215,10 @@ void Game::update()
 			break;
 		default:
 			break;
+		}
 	}
-}
+
+
 
 void Game::render()
 {
@@ -242,6 +254,7 @@ void Game::render()
 
 	SDL_RenderPresent(m_renderer);
 }
+
 
 void Game::clean()
 {

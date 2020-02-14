@@ -26,7 +26,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	initEnts(flag, Vector2(200, 200), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true);
 	initEnts(rock, Vector2(300, 300), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true);
 	initEnts(platform, Vector2(400, 400), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true);
-	initEnts(cactus, Vector2(500, 500), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true);
+	initEnts(cactus, Vector2(1200, 600), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true);
 	Entity *arr[]{ &newPlayer,&flag,&platform,&cactus,&rock };
 
 	std::copy(std::begin(arr), std::end(arr), std::begin(entArr));
@@ -149,12 +149,12 @@ void Game::update()
 	answer = m_gamePlayScr.getChanges();
 
 
-		for (int i = 0, j = 0, k = 1; i < 5; i++, j += 2, k += 2)
+	for (int i = 0, j = 0, k = 1; i < 5; i++, j += 2, k += 2)
+	{
+		if (entArr[i] != NULL)
 		{
 			if (answer[j] == "cat")
 			{
-
-
 				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true);
 				entArr[i]->setComponentString(answer[k]);
 			}
@@ -180,16 +180,18 @@ void Game::update()
 				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", false);
 				entArr[i]->setComponentString(answer[k]);
 
+
 			}
+
 		}
 
 
 
 
 
-	manager.update();
-	switch (m_currentMode)//gamestate
-	{
+		manager.update();
+		switch (m_currentMode)//gamestate
+		{
 		case GameState::splash://no process events for this screen
 			m_splashScr.update(m_currentMode);
 			break;
@@ -213,7 +215,9 @@ void Game::update()
 			break;
 		default:
 			break;
+		}
 	}
+
 }
 
 void Game::render()
@@ -232,7 +236,7 @@ void Game::render()
 		break;
 	case GameState::gameplay://no process events for this screen
 		manager.draw(m_renderer);
-		m_gamePlayScr.render(m_renderer,manager);
+		m_gamePlayScr.render(m_renderer, manager);
 		break;
 	case GameState::options://no process events for this screen
 		m_optionsScr.render(m_renderer);
@@ -250,6 +254,7 @@ void Game::render()
 	SDL_RenderPresent(m_renderer);
 }
 
+		
 void Game::clean()
 {
 	stick.close();

@@ -6,10 +6,11 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 	for (auto& e : entities)
 	{
 		Entity &tempE = *e.get();
-
-		if (tempE.getComponentString() == "player")
+		if (tempE.getAlive())
 		{
-			if (SDL_JoystickGetButton(stick.getStick(), 0) != 0)
+			if (tempE.getComponentString() == "player" && tempE.getComponent<PositionComponent>().getPosition()!=Vector2(230000, 20000) || SDL_JoystickGetButton(stick.getStick(), 4) != 0)
+			{
+				if (SDL_JoystickGetButton(stick.getStick(), 0) != 0)
 				{
 					handleMove(tempE, "down");
 				}
@@ -30,25 +31,52 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 					tempE.getComponent<PositionComponent>().setToPreviousPos();
 				}
 				handleBoundary(tempE, t_mapsize.at(0), t_mapsize.at(1));
-		}
-		if (tempE.getComponentString() == "stop")
-		{
-			for (auto& f : entities)
+			}
+			if (tempE.getComponentString() == "stop")
 			{
-				Entity& tempF = *f.get();
-				if (tempF.getComponentString() == "player")
+				for (auto& f : entities)
 				{
-					if (m_colSys.collides(tempE.getComponent<PositionComponent>().getPosition(),
-						tempE.getComponent<BodyComponent>().getSize(),
-						tempF.getComponent<PositionComponent>().getPosition(),
-						tempF.getComponent<BodyComponent>().getSize()))
+					Entity& tempF = *f.get();
+					if (tempF.getComponentString() == "player")
 					{
-						tempF.getComponent<PositionComponent>().setToPreviousPos();
+						if (m_colSys.collides(tempE.getComponent<PositionComponent>().getPosition(),
+							tempE.getComponent<BodyComponent>().getSize(),
+							tempF.getComponent<PositionComponent>().getPosition(),
+							tempF.getComponent<BodyComponent>().getSize()))
+						{
+							tempF.getComponent<PositionComponent>().setToPreviousPos();
+						}
+					}
+				}
+			}
+			if (tempE.getComponentString() == "spiky" && !SDL_JoystickGetButton(stick.getStick(), 4) != 0)
+			{
+				for (auto& f : entities)
+				{
+					Entity& tempF = *f.get();
+					if (tempF.getComponentString() == "player")
+					{
+						if (m_colSys.collides(tempE.getComponent<PositionComponent>().getPosition(),
+							tempE.getComponent<BodyComponent>().getSize(),
+							tempF.getComponent<PositionComponent>().getPosition(),
+							tempF.getComponent<BodyComponent>().getSize()))
+						{
+							tempF.getComponent<PositionComponent>().setPreviousPosition(tempF.getComponent<PositionComponent>().getPosition());
+							tempF.getComponent<PositionComponent>().setPosition(Vector2(230000, 20000));
+							tempF.getComponent<SpriteComponent>().setPosAndSize(tempF.getComponent<PositionComponent>().getPosition().X(),
+								tempF.getComponent<PositionComponent>().getPosition().Y(),
+								tempF.getComponent<BodyComponent>().getSize().X(),
+								tempF.getComponent<BodyComponent>().getSize().Y());
+							
+						}
 					}
 				}
 			}
 		}
+		
+		
 	}
+	
 }
 
 void EntityManager::update()

@@ -55,6 +55,10 @@ void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 			t_entMan.mapCol(m_map.tile[i][j].vec,temp );
 		}
 	}
+}
+
+void Gameplay::renderUI(SDL_Renderer*& t_renderer)
+{
 	if (paused)
 	{
 		m_pauseMenu.render(t_renderer);

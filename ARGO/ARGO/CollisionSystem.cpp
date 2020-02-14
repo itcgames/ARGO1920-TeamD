@@ -15,8 +15,8 @@ bool const CollisionSystem::collides(const PositionComponent& t_pos1, const Body
 	BodyComponent tempBod1 = t_body1, tempBod2 = t_body2;
 
 	
-	if (tempPos1.getPosition().x + tempBod1.getSize().x >= tempPos2.getPosition().x && tempPos1.getPosition().x <= tempPos2.getPosition().x + tempBod2.getSize().x &&
-		tempPos1.getPosition().y + tempBod1.getSize().y >= tempPos2.getPosition().y && tempPos1.getPosition().y <= tempPos2.getPosition().y + tempBod2.getSize().y)
+	if (tempPos1.getPosition().x + tempBod1.getSize().x > tempPos2.getPosition().x && tempPos1.getPosition().x < tempPos2.getPosition().x + tempBod2.getSize().x &&
+		tempPos1.getPosition().y + tempBod1.getSize().y > tempPos2.getPosition().y && tempPos1.getPosition().y < tempPos2.getPosition().y + tempBod2.getSize().y)
 	{
 		// there will be an if statement here to check if an entity has a "stop" component to check if the previous position should be set for it or it should be moved
 		

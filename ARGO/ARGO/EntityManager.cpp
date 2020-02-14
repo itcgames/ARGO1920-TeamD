@@ -2,34 +2,35 @@
 
 void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsize)
 {
-
+	m_moveThisFrame = false;
 	for (auto& e : entities)
 	{
 		Entity &tempE = *e.get();
 
-		if (tempE.getComponentString() == "player")
+		if (tempE.getComponentString() == "player" && timer == MAX_TIME)
 		{
-			if (SDL_JoystickGetButton(stick.getStick(), 0) != 0)
-				{
-					handleMove(tempE, "down");
-				}
-				else if (SDL_JoystickGetButton(stick.getStick(), 1) != 0)
-				{
-					handleMove(tempE, "right");
-				}
-				else if (SDL_JoystickGetButton(stick.getStick(), 2) != 0)
-				{
-					handleMove(tempE, "left");
-				}
-				else if (SDL_JoystickGetButton(stick.getStick(), 3) != 0)
-				{
-					handleMove(tempE, "up");
-				}
-				else if (SDL_JoystickGetButton(stick.getStick(), 4) != 0)
-				{
-					tempE.getComponent<PositionComponent>().setToPreviousPos();
-				}
-				handleBoundary(tempE, t_mapsize.at(0), t_mapsize.at(1));
+			if (stick.Y() == 1)
+			{
+				handleMove(tempE, "down");
+			}
+			else if (stick.X() == 1)
+			{
+				handleMove(tempE, "right");
+			}
+			else if (stick.X() == -1)
+			{
+				handleMove(tempE, "left");
+			}
+			else if (stick.Y() == -1)
+			{
+				handleMove(tempE, "up");
+			}
+			else if (SDL_JoystickGetButton(stick.getStick(), 4) != 0)
+			{
+				tempE.getComponent<PositionComponent>().setToPreviousPos(); 
+				m_moveThisFrame = true;
+			}
+			handleBoundary(tempE, t_mapsize.at(0), t_mapsize.at(1));
 		}
 		if (tempE.getComponentString() == "stop")
 		{
@@ -49,10 +50,16 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 			}
 		}
 	}
+	if (m_moveThisFrame)
+	{
+		timer = 0;
+	}
 }
 
 void EntityManager::update()
 {
+	if(timer < MAX_TIME)
+		timer++;
 	for (auto& e : entities)
 	{
 		e->update();
@@ -79,6 +86,9 @@ void EntityManager::mapCol(Vector2& t_pos, Vector2& t_size)
 				tempF.getComponent<BodyComponent>().getSize()))
 			{
 				tempF.getComponent<PositionComponent>().setToPreviousPos();
+				Vector2 pos = tempF.getComponent<PositionComponent>().getPosition();
+				Vector2 size = tempF.getComponent<BodyComponent>().getSize();
+				tempF.getComponent<SpriteComponent>().setPosAndSize(pos.x, pos.y, size.x, size.y);
 			}
 		}
 	}
@@ -103,7 +113,7 @@ Entity& EntityManager::addEntity(std::string t_identifier)
 
 void EntityManager::handleMove(Entity& t_ent, std::string t_str)
 {
-
+	m_moveThisFrame = true;
 	Vector2 tempVec = m_moveSys.move(t_ent.getComponent<PositionComponent>().getPosition(), t_str);
 	t_ent.getComponent<PositionComponent>().setPreviousPosition(t_ent.getComponent<PositionComponent>().getPosition());
 	t_ent.getComponent<PositionComponent>().setPosition(tempVec);

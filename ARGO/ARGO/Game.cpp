@@ -22,11 +22,11 @@ Game::~Game()
 
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
-	initEnts(newPlayer, Vector2(321, 121), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true);
-	initEnts(flag, Vector2(200, 200), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true);
-	initEnts(rock, Vector2(300, 300), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true);
-	initEnts(platform, Vector2(400, 400), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true);
-	initEnts(cactus, Vector2(500, 500), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true);
+	initEnts(newPlayer, Vector2(480, 120), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true);
+	initEnts(flag, Vector2(240, 240), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true);
+	initEnts(rock, Vector2(360, 360), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true);
+	initEnts(platform, Vector2(240, 480), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true);
+	initEnts(cactus, Vector2(480, 600), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true);
 	Entity *arr[]{ &newPlayer,&flag,&platform,&cactus,&rock };
 
 	std::copy(std::begin(arr), std::end(arr), std::begin(entArr));
@@ -107,11 +107,12 @@ void Game::handleEvents()
 		{
 			isRunning = false;
 		}
-
-		manager.handleEvents(stick, m_gamePlayScr.getMapCorners());
 		break;
 	}
-
+	if ((m_event.type == SDL_JOYBUTTONDOWN || m_event.type == SDL_JOYAXISMOTION) && !m_gamePlayScr.isPaused())
+	{
+		manager.handleEvents(stick, m_gamePlayScr.getMapCorners());
+	}
 	switch (m_currentMode)//gamestate
 	{
 	case GameState::splash:
@@ -222,8 +223,9 @@ void Game::render()
 		m_mainMenuScr.render(m_renderer);
 		break;
 	case GameState::gameplay://no process events for this screen
+		m_gamePlayScr.render(m_renderer, manager);
 		manager.draw(m_renderer);
-		m_gamePlayScr.render(m_renderer,manager);
+		m_gamePlayScr.renderUI(m_renderer);
 		break;
 	case GameState::options://no process events for this screen
 		m_optionsScr.render(m_renderer);

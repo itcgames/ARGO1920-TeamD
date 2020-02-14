@@ -72,6 +72,41 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 					}
 				}
 			}
+			if (tempE.getComponentString() == "move")
+			{
+				for (auto& f : entities)
+				{
+					Entity& tempF = *f.get();
+					if (tempF.getComponentString() == "player")
+					{
+						if (m_colSys.collides(tempE.getComponent<PositionComponent>().getPosition(),
+							tempE.getComponent<BodyComponent>().getSize(),
+							tempF.getComponent<PositionComponent>().getPosition(),
+							tempF.getComponent<BodyComponent>().getSize()))
+						{
+
+							if (SDL_JoystickGetButton(stick.getStick(), 0) != 0)
+							{
+								handleMove(tempE, "down");
+							}
+							else if (SDL_JoystickGetButton(stick.getStick(), 1) != 0)
+							{
+								handleMove(tempE, "right");
+							}
+							else if (SDL_JoystickGetButton(stick.getStick(), 2) != 0)
+							{
+								handleMove(tempE, "left");
+							}
+							else if (SDL_JoystickGetButton(stick.getStick(), 3) != 0)
+							{
+								handleMove(tempE, "up");
+							}
+							
+
+						}
+					}
+				}
+			}
 		}
 		
 		

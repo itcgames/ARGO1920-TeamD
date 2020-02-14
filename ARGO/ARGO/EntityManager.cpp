@@ -148,6 +148,31 @@ void EntityManager::handleStop( std::string t_str)
 	}*/
 }
 
+int EntityManager::handleWin(int t_levelNum)
+{
+	for (auto& e : entities)
+	{
+		Entity& tempE = *e.get();
+
+		if (tempE.getComponentString() == "player")
+		{
+			for (auto& e2 : entities)
+			{
+				Entity& tempE2 = *e2.get();
+
+				if (tempE2.getComponentString() == "goal")
+				{
+					if (m_colSys.collides(tempE.getComponent<PositionComponent>().getPosition(), tempE.getComponent<BodyComponent>().getSize(),
+						tempE2.getComponent<PositionComponent>().getPosition(), tempE2.getComponent<BodyComponent>().getSize()))
+					{
+						t_levelNum++;
+					}
+				}
+			}
+		}
+	}
+	return t_levelNum;
+}
 
 void EntityManager::handleBoundary(Entity& t_ent, Vector2 t_mapTopLeft, Vector2 t_mapBottomRight)
 {

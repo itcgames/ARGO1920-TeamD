@@ -25,18 +25,22 @@ void SpriteComponent::setPathAndScreen(std::string path, SDL_Renderer* t_screen,
 {
 	bool newString = true;
 	m_currentTex = -1;
+	int counter = m_currentTex;
 	for (auto currentPath : m_paths)
 	{
+		counter++;
 		if (currentPath == path)
 		{
 			newString = false;
+			m_currentTex = counter;
 		}
-		m_currentTex++;
+		
 	}
 	if (newString)
 	{
 		m_paths.push_back(path);
-		m_currentTex++;
+		counter++;
+		m_currentTex = counter;
 	}
 	m_screen = t_screen;
 	m_animed = t_anime;
@@ -66,7 +70,7 @@ void SpriteComponent::render()
 	{
 		timer = 0;
 		xOffset += 120;
-		if (xOffset == 1320)//to be changed for actually spritesheet
+		if (xOffset == 600)//to be changed for actually spritesheet
 		{
 			xOffset = 0;
 		}

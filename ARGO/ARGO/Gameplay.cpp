@@ -41,6 +41,11 @@ void Gameplay::update()
 
 void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 {
+	int newLevel = t_entMan.handleWin(m_map.getLevelNum());
+	if (m_map.getLevelNum() != newLevel)
+	{
+		m_map.init(t_renderer,newLevel);
+	}
 	for (int j = 0; j < 18; j++)
 	{
 		for (int i = 0; i < 32; i++)
@@ -69,6 +74,11 @@ bool Gameplay::isPaused()
 std::vector<std::string> Gameplay::getChanges()
 {
 	return m_pauseMenu.getChanges();
+}
+
+Map Gameplay::getMap()
+{
+	return m_map;
 }
 
 std::vector<Vector2> Gameplay::getMapCorners()

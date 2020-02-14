@@ -22,7 +22,7 @@ Game::~Game()
 
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
-	initEnts(newPlayer, Vector2(121, 121), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true);
+	initEnts(newPlayer, Vector2(321, 121), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true);
 	initEnts(flag, Vector2(200, 200), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true);
 	initEnts(rock, Vector2(300, 300), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true);
 	initEnts(platform, Vector2(400, 400), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true);
@@ -151,6 +151,7 @@ void Game::update()
 
 	for (int i = 0, j = 0, k = 1; i < 5; i++, j += 2, k += 2)
 	{
+
 		if (entArr[i] != NULL)
 		{
 			if (answer[j] == "cat")
@@ -184,10 +185,7 @@ void Game::update()
 			}
 
 		}
-
-
-
-
+	}
 
 		manager.update();
 		switch (m_currentMode)//gamestate
@@ -218,7 +216,7 @@ void Game::update()
 		}
 	}
 
-}
+
 
 void Game::render()
 {
@@ -254,7 +252,7 @@ void Game::render()
 	SDL_RenderPresent(m_renderer);
 }
 
-		
+
 void Game::clean()
 {
 	stick.close();

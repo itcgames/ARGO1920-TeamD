@@ -66,7 +66,6 @@ void Game::handleEvents()
 		isRunning = false;
 		break;
 	case SDL_JOYAXISMOTION:
-		std::cout << stick.X() << std::endl;
 		if (m_event.jaxis.which == 0)
 		{
 			if (m_event.jaxis.axis == 0)
@@ -85,7 +84,6 @@ void Game::handleEvents()
 					stick.setX(0);
 					keyTest = true;
 				}
-				std::cout << m_event.jaxis.value << std::endl;
 			}
 			if (m_event.jaxis.axis == 1)
 			{

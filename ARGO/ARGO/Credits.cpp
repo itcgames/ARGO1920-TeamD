@@ -29,8 +29,6 @@ void Credits::handleEvents(SDL_Event& t_event)
 void Credits::update()
 {
 	m_y--;
-	std::cout << "Credits" << std::endl;
-
 }
 
 void Credits::render(SDL_Renderer* t_renderer)

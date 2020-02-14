@@ -29,10 +29,7 @@ void Intro::handleEvents(SDL_Event& t_event)
 }
 
 void Intro::update()
-{
-	
-	std::cout << "Intro" << std::endl;
-	
+{	
 }
 
 void Intro::render(SDL_Renderer *t_renderer)

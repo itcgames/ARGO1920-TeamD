@@ -40,9 +40,6 @@ void Options::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t_
 
 void Options::update()
 {
-
-	std::cout << "Options" << std::endl;
-
 }
 
 void Options::render(SDL_Renderer* t_renderer)

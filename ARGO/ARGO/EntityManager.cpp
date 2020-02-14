@@ -8,7 +8,8 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 		Entity &tempE = *e.get();
 		if (tempE.getAlive())
 		{
-			if ((tempE.getComponentString() == "player" && tempE.getComponent<PositionComponent>().getPosition()!=Vector2(230000, 20000) || SDL_JoystickGetButton(stick.getStick(), 4) != 0) && timer == MAX_TIME)
+			if ((tempE.getComponentString() == "player" && tempE.getComponent<PositionComponent>().getPosition()!=Vector2(230000, 20000) || SDL_JoystickGetButton(stick.getStick(), 4) != 0) 
+				&& timer == MAX_TIME)
 			{
 				if (stick.Y() == 1)
 				{

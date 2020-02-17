@@ -103,7 +103,10 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 							{
 								handleMove(tempE, "up");
 							}
-
+							if (stick.Y() == 1 || stick.X() == 1 || stick.X() == -1 || stick.Y() == -1)
+							{
+								tempF.getComponent<SpriteComponent>().updateState(PlayerStates::PushingPlayer);
+							}
 						}
 					}
 				}
@@ -180,6 +183,7 @@ void EntityManager::handleMove(Entity& t_ent, std::string t_str)
 	t_ent.getComponent<PositionComponent>().setPreviousPosition(t_ent.getComponent<PositionComponent>().getPosition());
 	t_ent.getComponent<PositionComponent>().setPosition(tempVec);
 	t_ent.getComponent<SpriteComponent>().setPosAndSize(t_ent.getComponent<PositionComponent>().getPosition().X(), t_ent.getComponent<PositionComponent>().getPosition().Y(), t_ent.getComponent<BodyComponent>().getSize().X(), t_ent.getComponent<BodyComponent>().getSize().Y());
+	t_ent.getComponent<SpriteComponent>().updateState(PlayerStates::MovingPlayer);
 }
 
 void EntityManager::handleStop( std::string t_str)

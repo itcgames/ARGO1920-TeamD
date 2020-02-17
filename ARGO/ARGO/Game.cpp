@@ -1,6 +1,6 @@
 #include "Game.h"
 
-GameState Game::m_currentMode{ GameState::splash };
+GameState Game::m_currentMode{ GameState::gameplay };
 LevelState Game::m_currentLevel{ LevelState::Level1 };
 EntityManager manager;
 auto& newPlayer(manager.addEntity("player"));

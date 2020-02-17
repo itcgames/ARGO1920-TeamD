@@ -1,8 +1,8 @@
 #include "VelocityComponent.h"
 
-VelocityComponent::VelocityComponent(Vector2 velocity)
+VelocityComponent::VelocityComponent()
 {
-	m_velocity = velocity;
+	
 }
 
 void VelocityComponent::init()

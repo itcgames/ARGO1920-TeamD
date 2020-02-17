@@ -7,9 +7,11 @@ SpriteComponent::SpriteComponent()
 	m_width = 120;
 	m_height = 120;
 	xOffset = 0;
+	yOffset = 0;
 	timer = 0;
 	m_animed = false;
 	m_currentTex = 0;
+	m_currentState = PlayerStates::IdlePlayer;
 }
 
 void SpriteComponent::resetSprite()
@@ -54,6 +56,38 @@ void SpriteComponent::setPosAndSize(int x, int y, int width, int height)
 	m_height = height;
 }
 
+void SpriteComponent::updateState(PlayerStates t_newState)
+{
+	if (t_newState != m_currentState)
+	{
+		auto changeCheck = m_animeStates.getCurrent();
+		switch (t_newState)
+		{
+		case IdlePlayer:
+			m_animeStates.idle();
+			break;
+		case MovingPlayer:
+			m_animeStates.moving();
+			break;
+		case PushingPlayer:
+			m_animeStates.pushing();
+			break;
+		case DyingPlayer:
+			m_animeStates.dying();
+			break;
+		default:
+			break;
+		}
+		if(changeCheck != m_animeStates.getCurrent())
+		{
+			m_currentState = t_newState;
+			xOffset = 480;
+			timer = 10;
+		}
+		
+	}
+}
+
 void SpriteComponent::init()
 {
 }
@@ -61,11 +95,6 @@ void SpriteComponent::init()
 void SpriteComponent::update()
 {
 	timer++;
-}
-
-void SpriteComponent::render()
-{
-	SDL_Rect dstrect = { m_x, m_y, m_width, m_height };
 	if (m_animed && timer > 10)
 	{
 		timer = 0;
@@ -74,8 +103,31 @@ void SpriteComponent::render()
 		{
 			xOffset = 0;
 		}
+		switch (m_currentState)
+		{
+		case IdlePlayer:
+			yOffset = 0;
+			break;
+		case MovingPlayer:
+			yOffset = 120;
+			break;
+		case PushingPlayer:
+			yOffset = 240;
+			break;
+		case DyingPlayer:
+			yOffset = 360;
+			break;
+		default:
+			break;
+		}
 	}
-	SDL_Rect srcrect = { xOffset, 0, 120, 120 };
+}
+
+void SpriteComponent::render()
+{
+	SDL_Rect dstrect = { m_x, m_y, m_width, m_height };
+	
+	SDL_Rect srcrect = { xOffset, yOffset, 120, 120 };
 
 	while (loadedSurface.size() < m_paths.size())
 	{
@@ -88,4 +140,9 @@ void SpriteComponent::render()
 		}
 	}
 	SDL_RenderCopy(m_screen, m_texture.at(m_currentTex), &srcrect, &dstrect);
+	if (xOffset == 480 && m_currentState != PlayerStates::IdlePlayer)
+	{
+		m_animeStates.idle();
+		m_currentState = PlayerStates::IdlePlayer;
+	}
 }

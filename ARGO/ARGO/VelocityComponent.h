@@ -5,7 +5,7 @@
 class VelocityComponent : public Component
 {
 public:
-	VelocityComponent(Vector2 velocity);
+	VelocityComponent();
 	Vector2 getVelocity();
 	void setVelocity(Vector2 velocity);
 	void init() override;

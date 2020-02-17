@@ -7,6 +7,7 @@
 #include "BodyComponent.h"
 #include "SpriteComponent.h"
 #include "BoundarySystem.h"
+#include "VelocityComponent.h"
 
 class EntityManager
 {

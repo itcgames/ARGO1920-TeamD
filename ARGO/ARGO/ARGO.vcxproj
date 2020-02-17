@@ -38,6 +38,7 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapTile.cpp" />
     <ClCompile Include="MovementSystem.cpp" />
+    <ClCompile Include="OctTree.cpp" />
     <ClCompile Include="Options.cpp" />
     <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="Splash.cpp" />
@@ -69,6 +70,7 @@
     <ClInclude Include="MapHolder.h" />
     <ClInclude Include="MapTile.h" />
     <ClInclude Include="MovementSystem.h" />
+    <ClInclude Include="OctTree.h" />
     <ClInclude Include="Options.h" />
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Splash.h" />

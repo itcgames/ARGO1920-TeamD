@@ -6,6 +6,7 @@ void Gameplay::init(SDL_Renderer*& t_renderer)
 	m_pauseMenu.init();
 	paused = false;
 	timer = 0;
+	m_OTree.initTree(Vector2(0, 0), Vector2(960, 1080), Vector2(960, 0), Vector2(1920, 0), Vector2(2840, 0), Vector2(0, 1080), Vector2(960, 1080), Vector2(1920, 1080), Vector2(2840, 1080));
 }
 
 void Gameplay::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t_stick)
@@ -38,9 +39,36 @@ void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 	{
 		m_map.init(t_renderer,newLevel);
 	}
-	for (int j = 0; j < 18; j++)
+	Vector2 PlayerPos = t_entMan.getPlayerPos();
+	for (int i = 0; i < 8; i++)
 	{
-		for (int i = 0; i < 32; i++)
+		if (gameplayCol.collides(m_OTree.getOct(i), m_OTree.getSize(), PlayerPos, Vector2(120, 120)))
+		{
+			int test;
+			//row,col,maxrow,maxcol
+			if (i == 0){
+				setupRowCol(0, 0, 9, 8);
+				
+			}if (i == 1) {
+				setupRowCol(0, 8, 9, 16);
+			}if (i == 2) {
+				setupRowCol(0, 16, 9, 24);
+			}if (i == 3) {
+				setupRowCol(0, 24, 9, 32);
+			}if (i == 4) {
+				setupRowCol(9, 0, 18, 8);
+			}if (i == 5) {
+				setupRowCol(9, 8, 18, 16);
+			}if (i == 6) {
+				setupRowCol(9, 16, 18, 24);
+			}if (i == 7) {
+				setupRowCol(9, 24, 18, 32);
+			}
+		}
+	}
+	for (int j=row; j < maxRow; j++)
+	{
+		for (int i=col; i < maxCol; i++)
 		{
 			m_map.render(t_renderer, i, j);
 			Vector2 temp(120, 120);
@@ -80,4 +108,12 @@ Map Gameplay::getMap()
 std::vector<Vector2> Gameplay::getMapCorners()
 {
 	return m_map.getMapCorners();
+}
+
+void Gameplay::setupRowCol(int t_row, int t_col, int t_MaxRow,int t_MaxCol)
+{
+	row = t_row;
+	col = t_col;
+	maxRow = t_MaxRow;
+	maxCol = t_MaxCol;
 }

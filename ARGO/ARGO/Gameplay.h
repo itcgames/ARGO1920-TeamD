@@ -7,6 +7,8 @@
 #include "Joystick.h"
 #include "EntityManager.h"
 #include "Gamestate.h"
+#include "OctTree.h"
+#include "CollisionSystem.h"
 class Gameplay
 {
 public:
@@ -26,4 +28,8 @@ private:
 	PauseMenu m_pauseMenu;
 	bool paused;
 	int timer;
+	OctTree m_OTree;
+	int row, col,maxRow,maxCol;
+	void setupRowCol(int t_row, int t_col, int t_MaxRow, int t_MaxCol);
+	CollisionSystem gameplayCol;
 };

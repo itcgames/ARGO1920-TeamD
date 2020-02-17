@@ -59,11 +59,14 @@
     </ClCompile>
     <ClCompile Include="CollisionSystem.cpp">
       <Filter>Source Files</Filter>
-      </ClCompile>
+    </ClCompile>
     <ClCompile Include="Licence.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="help.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OctTree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -119,17 +122,19 @@
     <ClInclude Include="Flag.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-
     <ClInclude Include="BoundarySystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CollisionSystem.h">
       <Filter>Header Files</Filter>
-      </ClInclude>
+    </ClInclude>
     <ClInclude Include="Licence.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="help.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OctTree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

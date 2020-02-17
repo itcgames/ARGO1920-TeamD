@@ -1,6 +1,6 @@
 #include "Game.h"
 
-GameState Game::m_currentMode{ GameState::mainMenu };
+GameState Game::m_currentMode{ GameState::splash };
 LevelState Game::m_currentLevel{ LevelState::Level1 };
 EntityManager manager;
 auto& newPlayer(manager.addEntity("player"));
@@ -188,9 +188,13 @@ void Game::update()
 		}
 	}
 
-		manager.update();
-		switch (m_currentMode)//gamestate
-		{
+
+	manager.update();
+	switch (m_currentMode)//gamestate
+	{
+		case GameState::intro:
+			m_intro.update(m_currentMode);
+			break;
 		case GameState::splash://no process events for this screen
 			m_splashScr.update(m_currentMode);
 			break;
@@ -224,6 +228,9 @@ void Game::render()
 	SDL_RenderClear(m_renderer);
 	switch (m_currentMode)//gamestate
 	{
+	case GameState::intro:
+		m_intro.render(m_renderer);
+		break;
 	case GameState::licence://no process events for this screen
 		m_licence.render(m_renderer);
 		break;

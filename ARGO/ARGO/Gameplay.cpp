@@ -28,7 +28,6 @@ void Gameplay::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t
 
 void Gameplay::update()
 {
-	std::cout << "Gameplay" << std::endl;
 	m_pauseMenu.update();
 }
 

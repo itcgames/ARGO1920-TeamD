@@ -13,7 +13,7 @@ class EntityManager
 private:
 	std::vector<std::unique_ptr<Entity>> entities;
 	MovementSystem m_moveSys;
-	
+
 	BoundarySystem m_boundSys;
 
 	int timer = 0;
@@ -43,5 +43,6 @@ public:
 			};
 		}
 	}
-};
 
+	static const int MAX_TIME = 10;
+};

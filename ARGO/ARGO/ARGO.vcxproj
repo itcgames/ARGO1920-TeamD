@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AudioComponent.cpp" />
     <ClCompile Include="BodyComponent.cpp" />
     <ClCompile Include="BoundarySystem.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
@@ -49,9 +50,11 @@
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AudioComponent.h" />
     <ClInclude Include="BodyComponent.h" />
     <ClInclude Include="BoundarySystem.h" />
     <ClInclude Include="CollisionSystem.h" />
+    <ClInclude Include="Command.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Credits.h" />
     <ClInclude Include="Entity.h" />
@@ -63,6 +66,7 @@
     <ClInclude Include="help.h" />
     <ClInclude Include="Intro.h" />
     <ClInclude Include="Joystick.h" />
+    <ClInclude Include="Jump.h" />
     <ClInclude Include="LevelState.h" />
     <ClInclude Include="Licence.h" />
     <ClInclude Include="MainMenu.h" />
@@ -73,6 +77,7 @@
     <ClInclude Include="OctTree.h" />
     <ClInclude Include="Options.h" />
     <ClInclude Include="PauseMenu.h" />
+    <ClInclude Include="SDL_mixer.h" />
     <ClInclude Include="Splash.h" />
     <ClInclude Include="PositionComponent.h" />
     <ClInclude Include="SpriteComponent.h" />
@@ -156,7 +161,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SDL_SDK)\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

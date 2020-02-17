@@ -82,7 +82,7 @@ void MainMenu::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t
 				gamestate = GameState::help;
 				break;
 			case ButtonState::quit:
-				currentState = ButtonState::play;
+				SDL_Quit();
 				break;
 			default:
 				break;

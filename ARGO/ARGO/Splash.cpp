@@ -36,8 +36,6 @@ void Splash::update(GameState& gamestate)
 	{
 		gamestate = GameState::licence;
 	}
-	std::cout << m_count << std::endl;
-
 }
 
 void Splash::render(SDL_Renderer* t_renderer)

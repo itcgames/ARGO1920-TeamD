@@ -28,6 +28,7 @@ void Intro::handleEvents(SDL_Event& t_event)
 	}
 }
 
+
 void Intro::update(GameState &gamestate)
 {
 	m_counter++;

@@ -23,6 +23,7 @@ public:
 	std::vector<std::string> getChanges();
 	Map getMap();
 	std::vector<Vector2> getMapCorners();
+	void fixedUpdate(EntityManager& t_entMan);
 private:
 	Map m_map;
 	PauseMenu m_pauseMenu;

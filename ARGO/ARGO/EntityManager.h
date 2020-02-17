@@ -32,7 +32,7 @@ public:
 	int handleWin(int t_levelNum);
 	//Entity getEnt(int t_arrPos);
 	CollisionSystem m_colSys;
-	static const int MAX_TIME = 7;
+	//static const int MAX_TIME = 7;
 	Vector2 getPlayerPos() {
 		for (auto& f : entities)
 		{

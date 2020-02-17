@@ -1,5 +1,5 @@
 #include "Game.h"
-GameState Game::m_currentMode{ GameState::mainMenu };
+GameState Game::m_currentMode{ GameState::gameplay };
 LevelState Game::m_currentLevel{ LevelState::Level1 };
 
 EntityManager manager;
@@ -44,12 +44,17 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 
 	stick.init();
+	
 	//Entity t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim
-	initEnts(newPlayer, Vector2(100, 100), Vector2(50, 50), "ASSETS/IMAGES/dance.bmp", true, "temp.wav");
-	initEnts(flag, Vector2(200, 200), Vector2(50, 50), "ASSETS/IMAGES/flag.bmp", false, "temp.wav");
-	initEnts(rock, Vector2(300, 300), Vector2(50, 50), "ASSETS/IMAGES/yarn.bmp", false, "temp.wav");
-	initEnts(platform, Vector2(400, 400), Vector2(50, 50), "ASSETS/IMAGES/platform.bmp", false, "temp.wav");
-	initEnts(cactus, Vector2(500, 500), Vector2(50, 50), "ASSETS/IMAGES/cactus.bmp", false, "temp.wav");
+	initEnts(newPlayer, Vector2(100, 100), Vector2(50, 50), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav");
+	initEnts(flag, Vector2(200, 200), Vector2(50, 50), "ASSETS/IMAGES/flag.bmp", false, "ASSETS/AUDIO/temp.wav");
+	initEnts(rock, Vector2(300, 300), Vector2(50, 50), "ASSETS/IMAGES/yarn.bmp", false, "ASSETS/AUDIO/temp.wav");
+	initEnts(platform, Vector2(400, 400), Vector2(50, 50), "ASSETS/IMAGES/platform.bmp", false, "ASSETS/AUDIO/temp.wav");
+	initEnts(cactus, Vector2(500, 500), Vector2(50, 50), "ASSETS/IMAGES/cactus.bmp", false, "ASSETS/AUDIO/temp.wav");
+
+	
+	flag.addComponent<AudioComponent>().playAudio();
+	flag.addComponent<AudioComponent>().closeAudio();
 
 }
 
@@ -205,7 +210,15 @@ void Game::update()
 	platform.setComponentString(answer[5]);
 	flag.setComponentString(answer[7]);
 	cactus.setComponentString(answer[9]);
-	flag.addComponent<AudioComponent>().playAudio();
+	/*if (!temp)
+	{
+	
+		flag.getComponent<AudioComponent>().update();
+		temp = true;
+		
+		
+	}*/
+	//flag.getComponent<AudioComponent>().closeAudio();
 	
 	std::cout << std::endl;
 

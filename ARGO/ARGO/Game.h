@@ -50,7 +50,7 @@ private:
 	Help m_helpScr;
 	Joystick stick;
 	bool keyTest = false;
-
+	bool temp = false;
 	Entity* m_cat;
 
 

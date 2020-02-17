@@ -10,11 +10,15 @@ class AudioComponent: public Component
 public:
 	AudioComponent();
 	~AudioComponent();
-	AudioComponent(const char* t_string);
 	void LoadMusicFile( const char * t_string);
-	void closeAudio();
 	void playAudio();
+	void closeAudio();
+	void init() override;
+	void update() override;
+	void render() override;
 private:
 	Mix_Music* m_music;
+	Mix_Chunk* m_chunk;
+	bool doOnce = false;
 };
 #endif // !AUDIOCOMPONENT

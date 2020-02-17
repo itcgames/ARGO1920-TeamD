@@ -9,7 +9,7 @@
 #include "PositionComponent.h"
 #include "BodyComponent.h"
 #include "EntityManager.h"
-
+#include "Intro.h"
 #include "Splash.h"
 #include "Licence.h"
 #include "help.h"
@@ -47,6 +47,7 @@ private:
 	Options m_optionsScr;
 	Credits m_creditsScr;
 	Help m_helpScr;
+	Intro m_intro;
 	Joystick stick;
 	bool keyTest = false;
 

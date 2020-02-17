@@ -15,7 +15,7 @@ void PauseMenu::init()
 	loadedSurfaceAdjec = SDL_LoadBMP("ASSETS/IMAGES/adjectives.bmp");
 	loadedSurfaceSelect = SDL_LoadBMP("ASSETS/IMAGES/selector.bmp");
 
-	selectBox[0] = Vector2(2650, 200);
+	selectBox[0] = Vector2(2450, 200);
 	selectBox[1] = Vector2(3200, 200);
 	selectBox[2] = Vector2(selectBox[0].X(), 500);
 	selectBox[3] = Vector2(selectBox[1].X(), 500);
@@ -33,7 +33,7 @@ void PauseMenu::init()
 		boxRectSliced[box] = { int(selectBox[box].X()), int(selectBox[box].Y()), 500, 100 };
 		boxRect[box] = { int(selectBox[box].X()), int(selectBox[box].Y()), 500, 500 };
 	}
-	dstrectBack = { 2600, 100, 1150, 1800 };
+	dstrectBack = { 2400, 100, 1350, 1800 };
 	
 	currentBox = 0;
 	dstrectSelect = { int(selectBox[currentBox].X() - 5), int(selectBox[currentBox].Y() - 5), 510, 110 };

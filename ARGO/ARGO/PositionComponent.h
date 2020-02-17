@@ -19,6 +19,6 @@ public:
 	void render() override;
 private:
 	Vector2 m_position;
-	std::stack<Vector2> m_prevPositions[];
+	std::stack<Vector2> m_prevPositions;
 };
 

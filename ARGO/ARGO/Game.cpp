@@ -1,7 +1,7 @@
 #include "Game.h"
+
 GameState Game::m_currentMode{ GameState::mainMenu };
 LevelState Game::m_currentLevel{ LevelState::Level1 };
-
 EntityManager manager;
 auto& newPlayer(manager.addEntity("player"));
 auto& flag(manager.addEntity("goal"));
@@ -22,6 +22,12 @@ Game::~Game()
 
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
+	initEnts(newPlayer, Vector2(480, 120), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true);
+	initEnts(flag, Vector2(240, 240), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true);
+	initEnts(rock, Vector2(360, 360), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true);
+	initEnts(platform, Vector2(240, 480), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true);
+	initEnts(cactus, Vector2(600, 480), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true);
+
 	Entity *arr[]{ &newPlayer,&flag,&platform,&cactus,&rock };
 
 	std::copy(std::begin(arr), std::end(arr), std::begin(entArr));
@@ -46,12 +52,9 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	m_gamePlayScr.init(m_renderer);
 
 	stick.init();
-	//Entity t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim
-	initEnts(newPlayer, Vector2(250, 250), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true);
-	initEnts(flag, Vector2(200, 200), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", false);
-	initEnts(rock, Vector2(300, 300), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", false);
-	initEnts(platform, Vector2(400, 400), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", false);
-	initEnts(cactus, Vector2(500, 500), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", false);
+	answer = m_gamePlayScr.getChanges();
+	answer2 = answer;
+
 }
 
 void Game::handleEvents()
@@ -63,7 +66,6 @@ void Game::handleEvents()
 		isRunning = false;
 		break;
 	case SDL_JOYAXISMOTION:
-		std::cout << stick.X() << std::endl;
 		if (m_event.jaxis.which == 0)
 		{
 			if (m_event.jaxis.axis == 0)
@@ -82,7 +84,6 @@ void Game::handleEvents()
 					stick.setX(0);
 					keyTest = true;
 				}
-				std::cout << m_event.jaxis.value << std::endl;
 			}
 			if (m_event.jaxis.axis == 1)
 			{
@@ -105,11 +106,9 @@ void Game::handleEvents()
 		{
 			isRunning = false;
 		}
-		
-		manager.handleEvents(stick, m_gamePlayScr.getMapCorners());
 		break;
 	}
-
+	
 	switch (m_currentMode)//gamestate
 	{
 	case GameState::splash:
@@ -121,7 +120,11 @@ void Game::handleEvents()
 		m_mainMenuScr.handleEvents(m_event, m_currentMode, stick);
 		break;
 	case GameState::gameplay://no process events for this screen
-		m_gamePlayScr.handleEvents(m_event, stick);
+		if ((m_event.type == SDL_JOYBUTTONDOWN || m_event.type == SDL_JOYAXISMOTION) && !m_gamePlayScr.isPaused())
+		{
+			manager.handleEvents(stick, m_gamePlayScr.getMapCorners());
+		}
+		m_gamePlayScr.handleEvents(m_event, m_currentMode, stick);
 		break;
 	case GameState::options:
 		m_optionsScr.handleEvents(m_event, m_currentMode, stick);
@@ -139,50 +142,55 @@ void Game::update()
 {
 	static int count = 0; count++;
 
-	answer = m_gamePlayScr.getChanges();
-	
+
 	//newPlayer.destroy();
 	//flag.destroy();
 
 	//manager.refresh();
+	answer = m_gamePlayScr.getChanges();
+
 
 	for (int i = 0, j = 0, k = 1; i < 5; i++, j += 2, k += 2)
 	{
-		if (answer[j] == "cat")
+
+		if (entArr[i] != NULL)
 		{
+			if (answer[j] == "cat")
+			{
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true);
+				entArr[i]->setComponentString(answer[k]);
+			}
+			if (answer[j] == "flag")
+			{
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", false);
+				entArr[i]->setComponentString(answer[k]);
+
+			}
+			if (answer[j] == "cactus")
+			{
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", false);
+				entArr[i]->setComponentString(answer[k]);
+			}
+			if (answer[j] == "ball")
+			{
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", false);
+				entArr[i]->setComponentString(answer[k]);
+
+			}
+			if (answer[j] == "platform")
+			{
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", false);
+				entArr[i]->setComponentString(answer[k]);
 
 
-			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true);
-			entArr[i]->setComponentString(answer[k]);
-		}
-		if (answer[j] == "flag")
-		{
-			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", false);
-			entArr[i]->setComponentString(answer[k]);
-
-		}
-		if (answer[j] == "cactus")
-		{
-			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", false);
-			entArr[i]->setComponentString(answer[k]);
-		}
-		if (answer[j] == "ball")
-		{
-			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", false);
-			entArr[i]->setComponentString(answer[k]);
-
-		}
-		if (answer[j] == "platform")
-		{
-			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", false);
-			entArr[i]->setComponentString(answer[k]);
+			}
 
 		}
 	}
 
-	manager.update();
-	switch (m_currentMode)//gamestate
-	{
+		manager.update();
+		switch (m_currentMode)//gamestate
+		{
 		case GameState::splash://no process events for this screen
 			m_splashScr.update(m_currentMode);
 			break;
@@ -206,8 +214,10 @@ void Game::update()
 			break;
 		default:
 			break;
+		}
 	}
-}
+
+
 
 void Game::render()
 {
@@ -224,8 +234,9 @@ void Game::render()
 		m_mainMenuScr.render(m_renderer);
 		break;
 	case GameState::gameplay://no process events for this screen
-		m_gamePlayScr.render(m_renderer);
+		m_gamePlayScr.render(m_renderer, manager);
 		manager.draw(m_renderer);
+		m_gamePlayScr.renderUI(m_renderer);
 		break;
 	case GameState::options://no process events for this screen
 		m_optionsScr.render(m_renderer);
@@ -242,6 +253,7 @@ void Game::render()
 
 	SDL_RenderPresent(m_renderer);
 }
+
 
 void Game::clean()
 {

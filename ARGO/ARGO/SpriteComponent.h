@@ -7,14 +7,16 @@ class SpriteComponent : public Component
 {
 public:
 	SpriteComponent();
+	void resetSprite();
 	void setPathAndScreen(std::string path, SDL_Renderer* t_screen, bool t_anime = false);
 	void setPosAndSize(int x, int y, int width, int height);
 	void init() override;
 	void update() override;
 	void render() override;
 private:
-	SDL_Surface* loadedSurface;
-	SDL_Texture* m_texture;
+	std::vector< std::string> m_paths;
+	std::vector <SDL_Surface*> loadedSurface;
+	std::vector<SDL_Texture*> m_texture;
 	SDL_Renderer* m_screen;
 	int m_width;
 	int m_height;
@@ -23,4 +25,5 @@ private:
 	int xOffset;
 	int timer;
 	int m_animed;
+	int m_currentTex;
 };

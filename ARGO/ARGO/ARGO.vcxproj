@@ -53,6 +53,7 @@
     <ClInclude Include="BodyComponent.h" />
     <ClInclude Include="BoundarySystem.h" />
     <ClInclude Include="CollisionSystem.h" />
+    <ClInclude Include="Command.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Credits.h" />
     <ClInclude Include="Entity.h" />
@@ -64,6 +65,7 @@
     <ClInclude Include="help.h" />
     <ClInclude Include="Intro.h" />
     <ClInclude Include="Joystick.h" />
+    <ClInclude Include="Jump.h" />
     <ClInclude Include="LevelState.h" />
     <ClInclude Include="Licence.h" />
     <ClInclude Include="MainMenu.h" />

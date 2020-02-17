@@ -9,7 +9,7 @@
 #include "PositionComponent.h"
 #include "BodyComponent.h"
 #include "EntityManager.h"
-
+#include "Intro.h"
 #include "Splash.h"
 #include "Licence.h"
 #include "help.h"
@@ -48,16 +48,22 @@ private:
 	Options m_optionsScr;
 	Credits m_creditsScr;
 	Help m_helpScr;
+	Intro m_intro;
 	Joystick stick;
 	bool keyTest = false;
 	bool temp = false;
 	Entity* m_cat;
 
+	Entity*  entArr[5];
 
 	/// <summary>
 	/// Systems
 	/// </summary>
 	MovementSystem m_moveSys;
 	std::vector<std::string> answer;
+
 	void initEnts(Entity &t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim, const char* t_audioStr);
+
+	std::vector<std::string> answer2;
+	void updateEnts(Entity& t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim);
 };

@@ -2,20 +2,46 @@
 
 SpriteComponent::SpriteComponent()
 {
-	m_x = 50;
-	m_y = 50;
-	m_width = 50;
-	m_height = 50;
-	loadedSurface = NULL;
-	m_texture = NULL;
+	m_x = 120;
+	m_y = 120;
+	m_width = 120;
+	m_height = 120;
 	xOffset = 0;
 	timer = 0;
+	m_animed = false;
+	m_currentTex = 0;
+}
+
+void SpriteComponent::resetSprite()
+{
+	m_x = 120;
+	m_y = 120;
+	m_width = 120;
+	m_height = 120;
 	m_animed = false;
 }
 
 void SpriteComponent::setPathAndScreen(std::string path, SDL_Renderer* t_screen, bool t_anime)
 {
-	loadedSurface = SDL_LoadBMP(path.c_str());
+	bool newString = true;
+	m_currentTex = -1;
+	int counter = m_currentTex;
+	for (auto currentPath : m_paths)
+	{
+		counter++;
+		if (currentPath == path)
+		{
+			newString = false;
+			m_currentTex = counter;
+		}
+		
+	}
+	if (newString)
+	{
+		m_paths.push_back(path);
+		counter++;
+		m_currentTex = counter;
+	}
 	m_screen = t_screen;
 	m_animed = t_anime;
 }
@@ -43,16 +69,23 @@ void SpriteComponent::render()
 	if (m_animed && timer > 10)
 	{
 		timer = 0;
-		xOffset += 50;
-		if (xOffset == 550)//to be changed for actually spritesheet
+		xOffset += 120;
+		if (xOffset == 600)//to be changed for actually spritesheet
 		{
 			xOffset = 0;
 		}
 	}
-	SDL_Rect srcrect = { xOffset, 0, 50, 50 };
-	if (m_texture == NULL)
+	SDL_Rect srcrect = { xOffset, 0, 120, 120 };
+
+	while (loadedSurface.size() < m_paths.size())
 	{
-		m_texture = SDL_CreateTextureFromSurface(m_screen, loadedSurface);
+		SDL_Surface* newSurface = SDL_LoadBMP(m_paths.at(m_currentTex).c_str());
+		loadedSurface.push_back(newSurface);
+		m_texture.push_back(SDL_CreateTextureFromSurface(m_screen, loadedSurface.at(m_texture.size())));
+		if (m_currentTex == 1)
+		{
+			int t = 0;
+		}
 	}
-	SDL_RenderCopy(m_screen, m_texture, &srcrect, &dstrect);
+	SDL_RenderCopy(m_screen, m_texture.at(m_currentTex), &srcrect, &dstrect);
 }

@@ -19,17 +19,13 @@ MainMenu::MainMenu()
 
 void MainMenu::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t_stick)
 {
-	count++;
+	
 	switch (t_event.type)
 	{
-	case SDL_KEYDOWN:
-		if (t_event.key.keysym.sym == SDLK_ESCAPE)
+	case SDL_JOYHATMOTION:
+		if (SDL_JoystickGetHat(t_stick.getStick(), 0) == SDL_HAT_DOWN && count > 20)
 		{
-			SDL_Quit();
-		}
-		else if (t_event.key.keysym.sym == SDLK_DOWN && keyHeld == false)
-		{
-			keyHeld = true;
+			count = 0;
 			switch (currentState)
 			{
 			case ButtonState::play:
@@ -48,9 +44,10 @@ void MainMenu::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t
 				break;
 			}
 		}
-		else if (t_event.key.keysym.sym == SDLK_UP && keyHeld == false)
+
+		if (SDL_JoystickGetHat(t_stick.getStick(), 0) == SDL_HAT_UP && count > 20)
 		{
-			keyHeld = true;
+			count = 0;
 			switch (currentState)
 			{
 				case ButtonState::play:
@@ -69,9 +66,10 @@ void MainMenu::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t
 					break;
 			}
 		}
-
-		else if (t_event.key.keysym.sym == SDLK_RETURN && count > 60)
+	case SDL_JOYBUTTONDOWN:
+		if (SDL_JoystickGetButton(t_stick.getStick(), 0) != 0 && count > 30)
 		{
+			count = 0;
 			switch (currentState)
 			{
 			case ButtonState::play:
@@ -89,11 +87,8 @@ void MainMenu::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t
 			default:
 				break;
 			}
-			count = 0;
 		}
 		break;
-	case SDL_KEYUP:
-		keyHeld = false;
 	default:
 		break;
 	}
@@ -101,6 +96,7 @@ void MainMenu::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t
 
 void MainMenu::update()
 {
+	count++;
 	switch (currentState)
 	{
 	case ButtonState::play:
@@ -124,7 +120,6 @@ void MainMenu::render(SDL_Renderer* t_renderer)
 {
 	SDL_RenderClear(t_renderer);
 	loadSprites(t_renderer);
-
 	SDL_RenderCopy(t_renderer, m_backgroundTexture, NULL, &m_backgroundRect);
 	SDL_RenderCopy(t_renderer, m_playTexture, NULL, &m_playRect);
 	SDL_RenderCopy(t_renderer, m_optionsTexture, NULL, &m_optionsRect);

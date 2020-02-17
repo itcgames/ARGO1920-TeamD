@@ -14,31 +14,25 @@ Options::Options()
 	count = 0;
 }
 
-void Options::handleEvents(SDL_Event& t_event, GameState& gamestate)
+void Options::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t_stick)
 {
 	count++;
 	switch (t_event.type)
 	{
-	case SDL_KEYDOWN:
-		if (t_event.key.keysym.sym == SDLK_ESCAPE)
+	case SDL_JOYBUTTONDOWN:
+		if (SDL_JoystickGetButton(t_stick.getStick(), 0) != 0 && count > 30)
 		{
-			SDL_Quit();
-		}
-		
-		if (t_event.key.keysym.sym == SDLK_RETURN && count > 60)
-		{
+			count = 0;
 			switch (currentState)
 			{
 			case OptionsButtonState::optionsBackBtn:
 				gamestate = GameState::mainMenu;
-				break;
 			default:
 				break;
 			}
-
-			count = 0;
 		}
 		break;
+
 	default:
 		break;
 	}
@@ -46,9 +40,6 @@ void Options::handleEvents(SDL_Event& t_event, GameState& gamestate)
 
 void Options::update()
 {
-
-	std::cout << "Options" << std::endl;
-
 }
 
 void Options::render(SDL_Renderer* t_renderer)

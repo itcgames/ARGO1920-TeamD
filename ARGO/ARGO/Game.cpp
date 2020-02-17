@@ -1,13 +1,14 @@
 #include "Game.h"
-GameState Game::m_currentMode{ GameState::gameplay };
-LevelState Game::m_currentLevel{ LevelState::Level1 };
 
+GameState Game::m_currentMode{ GameState::splash };
+LevelState Game::m_currentLevel{ LevelState::Level1 };
 EntityManager manager;
 auto& newPlayer(manager.addEntity("player"));
 auto& flag(manager.addEntity("goal"));
 auto& platform(manager.addEntity("stop"));
 auto& cactus(manager.addEntity("spikey"));
 auto& rock(manager.addEntity("move"));
+
 
 Game::Game()
 {
@@ -21,7 +22,15 @@ Game::~Game()
 
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
+	initEnts(newPlayer, Vector2(480, 120), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav");
+	initEnts(flag, Vector2(240, 240), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, "ASSETS/AUDIO/temp.wav");
+	initEnts(rock, Vector2(360, 360), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true, "ASSETS/AUDIO/temp.wav");
+	initEnts(platform, Vector2(240, 480), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true, "ASSETS/AUDIO/temp.wav");
+	initEnts(cactus, Vector2(600, 480), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, "ASSETS/AUDIO/temp.wav");
 
+	Entity *arr[]{ &newPlayer,&flag,&platform,&cactus,&rock };
+
+	std::copy(std::begin(arr), std::end(arr), std::begin(entArr));
 	int flags = 0;
 	if (fullscreen)
 	{
@@ -42,32 +51,27 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 	m_gamePlayScr.init(m_renderer);
 
-
 	stick.init();
-	
-	//Entity t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim
-	initEnts(newPlayer, Vector2(100, 100), Vector2(50, 50), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav");
-	initEnts(flag, Vector2(200, 200), Vector2(50, 50), "ASSETS/IMAGES/flag.bmp", false, "ASSETS/AUDIO/temp.wav");
-	initEnts(rock, Vector2(300, 300), Vector2(50, 50), "ASSETS/IMAGES/yarn.bmp", false, "ASSETS/AUDIO/temp.wav");
-	initEnts(platform, Vector2(400, 400), Vector2(50, 50), "ASSETS/IMAGES/platform.bmp", false, "ASSETS/AUDIO/temp.wav");
-	initEnts(cactus, Vector2(500, 500), Vector2(50, 50), "ASSETS/IMAGES/cactus.bmp", false, "ASSETS/AUDIO/temp.wav");
 
 	
 	flag.addComponent<AudioComponent>().playAudio();
 	flag.addComponent<AudioComponent>().closeAudio();
 
+	answer = m_gamePlayScr.getChanges();
+	answer2 = answer;
+
+
 }
 
 void Game::handleEvents()
 {
-	SDL_PollEvent(&m_event); 
+	SDL_PollEvent(&m_event);
 	switch (m_event.type)
 	{
 	case SDL_QUIT:
 		isRunning = false;
 		break;
 	case SDL_JOYAXISMOTION:
-		std::cout << stick.X() << std::endl; 
 		if (m_event.jaxis.which == 0)
 		{
 			if (m_event.jaxis.axis == 0)
@@ -86,7 +90,6 @@ void Game::handleEvents()
 					stick.setX(0);
 					keyTest = true;
 				}
-				std::cout << m_event.jaxis.value << std::endl;
 			}
 			if (m_event.jaxis.axis == 1)
 			{
@@ -109,70 +112,9 @@ void Game::handleEvents()
 		{
 			isRunning = false;
 		}
-		manager.handleEvents(stick);
 		break;
 	}
-
-	//if (SDL_JoystickGetHat(stick.getStick(), 0) == SDL_HAT_LEFT && keyTest && !m_gamePlayScr.isPaused())
-	//{
-	//	std::cout << "left" << std::endl;
-	//	switch (m_currentMode)
-	//	{
-	//	case GameState::splash://no process events for this screen
-	//		m_currentMode = GameState::credits;
-	//		break;
-	//	case GameState::licence:
-	//		m_currentMode = GameState::splash;
-	//		break;
-	//	case GameState::mainMenu://no process events for this screen
-	//		m_currentMode = GameState::licence;
-	//		break;
-	//	case GameState::gameplay://no process events for this screen
-	//		m_currentMode = GameState::mainMenu;
-	//		break;
-	//	case GameState::options://no process events for this screen
-	//		m_currentMode = GameState::gameplay;
-	//		break;
-	//	case GameState::credits://no process events for this screen
-	//		m_currentMode = GameState::options;
-	//		break;
-	//	default:
-	//		break;
-	//	}
-	//	keyTest = false;
-	//}
-	//else if (SDL_JoystickGetHat(stick.getStick(), 0) == SDL_HAT_RIGHT && keyTest && !m_gamePlayScr.isPaused())
-	//{
-	//	switch (m_currentMode)
-	//	{
-	//		case GameState::splash://no process events for this screen
-	//			m_currentMode = GameState::licence;
-	//			break;
-	//		case GameState::licence:
-	//			m_currentMode = GameState::mainMenu;
-	//			break;
-	//		case GameState::mainMenu://no process events for this screen
-	//			m_currentMode = GameState::gameplay;
-	//			break;
-	//		case GameState::gameplay://no process events for this screen
-	//			m_currentMode = GameState::options;
-	//			break;
-	//		case GameState::options://no process events for this screen
-	//			m_currentMode = GameState::credits;
-	//			break;
-	//		case GameState::credits://no process events for this screen
-	//			m_currentMode = GameState::splash;
-	//			break;
-	//		default:
-	//			break;
-	//	}
-	//	keyTest = false;
-	//}
-	//else if (SDL_JoystickGetHat(stick.getStick(), 0) == SDL_HAT_CENTERED)
-	//{
-	//	keyTest = true;
-	//}
-
+	
 	switch (m_currentMode)//gamestate
 	{
 	case GameState::splash:
@@ -184,13 +126,17 @@ void Game::handleEvents()
 		m_mainMenuScr.handleEvents(m_event, m_currentMode, stick);
 		break;
 	case GameState::gameplay://no process events for this screen
-		m_gamePlayScr.handleEvents(m_event, stick);
+		if ((m_event.type == SDL_JOYBUTTONDOWN || m_event.type == SDL_JOYAXISMOTION) && !m_gamePlayScr.isPaused())
+		{
+			manager.handleEvents(stick, m_gamePlayScr.getMapCorners());
+		}
+		m_gamePlayScr.handleEvents(m_event, m_currentMode, stick);
 		break;
 	case GameState::options:
-		m_optionsScr.handleEvents(m_event, m_currentMode);
+		m_optionsScr.handleEvents(m_event, m_currentMode, stick);
 		break;
 	case GameState::help:
-		m_helpScr.handleEvents(m_event, m_currentMode);
+		m_helpScr.handleEvents(m_event, m_currentMode, stick);
 	case GameState::credits:
 		break;
 	default:
@@ -201,30 +147,71 @@ void Game::handleEvents()
 void Game::update()
 {
 	static int count = 0; count++;
-	manager.update();
+
+
+	//newPlayer.destroy();
+	//flag.destroy();
+
+	//manager.refresh();
 	answer = m_gamePlayScr.getChanges();
-	manager.refresh();
+
 
 	newPlayer.setComponentString(answer[1]);
 	rock.setComponentString(answer[3]);
 	platform.setComponentString(answer[5]);
 	flag.setComponentString(answer[7]);
 	cactus.setComponentString(answer[9]);
-	/*if (!temp)
-	{
-	
-		flag.getComponent<AudioComponent>().update();
-		temp = true;
-		
-		
-	}*/
-	//flag.getComponent<AudioComponent>().closeAudio();
+
 	
 	std::cout << std::endl;
 
 
+	for (int i = 0, j = 0, k = 1; i < 5; i++, j += 2, k += 2)
+	{
+
+		if (entArr[i] != NULL)
+		{
+			if (answer[j] == "cat")
+			{
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true);
+				entArr[i]->setComponentString(answer[k]);
+			}
+			if (answer[j] == "flag")
+			{
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", false);
+				entArr[i]->setComponentString(answer[k]);
+
+			}
+			if (answer[j] == "cactus")
+			{
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", false);
+				entArr[i]->setComponentString(answer[k]);
+			}
+			if (answer[j] == "ball")
+			{
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", false);
+				entArr[i]->setComponentString(answer[k]);
+
+			}
+			if (answer[j] == "platform")
+			{
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", false);
+				entArr[i]->setComponentString(answer[k]);
+
+
+
+			}
+
+		}
+	}
+
+
+	manager.update();
 	switch (m_currentMode)//gamestate
 	{
+		case GameState::intro:
+			m_intro.update(m_currentMode);
+			break;
 		case GameState::splash://no process events for this screen
 			m_splashScr.update(m_currentMode);
 			break;
@@ -248,14 +235,19 @@ void Game::update()
 			break;
 		default:
 			break;
+		}
 	}
-}
+
+
 
 void Game::render()
 {
 	SDL_RenderClear(m_renderer);
 	switch (m_currentMode)//gamestate
 	{
+	case GameState::intro:
+		m_intro.render(m_renderer);
+		break;
 	case GameState::licence://no process events for this screen
 		m_licence.render(m_renderer);
 		break;
@@ -266,8 +258,9 @@ void Game::render()
 		m_mainMenuScr.render(m_renderer);
 		break;
 	case GameState::gameplay://no process events for this screen
-		m_gamePlayScr.render(m_renderer);
+		m_gamePlayScr.render(m_renderer, manager);
 		manager.draw(m_renderer);
+		m_gamePlayScr.renderUI(m_renderer);
 		break;
 	case GameState::options://no process events for this screen
 		m_optionsScr.render(m_renderer);
@@ -285,6 +278,7 @@ void Game::render()
 	SDL_RenderPresent(m_renderer);
 }
 
+
 void Game::clean()
 {
 	stick.close();
@@ -296,7 +290,9 @@ void Game::clean()
 
 
 
+
 void Game::initEnts(Entity &t_ent,Vector2 t_pos,Vector2 t_size, std::string t_str, bool t_isAnim, const char* t_audioStr)
+
 {
 	t_ent.addComponent<PositionComponent>();
 	t_ent.addComponent<BodyComponent>();
@@ -308,5 +304,17 @@ void Game::initEnts(Entity &t_ent,Vector2 t_pos,Vector2 t_size, std::string t_st
 	t_ent.getComponent< SpriteComponent>().setPosAndSize(t_ent.getComponent<PositionComponent>().getPosition().X(), t_ent.getComponent<PositionComponent>().getPosition().Y(),
 	t_ent.getComponent<BodyComponent>().getSize().X(), t_ent.getComponent<BodyComponent>().getSize().Y());
 	t_ent.getComponent<AudioComponent>().LoadMusicFile(t_audioStr);
+
+}
+
+void Game::updateEnts(Entity& t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim)
+{
+	//t_ent.deleteComp<SpriteComponent>(&t_ent.getComponent<SpriteComponent>());
+	t_ent.getComponent<SpriteComponent>().resetSprite();
+	t_ent.getComponent<PositionComponent>().setPosition(t_pos);
+	t_ent.getComponent<BodyComponent>().setSize(t_size);
+	t_ent.getComponent< SpriteComponent>().setPathAndScreen(t_str, m_renderer, t_isAnim);
+	t_ent.getComponent< SpriteComponent>().setPosAndSize(t_ent.getComponent<PositionComponent>().getPosition().X(), t_ent.getComponent<PositionComponent>().getPosition().Y(),
+	t_ent.getComponent<BodyComponent>().getSize().X(), t_ent.getComponent<BodyComponent>().getSize().Y());
 
 }

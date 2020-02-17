@@ -28,8 +28,17 @@ void Intro::handleEvents(SDL_Event& t_event)
 	}
 }
 
-void Intro::update()
-{	
+
+void Intro::update(GameState &gamestate)
+{
+	m_counter++;
+
+	if (m_counter > 240)
+	{
+		gamestate = GameState::licence;
+	}
+	std::cout << "Intro" << std::endl;
+	
 }
 
 void Intro::render(SDL_Renderer *t_renderer)

@@ -54,7 +54,6 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	stick.init();
 	answer = m_gamePlayScr.getChanges();
 	answer2 = answer;
-
 }
 
 void Game::handleEvents()
@@ -140,9 +139,6 @@ void Game::handleEvents()
 
 void Game::update()
 {
-	static int count = 0; count++;
-
-
 	//newPlayer.destroy();
 	//flag.destroy();
 
@@ -188,36 +184,39 @@ void Game::update()
 		}
 	}
 
-		manager.update();
-		switch (m_currentMode)//gamestate
-		{
-		case GameState::splash://no process events for this screen
-			m_splashScr.update(m_currentMode);
-			break;
-		case GameState::licence:
-			m_licence.update(m_currentMode);
-			break;
-		case GameState::mainMenu://no process events for this screen
-			m_mainMenuScr.update();
-			break;
-		case GameState::gameplay://no process events for this screen
-			m_gamePlayScr.update();
-			break;
-		case GameState::options://no process events for this screen
-			m_optionsScr.update();
-			break;
-		case GameState::help:
-			m_helpScr.update();
-			break;
-		case GameState::credits://no process events for this screen
-			m_creditsScr.update();
-			break;
-		default:
-			break;
-		}
+	manager.update();
+	switch (m_currentMode)//gamestate
+	{
+	case GameState::splash://no process events for this screen
+		m_splashScr.update(m_currentMode);
+		break;
+	case GameState::licence:
+		m_licence.update(m_currentMode);
+		break;
+	case GameState::mainMenu://no process events for this screen
+		m_mainMenuScr.update();
+		break;
+	case GameState::gameplay://no process events for this screen
+		m_gamePlayScr.update();
+		break;
+	case GameState::options://no process events for this screen
+		m_optionsScr.update();
+		break;
+	case GameState::help:
+		m_helpScr.update();
+		break;
+	case GameState::credits://no process events for this screen
+		m_creditsScr.update();
+		break;
+	default:
+		break;
 	}
+}
 
-
+void Game::subSystemUpdate()
+{
+	std::cout << "update subsytems" << std::endl;
+}
 
 void Game::render()
 {

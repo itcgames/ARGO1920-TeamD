@@ -123,13 +123,13 @@ void Game::handleEvents()
 	case GameState::mainMenu:
 		m_mainMenuScr.handleEvents(m_event, m_currentMode, stick);
 		break;
-	case GameState::gameplay://no process events for this screen
-		if ((m_event.type == SDL_JOYBUTTONDOWN || m_event.type == SDL_JOYAXISMOTION) && !m_gamePlayScr.isPaused())
-		{
-			manager.handleEvents(stick, m_gamePlayScr.getMapCorners());
-		}
-		m_gamePlayScr.handleEvents(m_event, m_currentMode, stick);
-		break;
+	//case GameState::gameplay://no process events for this screen
+	//	if ((m_event.type == SDL_JOYBUTTONDOWN || m_event.type == SDL_JOYAXISMOTION) && !m_gamePlayScr.isPaused())
+	//	{
+	//		manager.handleEvents(stick, m_gamePlayScr.getMapCorners());
+	//	}
+	//	m_gamePlayScr.handleEvents(m_event, m_currentMode, stick);
+	//	break;
 	case GameState::options:
 		m_optionsScr.handleEvents(m_event, m_currentMode, stick);
 		break;
@@ -200,7 +200,7 @@ void Game::update()
 		}
 	}
 
-	manager.update();
+	
 	switch (m_currentMode)//gamestate
 	{
 	case GameState::intro:
@@ -235,6 +235,21 @@ void Game::update()
 
 void Game::subSystemUpdate()
 {
+	switch (m_currentMode)//gamestate
+	{
+	
+	case GameState::gameplay://no process events for this screen
+		if ((m_event.type == SDL_JOYBUTTONDOWN || m_event.type == SDL_JOYAXISMOTION) && !m_gamePlayScr.isPaused())
+		{
+			manager.handleEvents(stick, m_gamePlayScr.getMapCorners());
+		}
+		m_gamePlayScr.handleEvents(m_event, m_currentMode, stick);
+		break;
+	default:
+		break;
+	}
+	manager.update();
+	m_gamePlayScr.fixedUpdate(manager);
 	std::cout << "update subsytems" << std::endl;
 }
 

@@ -7,6 +7,8 @@
 #include "Joystick.h"
 #include "EntityManager.h"
 #include "Gamestate.h"
+#include "OctTree.h"
+#include "CollisionSystem.h"
 class Gameplay
 {
 public:
@@ -21,9 +23,14 @@ public:
 	std::vector<std::string> getChanges();
 	Map getMap();
 	std::vector<Vector2> getMapCorners();
+	void fixedUpdate(EntityManager& t_entMan);
 private:
 	Map m_map;
 	PauseMenu m_pauseMenu;
 	bool paused;
 	int timer;
+	OctTree m_OTree;
+	int row, col,maxRow,maxCol;
+	void setupRowCol(int t_row, int t_col, int t_MaxRow, int t_MaxCol);
+	CollisionSystem gameplayCol;
 };

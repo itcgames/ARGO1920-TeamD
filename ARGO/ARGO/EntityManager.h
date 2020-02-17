@@ -13,7 +13,7 @@ class EntityManager
 private:
 	std::vector<std::unique_ptr<Entity>> entities;
 	MovementSystem m_moveSys;
-	CollisionSystem m_colSys;
+
 	BoundarySystem m_boundSys;
 
 	int timer = 0;
@@ -31,7 +31,19 @@ public:
 	void handleStop( std::string t_str);
 	int handleWin(int t_levelNum);
 	//Entity getEnt(int t_arrPos);
-	
-	static const int MAX_TIME = 10;
-};
+	CollisionSystem m_colSys;
+	//static const int MAX_TIME = 7;
+	Vector2 getPlayerPos() {
+		for (auto& f : entities)
+		{
+			Entity& tempF = *f.get();
+			if (tempF.getComponentString() == "player")
+			{
+				return tempF.getComponent<PositionComponent>().getPosition();
+			};
+		}
+	}
 
+	static const int MAX_TIME = 100;
+	int newTimer = 0;
+};

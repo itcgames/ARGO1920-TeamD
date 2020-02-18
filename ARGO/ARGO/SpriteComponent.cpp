@@ -150,9 +150,4 @@ void SpriteComponent::render()
 		}
 	}
 	SDL_RenderCopy(m_screen, m_texture.at(m_currentTex), &srcrect, &dstrect);
-	if (xOffset == 480 && m_currentState != PlayerStates::IdlePlayer)
-	{
-		m_animeStates.idle();
-		m_currentState = PlayerStates::IdlePlayer;
-	}
 }

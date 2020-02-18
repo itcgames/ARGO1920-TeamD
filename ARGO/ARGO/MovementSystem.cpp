@@ -10,7 +10,6 @@ MovementSystem::~MovementSystem()
 
 Vector2 const MovementSystem::move(PositionComponent pos, std::string t_dir)
 {
-	std::cout << dlelte++ << std::endl;
 	Vector2 temp = pos.getPosition();
 	if (t_dir == "up")
 	{

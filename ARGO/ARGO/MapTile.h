@@ -1,7 +1,9 @@
-#pragma once
+#ifndef MAPTILE
+#define MAPTILE
 #include "SpriteComponent.h"
 #include "PositionComponent.h"
-class mapTile
+#include "TileHolder.h"
+class mapTile: public TileHolder
 {
 public:
 	mapTile();
@@ -18,3 +20,4 @@ public:
 	void render(SDL_Renderer*& t_renderer) { m_tile.render(); };
 	
 };
+#endif	//!MAPTILE

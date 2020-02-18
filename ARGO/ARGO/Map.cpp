@@ -39,32 +39,39 @@ void Map::init(SDL_Renderer*& t_renderer, int t_levelNum)
 	{
 		for (int i = 0; i < 32; i++)
 		{
-			tile[i][j].setPos(Vector2(0, 0));
+			
+			m_factory->setPos(test, i, j);
+			//tile[i][j].setPos(Vector2(0, 0));
 			if (mapArray[arrayIndex] == 14) {
 				m_mapHolder.mapDoubleArray[i][j] = mapArray[arrayIndex];
 				tile[i][j].init(wallStr, t_renderer);
-				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
+				//tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
+				//m_factory->setPos(Vector2(0 + (120 * i), 0 + (120 * j)), i, j);
 			}
 			else if (mapArray[arrayIndex] == 13) {
 				m_mapHolder.mapDoubleArray[i][j] = mapArray[arrayIndex];
 				tile[i][j].init(platformStr, t_renderer);
-				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
+				//tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
+				//m_factory->setPos(Vector2(0 + (120 * i), 0 + (120 * j)), i, j);
 			}
 			else if (mapArray[arrayIndex] == 15) {
 				m_mapHolder.mapDoubleArray[i][j] = mapArray[arrayIndex];
 				tile[i][j].init(yarnStr, t_renderer);
-				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
+				//tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
+				//m_factory->setPos(Vector2(0 + (120 * i), 0 + (120 * j)), i, j);
 			}
 			else if (mapArray[arrayIndex] == 11) {
 				m_mapHolder.mapDoubleArray[i][j] = mapArray[arrayIndex];
 				tile[i][j].init(catStr, t_renderer);
-				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
+				//tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
+				//m_factory->setPos(Vector2(0 + (120 * i), 0 + (120 * j)), i, j);
 			}
 			else if (mapArray[arrayIndex] == 12)
 			{
 				m_mapHolder.mapDoubleArray[i][j] = mapArray[arrayIndex];
 				tile[i][j].init(flagStr, t_renderer);
-				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
+				//tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
+				//m_factory->setPos(Vector2(0 + (120 * i), 0 + (120 * j)), i, j);
 			}
 			else {
 				m_mapHolder.mapDoubleArray[i][j] = 0;
@@ -90,7 +97,8 @@ void Map::render(SDL_Renderer*& t_renderer, int i, int j)
 		m_mapHolder.mapDoubleArray[i][j] == 14 ||
 		m_mapHolder.mapDoubleArray[i][j] == 15)
 	{
-		drawTile(t_renderer, i, j);
+		m_factory->drawTile(t_renderer, i, j);
+		//drawTile(t_renderer, i, j);
 	}
 	else
 	{

@@ -44,6 +44,6 @@ public:
 		}
 	}
 
-	static const int MAX_TIME = 100;
+	static const int MAX_TIME = 10 ;
 	int newTimer = 0;
 };

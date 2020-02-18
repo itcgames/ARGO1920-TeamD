@@ -19,6 +19,9 @@
 #include "Credits.h"
 #include "Joystick.h"
 #include "MovementSystem.h"
+#include"Jump.h"
+#include"Command.h"
+#include<vector>
 class Game
 {
 public:
@@ -54,6 +57,9 @@ private:
 	Entity* m_cat;
 
 	Entity*  entArr[5];
+	//std::vector<Command *> jump;
+	JumpCommand jump;
+
 
 	/// <summary>
 	/// Systems

@@ -95,7 +95,11 @@ PlayerStates SpriteComponent::getCurrentState()
 
 bool SpriteComponent::finishedAnime()
 {
-	return xOffset==480;
+	if (timer >= MAX_TIME-1 && xOffset >= 480)
+	{
+		return true;
+	}
+	return false;
 }
 
 void SpriteComponent::init()

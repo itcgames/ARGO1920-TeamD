@@ -188,9 +188,6 @@ void Game::update()
 			{
 				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", false);
 				entArr[i]->setComponentString(answer[k]);
-
-
-
 			}
 
 		}

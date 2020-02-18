@@ -25,6 +25,7 @@ private:
 	float newTimer = 1;
 	bool m_moveThisFrame = false;
 	bool m_inputThisFrame = false;
+	bool m_startOfInput = false;
 	std::string m_direction = "";
 
 	UpCommand m_up;
@@ -57,6 +58,6 @@ public:
 			};
 		}
 	}
-
+	int ti = 0;
 	static const int MAX_TIME = 20;
 };

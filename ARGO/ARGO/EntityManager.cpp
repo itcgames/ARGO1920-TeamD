@@ -232,6 +232,65 @@ void EntityManager::handleBoundary(Entity& t_ent, Vector2 t_mapTopLeft, Vector2 
 	t_ent.getComponent<SpriteComponent>().setPosAndSize(t_ent.getComponent<PositionComponent>().getPosition().X(), t_ent.getComponent<PositionComponent>().getPosition().Y(), t_ent.getComponent<BodyComponent>().getSize().X(), t_ent.getComponent<BodyComponent>().getSize().Y());
 }
 
+<<<<<<< Updated upstream
+=======
+void EntityManager::movement()
+{
+	for (auto& e : entities)
+	{
+		Entity& tempE = *e.get();
+		if (tempE.getAlive() && tempE.getComponentString() == "player" && 
+			(tempE.getComponent<SpriteComponent>().getCurrentState() == PlayerStates::MovingPlayer || tempE.getComponent<SpriteComponent>().getCurrentState() == PlayerStates::PushingPlayer))
+		{
+			Vector2 tempVec = m_moveSys.move(tempE.getComponent<PositionComponent>().getPosition(), m_direction);
+			if (tempE.getComponent<SpriteComponent>().finishedAnime())
+			{
+				tempVec = tempE.getComponent<PositionComponent>().getPosition();
+				tempVec = Vector2((int((tempVec.x + 60) / 120)) * 120, (int((tempVec.y + 60) / 120)) * 120);
+				tempE.getComponent<SpriteComponent>().updateState(PlayerStates::IdlePlayer);
+			}
+			tempE.getComponent<PositionComponent>().setPosition(tempVec);
+			tempE.getComponent<SpriteComponent>().setPosAndSize(tempE.getComponent<PositionComponent>().getPosition().X(), tempE.getComponent<PositionComponent>().getPosition().Y(),
+				tempE.getComponent<BodyComponent>().getSize().X(), tempE.getComponent<BodyComponent>().getSize().Y());
+		}
+	}
+}
+
+void EntityManager::pushing()
+{
+	for (auto& e : entities)
+	{
+		Entity& tempE = *e.get();
+		if (tempE.getComponentString() == "move")
+		{
+			for (auto& f : entities)
+			{
+				Entity& tempF = *f.get();
+				if (tempF.getComponentString() == "player" ||(tempF.getComponentString() == "move"&& tempE.getComponent<PositionComponent>().getPosition()!=tempF.getComponent<PositionComponent>().getPosition())   )
+				{
+					if (m_colSys.collides(tempE.getComponent<PositionComponent>().getPosition(),
+						tempE.getComponent<BodyComponent>().getSize(),
+						tempF.getComponent<PositionComponent>().getPosition(),
+						tempF.getComponent<BodyComponent>().getSize()))
+					{
+						Vector2 tempVec = m_moveSys.move(tempE.getComponent<PositionComponent>().getPosition(), m_direction);
+						if (tempF.getComponent<SpriteComponent>().finishedAnime())
+						{
+							tempVec = tempE.getComponent<PositionComponent>().getPosition();
+							tempVec = Vector2((int((tempVec.x + 60) / 120)) * 120, (int((tempVec.y + 60) / 120)) * 120);
+						}
+						tempE.getComponent<PositionComponent>().setPosition(tempVec);
+						tempE.getComponent<SpriteComponent>().setPosAndSize(tempE.getComponent<PositionComponent>().getPosition().X(), tempE.getComponent<PositionComponent>().getPosition().Y(),
+							tempE.getComponent<BodyComponent>().getSize().X(), tempE.getComponent<BodyComponent>().getSize().Y());
+						tempF.getComponent<SpriteComponent>().updateState(PlayerStates::PushingPlayer);
+					}
+				}
+			}
+		}
+	}
+}
+
+>>>>>>> Stashed changes
 //Entity EntityManager::getEnt(int t_arrPos)
 //{
 //	return *entities[t_arrPos];

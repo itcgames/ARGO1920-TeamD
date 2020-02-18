@@ -9,7 +9,7 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 		if (tempE.getAlive())
 		{
 			if ((tempE.getComponentString() == "player" && tempE.getComponent<PositionComponent>().getPosition()!=Vector2(230000, 20000) || SDL_JoystickGetButton(stick.getStick(), 4) != 0) 
-				&& timer >= MAX_TIME)
+				&& timer >= MAX_TIME && tempE.getComponent<SpriteComponent>().getCurrentState() == PlayerStates::IdlePlayer)
 			{
 				if (stick.Y() == 1)
 				{
@@ -64,6 +64,7 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 							tempF.getComponent<PositionComponent>().getPosition(),
 							tempF.getComponent<BodyComponent>().getSize()))
 						{
+							tempF.getComponent<SpriteComponent>().updateState(PlayerStates::DyingPlayer);
 							tempF.getComponent<PositionComponent>().setPreviousPosition(tempF.getComponent<PositionComponent>().getPosition());
 							tempF.getComponent<PositionComponent>().setPosition(Vector2(230000, 20000));
 							tempF.getComponent<SpriteComponent>().setPosAndSize(tempF.getComponent<PositionComponent>().getPosition().X(),
@@ -88,7 +89,7 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 							tempF.getComponent<BodyComponent>().getSize()))
 						{
 
-							if (stick.Y() == 1)
+							/*if (stick.Y() == 1)
 							{
 								handleMove(tempE, "down");
 							}
@@ -103,7 +104,8 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 							else if (stick.Y() == -1)
 							{
 								handleMove(tempE, "up");
-							}
+							}*/
+
 							if (stick.Y() == 1 || stick.X() == 1 || stick.X() == -1 || stick.Y() == -1)
 							{
 								tempF.getComponent<SpriteComponent>().updateState(PlayerStates::PushingPlayer);
@@ -118,20 +120,33 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 	}
 	if (m_moveThisFrame)
 	{
-		timer =0;
-		
+		if (newTimer < (MAX_TIME*0.5f))
+		{
+			newTimer *= 1.7;
+		}
+		timer = newTimer;		
 	}
-	
+	if (stick.X() != 0 || stick.Y() != 0)
+	{
+		m_inputThisFrame = true;
+	}
 }
 
 void EntityManager::update()
 {
-	if(timer < MAX_TIME)
+	if (timer < MAX_TIME)
 		timer++;
+	if (!m_inputThisFrame)
+	{
+		newTimer = 1;
+	}
+	m_inputThisFrame = false;
 	for (auto& e : entities)
 	{
 		e->update();
 	}
+	movement();
+	pushing();
 }
 
 void EntityManager::draw(SDL_Renderer* t_screen)
@@ -182,21 +197,9 @@ Entity& EntityManager::addEntity(std::string t_identifier)
 void EntityManager::handleMove(Entity& t_ent, std::string t_str)
 {
 	m_moveThisFrame = true;
-	Vector2 tempVec = m_moveSys.move(t_ent.getComponent<PositionComponent>().getPosition(), t_str);
+	m_direction = t_str;
 	t_ent.getComponent<PositionComponent>().setPreviousPosition(t_ent.getComponent<PositionComponent>().getPosition());
-	t_ent.getComponent<PositionComponent>().setPosition(tempVec);
-	t_ent.getComponent<SpriteComponent>().setPosAndSize(t_ent.getComponent<PositionComponent>().getPosition().X(), t_ent.getComponent<PositionComponent>().getPosition().Y(), t_ent.getComponent<BodyComponent>().getSize().X(), t_ent.getComponent<BodyComponent>().getSize().Y());
 	t_ent.getComponent<SpriteComponent>().updateState(PlayerStates::MovingPlayer);
-}
-
-void EntityManager::handleStop( std::string t_str)
-{
-	/*const Entity tempE = t_ent;
-	for (auto& e2 : entities)
-	{
-
-		m_colSys.collides(tempE.getComponent<PositionComponent>().getPosition(),t_)
-	}*/
 }
 
 int EntityManager::handleWin(int t_levelNum)
@@ -230,6 +233,60 @@ void EntityManager::handleBoundary(Entity& t_ent, Vector2 t_mapTopLeft, Vector2 
 	Vector2 tempPos = m_boundSys.hitBoundary(t_ent.getComponent<PositionComponent>().getPosition(), t_ent.getComponent<BodyComponent>().getSize(), t_mapTopLeft, t_mapBottomRight);
 	t_ent.getComponent<PositionComponent>().setPosition(tempPos);
 	t_ent.getComponent<SpriteComponent>().setPosAndSize(t_ent.getComponent<PositionComponent>().getPosition().X(), t_ent.getComponent<PositionComponent>().getPosition().Y(), t_ent.getComponent<BodyComponent>().getSize().X(), t_ent.getComponent<BodyComponent>().getSize().Y());
+}
+
+void EntityManager::movement()
+{
+	for (auto& e : entities)
+	{
+		Entity& tempE = *e.get();
+		if (tempE.getAlive() && tempE.getComponentString() == "player" && tempE.getComponent<SpriteComponent>().getCurrentState() == PlayerStates::MovingPlayer)
+		{
+			Vector2 tempVec = m_moveSys.move(tempE.getComponent<PositionComponent>().getPosition(), m_direction);
+			if (tempE.getComponent<SpriteComponent>().finishedAnime())
+			{
+				tempVec = tempE.getComponent<PositionComponent>().getPosition();
+				tempVec = Vector2((int((tempVec.x + 60) / 120)) * 120, (int((tempVec.y + 60) / 120)) * 120);
+			}
+			tempE.getComponent<PositionComponent>().setPosition(tempVec);
+			tempE.getComponent<SpriteComponent>().setPosAndSize(tempE.getComponent<PositionComponent>().getPosition().X(), tempE.getComponent<PositionComponent>().getPosition().Y(),
+				tempE.getComponent<BodyComponent>().getSize().X(), tempE.getComponent<BodyComponent>().getSize().Y());
+		}
+	}
+}
+
+void EntityManager::pushing()
+{
+	for (auto& e : entities)
+	{
+		Entity& tempE = *e.get();
+		if (tempE.getComponentString() == "move")
+		{
+			for (auto& f : entities)
+			{
+				Entity& tempF = *f.get();
+				if (tempF.getComponentString() == "player")
+				{
+					if (m_colSys.collides(tempE.getComponent<PositionComponent>().getPosition(),
+						tempE.getComponent<BodyComponent>().getSize(),
+						tempF.getComponent<PositionComponent>().getPosition(),
+						tempF.getComponent<BodyComponent>().getSize()))
+					{
+						Vector2 tempVec = m_moveSys.move(tempE.getComponent<PositionComponent>().getPosition(), m_direction);
+						if (tempF.getComponent<SpriteComponent>().finishedAnime())
+						{
+							tempVec = tempE.getComponent<PositionComponent>().getPosition();
+							tempVec = Vector2((int((tempVec.x + 60) / 120)) * 120, (int((tempVec.y + 60) / 120)) * 120);
+						}
+						tempE.getComponent<PositionComponent>().setPosition(tempVec);
+						tempE.getComponent<SpriteComponent>().setPosAndSize(tempE.getComponent<PositionComponent>().getPosition().X(), tempE.getComponent<PositionComponent>().getPosition().Y(),
+							tempE.getComponent<BodyComponent>().getSize().X(), tempE.getComponent<BodyComponent>().getSize().Y());
+
+					}
+				}
+			}
+		}
+	}
 }
 
 //Entity EntityManager::getEnt(int t_arrPos)

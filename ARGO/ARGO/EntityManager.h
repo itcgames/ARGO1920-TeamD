@@ -16,8 +16,11 @@ private:
 
 	BoundarySystem m_boundSys;
 
-	int timer = 0;
+	float timer = 0;
+	float newTimer = 1;
 	bool m_moveThisFrame = false;
+	bool m_inputThisFrame = false;
+	std::string m_direction = "";
 public:
 	void handleEvents(Joystick &stick,std::vector<Vector2> t_mapsize);
 	void update();
@@ -28,7 +31,8 @@ public:
 	void mapCol(Vector2& t_pos,Vector2& t_size);
 
 	void handleBoundary(Entity& t_ent, Vector2 t_mapTopLeft, Vector2 t_mapBottomRight);
-	void handleStop( std::string t_str);
+	void movement();
+	void pushing();
 	int handleWin(int t_levelNum);
 	//Entity getEnt(int t_arrPos);
 	CollisionSystem m_colSys;
@@ -44,6 +48,5 @@ public:
 		}
 	}
 
-	static const int MAX_TIME = 10 ;
-	int newTimer = 0;
+	static const int MAX_TIME = 20;
 };

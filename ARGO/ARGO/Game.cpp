@@ -157,10 +157,6 @@ void Game::update()
 	flag.setComponentString(answer[7]);
 	cactus.setComponentString(answer[9]);
 
-
-	std::cout << std::endl;
-
-
 	for (int i = 0, j = 0, k = 1; i < 5; i++, j += 2, k += 2)
 	{
 
@@ -250,7 +246,6 @@ void Game::subSystemUpdate()
 	}
 	manager.update();
 	m_gamePlayScr.fixedUpdate(manager);
-	std::cout << "update subsytems" << std::endl;
 }
 
 void Game::render()

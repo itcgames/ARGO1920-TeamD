@@ -11,6 +11,6 @@ public:
 	
 
 private:
-	
+	int dlelte = 1;
 };
 

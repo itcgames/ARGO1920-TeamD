@@ -82,10 +82,20 @@ void SpriteComponent::updateState(PlayerStates t_newState)
 		{
 			m_currentState = t_newState;
 			xOffset = 480;
-			timer = 10;
+			timer = MAX_TIME;
 		}
 
 	}
+}
+
+PlayerStates SpriteComponent::getCurrentState()
+{
+	return m_currentState;
+}
+
+bool SpriteComponent::finishedAnime()
+{
+	return xOffset==480;
 }
 
 void SpriteComponent::init()
@@ -95,7 +105,7 @@ void SpriteComponent::init()
 void SpriteComponent::update()
 {
 	timer++;
-	if (m_animed && timer > 10)
+	if (m_animed && timer >= MAX_TIME)
 	{
 		timer = 0;
 		xOffset += 120;

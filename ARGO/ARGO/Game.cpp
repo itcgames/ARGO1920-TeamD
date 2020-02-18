@@ -158,7 +158,6 @@ void Game::update()
 	cactus.setComponentString(answer[9]);
 
 
-	std::cout << std::endl;
 
 
 	for (int i = 0, j = 0, k = 1; i < 5; i++, j += 2, k += 2)
@@ -250,7 +249,6 @@ void Game::subSystemUpdate()
 	}
 	manager.update();
 	m_gamePlayScr.fixedUpdate(manager);
-	std::cout << "update subsytems" << std::endl;
 }
 
 void Game::render()
@@ -298,7 +296,6 @@ void Game::clean()
 	SDL_DestroyWindow(m_window);
 	SDL_DestroyRenderer(m_renderer);
 	SDL_Quit();
-	std::cout << "Game Cleaned" << std::endl;
 }
 
 

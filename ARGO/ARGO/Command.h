@@ -1,9 +1,9 @@
 #pragma once
 #include"Joystick.h"
-#include"EntityManager.h"
+#include<iostream>
 class Command
 {
 public:
 	virtual ~Command() {}
-	virtual void execute(Joystick& stick, std::vector<Vector2> t_mapsize, EntityManager manager) = 0;
+	virtual std::string execute() = 0;
 };

@@ -13,19 +13,23 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 			{
 				if (stick.Y() == 1)
 				{
-					handleMove(tempE, "down");
+					//handleMove(tempE, "down");
+					handleMove(tempE, m_down.execute());
 				}
 				else if (stick.X() == 1)
 				{
-					handleMove(tempE, "right");
+					//handleMove(tempE, "right");
+					handleMove(tempE, m_right.execute());
 				}
 				else if (stick.X() == -1)
 				{
-					handleMove(tempE, "left");
+					//handleMove(tempE, "left");
+					handleMove(tempE, m_left.execute());
 				}
 				else if (stick.Y() == -1)
 				{
-					handleMove(tempE, "up");
+					//handleMove(tempE, "up");
+					handleMove(tempE, m_up.execute());
 				}
 				else if (SDL_JoystickGetButton(stick.getStick(), 4) != 0)
 				{

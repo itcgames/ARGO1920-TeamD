@@ -24,7 +24,6 @@ int main(int argc, char* argv[])
 
 		frameTime = SDL_GetTicks() - frameStart;
 		
-		std::cout << SDL_GetTicks() << std::endl;
 
 		if (SDL_GetTicks() > time + 10)
 		{
@@ -34,7 +33,6 @@ int main(int argc, char* argv[])
 
 		if (frameDelay > frameTime)
 		{
-			std::cout << "delay" << std::endl;
 			SDL_Delay(frameDelay - frameTime);
 		}
 	}

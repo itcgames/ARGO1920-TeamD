@@ -35,7 +35,6 @@
     <ClCompile Include="help.cpp" />
     <ClCompile Include="Intro.cpp" />
     <ClCompile Include="Joystick.cpp" />
-    <ClCompile Include="Jump.cpp" />
     <ClCompile Include="Licence.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
@@ -49,6 +48,7 @@
     <ClCompile Include="PositionComponent.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
     <ClCompile Include="System.cpp" />
+    <ClCompile Include="Up.cpp" />
     <ClCompile Include="VelocityComponent.cpp" />
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>
@@ -62,6 +62,7 @@
     <ClInclude Include="Command.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Credits.h" />
+    <ClInclude Include="Down.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Flag.h" />
     <ClInclude Include="EntityManager.h" />
@@ -71,7 +72,7 @@
     <ClInclude Include="help.h" />
     <ClInclude Include="Intro.h" />
     <ClInclude Include="Joystick.h" />
-    <ClInclude Include="Jump.h" />
+    <ClInclude Include="Left.h" />
     <ClInclude Include="LevelState.h" />
     <ClInclude Include="Licence.h" />
     <ClInclude Include="MainMenu.h" />
@@ -82,11 +83,13 @@
     <ClInclude Include="OctTree.h" />
     <ClInclude Include="Options.h" />
     <ClInclude Include="PauseMenu.h" />
+    <ClInclude Include="Right.h" />
     <ClInclude Include="SDL_mixer.h" />
     <ClInclude Include="Splash.h" />
     <ClInclude Include="PositionComponent.h" />
     <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="System.h" />
+    <ClInclude Include="Up.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="VelocityComponent.h" />
     <ClInclude Include="Wall.h" />

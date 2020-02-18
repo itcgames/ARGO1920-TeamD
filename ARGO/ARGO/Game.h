@@ -20,7 +20,6 @@
 #include "Joystick.h"
 #include "MovementSystem.h"
 #include "AudioComponent.h"
-#include "Jump.h"
 class Game
 {
 public:
@@ -57,8 +56,6 @@ private:
 	Entity* m_cat;
 
 	Entity*  entArr[5];
-
-	JumpCommand m_jump;
 
 	/// <summary>
 	/// Systems

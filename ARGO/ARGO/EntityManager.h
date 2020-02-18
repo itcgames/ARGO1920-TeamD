@@ -8,16 +8,25 @@
 #include "SpriteComponent.h"
 #include "BoundarySystem.h"
 
+#include"Up.h"
+#include"Down.h"
+#include"Left.h"
+#include"Right.h"
+
 class EntityManager
 {
 private:
 	std::vector<std::unique_ptr<Entity>> entities;
 	MovementSystem m_moveSys;
-
 	BoundarySystem m_boundSys;
-
 	int timer = 0;
 	bool m_moveThisFrame = false;
+
+	UpCommand m_up;
+	DownCommand m_down;
+	LeftCommand m_left;
+	RightCommand m_right;
+
 public:
 	void handleEvents(Joystick &stick,std::vector<Vector2> t_mapsize);
 	void update();

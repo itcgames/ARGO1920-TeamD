@@ -103,6 +103,7 @@ void PauseMenu::input(SDL_Event& t_event, Joystick t_stick)
 			{
 				if (t_stick.Y() == 1)
 				{
+					mostRecentBoxChanged = box;
 					dstrectSelect.y += 100;
 					timer = 0;
 					if (dstrectSelect.y - selectBox[box].Y() > 400)
@@ -112,12 +113,14 @@ void PauseMenu::input(SDL_Event& t_event, Joystick t_stick)
 				}
 				else if (t_stick.Y() == -1)
 				{
+					mostRecentBoxChanged = box;
 					dstrectSelect.y -= 100;
 					timer = 0;
 					if (dstrectSelect.y + 5 < selectBox[box].Y())
 					{
 						dstrectSelect.y += 500;
 					}
+					
 				}
 			}
 		}
@@ -244,4 +247,9 @@ std::vector<std::string> PauseMenu::getChanges()
 	}
 
 	return rules;
+}
+
+void PauseMenu::setBoxY(int t_arrPos, int t_yVal)
+{
+	srcrect[t_arrPos].y = t_yVal;
 }

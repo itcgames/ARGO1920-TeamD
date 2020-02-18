@@ -18,6 +18,8 @@ public:
 	void resetTime();
 	std::vector<std::string> getChanges();
 	static const int MAX_TIME = 30;
+	void setBoxY(int t_arrPos, int t_yVal);
+	int getBoxY(int t_arrPos) { return srcrect[t_arrPos].y; };
 private:
 	SDL_Surface* loadedSurfaceBack;
 	SDL_Surface* loadedSurfaceObj;
@@ -39,4 +41,6 @@ private:
 
 	int timer;
 	int currentBox;
+	int yValToStore = 0;
+	int mostRecentBoxChanged = 0;
 };

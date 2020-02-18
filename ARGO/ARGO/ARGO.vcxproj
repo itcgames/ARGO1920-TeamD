@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="AnimationStates.cpp" />
     <ClCompile Include="AudioComponent.cpp" />
     <ClCompile Include="BodyComponent.cpp" />
     <ClCompile Include="BoundarySystem.cpp" />
@@ -50,6 +52,8 @@
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
+    <ClInclude Include="AnimationStates.h" />
     <ClInclude Include="AudioComponent.h" />
     <ClInclude Include="BodyComponent.h" />
     <ClInclude Include="BoundarySystem.h" />

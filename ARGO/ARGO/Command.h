@@ -1,8 +1,7 @@
 #pragma once
+#include"EntityManager.h"
 class Command
 {
 public:
-	Command();
-	virtual ~Command() = 0;
-	virtual void execute() = 0;
+	virtual void execute(Joystick& stick, std::vector<Vector2> t_mapsize, EntityManager manager) = 0;
 };

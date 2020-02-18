@@ -19,9 +19,9 @@
 #include "Credits.h"
 #include "Joystick.h"
 #include "MovementSystem.h"
+#include<vector>
 #include"Jump.h"
 #include"Command.h"
-#include<vector>
 class Game
 {
 public:
@@ -53,13 +53,9 @@ private:
 	Intro m_intro;
 	Joystick stick;
 	bool keyTest = false;
-
 	Entity* m_cat;
-
 	Entity*  entArr[5];
-	//std::vector<Command *> jump;
-	JumpCommand jump;
-
+	JumpCommand* m_jump = new JumpCommand;
 
 	/// <summary>
 	/// Systems

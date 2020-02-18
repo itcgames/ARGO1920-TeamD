@@ -22,7 +22,6 @@
     <ClCompile Include="BodyComponent.cpp" />
     <ClCompile Include="BoundarySystem.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
-    <ClCompile Include="Command.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Credits.cpp" />
     <ClCompile Include="Entity.cpp" />

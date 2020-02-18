@@ -37,7 +37,6 @@ void Intro::update(GameState &gamestate)
 	{
 		gamestate = GameState::licence;
 	}
-	std::cout << "Intro" << std::endl;
 	
 }
 

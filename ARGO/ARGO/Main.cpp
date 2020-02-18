@@ -24,6 +24,7 @@ int main(int argc, char* argv[])
 
 		frameTime = SDL_GetTicks() - frameStart;
 
+
 		if (SDL_GetTicks() > time + 10)
 		{
 			time = SDL_GetTicks();

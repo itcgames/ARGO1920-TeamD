@@ -20,9 +20,13 @@ public:
 	void setPathAndScreen(std::string path, SDL_Renderer* t_screen, bool t_anime = false);
 	void setPosAndSize(int x, int y, int width, int height);
 	void updateState(PlayerStates t_newState);
+	PlayerStates getCurrentState();
+	bool finishedAnime();
 	void init() override;
 	void update() override;
 	void render() override;
+
+	static const int MAX_TIME = 10;
 private:
 	std::vector< std::string> m_paths;
 	std::vector <SDL_Surface*> loadedSurface;

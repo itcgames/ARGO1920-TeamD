@@ -6,20 +6,16 @@ class State
 public:
 	virtual void idle(Animation* a)
 	{
-		std::cout << "State::Idling" << std::endl;
 	}
 
 	virtual void moving(Animation* a)
 	{
-		std::cout << "State::moving" << std::endl;
 	}
 	virtual void pushing(Animation* a)
 	{
-		std::cout << "State::pushing" << std::endl;
 	}
 	virtual void dying(Animation* a)
 	{
-		std::cout << "State::dying" << std::endl;
 	}
 };
 

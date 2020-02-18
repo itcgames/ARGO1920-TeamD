@@ -14,6 +14,7 @@ public:
 	void setPreviousPosition(Vector2 position);
 	Vector2 getPreviousPosition();
 	void setToPreviousPos();
+	bool isEmpty();
 	void init() override;
 	void update() override;
 	void render() override;

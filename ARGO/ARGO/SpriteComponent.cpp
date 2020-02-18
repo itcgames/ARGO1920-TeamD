@@ -82,10 +82,24 @@ void SpriteComponent::updateState(PlayerStates t_newState)
 		{
 			m_currentState = t_newState;
 			xOffset = 480;
-			timer = 10;
+			timer = MAX_TIME;
 		}
 
 	}
+}
+
+PlayerStates SpriteComponent::getCurrentState()
+{
+	return m_currentState;
+}
+
+bool SpriteComponent::finishedAnime()
+{
+	if (timer >= MAX_TIME-1 && xOffset >= 480)
+	{
+		return true;
+	}
+	return false;
 }
 
 void SpriteComponent::init()
@@ -95,7 +109,7 @@ void SpriteComponent::init()
 void SpriteComponent::update()
 {
 	timer++;
-	if (m_animed && timer > 10)
+	if (m_animed && timer >= MAX_TIME)
 	{
 		timer = 0;
 		xOffset += 120;
@@ -140,9 +154,4 @@ void SpriteComponent::render()
 		}
 	}
 	SDL_RenderCopy(m_screen, m_texture.at(m_currentTex), &srcrect, &dstrect);
-	if (xOffset == 480 && m_currentState != PlayerStates::IdlePlayer)
-	{
-		m_animeStates.idle();
-		m_currentState = PlayerStates::IdlePlayer;
-	}
 }

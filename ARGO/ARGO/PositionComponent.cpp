@@ -52,6 +52,11 @@ void PositionComponent::setToPreviousPos()
 	
 }
 
+bool PositionComponent::isEmpty()
+{
+	return m_prevPositions.size() == 0;
+}
+
 Vector2 PositionComponent::getPosition()
 {
 	return m_position;

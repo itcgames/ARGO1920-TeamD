@@ -1,8 +1,9 @@
 #pragma once
-
+#include"Joystick.h"
+#include<iostream>
 class Command
 {
 public:
 	virtual ~Command() {}
-	virtual void execute() = 0;
+	virtual std::string execute() = 0;
 };

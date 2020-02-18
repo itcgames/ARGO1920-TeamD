@@ -27,7 +27,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	initEnts(rock, Vector2(360, 360), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true, "ASSETS/AUDIO/temp.wav");
 	initEnts(platform, Vector2(240, 480), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true, "ASSETS/AUDIO/temp.wav");
 	initEnts(cactus, Vector2(600, 480), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, "ASSETS/AUDIO/temp.wav");
-
+	lastString = "ASSETS/IMAGES/states.bmp";
 	Entity *arr[]{ &newPlayer,&flag,&platform,&cactus,&rock };
 
 	std::copy(std::begin(arr), std::end(arr), std::begin(entArr));
@@ -164,7 +164,18 @@ void Game::update()
 		{
 			if (answer[j] == "cat")
 			{
-				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/states.bmp", true);
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), lastString, true);
+				if (stick.X()==1)
+				{
+					lastString = "ASSETS/IMAGES/states.bmp";
+					updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), lastString, true);
+				}
+				else if (stick.X() == -1)
+				{
+					lastString = "ASSETS/IMAGES/states2.bmp";
+					updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), lastString, true);
+				}
+				
 				entArr[i]->setComponentString(answer[k]);
 			}
 			if (answer[j] == "flag")

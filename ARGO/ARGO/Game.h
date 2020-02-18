@@ -67,4 +67,6 @@ private:
 
 	std::vector<std::string> answer2;
 	void updateEnts(Entity& t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim);
+	std::string lastString;
+	
 };

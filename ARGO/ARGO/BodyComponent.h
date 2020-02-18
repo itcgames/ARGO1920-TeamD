@@ -13,7 +13,7 @@ public:
 	void init() override;
 	void update() override;
 	void render() override;
-
+	
 private:
 	Vector2 m_size;
 };

@@ -58,5 +58,5 @@ public:
 		}
 	}
 
-	static const int MAX_TIME = 20;
+	static const int MAX_TIME = 10;
 };

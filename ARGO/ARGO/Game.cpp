@@ -167,16 +167,16 @@ void Game::update()
 		{
 			if (answer[j] == "cat")
 			{
-				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), lastString, true, true);
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), lastString, true, false);
 				if (stick.X()==1)
 				{
 					lastString = "ASSETS/IMAGES/states.bmp";
-					updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), lastString, true, true);
+					updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), lastString, true, false);
 				}
 				else if (stick.X() == -1)
 				{
 					lastString = "ASSETS/IMAGES/states2.bmp";
-					updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), lastString, true, true);
+					updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), lastString, true, false);
 				}
 				
 				entArr[i]->setComponentString(answer[k]);

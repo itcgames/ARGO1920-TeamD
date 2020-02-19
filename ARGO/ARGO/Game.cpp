@@ -280,7 +280,6 @@ void Game::render()
 	case GameState::gameplay://no process events for this screen
 		m_gamePlayScr.render(m_renderer, manager);
 		manager.draw(m_renderer);
-		m_gamePlayScr.renderUI(m_renderer);
 		break;
 	case GameState::options://no process events for this screen
 		m_optionsScr.render(m_renderer);

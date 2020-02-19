@@ -48,13 +48,8 @@ void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 			
 		}
 	}
-}
-
-void Gameplay::renderUI(SDL_Renderer*& t_renderer)
-{
 	m_pauseMenu.render(t_renderer);
 }
-
 
 void Gameplay::clean(SDL_Renderer*& t_renderer, SDL_Window* t_window)
 {

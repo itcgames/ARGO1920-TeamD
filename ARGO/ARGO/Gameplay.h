@@ -16,7 +16,6 @@ public:
 	void handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t_stick);
 	void update();
 	void render(SDL_Renderer *&t_renderer,EntityManager& t_entMan);
-	void renderUI(SDL_Renderer*& t_renderer);
 
 	void clean(SDL_Renderer*& t_renderer, SDL_Window* t_window);
 	std::vector<std::string> getChanges();

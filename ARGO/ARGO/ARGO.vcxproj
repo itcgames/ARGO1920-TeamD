@@ -60,12 +60,14 @@
     <ClInclude Include="BodyComponent.h" />
     <ClInclude Include="Bot.h" />
     <ClInclude Include="BoundarySystem.h" />
+    <ClInclude Include="Character.h" />
     <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Credits.h" />
     <ClInclude Include="Down.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="Factory.h" />
     <ClInclude Include="Flag.h" />
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="Game.h" />

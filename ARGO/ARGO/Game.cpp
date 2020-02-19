@@ -10,9 +10,13 @@ auto& cactus(manager.addEntity("spikey"));
 auto& rock(manager.addEntity("move"));
 auto& bot(manager.addEntity("bot"));
 
+
+
+
 Game::Game()
 {
-
+	//m_factory->createCat(newPlayer, Vector2(480, 120), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav");
+	//m_factory->createFlag(flag, Vector2(240, 240), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, "ASSETS/AUDIO/temp.wav");
 }
 
 Game::~Game()

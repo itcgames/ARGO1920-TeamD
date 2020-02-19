@@ -20,6 +20,7 @@
 #include "Joystick.h"
 #include "MovementSystem.h"
 #include "AudioComponent.h"
+#include "Factory.h"
 class Game
 {
 public:
@@ -54,6 +55,9 @@ private:
 	bool keyTest = false;
 	bool temp = false;
 	Entity* m_cat;
+	Factory* m_factory = new CharacterFactory();
+	Character* m_catFactoryPointer;
+	Character* m_flagFactoryPointer;
 
 	Entity*  entArr[5];
 

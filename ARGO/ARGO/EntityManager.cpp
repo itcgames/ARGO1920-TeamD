@@ -125,6 +125,7 @@ void EntityManager::draw(SDL_Renderer* t_screen)
 	for (auto& e : entities)
 	{
 		e->render(t_screen);
+
 	}
 }
 void EntityManager::mapCol(Vector2& t_pos, Vector2& t_size)

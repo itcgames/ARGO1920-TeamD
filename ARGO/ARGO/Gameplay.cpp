@@ -4,7 +4,6 @@ void Gameplay::init(SDL_Renderer*& t_renderer)
 {
 	m_map.init(t_renderer);
 	m_pauseMenu.init();
-	paused = false;
 	timer = 0;
 	m_OTree.initTree(Vector2(0, 0), Vector2(960, 1080), Vector2(960, 0), Vector2(1920, 0), Vector2(2840, 0), Vector2(0, 1080), Vector2(960, 1080), Vector2(1920, 1080), Vector2(2840, 1080));
 }
@@ -15,15 +14,7 @@ void Gameplay::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t
 	{
 		gamestate = GameState::mainMenu;
 	}
-	if (SDL_JoystickGetButton(t_stick.getStick(), 7) != 0 && m_pauseMenu.getTime() >= m_pauseMenu.MAX_TIME)
-	{
-		paused = !paused;
-		m_pauseMenu.resetTime();
-	}
-	if (paused)
-	{
-		m_pauseMenu.input(t_event, t_stick);
-	}
+	m_pauseMenu.input(t_event, t_stick);
 }
 
 void Gameplay::update()
@@ -52,10 +43,7 @@ void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 
 void Gameplay::renderUI(SDL_Renderer*& t_renderer)
 {
-	if (paused)
-	{
-		m_pauseMenu.render(t_renderer);
-	}
+	m_pauseMenu.render(t_renderer);
 }
 
 
@@ -63,10 +51,6 @@ void Gameplay::clean(SDL_Renderer*& t_renderer, SDL_Window* t_window)
 {
 }
 
-bool Gameplay::isPaused()
-{
-	return paused;
-}
 
 std::vector<std::string> Gameplay::getChanges()
 {

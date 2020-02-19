@@ -12,9 +12,6 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 			if (tempE.getComponent<BotComponent>().getBotMode())
 			{
 				tempE.getComponent<BotComponent>().setFakeStickX(fakeStickXVal);
-				
-				
-
 			}
 			if (tempE.getComponentString() == "player" && tempE.getComponent<PositionComponent>().getPosition()!=Vector2(230000, 20000) &&
 				tempE.getComponent<SpriteComponent>().getCurrentState() == PlayerStates::IdlePlayer)
@@ -46,7 +43,10 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 			{
 				tempE.getComponent<PositionComponent>().setToPreviousPos();
 				if (!tempE.getComponent<PositionComponent>().isEmpty())
+				{
 					m_moveThisFrame = true;
+				}
+				tempE.getComponent<SpriteComponent>().updateState(PlayerStates::IdlePlayer);
 			}
 			if (tempE.getComponentString() == "stop")
 			{
@@ -79,13 +79,6 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 							tempF.getComponent<BodyComponent>().getSize()))
 						{
 							tempF.getComponent<SpriteComponent>().updateState(PlayerStates::DyingPlayer);
-							tempF.getComponent<PositionComponent>().setPreviousPosition(tempF.getComponent<PositionComponent>().getPosition());
-							tempF.getComponent<PositionComponent>().setPosition(Vector2(230000, 20000));
-							tempF.getComponent<SpriteComponent>().setPosAndSize(tempF.getComponent<PositionComponent>().getPosition().X(),
-								tempF.getComponent<PositionComponent>().getPosition().Y(),
-								tempF.getComponent<BodyComponent>().getSize().X(),
-								tempF.getComponent<BodyComponent>().getSize().Y());
-
 						}
 					}
 				}
@@ -124,6 +117,7 @@ void EntityManager::update()
 	}
 	movement();
 	pushing();
+	dying();
 }
 
 void EntityManager::draw(SDL_Renderer* t_screen)
@@ -294,6 +288,24 @@ void EntityManager::pushing()
 
 				}
 			}
+		}
+	}
+}
+
+void EntityManager::dying()
+{
+	for (auto& e : entities)
+	{
+		Entity& tempE = *e.get();
+		if (tempE.getComponentString() == "player" && tempE.getComponent<SpriteComponent>().getCurrentState() == PlayerStates::DyingPlayer && 
+			tempE.getComponent<SpriteComponent>().finishedAnime())
+		{
+			//tempE.getComponent<PositionComponent>().setPreviousPosition(tempE.getComponent<PositionComponent>().getPosition());
+			tempE.getComponent<PositionComponent>().setPosition(Vector2(230000, 20000));
+			tempE.getComponent<SpriteComponent>().setPosAndSize(tempE.getComponent<PositionComponent>().getPosition().X(),
+				tempE.getComponent<PositionComponent>().getPosition().Y(),
+				tempE.getComponent<BodyComponent>().getSize().X(),
+				tempE.getComponent<BodyComponent>().getSize().Y());
 		}
 	}
 }

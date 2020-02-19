@@ -22,16 +22,7 @@ Game::~Game()
 
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
-	initEnts(newPlayer, Vector2(480, 120), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav",false);
-	initEnts(flag, Vector2(240, 240), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock, Vector2(360, 360), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(platform, Vector2(240, 480), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(cactus, Vector2(600, 480), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	
-	lastString = "ASSETS/IMAGES/states.bmp";
-	Entity *arr[]{ &newPlayer,&flag,&platform,&cactus,&rock };
-
-	std::copy(std::begin(arr), std::end(arr), std::begin(entArr));
 	int flags = 0;
 	if (fullscreen)
 	{
@@ -51,7 +42,16 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	}
 
 	m_gamePlayScr.init(m_renderer);
+	initEnts(newPlayer, Vector2(m_gamePlayScr.getMap().getPlayerPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(flag, Vector2(m_gamePlayScr.getMap().getRockPos()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock, Vector2(m_gamePlayScr.getMap().getFlagPos()), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(platform, Vector2(m_gamePlayScr.getMap().getPlatformPos()), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(cactus, Vector2(m_gamePlayScr.getMap().getcactusPos()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 
+	lastString = "ASSETS/IMAGES/states.bmp";
+	Entity* arr[]{ &newPlayer,&flag,&platform,&cactus,&rock };
+
+	std::copy(std::begin(arr), std::end(arr), std::begin(entArr));
 	stick.init();
 
 	

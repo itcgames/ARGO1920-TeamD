@@ -39,7 +39,7 @@ void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 		m_map.init(t_renderer,newLevel);
 	}
 	
-	for (int j=0; j < 18; j++)
+	for (int j=0; j < 15; j++)
 	{
 		for (int i=0; i < 32; i++)
 		{
@@ -93,22 +93,22 @@ void Gameplay::fixedUpdate(EntityManager& t_entMan)
 			int test;
 			//row,col,maxrow,maxcol
 			if (i == 0) {
-				setupRowCol(0, 0, 9, 8);
+				setupRowCol(0, 0, 7, 8);
 
 			}if (i == 1) {
-				setupRowCol(0, 8, 9, 16);
+				setupRowCol(0, 8, 7, 16);
 			}if (i == 2) {
-				setupRowCol(0, 16, 9, 24);
+				setupRowCol(0, 16, 7, 24);
 			}if (i == 3) {
-				setupRowCol(0, 24, 9, 32);
+				setupRowCol(0, 24, 7, 32);
 			}if (i == 4) {
-				setupRowCol(9, 0, 18, 8);
+				setupRowCol(7, 0, 15, 8);
 			}if (i == 5) {
-				setupRowCol(9, 8, 18, 16);
+				setupRowCol(7, 8, 15, 16);
 			}if (i == 6) {
-				setupRowCol(9, 16, 18, 24);
+				setupRowCol(7, 16, 15, 24);
 			}if (i == 7) {
-				setupRowCol(9, 24, 18, 32);
+				setupRowCol(7, 24, 15, 32);
 			}
 		}
 	}

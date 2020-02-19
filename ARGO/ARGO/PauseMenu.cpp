@@ -240,3 +240,8 @@ std::vector<std::string> PauseMenu::getChanges()
 
 	return rules;
 }
+
+void PauseMenu::setBoxY(int t_arrPos, int t_yVal)
+{
+	srcrect[t_arrPos].y = t_yVal;
+}

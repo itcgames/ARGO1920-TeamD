@@ -36,6 +36,7 @@ private:
 	ComponentArray componentArray;
 	ComponentBitSet componentBitset;
 	std::string ComponentTag;
+	
 public:
 	Entity();
 	bool getAlive();
@@ -44,7 +45,7 @@ public:
 	void update();
 	void render(SDL_Renderer* t_screen);
 
-
+	
 	template <typename T> bool hasComponent() const
 	{
 		return componentBitset[getComponentTypeID<T>()];

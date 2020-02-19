@@ -23,6 +23,8 @@ public:
 	Map getMap();
 	std::vector<Vector2> getMapCorners();
 	void fixedUpdate(EntityManager& t_entMan);
+	void setBoxY(int t_arrPos, int t_yVal) { m_pauseMenu.setBoxY(t_arrPos, t_yVal); };
+	int getBoxY(int t_arrPos) { return m_pauseMenu.getBoxY(t_arrPos); };
 private:
 	Map m_map;
 	PauseMenu m_pauseMenu;

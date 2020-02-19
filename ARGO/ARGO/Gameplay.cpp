@@ -3,6 +3,9 @@
 void Gameplay::init(SDL_Renderer*& t_renderer)
 {
 	m_map.init(t_renderer);
+	std::string temp = "ASSETS/IMAGES/level" + std::to_string(m_map.getLevelNum()) + "back.bmp";
+	m_loadedSurfaceBack = SDL_LoadBMP(temp.c_str());
+	m_textureBack = SDL_CreateTextureFromSurface(t_renderer, m_loadedSurfaceBack);
 	m_pauseMenu.init();
 	timer = 0;
 	m_OTree.initTree(Vector2(0, 0), Vector2(960, 1080), Vector2(960, 0), Vector2(1920, 0), Vector2(2840, 0), Vector2(0, 1080), Vector2(960, 1080), Vector2(1920, 1080), Vector2(2840, 1080));
@@ -28,7 +31,13 @@ void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 	if (m_map.getLevelNum() != newLevel)
 	{
 		m_map.init(t_renderer,newLevel);
+		std::string temp = "ASSETS/IMAGES/level" + std::to_string(m_map.getLevelNum()) + "back.bmp";
+		m_loadedSurfaceBack = SDL_LoadBMP(temp.c_str());
+		m_textureBack = SDL_CreateTextureFromSurface(t_renderer, m_loadedSurfaceBack);
 	}
+	SDL_Rect dstrect = { 0, 0, m_map.getMapCorners().at(1).x,  m_map.getMapCorners().at(1).y };
+
+	SDL_RenderCopy(t_renderer, m_textureBack, NULL, &dstrect);
 	
 	for (int j=0; j < 18; j++)
 	{

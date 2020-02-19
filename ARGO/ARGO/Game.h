@@ -20,6 +20,8 @@
 #include "Joystick.h"
 #include "MovementSystem.h"
 #include "AudioComponent.h"
+#include "BotComponent.h"
+
 class Game
 {
 public:
@@ -63,10 +65,10 @@ private:
 	MovementSystem m_moveSys;
 	std::vector<std::string> answer;
 
-	void initEnts(Entity &t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim, const char* t_audioStr);
+	void initEnts(Entity &t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim, const char* t_audioStr, bool t_botMode);
 
 	std::vector<std::string> answer2;
-	void updateEnts(Entity& t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim);
+	void updateEnts(Entity& t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim, bool t_botMode);
 	std::string lastString;
-	
+	bool botPresent=true;
 };

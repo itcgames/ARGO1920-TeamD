@@ -7,6 +7,7 @@
 #include "BodyComponent.h"
 #include "SpriteComponent.h"
 #include "BoundarySystem.h"
+#include "BotComponent.h"
 
 #include"Up.h"
 #include"Down.h"
@@ -60,5 +61,5 @@ public:
 	}
 
 	static const int MAX_TIME = 10;
-
+	int fakeStickXVal = -1;
 };

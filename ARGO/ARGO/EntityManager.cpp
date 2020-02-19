@@ -9,6 +9,13 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 		Entity &tempE = *e.get();
 		if (tempE.getAlive())
 		{
+			if (tempE.getComponent<BotComponent>().getBotMode())
+			{
+				tempE.getComponent<BotComponent>().setFakeStickX(fakeStickXVal);
+				
+				
+
+			}
 			if (tempE.getComponentString() == "player" && tempE.getComponent<PositionComponent>().getPosition()!=Vector2(230000, 20000) &&
 				tempE.getComponent<SpriteComponent>().getCurrentState() == PlayerStates::IdlePlayer)
 			{
@@ -17,12 +24,12 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 					//handleMove(tempE, "down");
 					handleMove(tempE, m_down.execute());
 				}
-				else if (stick.X() == 1)
+				else if (stick.X() == 1 || (tempE.getComponent<BotComponent>().getBotMode() && tempE.getComponent<BotComponent>().getFakeStickX()==1))
 				{
 					//handleMove(tempE, "right");
 					handleMove(tempE, m_right.execute());
 				}
-				else if (stick.X() == -1)
+				else if (stick.X() == -1 || (tempE.getComponent<BotComponent>().getBotMode() && tempE.getComponent<BotComponent>().getFakeStickX() == -1))
 				{
 					//handleMove(tempE, "left");
 					handleMove(tempE, m_left.execute());
@@ -33,6 +40,7 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 					handleMove(tempE, m_up.execute());
 				}
 				handleBoundary(tempE, t_mapsize.at(0), t_mapsize.at(1));
+				
 			}
 			if (SDL_JoystickGetButton(stick.getStick(), 4) != 0 && timer >= MAX_TIME)
 			{
@@ -142,6 +150,9 @@ void EntityManager::mapCol(Vector2& t_pos, Vector2& t_size)
 				Vector2 pos = tempF.getComponent<PositionComponent>().getPosition();
 				Vector2 size = tempF.getComponent<BodyComponent>().getSize();
 				tempF.getComponent<SpriteComponent>().setPosAndSize(pos.x, pos.y, size.x, size.y);
+				
+				fakeStickXVal *= -1;
+				
 			}
 		}
 	}
@@ -168,8 +179,10 @@ void EntityManager::handleMove(Entity& t_ent, std::string t_str)
 {
 	m_moveThisFrame = true;
 	m_startOfInput = true;
+	
 	m_direction = t_str;
 	t_ent.getComponent<SpriteComponent>().updateState(PlayerStates::MovingPlayer);
+	
 }
 
 int EntityManager::handleWin(int t_levelNum)
@@ -230,7 +243,10 @@ void EntityManager::movement()
 		if (m_startOfInput)
 		{
 			Vector2 tempVec = tempE.getComponent<PositionComponent>().getPosition();
+			
 			tempE.getComponent<PositionComponent>().setPreviousPosition(Vector2((int((tempVec.x + 60) / 120)) * 120, (int((tempVec.y + 60) / 120)) * 120));
+			
+			
 			//tempE.getComponent<PositionComponent>().setPreviousPosition(tempE.getComponent<PositionComponent>().getPosition());
 		}
 	}

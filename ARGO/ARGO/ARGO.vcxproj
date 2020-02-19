@@ -23,7 +23,7 @@
     <ClCompile Include="AnimationStates.cpp" />
     <ClCompile Include="AudioComponent.cpp" />
     <ClCompile Include="BodyComponent.cpp" />
-    <ClCompile Include="Bot.cpp" />
+    <ClCompile Include="BotComponent.cpp" />
     <ClCompile Include="BoundarySystem.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -58,7 +58,7 @@
     <ClInclude Include="AnimationStates.h" />
     <ClInclude Include="AudioComponent.h" />
     <ClInclude Include="BodyComponent.h" />
-    <ClInclude Include="Bot.h" />
+    <ClInclude Include="BotComponent.h" />
     <ClInclude Include="BoundarySystem.h" />
     <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="Command.h" />

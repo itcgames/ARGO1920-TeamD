@@ -169,24 +169,24 @@ void Game::update()
 			}
 			if (answer[j] == "flag")
 			{
-				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", false);
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true);
 				entArr[i]->setComponentString(answer[k]);
 
 			}
 			if (answer[j] == "cactus")
 			{
-				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", false);
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true);
 				entArr[i]->setComponentString(answer[k]);
 			}
 			if (answer[j] == "ball")
 			{
-				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", false);
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true);
 				entArr[i]->setComponentString(answer[k]);
 
 			}
 			if (answer[j] == "platform")
 			{
-				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", false);
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true);
 				entArr[i]->setComponentString(answer[k]);
 			}
 
@@ -232,7 +232,7 @@ void Game::subSystemUpdate()
 	{
 	
 	case GameState::gameplay://no process events for this screen
-		if ((m_event.type == SDL_JOYBUTTONDOWN || m_event.type == SDL_JOYAXISMOTION) && !m_gamePlayScr.isPaused())
+		if ((m_event.type == SDL_JOYBUTTONDOWN || m_event.type == SDL_JOYAXISMOTION))
 		{
 			manager.handleEvents(stick, m_gamePlayScr.getMapCorners());
 		}

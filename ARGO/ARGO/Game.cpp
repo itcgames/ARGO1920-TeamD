@@ -8,7 +8,7 @@ auto& flag(manager.addEntity("goal"));
 auto& platform(manager.addEntity("stop"));
 auto& cactus(manager.addEntity("spikey"));
 auto& rock(manager.addEntity("move"));
-
+auto& bot(manager.addEntity("bot"));
 
 Game::Game()
 {
@@ -27,6 +27,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	initEnts(rock, Vector2(360, 360), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true, "ASSETS/AUDIO/temp.wav");
 	initEnts(platform, Vector2(240, 480), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true, "ASSETS/AUDIO/temp.wav");
 	initEnts(cactus, Vector2(600, 480), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, "ASSETS/AUDIO/temp.wav");
+	initEnts(bot, Vector2(650, 480), Vector2(120, 120), "ASSETS/IMAGES/bot.bmp", true, "ASSETS/AUDIO/temp.wav");
 	lastString = "ASSETS/IMAGES/states.bmp";
 	Entity *arr[]{ &newPlayer,&flag,&platform,&cactus,&rock };
 
@@ -156,6 +157,8 @@ void Game::update()
 	platform.setComponentString(answer[5]);
 	flag.setComponentString(answer[7]);
 	cactus.setComponentString(answer[9]);
+
+	updateEnts(bot, Vector2(bot.getComponent<PositionComponent>().getPosition().X(), bot.getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/bot.bmp", true);
 
 	for (int i = 0, j = 0, k = 1; i < 5; i++, j += 2, k += 2)
 	{

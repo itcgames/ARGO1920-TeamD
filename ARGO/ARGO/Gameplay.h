@@ -19,7 +19,6 @@ public:
 	void renderUI(SDL_Renderer*& t_renderer);
 
 	void clean(SDL_Renderer*& t_renderer, SDL_Window* t_window);
-	bool isPaused();
 	std::vector<std::string> getChanges();
 	Map getMap();
 	std::vector<Vector2> getMapCorners();
@@ -29,7 +28,6 @@ public:
 private:
 	Map m_map;
 	PauseMenu m_pauseMenu;
-	bool paused;
 	int timer;
 	OctTree m_OTree;
 	int row, col,maxRow,maxCol;

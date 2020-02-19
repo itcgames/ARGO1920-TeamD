@@ -153,5 +153,9 @@ void SpriteComponent::render()
 			int t = 0;
 		}
 	}
+	if (loadedSurface.at(m_currentTex)->clip_rect.h - srcrect.h < srcrect.y)
+	{
+		srcrect.y = 0;
+	}
 	SDL_RenderCopy(m_screen, m_texture.at(m_currentTex), &srcrect, &dstrect);
 }

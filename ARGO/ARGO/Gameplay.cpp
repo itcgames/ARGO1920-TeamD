@@ -8,7 +8,7 @@ void Gameplay::init(SDL_Renderer*& t_renderer)
 	m_textureBack = SDL_CreateTextureFromSurface(t_renderer, m_loadedSurfaceBack);
 	m_pauseMenu.init();
 	timer = 0;
-	m_OTree.initTree(Vector2(0, 0), Vector2(960, 1080), Vector2(960, 0), Vector2(1920, 0), Vector2(2840, 0), Vector2(0, 1080), Vector2(960, 1080), Vector2(1920, 1080), Vector2(2840, 1080));
+	m_OTree.initTree(Vector2(0, 0), Vector2(960, 1080), Vector2(960, 0), Vector2(1920, 0), Vector2(2840, 0), Vector2(0, 900), Vector2(960, 900), Vector2(1920, 900), Vector2(2840, 900));
 }
 
 void Gameplay::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t_stick)
@@ -83,6 +83,7 @@ void Gameplay::fixedUpdate(EntityManager& t_entMan)
 	{
 		if (gameplayCol.collides(m_OTree.getOct(i), m_OTree.getSize(), PlayerPos, Vector2(120, 120)))
 		{
+			setupRowCol(0, 0, 15, 32);
 			int test;
 			//row,col,maxrow,maxcol
 			if (i == 0) {

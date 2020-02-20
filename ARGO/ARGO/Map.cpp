@@ -27,7 +27,7 @@ void Map::init(SDL_Renderer*& t_renderer, int t_levelNum)
 	std::vector<int> mapArray;
 	if (myfile.is_open())
 	{
-		while (getline(myfile, line, ','))
+		while (getline(myfile, line, ',') && line!="end")
 		{
 			mapArray.push_back(std::stoi(line));
 		}

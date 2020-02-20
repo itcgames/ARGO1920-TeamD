@@ -3,9 +3,13 @@
 void Gameplay::init(SDL_Renderer*& t_renderer)
 {
 	m_map.init(t_renderer);
+	m_pauseMenu.setRules(m_map.getLevelNum());
+	std::string temp = "ASSETS/IMAGES/level" + std::to_string(m_map.getLevelNum()) + "back.bmp";
+	m_loadedSurfaceBack = SDL_LoadBMP(temp.c_str());
+	m_textureBack = SDL_CreateTextureFromSurface(t_renderer, m_loadedSurfaceBack);
 	m_pauseMenu.init();
 	timer = 0;
-	m_OTree.initTree(Vector2(0, 0), Vector2(960, 1080), Vector2(960, 0), Vector2(1920, 0), Vector2(2840, 0), Vector2(0, 1080), Vector2(960, 1080), Vector2(1920, 1080), Vector2(2840, 1080));
+	m_OTree.initTree(Vector2(0, 0), Vector2(960, 1080), Vector2(960, 0), Vector2(1920, 0), Vector2(2840, 0), Vector2(0, 900), Vector2(960, 900), Vector2(1920, 900), Vector2(2840, 900));
 }
 
 void Gameplay::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t_stick)
@@ -28,29 +32,25 @@ void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 	if (m_map.getLevelNum() != newLevel)
 	{
 		m_map.init(t_renderer,newLevel);
+		m_pauseMenu.setRules(m_map.getLevelNum());
+		std::string temp = "ASSETS/IMAGES/level" + std::to_string(m_map.getLevelNum()) + "back.bmp";
+		m_loadedSurfaceBack = SDL_LoadBMP(temp.c_str());
+		m_textureBack = SDL_CreateTextureFromSurface(t_renderer, m_loadedSurfaceBack);
 	}
-
 	SDL_Rect dstrect = { 120, 120, m_map.getMapCorners().at(1).x-120,  m_map.getMapCorners().at(1).y-120};
 
 	SDL_RenderCopy(t_renderer, m_textureBack, NULL, &dstrect);
-
-	
 	for (int j=0; j < 15; j++)
 	{
 		for (int i=0; i < 32; i++)
 		{
 			m_map.render(t_renderer, i, j);
 			Vector2 temp(120, 120);
-			
+
 		}
 	}
-}
-
-void Gameplay::renderUI(SDL_Renderer*& t_renderer)
-{
 	m_pauseMenu.render(t_renderer);
 }
-
 
 void Gameplay::clean(SDL_Renderer*& t_renderer, SDL_Window* t_window)
 {
@@ -79,6 +79,7 @@ void Gameplay::fixedUpdate(EntityManager& t_entMan)
 	{
 		if (gameplayCol.collides(m_OTree.getOct(i), m_OTree.getSize(), PlayerPos, Vector2(120, 120)))
 		{
+			setupRowCol(0, 0, 15, 32);
 			int test;
 			//row,col,maxrow,maxcol
 			if (i == 0) {

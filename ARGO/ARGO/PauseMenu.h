@@ -17,9 +17,10 @@ public:
 	int getTime();
 	void resetTime();
 	std::vector<std::string> getChanges();
+	void setRules(int t_levelNum);
+
 	static const int MAX_TIME = 30;
-	void setBoxY(int t_arrPos, int t_yVal);
-	int getBoxY(int t_arrPos) { return srcrect[t_arrPos].y; };
+
 private:
 	SDL_Surface* loadedSurfaceBack;
 	SDL_Surface* loadedSurfaceObj;
@@ -44,4 +45,5 @@ private:
 	int timer;
 	int currentBox;
 	Vector2 m_slectOffset;
+	int m_lockValue;
 };

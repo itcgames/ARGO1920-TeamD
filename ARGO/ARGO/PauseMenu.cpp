@@ -1,5 +1,7 @@
 #include "PauseMenu.h"
-
+#include <fstream>
+#include <sstream>
+#include <iostream>
 PauseMenu::PauseMenu()
 {
 }
@@ -31,11 +33,12 @@ void PauseMenu::init()
 	{
 		boxSelected[box] = false;
 		if(box%2==0)
-			srcrect[box] = { 0, ((box-(box%2))/2)*120, 120, 120 };
+			srcrect[box] = { 0, srcrect[box].y, 120, 120 };
 		else
-			srcrect[box] = { 0, ((box - (box % 2)) / 2) * 120, 240, 120 };
+			srcrect[box] = { 0, srcrect[box].y, 240, 120 };
 		boxRectSliced[box] = { int(selectBox[box].X()), int(selectBox[box].Y()), srcrect[box].w, 120 };
 	}
+	m_lockValue = 0;
 	dstrectBack = { 0, 1800, 3840, 360 };
 	
 	currentBox = 1;
@@ -241,7 +244,57 @@ std::vector<std::string> PauseMenu::getChanges()
 	return rules;
 }
 
-void PauseMenu::setBoxY(int t_arrPos, int t_yVal)
+void PauseMenu::setRules(int t_levelNum)
 {
-	srcrect[t_arrPos].y = t_yVal;
+	std::ifstream myfile("ASSETS/MAP/level" + std::to_string(t_levelNum) + ".txt");
+	std::string currentText = "";
+	getline(myfile, currentText, ':');
+	int currentBox = 0;
+	while (getline(myfile, currentText, '-'))
+	{
+		if (currentText == "cat")
+		{
+			srcrect[currentBox].y = 0;
+		}
+		else if (currentText == "ball")
+		{
+			srcrect[currentBox].y = 120;
+		}
+		else if (currentText == "platform")
+		{
+			srcrect[currentBox].y = 240;
+		}
+		else if (currentText == "flag")
+		{
+			srcrect[currentBox].y = 360;
+		}
+		else if (currentText == "cactus")
+		{
+			srcrect[currentBox].y = 480;
+		}
+		currentBox++;
+		getline(myfile, currentText, ',');
+		if (currentText == "player")
+		{
+			srcrect[currentBox].y = 0;
+		}
+		else if (currentText == "goal")
+		{
+			srcrect[currentBox].y = 120;
+		}
+		else if (currentText == "stop")
+		{
+			srcrect[currentBox].y = 240;
+		}
+		else if (currentText == "move")
+		{
+			srcrect[currentBox].y = 360;
+		}
+		else if (currentText == "spiky")
+		{
+			srcrect[currentBox].y = 480;
+		}
+		currentBox++;
+	}
 }
+

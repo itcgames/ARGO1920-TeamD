@@ -9,9 +9,12 @@
 #include "Gamestate.h"
 #include "OctTree.h"
 #include "CollisionSystem.h"
+#include "ClientStuff/Client.h"
 class Gameplay
 {
 public:
+	Gameplay();
+
 	void init(SDL_Renderer*& t_renderer);
 	void handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t_stick);
 	void update();
@@ -32,4 +35,6 @@ private:
 	CollisionSystem gameplayCol;
 	SDL_Surface* m_loadedSurfaceBack;
 	SDL_Texture* m_textureBack;
+	Client myClient;
+	int playerNum = 1;
 };

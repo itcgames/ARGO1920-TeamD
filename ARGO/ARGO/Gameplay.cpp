@@ -1,4 +1,14 @@
 #include "Gameplay.h"
+#include <fstream>
+#include <sstream>
+Gameplay::Gameplay() :
+	myClient("149.153.106.148", 1111)
+{
+	if (!myClient.Connect()) //If client fails to connect...
+	{
+		std::cout << "Failed to connect to server..." << std::endl;
+	}
+}
 
 void Gameplay::init(SDL_Renderer*& t_renderer)
 {
@@ -24,6 +34,20 @@ void Gameplay::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t
 void Gameplay::update()
 {
 	m_pauseMenu.update();
+	std::string mess = "I'm playing the game."+ std::to_string(playerNum)+".";
+	myClient.SendString(mess);
+	if (myClient.isMessage)
+	{
+		std::istringstream input;
+		input.str(myClient.newMessage);
+		std::getline(input, mess,'.');
+		std::getline(input, mess, '.');
+		if (std::stoi(mess) == playerNum)
+		{
+			playerNum++;
+		}
+		std::cout << "Hi player " + mess + ".I'm player " + std::to_string(playerNum) << std::endl;
+	}
 }
 
 void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)

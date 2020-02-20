@@ -19,9 +19,11 @@ public:
 	int getFakeStickY() { return m_fakeStickY; };
 	bool getBotMode() { return botMode; };
 	void setBotMode(bool t_mode) { botMode = t_mode; };
-
+	bool AButtonPress() { return selectA; };
+	bool moveRight() { return goRight; };
 
 private:
 	bool botMode = true;
 	int m_fakeStickX = 0, m_fakeStickY=0;
+	bool selectA = false, goRight = false;
 };

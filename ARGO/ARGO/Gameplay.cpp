@@ -3,6 +3,7 @@
 void Gameplay::init(SDL_Renderer*& t_renderer)
 {
 	m_map.init(t_renderer);
+	m_pauseMenu.setRules(m_map.getLevelNum());
 	std::string temp = "ASSETS/IMAGES/level" + std::to_string(m_map.getLevelNum()) + "back.bmp";
 	m_loadedSurfaceBack = SDL_LoadBMP(temp.c_str());
 	m_textureBack = SDL_CreateTextureFromSurface(t_renderer, m_loadedSurfaceBack);
@@ -31,6 +32,7 @@ void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 	if (m_map.getLevelNum() != newLevel)
 	{
 		m_map.init(t_renderer,newLevel);
+		m_pauseMenu.setRules(m_map.getLevelNum());
 		std::string temp = "ASSETS/IMAGES/level" + std::to_string(m_map.getLevelNum()) + "back.bmp";
 		m_loadedSurfaceBack = SDL_LoadBMP(temp.c_str());
 		m_textureBack = SDL_CreateTextureFromSurface(t_renderer, m_loadedSurfaceBack);

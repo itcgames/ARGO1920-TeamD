@@ -29,6 +29,11 @@ void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 	{
 		m_map.init(t_renderer,newLevel);
 	}
+
+	SDL_Rect dstrect = { 120, 120, m_map.getMapCorners().at(1).x-120,  m_map.getMapCorners().at(1).y-120};
+
+	SDL_RenderCopy(t_renderer, m_textureBack, NULL, &dstrect);
+
 	
 	for (int j=0; j < 15; j++)
 	{

@@ -125,7 +125,7 @@ std::vector<Vector2> Map::getMapCorners()
 {
 	std::vector<Vector2> corners;
 	Vector2 topLeft(0 + (120 * 1), 0 + (120 * 1));
-	Vector2 bottomRight(0 + (120 * 31), 0 + (120 * 17));
+	Vector2 bottomRight(0 + (120 * 31), 0 + (120 * 14));
 	corners.push_back(topLeft);
 	corners.push_back(bottomRight);
 	return corners;

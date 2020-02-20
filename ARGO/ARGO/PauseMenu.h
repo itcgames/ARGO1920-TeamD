@@ -18,18 +18,21 @@ public:
 	void resetTime();
 	std::vector<std::string> getChanges();
 	void setRules(int t_levelNum);
+	void setUIRules(int t_index,std::string t_type);
 
 	static const int MAX_TIME = 30;
 
 private:
 	SDL_Surface* loadedSurfaceBack;
 	SDL_Surface* loadedSurfaceObj;
-	SDL_Surface* loadedSurfaceAdjec;
+	SDL_Surface* loadedSurfaceAdjecUnlock;
+	SDL_Surface* loadedSurfaceAdjecLock;
 	SDL_Surface* loadedSurfaceSelect;
 	SDL_Surface* loadedSurfaceSelect2;
 	SDL_Texture* m_textureBack;
 	SDL_Texture* m_textureObj;
-	SDL_Texture* m_textureAdjec;
+	SDL_Texture* m_textureAdjecUnlock;
+	SDL_Texture* m_textureAdjecLock;
 	SDL_Texture* m_textureSelect;
 	SDL_Texture* m_textureSelect2;
 	SDL_Rect dstrectBack;

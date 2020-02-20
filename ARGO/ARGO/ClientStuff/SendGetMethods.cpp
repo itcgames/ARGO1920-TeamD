@@ -46,7 +46,7 @@ bool Client::GetPacketType(PacketType & packetType)
 
 void Client::SendString(const std::string & str)
 {
-	std::cout << "Client::SendString" << std::endl;
+	//std::cout << "Client::SendString" << std::endl;
 	PS::ChatMessage cm(str);
 	m_pm.Append(cm.toPacket());
 }

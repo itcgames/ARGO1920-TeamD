@@ -5,7 +5,7 @@ EntityManager manager;
 auto& newPlayer(manager.addEntity("player"));
 auto& flag(manager.addEntity("goal"));
 auto& platform(manager.addEntity("stop"));
-auto& cactus(manager.addEntity("spikey"));
+auto& cactus(manager.addEntity("spiky"));
 auto& rock(manager.addEntity("move"));
 
 
@@ -41,12 +41,14 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 	m_gamePlayScr.init(m_renderer);
 	Map tempMap = m_gamePlayScr.getMap();
-	m_currentLevel = tempMap.getLevelNum();
+	m_currentLevel = 0;// tempMap.getLevelNum();
+	
 	initEnts(newPlayer, Vector2(tempMap.getPlayerPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(flag, Vector2(tempMap.getRockPos()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock, Vector2(tempMap.getFlagPos()), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(flag, Vector2(tempMap.getFlagPos()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock, Vector2(tempMap.getRockPos()), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(platform, Vector2(tempMap.getPlatformPos()), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(cactus, Vector2(tempMap.getcactusPos()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	
 
 	lastString = "ASSETS/IMAGES/states.bmp";
 	Entity* arr[]{ &newPlayer,&flag,&platform,&cactus,&rock };
@@ -161,70 +163,53 @@ void Game::update()
 	//updateEnts(bot, Vector2(bot.getComponent<PositionComponent>().getPosition().X(), bot.getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/bot.bmp", true);
 
 	Map tempMap = m_gamePlayScr.getMap();
-	if (m_currentLevel != tempMap.getLevelNum())
+	for (int i = 0, j = 0; i < 5; i++, j += 2)
 	{
-		m_currentLevel = tempMap.getLevelNum();
-		for (auto currentEnt : entArr)
-		{
-			if (currentEnt->getComponentString() == "cat")
-				currentEnt->getComponent<PositionComponent>().setPosition(tempMap.getPlayerPos());
-			else if (currentEnt->getComponentString() == "flag")
-				currentEnt->getComponent<PositionComponent>().setPosition(tempMap.getFlagPos());
-			else if(currentEnt->getComponentString() == "cactus")
-				currentEnt->getComponent<PositionComponent>().setPosition(tempMap.getcactusPos());
-			else if(currentEnt->getComponentString() == "ball")
-				currentEnt->getComponent<PositionComponent>().setPosition(tempMap.getRockPos());
-			else if(currentEnt->getComponentString() == "platform")
-				currentEnt->getComponent<PositionComponent>().setPosition(tempMap.getPlatformPos());
-		}
-	}
-
-	for (int i = 0, j = 0, k = 1; i < 5; i++, j += 2, k += 2)
-	{
-
 		if (entArr[i] != NULL)
 		{
 			if (answer[j] == "cat")
-			{
-				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), lastString, true, false);
+			{				
 				if (stick.X()==1)
 				{
 					lastString = "ASSETS/IMAGES/states.bmp";
-					updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), lastString, true, false);
 				}
 				else if (stick.X() == -1)
 				{
 					lastString = "ASSETS/IMAGES/states2.bmp";
-					updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), lastString, true, false);
 				}
-				
-				entArr[i]->setComponentString(answer[k]);
+				if (m_currentLevel != tempMap.getLevelNum())
+					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getPlayerPos());
+			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), lastString, true, false);
 			}
-			if (answer[j] == "flag")
+			else if (answer[j] == "flag")
 			{
+				if (m_currentLevel != tempMap.getLevelNum())
+					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getFlagPos());
 				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, false);
-				entArr[i]->setComponentString(answer[k]);
-
 			}
-			if (answer[j] == "cactus")
+			else if (answer[j] == "cactus")
 			{
+				if (m_currentLevel != tempMap.getLevelNum())
+					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getcactusPos());
 				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, false);
-				entArr[i]->setComponentString(answer[k]);
 			}
-			if (answer[j] == "ball")
+			else if (answer[j] == "ball")
 			{
+				if (m_currentLevel != tempMap.getLevelNum())
+					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getRockPos());
 				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true,false);
-				entArr[i]->setComponentString(answer[k]);
-
 			}
-			if (answer[j] == "platform")
+			else if (answer[j] == "platform")
 			{
+				if (m_currentLevel != tempMap.getLevelNum())
+					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getPlatformPos());
 				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/book.bmp", true, false);
-				entArr[i]->setComponentString(answer[k]);
 			}
+			entArr[i]->setComponentString(answer[j+1]);
 		}
 	}
-	
+	m_currentLevel = tempMap.getLevelNum();
+
 	switch (m_currentMode)//gamestate
 	{
 	case GameState::intro:
@@ -254,7 +239,6 @@ void Game::update()
 	default:
 		break;
 	}
-	//>>>>>>> master
 }
 
 void Game::subSystemUpdate()

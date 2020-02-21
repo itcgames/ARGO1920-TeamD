@@ -16,6 +16,9 @@
     <Filter Include="Client Files">
       <UniqueIdentifier>{098f78e2-605f-4d7e-98ff-4b35f25469a8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Levels">
+      <UniqueIdentifier>{3c812efd-cb23-4aeb-a083-b7e1c60fffc9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -314,5 +317,13 @@
     <ClInclude Include="System.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="VelocityComponent.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ASSETS\MAP\Level1.txt">
+      <Filter>Levels</Filter>
+    </Text>
+    <Text Include="ASSETS\MAP\Level2.txt">
+      <Filter>Levels</Filter>
+    </Text>
   </ItemGroup>
 </Project>

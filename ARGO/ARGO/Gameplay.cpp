@@ -35,7 +35,6 @@ void Gameplay::update()
 {
 	m_pauseMenu.update();
 	std::string mess = "";
-	myClient.SendString(mess);
 	if (myClient.isMessage)
 	{
 		std::istringstream input;

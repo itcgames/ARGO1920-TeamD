@@ -14,7 +14,7 @@ auto& rock(manager.addEntity("move"));
 
 Game::Game()
 {
-	m_factory->createCatAudio(newPlayer, "ASSETS/AUDIO/temp.wav");
+	//m_factory->createCatAudio(newPlayer, "ASSETS/AUDIO/temp.wav");
 	m_factory->createFlagAudio(flag, "ASSETS/AUDIO/temp.wav");
 }
 
@@ -52,7 +52,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	
 	initEnts(newPlayer, Vector2(tempMap.getPlayerPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(flag, Vector2(tempMap.getFlagPos()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock, Vector2(tempMap.getRockPos()), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock, Vector2(tempMap.getClockPos()), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(platform, Vector2(tempMap.getPlatformPos()), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(cactus, Vector2(tempMap.getcactusPos()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	
@@ -200,11 +200,11 @@ void Game::update()
 					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getcactusPos());
 				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, false);
 			}
-			else if (answer[j] == "ball")
+			else if (answer[j] == "clock")
 			{
 				if (m_currentLevel != tempMap.getLevelNum())
-					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getRockPos());
-				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true,false);
+					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getClockPos());
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true,false);
 			}
 			else if (answer[j] == "platform")
 			{

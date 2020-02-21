@@ -37,4 +37,5 @@ private:
 	SDL_Texture* m_textureBack;
 	Client myClient;
 	int playerNum = 1;
+	std::string mess = "";
 };

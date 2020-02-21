@@ -7,6 +7,7 @@
 #include "BodyComponent.h"
 #include "SpriteComponent.h"
 #include "BoundarySystem.h"
+#include "BotComponent.h"
 
 #include"Up.h"
 #include"Down.h"
@@ -45,6 +46,7 @@ public:
 	void handleBoundary(Entity& t_ent, Vector2 t_mapTopLeft, Vector2 t_mapBottomRight);
 	void movement();
 	void pushing();
+	void dying();
 	int handleWin(int t_levelNum);
 	//Entity getEnt(int t_arrPos);
 	CollisionSystem m_colSys;
@@ -60,5 +62,5 @@ public:
 	}
 
 	static const int MAX_TIME = 10;
-
+	int fakeStickXVal = -1;
 };

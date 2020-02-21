@@ -8,7 +8,7 @@ auto& flag(manager.addEntity("goal"));
 auto& platform(manager.addEntity("stop"));
 auto& cactus(manager.addEntity("spikey"));
 auto& rock(manager.addEntity("move"));
-auto& bot(manager.addEntity("bot"));
+
 
 
 
@@ -26,16 +26,10 @@ Game::~Game()
 
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
-	initEnts(newPlayer, Vector2(480, 120), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true/*, "ASSETS/AUDIO/temp.wav"*/);
-	initEnts(flag, Vector2(240, 240), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true/*, "ASSETS/AUDIO/temp.wav"*/);
-	initEnts(rock, Vector2(360, 360), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true/*, "ASSETS/AUDIO/temp.wav"*/);
-	initEnts(platform, Vector2(240, 480), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true/*, "ASSETS/AUDIO/temp.wav"*/);
-	initEnts(cactus, Vector2(600, 480), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true/*, "ASSETS/AUDIO/temp.wav"*/);
-	initEnts(bot, Vector2(650, 480), Vector2(120, 120), "ASSETS/IMAGES/bot.bmp", true/*, "ASSETS/AUDIO/temp.wav"*/);
-	lastString = "ASSETS/IMAGES/states.bmp";
-	Entity *arr[]{ &newPlayer,&flag,&platform,&cactus,&rock };
 
 	std::copy(std::begin(arr), std::end(arr), std::begin(entArr));
+
+
 	int flags = 0;
 	if (fullscreen)
 	{
@@ -55,7 +49,16 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	}
 
 	m_gamePlayScr.init(m_renderer);
+	initEnts(newPlayer, Vector2(m_gamePlayScr.getMap().getPlayerPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(flag, Vector2(m_gamePlayScr.getMap().getRockPos()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock, Vector2(m_gamePlayScr.getMap().getFlagPos()), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(platform, Vector2(m_gamePlayScr.getMap().getPlatformPos()), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(cactus, Vector2(m_gamePlayScr.getMap().getcactusPos()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 
+	lastString = "ASSETS/IMAGES/states.bmp";
+	Entity* arr[]{ &newPlayer,&flag,&platform,&cactus,&rock };
+
+	std::copy(std::begin(arr), std::end(arr), std::begin(entArr));
 	stick.init();
 
 	
@@ -162,7 +165,7 @@ void Game::update()
 	flag.setComponentString(answer[7]);
 	cactus.setComponentString(answer[9]);
 
-	updateEnts(bot, Vector2(bot.getComponent<PositionComponent>().getPosition().X(), bot.getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/bot.bmp", true);
+	//updateEnts(bot, Vector2(bot.getComponent<PositionComponent>().getPosition().X(), bot.getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/bot.bmp", true);
 
 	for (int i = 0, j = 0, k = 1; i < 5; i++, j += 2, k += 2)
 	{
@@ -171,43 +174,40 @@ void Game::update()
 		{
 			if (answer[j] == "cat")
 			{
-				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), lastString, true);
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), lastString, true, false);
 				if (stick.X()==1)
 				{
 					lastString = "ASSETS/IMAGES/states.bmp";
-					updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), lastString, true);
+					updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), lastString, true, false);
 				}
 				else if (stick.X() == -1)
 				{
 					lastString = "ASSETS/IMAGES/states2.bmp";
-					updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), lastString, true);
+					updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), lastString, true, false);
 				}
 				
 				entArr[i]->setComponentString(answer[k]);
 			}
 			if (answer[j] == "flag")
 			{
-				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", false);
-				
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, false);
 				entArr[i]->setComponentString(answer[k]);
 
 			}
 			if (answer[j] == "cactus")
 			{
-				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", false);
-				
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, false);
 				entArr[i]->setComponentString(answer[k]);
 			}
 			if (answer[j] == "ball")
 			{
-				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", false);
-				
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true,false);
 				entArr[i]->setComponentString(answer[k]);
 
 			}
 			if (answer[j] == "platform")
 			{
-				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", false);
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/book.bmp", true, false);
 				entArr[i]->setComponentString(answer[k]);
 			}
 		}
@@ -245,7 +245,7 @@ void Game::update()
 	default:
 		break;
 	}
-	//>>>>>>> master
+
 }
 
 void Game::subSystemUpdate()
@@ -254,7 +254,7 @@ void Game::subSystemUpdate()
 	{
 	
 	case GameState::gameplay://no process events for this screen
-		if ((m_event.type == SDL_JOYBUTTONDOWN || m_event.type == SDL_JOYAXISMOTION) && !m_gamePlayScr.isPaused())
+		if ((m_event.type == SDL_JOYBUTTONDOWN || m_event.type == SDL_JOYAXISMOTION))
 		{
 			manager.handleEvents(stick, m_gamePlayScr.getMapCorners());
 		}
@@ -287,7 +287,6 @@ void Game::render()
 	case GameState::gameplay://no process events for this screen
 		m_gamePlayScr.render(m_renderer, manager);
 		manager.draw(m_renderer);
-		m_gamePlayScr.renderUI(m_renderer);
 		break;
 	case GameState::options://no process events for this screen
 		m_optionsScr.render(m_renderer);
@@ -315,13 +314,12 @@ void Game::clean()
 }
 
 
+void Game::initEnts(Entity &t_ent,Vector2 t_pos,Vector2 t_size, std::string t_str, bool t_isAnim, const char* t_audioStr,bool t_botMode)
 
-
-
-
-void Game::initEnts(Entity &t_ent,Vector2 t_pos,Vector2 t_size, std::string t_str, bool t_isAnim/*, const char* t_audioStr*/)
 
 {
+	t_ent.addComponent<BotComponent>();
+	t_ent.getComponent<BotComponent>().setBotMode(t_botMode);
 	t_ent.addComponent<PositionComponent>();
 	t_ent.addComponent<BodyComponent>();
 	t_ent.addComponent<SpriteComponent>();
@@ -335,9 +333,10 @@ void Game::initEnts(Entity &t_ent,Vector2 t_pos,Vector2 t_size, std::string t_st
 
 }
 
-void Game::updateEnts(Entity& t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim)
+void Game::updateEnts(Entity& t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim,bool t_botMode)
 {
 	//t_ent.deleteComp<SpriteComponent>(&t_ent.getComponent<SpriteComponent>());
+	t_ent.getComponent<BotComponent>().setBotMode(t_botMode);
 	t_ent.getComponent<SpriteComponent>().resetSprite();
 	t_ent.getComponent<PositionComponent>().setPosition(t_pos);
 	t_ent.getComponent<BodyComponent>().setSize(t_size);

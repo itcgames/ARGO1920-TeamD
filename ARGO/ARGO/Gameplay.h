@@ -9,30 +9,32 @@
 #include "Gamestate.h"
 #include "OctTree.h"
 #include "CollisionSystem.h"
+#include "ClientStuff/Client.h"
 class Gameplay
 {
 public:
+	Gameplay();
+
 	void init(SDL_Renderer*& t_renderer);
 	void handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t_stick);
 	void update();
 	void render(SDL_Renderer *&t_renderer,EntityManager& t_entMan);
-	void renderUI(SDL_Renderer*& t_renderer);
 
 	void clean(SDL_Renderer*& t_renderer, SDL_Window* t_window);
-	bool isPaused();
 	std::vector<std::string> getChanges();
 	Map getMap();
 	std::vector<Vector2> getMapCorners();
 	void fixedUpdate(EntityManager& t_entMan);
-	void setBoxY(int t_arrPos, int t_yVal) { m_pauseMenu.setBoxY(t_arrPos, t_yVal); };
-	int getBoxY(int t_arrPos) { return m_pauseMenu.getBoxY(t_arrPos); };
 private:
 	Map m_map;
 	PauseMenu m_pauseMenu;
-	bool paused;
 	int timer;
 	OctTree m_OTree;
 	int row, col,maxRow,maxCol;
 	void setupRowCol(int t_row, int t_col, int t_MaxRow, int t_MaxCol);
 	CollisionSystem gameplayCol;
+	SDL_Surface* m_loadedSurfaceBack;
+	SDL_Texture* m_textureBack;
+	Client myClient;
+	int playerNum = 1;
 };

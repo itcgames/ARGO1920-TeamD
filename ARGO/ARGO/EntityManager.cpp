@@ -9,6 +9,10 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 		Entity &tempE = *e.get();
 		if (tempE.getAlive())
 		{
+			if (tempE.getComponent<BotComponent>().getBotMode())
+			{
+				tempE.getComponent<BotComponent>().setFakeStickX(fakeStickXVal);
+			}
 			if (tempE.getComponentString() == "player" && tempE.getComponent<PositionComponent>().getPosition()!=Vector2(230000, 20000) &&
 				tempE.getComponent<SpriteComponent>().getCurrentState() == PlayerStates::IdlePlayer)
 			{
@@ -17,12 +21,12 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 					//handleMove(tempE, "down");
 					handleMove(tempE, m_down.execute());
 				}
-				else if (stick.X() == 1)
+				else if (stick.X() == 1 || (tempE.getComponent<BotComponent>().getBotMode() && tempE.getComponent<BotComponent>().getFakeStickX()==1))
 				{
 					//handleMove(tempE, "right");
 					handleMove(tempE, m_right.execute());
 				}
-				else if (stick.X() == -1)
+				else if (stick.X() == -1 || (tempE.getComponent<BotComponent>().getBotMode() && tempE.getComponent<BotComponent>().getFakeStickX() == -1))
 				{
 					//handleMove(tempE, "left");
 					handleMove(tempE, m_left.execute());
@@ -33,12 +37,16 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 					handleMove(tempE, m_up.execute());
 				}
 				handleBoundary(tempE, t_mapsize.at(0), t_mapsize.at(1));
+				
 			}
 			if (SDL_JoystickGetButton(stick.getStick(), 4) != 0 && timer >= MAX_TIME)
 			{
 				tempE.getComponent<PositionComponent>().setToPreviousPos();
 				if (!tempE.getComponent<PositionComponent>().isEmpty())
+				{
 					m_moveThisFrame = true;
+				}
+				tempE.getComponent<SpriteComponent>().updateState(PlayerStates::IdlePlayer);
 			}
 			if (tempE.getComponentString() == "stop")
 			{
@@ -71,13 +79,6 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 							tempF.getComponent<BodyComponent>().getSize()))
 						{
 							tempF.getComponent<SpriteComponent>().updateState(PlayerStates::DyingPlayer);
-							tempF.getComponent<PositionComponent>().setPreviousPosition(tempF.getComponent<PositionComponent>().getPosition());
-							tempF.getComponent<PositionComponent>().setPosition(Vector2(230000, 20000));
-							tempF.getComponent<SpriteComponent>().setPosAndSize(tempF.getComponent<PositionComponent>().getPosition().X(),
-								tempF.getComponent<PositionComponent>().getPosition().Y(),
-								tempF.getComponent<BodyComponent>().getSize().X(),
-								tempF.getComponent<BodyComponent>().getSize().Y());
-
 						}
 					}
 				}
@@ -116,6 +117,7 @@ void EntityManager::update()
 	}
 	movement();
 	pushing();
+	dying();
 }
 
 void EntityManager::draw(SDL_Renderer* t_screen)
@@ -123,6 +125,7 @@ void EntityManager::draw(SDL_Renderer* t_screen)
 	for (auto& e : entities)
 	{
 		e->render(t_screen);
+
 	}
 }
 void EntityManager::mapCol(Vector2& t_pos, Vector2& t_size)
@@ -142,6 +145,9 @@ void EntityManager::mapCol(Vector2& t_pos, Vector2& t_size)
 				Vector2 pos = tempF.getComponent<PositionComponent>().getPosition();
 				Vector2 size = tempF.getComponent<BodyComponent>().getSize();
 				tempF.getComponent<SpriteComponent>().setPosAndSize(pos.x, pos.y, size.x, size.y);
+				
+				fakeStickXVal *= -1;
+				
 			}
 		}
 	}
@@ -168,8 +174,10 @@ void EntityManager::handleMove(Entity& t_ent, std::string t_str)
 {
 	m_moveThisFrame = true;
 	m_startOfInput = true;
+	
 	m_direction = t_str;
 	t_ent.getComponent<SpriteComponent>().updateState(PlayerStates::MovingPlayer);
+	
 }
 
 int EntityManager::handleWin(int t_levelNum)
@@ -230,7 +238,10 @@ void EntityManager::movement()
 		if (m_startOfInput)
 		{
 			Vector2 tempVec = tempE.getComponent<PositionComponent>().getPosition();
+			
 			tempE.getComponent<PositionComponent>().setPreviousPosition(Vector2((int((tempVec.x + 60) / 120)) * 120, (int((tempVec.y + 60) / 120)) * 120));
+			
+			
 			//tempE.getComponent<PositionComponent>().setPreviousPosition(tempE.getComponent<PositionComponent>().getPosition());
 		}
 	}
@@ -277,6 +288,24 @@ void EntityManager::pushing()
 
 				}
 			}
+		}
+	}
+}
+
+void EntityManager::dying()
+{
+	for (auto& e : entities)
+	{
+		Entity& tempE = *e.get();
+		if (tempE.getComponentString() == "player" && tempE.getComponent<SpriteComponent>().getCurrentState() == PlayerStates::DyingPlayer && 
+			tempE.getComponent<SpriteComponent>().finishedAnime())
+		{
+			//tempE.getComponent<PositionComponent>().setPreviousPosition(tempE.getComponent<PositionComponent>().getPosition());
+			tempE.getComponent<PositionComponent>().setPosition(Vector2(230000, 20000));
+			tempE.getComponent<SpriteComponent>().setPosAndSize(tempE.getComponent<PositionComponent>().getPosition().X(),
+				tempE.getComponent<PositionComponent>().getPosition().Y(),
+				tempE.getComponent<BodyComponent>().getSize().X(),
+				tempE.getComponent<BodyComponent>().getSize().Y());
 		}
 	}
 }

@@ -1,7 +1,10 @@
 #include "PauseMenu.h"
-
+#include <fstream>
+#include <sstream>
+#include <iostream>
 PauseMenu::PauseMenu()
 {
+	m_lockValue = NUM_OF_BOXES;
 }
 
 PauseMenu::~PauseMenu()
@@ -12,31 +15,37 @@ void PauseMenu::init()
 {
 	loadedSurfaceBack = SDL_LoadBMP("ASSETS/IMAGES/pauseBack.bmp");
 	loadedSurfaceObj = SDL_LoadBMP("ASSETS/IMAGES/objects.bmp");
-	loadedSurfaceAdjec = SDL_LoadBMP("ASSETS/IMAGES/adjectives.bmp");
+	loadedSurfaceAdjecUnlock = SDL_LoadBMP("ASSETS/IMAGES/adjectivesUnlocked.bmp");
+	loadedSurfaceAdjecLock = SDL_LoadBMP("ASSETS/IMAGES/adjectivesLocked.bmp");
 	loadedSurfaceSelect = SDL_LoadBMP("ASSETS/IMAGES/selector.bmp");
+	loadedSurfaceSelect2 = SDL_LoadBMP("ASSETS/IMAGES/selected.bmp");
 
-	selectBox[0] = Vector2(2450, 200);
-	selectBox[1] = Vector2(3200, 200);
-	selectBox[2] = Vector2(selectBox[0].X(), 500);
-	selectBox[3] = Vector2(selectBox[1].X(), 500);
-	selectBox[4] = Vector2(selectBox[0].X(), 800);
-	selectBox[5] = Vector2(selectBox[1].X(), 800);
-	selectBox[6] = Vector2(selectBox[0].X(), 1100);
-	selectBox[7] = Vector2(selectBox[1].X(), 1100);
-	selectBox[8] = Vector2(selectBox[0].X(), 1400);
-	selectBox[9] = Vector2(selectBox[1].X(), 1400);
+	selectBox[0] = Vector2(240, 1900);
+	selectBox[1] = Vector2(480, 1900);
+	selectBox[2] = Vector2(960,selectBox[0].Y());
+	selectBox[3] = Vector2(1200,selectBox[1].Y());
+	selectBox[4] = Vector2(1680,selectBox[0].Y());
+	selectBox[5] = Vector2(1920, selectBox[1].Y());
+	selectBox[6] = Vector2(2400, selectBox[0].Y());
+	selectBox[7] = Vector2(2640, selectBox[1].Y());
+	selectBox[8] = Vector2(3120, selectBox[0].Y());
+	selectBox[9] = Vector2(3360, selectBox[1].Y());
 	
 	for (int box = 0; box < NUM_OF_BOXES; box++)
 	{
 		boxSelected[box] = false;
-		srcrect[box] = { 0, ((box-(box%2))/2)*100, 500, 100 };
-		boxRectSliced[box] = { int(selectBox[box].X()), int(selectBox[box].Y()), 500, 100 };
-		boxRect[box] = { int(selectBox[box].X()), int(selectBox[box].Y()), 500, 500 };
+		if(box%2==0)
+			srcrect[box] = { 0, srcrect[box].y, 120, 120 };
+		else
+			srcrect[box] = { 0, srcrect[box].y, 240, 120 };
+		boxRectSliced[box] = { int(selectBox[box].X()), int(selectBox[box].Y()), srcrect[box].w, 120 };
 	}
-	dstrectBack = { 2400, 100, 1350, 1800 };
+	dstrectBack = { 0, 1800, 3840, 360 };
 	
-	currentBox = 0;
-	dstrectSelect = { int(selectBox[currentBox].X() - 5), int(selectBox[currentBox].Y() - 5), 510, 110 };
+	currentBox = 1;
+	m_slectOffset = Vector2(5, 5);
+	dstrectSelect = { int(selectBox[currentBox].X() - m_slectOffset.x), int(selectBox[currentBox].Y() - m_slectOffset.y), 250, 130 };
+	dstrectSelect2 = { int(selectBox[currentBox].X()- (m_slectOffset.x/2)), int(selectBox[currentBox].Y()- (m_slectOffset.y / 2)), 244, 124 };
 }
 
 void PauseMenu::input(SDL_Event& t_event, Joystick t_stick)
@@ -47,83 +56,65 @@ void PauseMenu::input(SDL_Event& t_event, Joystick t_stick)
 		{
 			for (int box = 0; box < NUM_OF_BOXES; box++)
 			{
-				if (!anyActive() && dstrectSelect.x + 5 == selectBox[box].X() && dstrectSelect.y + 5 == selectBox[box].Y())
+				if (!anyActive() && dstrectSelect.x + m_slectOffset.x == selectBox[box].X() && dstrectSelect.y + m_slectOffset.y == selectBox[box].Y())
 				{
 					boxSelected[box] = true;
-					dstrectSelect.y += srcrect[box].y;
 					timer = 0;
 				}
-				else if (boxSelected[box])
+				else if (dstrectSelect.x + m_slectOffset.x == selectBox[box].X() && dstrectSelect.y + m_slectOffset.y == selectBox[box].Y())
 				{
-					srcrect[box] = { 0, int(dstrectSelect.y + 5 - selectBox[box].Y()), 500, 100 };
+					if (boxSelected[box])
+					{
+						boxSelected[box] = false;
+					}
+					else
+					{
+						for (int box2 = 1; box2 < NUM_OF_BOXES; box2 += 2)
+						{
+							if (boxSelected[box2])
+							{
+								float tempCut = srcrect[box2].y;
+								srcrect[box2].y = srcrect[box].y;
+								srcrect[box].y = tempCut;
+								boxSelected[box2] = false;
+							}
+						}
+					}
+					timer = 0;
+				}
+
+				if (false&&boxSelected[box])
+				{
 					boxSelected[box] = false;
-					dstrectSelect.y = selectBox[box].Y() - 5;
 					timer = 0;
 				}
 			}
 		}
+		
+		if (SDL_JoystickGetHat(t_stick.getStick(), 0) == SDL_HAT_RIGHT)
+		{
+			currentBox += 2;
+			timer = 0;
+			if (currentBox >= m_lockValue)
+			{
+				currentBox -= m_lockValue;
+			}
+		}
+		else if (SDL_JoystickGetHat(t_stick.getStick(), 0) == SDL_HAT_LEFT)
+		{
+			currentBox -= 2;
+			timer = 0;
+			if (currentBox < 0)
+			{
+				currentBox += m_lockValue;
+			}
+		}
+		dstrectSelect = { int(selectBox[currentBox].X() - 5), int(selectBox[currentBox].Y() - 5), dstrectSelect.w, dstrectSelect.h };
 		if (!anyActive())
 		{
-			if (t_stick.X() == -1 || t_stick.X() == 1)
-			{
-				if (currentBox % 2 == 0)
-				{
-					currentBox++;
-					timer = 0;
-				}
-				else 
-				{
-					currentBox--;
-					timer = 0;
-				}
-			}
-			else if (t_stick.Y() == 1)
-			{
-				currentBox += 2;
-				timer = 0;
-				if (currentBox >= NUM_OF_BOXES)
-				{
-					currentBox -= NUM_OF_BOXES;
-				}
-			}
-			else if (t_stick.Y() == -1)
-			{
-				currentBox -= 2;
-				timer = 0;
-				if (currentBox < 0)
-				{
-					currentBox += NUM_OF_BOXES;
-				}
-			}
-			dstrectSelect = { int(selectBox[currentBox].X() - 5), int(selectBox[currentBox].Y() - 5), 510, 110 };
+			dstrectSelect2 = { int(selectBox[currentBox].X() - 2), int(selectBox[currentBox].Y() - 2), dstrectSelect2.w, dstrectSelect2.h };
 		}
-		for (int box = 0; box < NUM_OF_BOXES; box++)
-		{
-			if (boxSelected[box] && dstrectSelect.x + 5 == selectBox[box].X() && dstrectSelect.y + 5 >= selectBox[box].Y() && dstrectSelect.y + 405 >= selectBox[box].Y())
-			{
-				if (t_stick.Y() == 1)
-				{
-					mostRecentBoxChanged = box;
-					dstrectSelect.y += 100;
-					timer = 0;
-					if (dstrectSelect.y - selectBox[box].Y() > 400)
-					{
-						dstrectSelect.y -= 500;
-					}
-				}
-				else if (t_stick.Y() == -1)
-				{
-					mostRecentBoxChanged = box;
-					dstrectSelect.y -= 100;
-					timer = 0;
-					if (dstrectSelect.y + 5 < selectBox[box].Y())
-					{
-						dstrectSelect.y += 500;
-					}
-					
-				}
-			}
-		}
+		
 	}
 }
 
@@ -148,9 +139,13 @@ void PauseMenu::render(SDL_Renderer*& t_renderer)
 		m_textureObj = SDL_CreateTextureFromSurface(t_renderer, loadedSurfaceObj);
 	}
 
-	if (m_textureAdjec == NULL)
+	if (m_textureAdjecUnlock == NULL)
 	{
-		m_textureAdjec = SDL_CreateTextureFromSurface(t_renderer, loadedSurfaceAdjec);
+		m_textureAdjecUnlock = SDL_CreateTextureFromSurface(t_renderer, loadedSurfaceAdjecUnlock);
+	}
+	if (m_textureAdjecLock == NULL)
+	{
+		m_textureAdjecLock = SDL_CreateTextureFromSurface(t_renderer, loadedSurfaceAdjecLock);
 	}
 
 	SDL_Texture* forAllTexture;
@@ -160,20 +155,29 @@ void PauseMenu::render(SDL_Renderer*& t_renderer)
 		{
 			forAllTexture = m_textureObj;
 		}
+		else if (box < m_lockValue)
+		{
+			forAllTexture = m_textureAdjecUnlock;
+		}
 		else
 		{
-			forAllTexture = m_textureAdjec;
+			forAllTexture = m_textureAdjecLock;
 		}
-		if (!boxSelected[box])
-			SDL_RenderCopy(t_renderer, forAllTexture, &srcrect[box], &boxRectSliced[box]);
-		else
-			SDL_RenderCopy(t_renderer, forAllTexture, NULL, &boxRect[box]);
+		SDL_RenderCopy(t_renderer, forAllTexture, &srcrect[box], &boxRectSliced[box]);
 	}
 	if (m_textureSelect == NULL)
 	{
 		m_textureSelect = SDL_CreateTextureFromSurface(t_renderer, loadedSurfaceSelect);
 	}
+	if (m_textureSelect2 == NULL)
+	{
+		m_textureSelect2 = SDL_CreateTextureFromSurface(t_renderer, loadedSurfaceSelect2);
+	}
 	SDL_RenderCopy(t_renderer, m_textureSelect, NULL, &dstrectSelect);
+	if (anyActive())
+	{
+		SDL_RenderCopy(t_renderer, m_textureSelect2, NULL, &dstrectSelect2);	
+	}
 }
 
 bool PauseMenu::anyActive()
@@ -208,15 +212,15 @@ std::vector<std::string> PauseMenu::getChanges()
 		{
 			rules.push_back("cat");
 		}
-		else if (srcrect[box].y == 100)
+		else if (srcrect[box].y == 120)
 		{
 			rules.push_back("ball");
 		}
-		else if(srcrect[box].y == 200)
+		else if(srcrect[box].y == 240)
 		{
 			rules.push_back("platform");
 		}
-		else if (srcrect[box].y == 300)
+		else if (srcrect[box].y == 360)
 		{
 			rules.push_back("flag");
 		}
@@ -228,15 +232,15 @@ std::vector<std::string> PauseMenu::getChanges()
 		{
 			rules.push_back("player");
 		}
-		else if (srcrect[box + 1].y == 100)
+		else if (srcrect[box + 1].y == 120)
 		{
 			rules.push_back("goal");
 		}
-		else if (srcrect[box + 1].y == 200)
+		else if (srcrect[box + 1].y == 240)
 		{
 			rules.push_back("stop");
 		}
-		else if (srcrect[box + 1].y == 300)
+		else if (srcrect[box + 1].y == 360)
 		{
 			rules.push_back("move");
 		}
@@ -249,7 +253,38 @@ std::vector<std::string> PauseMenu::getChanges()
 	return rules;
 }
 
-void PauseMenu::setBoxY(int t_arrPos, int t_yVal)
+void PauseMenu::setRules(int t_levelNum)
 {
-	srcrect[t_arrPos].y = t_yVal;
+	std::ifstream myfile("ASSETS/MAP/level" + std::to_string(t_levelNum) + ".txt");
+	std::string currentText = "";
+	getline(myfile, currentText, ':');
+	int currentBox = 0;
+	while (getline(myfile, currentText, '-'))
+	{
+		setUIRules(currentBox, currentText);
+		if (currentText == "lock")
+		{
+			m_lockValue = currentBox;
+			currentBox -= 2;
+		}
+		currentBox++;
+		getline(myfile, currentText, ',');
+		setUIRules(currentBox, currentText);
+		currentBox++;
+	}
 }
+
+void PauseMenu::setUIRules(int t_index, std::string t_type)
+{
+	if (t_type == "cat" || t_type == "player")
+		srcrect[t_index].y = 0;
+	else if (t_type == "ball" || t_type == "goal")
+		srcrect[t_index].y = 120;
+	else if (t_type == "platform" || t_type == "stop")
+		srcrect[t_index].y = 240;
+	else if (t_type == "flag" || t_type == "move")
+		srcrect[t_index].y = 360;
+	else if (t_type == "cactus" || t_type == "spiky")
+		srcrect[t_index].y = 480;
+}
+

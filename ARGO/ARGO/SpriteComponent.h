@@ -26,7 +26,7 @@ public:
 	void update() override;
 	void render() override;
 
-	static const int MAX_TIME = 10;
+	static const int MAX_TIME = 3;//MovementSystem::move
 private:
 	std::vector< std::string> m_paths;
 	std::vector <SDL_Surface*> loadedSurface;

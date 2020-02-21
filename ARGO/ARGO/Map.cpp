@@ -27,7 +27,7 @@ void Map::init(SDL_Renderer*& t_renderer, int t_levelNum)
 	std::vector<int> mapArray;
 	if (myfile.is_open())
 	{
-		while (getline(myfile, line, ','))
+		while (getline(myfile, line, ',') && line!="end")
 		{
 			mapArray.push_back(std::stoi(line));
 		}
@@ -35,7 +35,7 @@ void Map::init(SDL_Renderer*& t_renderer, int t_levelNum)
 	}
 	//7,6,5,2,0
 		 int arrayIndex = 0;
-	for (int j = 0; j < 18; j++)
+	for (int j = 0; j < 15; j++)
 	{
 		for (int i = 0; i < 32; i++)
 		{
@@ -65,6 +65,29 @@ void Map::init(SDL_Renderer*& t_renderer, int t_levelNum)
 				m_mapHolder.mapDoubleArray[i][j] = mapArray[arrayIndex];
 				tile[i][j].init(flagStr, t_renderer);
 				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
+			}
+
+			//19, 16, 17, 18, 20,
+			//16=cactus 17=flag 18=platform 19=cat 20 = rock
+			else if (mapArray[arrayIndex] == 16)
+			{
+				cactusPos = Vector2(0 + (120 * i), 0 + (120 * j));
+			}
+			else if (mapArray[arrayIndex] == 17)
+			{
+				flagPos = Vector2(0 + (120 * i), 0 + (120 * j));
+			}
+			else if (mapArray[arrayIndex] == 18)
+			{
+				platformPos = Vector2(0 + (120 * i), 0 + (120 * j));
+			}
+			else if (mapArray[arrayIndex] == 19)
+			{
+				playerPos = Vector2(0 + (120 * i), 0 + (120 * j));
+			}
+			else if (mapArray[arrayIndex] == 20)
+			{
+				rockPos = Vector2(0 + (120 * i), 0 + (120 * j));
 			}
 			else {
 				m_mapHolder.mapDoubleArray[i][j] = 0;
@@ -102,7 +125,7 @@ std::vector<Vector2> Map::getMapCorners()
 {
 	std::vector<Vector2> corners;
 	Vector2 topLeft(0 + (120 * 1), 0 + (120 * 1));
-	Vector2 bottomRight(0 + (120 * 31), 0 + (120 * 17));
+	Vector2 bottomRight(0 + (120 * 31), 0 + (120 * 14));
 	corners.push_back(topLeft);
 	corners.push_back(bottomRight);
 	return corners;

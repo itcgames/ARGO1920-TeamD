@@ -34,7 +34,7 @@ void Gameplay::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t
 void Gameplay::update()
 {
 	m_pauseMenu.update();
-	std::string mess = "I'm playing the game."+ std::to_string(playerNum)+".";
+	std::string mess = "";
 	myClient.SendString(mess);
 	if (myClient.isMessage)
 	{
@@ -47,6 +47,11 @@ void Gameplay::update()
 			playerNum++;
 		}
 		std::cout << "Hi player " + mess + ".I'm player " + std::to_string(playerNum) << std::endl;
+	}
+	else
+	{
+		mess = "I'm playing the game." + std::to_string(playerNum) + ".";
+		myClient.SendString(mess);
 	}
 }
 

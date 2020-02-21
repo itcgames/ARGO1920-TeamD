@@ -138,6 +138,9 @@
     <ClCompile Include="ClientStuff\Source.cpp">
       <Filter>Client Files</Filter>
     </ClCompile>
+    <ClCompile Include="Factory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">

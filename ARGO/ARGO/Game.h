@@ -59,8 +59,9 @@ private:
 	bool temp = false;
 	Entity* m_cat;
 	Factory* m_factory = new CharacterFactory();
-	Character* m_catFactoryPointer;
-	Character* m_flagFactoryPointer;
+	std::vector<Character*> m_characterVectorArray;
+	
+	
 
 	Entity*  entArr[5];
 

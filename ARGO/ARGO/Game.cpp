@@ -1,7 +1,6 @@
 #include "Game.h"
 
 GameState Game::m_currentMode{ GameState::gameplay };
-LevelState Game::m_currentLevel{ LevelState::Level1 };
 EntityManager manager;
 auto& newPlayer(manager.addEntity("player"));
 auto& flag(manager.addEntity("goal"));
@@ -27,7 +26,6 @@ Game::~Game()
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
 
-	std::copy(std::begin(arr), std::end(arr), std::begin(entArr));
 
 
 	int flags = 0;
@@ -49,11 +47,13 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	}
 
 	m_gamePlayScr.init(m_renderer);
-	initEnts(newPlayer, Vector2(m_gamePlayScr.getMap().getPlayerPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(flag, Vector2(m_gamePlayScr.getMap().getRockPos()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock, Vector2(m_gamePlayScr.getMap().getFlagPos()), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(platform, Vector2(m_gamePlayScr.getMap().getPlatformPos()), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(cactus, Vector2(m_gamePlayScr.getMap().getcactusPos()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	Map tempMap = m_gamePlayScr.getMap();
+	m_currentLevel = tempMap.getLevelNum();
+	initEnts(newPlayer, Vector2(tempMap.getPlayerPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(flag, Vector2(tempMap.getRockPos()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock, Vector2(tempMap.getFlagPos()), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(platform, Vector2(tempMap.getPlatformPos()), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(cactus, Vector2(tempMap.getcactusPos()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 
 	lastString = "ASSETS/IMAGES/states.bmp";
 	Entity* arr[]{ &newPlayer,&flag,&platform,&cactus,&rock };
@@ -167,6 +167,25 @@ void Game::update()
 
 	//updateEnts(bot, Vector2(bot.getComponent<PositionComponent>().getPosition().X(), bot.getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/bot.bmp", true);
 
+	Map tempMap = m_gamePlayScr.getMap();
+	if (m_currentLevel != tempMap.getLevelNum())
+	{
+		m_currentLevel = tempMap.getLevelNum();
+		for (auto currentEnt : entArr)
+		{
+			if (currentEnt->getComponentString() == "cat")
+				currentEnt->getComponent<PositionComponent>().setPosition(tempMap.getPlayerPos());
+			else if (currentEnt->getComponentString() == "flag")
+				currentEnt->getComponent<PositionComponent>().setPosition(tempMap.getFlagPos());
+			else if(currentEnt->getComponentString() == "cactus")
+				currentEnt->getComponent<PositionComponent>().setPosition(tempMap.getcactusPos());
+			else if(currentEnt->getComponentString() == "ball")
+				currentEnt->getComponent<PositionComponent>().setPosition(tempMap.getRockPos());
+			else if(currentEnt->getComponentString() == "platform")
+				currentEnt->getComponent<PositionComponent>().setPosition(tempMap.getPlatformPos());
+		}
+	}
+
 	for (int i = 0, j = 0, k = 1; i < 5; i++, j += 2, k += 2)
 	{
 
@@ -212,9 +231,6 @@ void Game::update()
 			}
 		}
 	}
-
-	
-
 	
 	switch (m_currentMode)//gamestate
 	{

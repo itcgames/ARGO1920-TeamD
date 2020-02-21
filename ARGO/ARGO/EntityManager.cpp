@@ -78,6 +78,11 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 							tempF.getComponent<PositionComponent>().getPosition(),
 							tempF.getComponent<BodyComponent>().getSize()))
 						{
+							tempE.getComponent<PositionComponent>().setPosition(Vector2(240000, 20000));
+							tempE.getComponent<SpriteComponent>().setPosAndSize(tempE.getComponent<PositionComponent>().getPosition().X(),
+								tempE.getComponent<PositionComponent>().getPosition().Y(),
+								tempE.getComponent<BodyComponent>().getSize().X(),
+								tempE.getComponent<BodyComponent>().getSize().Y());
 							tempF.getComponent<SpriteComponent>().updateState(PlayerStates::DyingPlayer);
 						}
 					}
@@ -205,6 +210,8 @@ int EntityManager::handleWin(int t_levelNum)
 	}
 	return t_levelNum;
 }
+
+
 
 void EntityManager::handleBoundary(Entity& t_ent, Vector2 t_mapTopLeft, Vector2 t_mapBottomRight)
 {

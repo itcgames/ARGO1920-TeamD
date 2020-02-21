@@ -39,7 +39,7 @@ public:
 
 	bool running() { return isRunning; }
 	static GameState m_currentMode;
-	static LevelState m_currentLevel;
+	int m_currentLevel;
 
 	SDL_Renderer* m_renderer;
 	SDL_Event m_event;

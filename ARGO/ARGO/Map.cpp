@@ -69,6 +69,7 @@ void Map::init(SDL_Renderer*& t_renderer, int t_levelNum)
 
 			//19, 16, 17, 18, 20,
 			//16=cactus 17=flag 18=platform 19=cat 20 = rock
+			//cactus 16, cat 19, flag 17, clock 20, shelf 18 
 			else if (mapArray[arrayIndex] == 16)
 			{
 				cactusPos = Vector2(0 + (120 * i), 0 + (120 * j));

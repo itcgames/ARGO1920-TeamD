@@ -49,6 +49,7 @@ public:
 	void dying();
 	int handleWin(int t_levelNum);
 	//Entity getEnt(int t_arrPos);
+	
 	CollisionSystem m_colSys;
 	Vector2 getPlayerPos() {
 		for (auto& f : entities)

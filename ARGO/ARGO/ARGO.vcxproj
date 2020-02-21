@@ -67,6 +67,7 @@
     <ClInclude Include="BodyComponent.h" />
     <ClInclude Include="BotComponent.h" />
     <ClInclude Include="BoundarySystem.h" />
+    <ClInclude Include="Character.h" />
     <ClInclude Include="ClientStuff\Client.h" />
     <ClInclude Include="ClientStuff\FileTransferData.h" />
     <ClInclude Include="ClientStuff\Packet.h" />
@@ -79,6 +80,7 @@
     <ClInclude Include="Credits.h" />
     <ClInclude Include="Down.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="Factory.h" />
     <ClInclude Include="Flag.h" />
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="Game.h" />

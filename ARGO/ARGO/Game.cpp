@@ -9,8 +9,13 @@ auto& cactus(manager.addEntity("spiky"));
 auto& rock(manager.addEntity("move"));
 
 
+
+
+
 Game::Game()
 {
+	m_factory->createCatAudio(newPlayer, "ASSETS/AUDIO/temp.wav");
+	m_factory->createFlagAudio(flag, "ASSETS/AUDIO/temp.wav");
 }
 
 Game::~Game()
@@ -20,7 +25,9 @@ Game::~Game()
 
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
-	
+
+
+
 	int flags = 0;
 	if (fullscreen)
 	{
@@ -239,6 +246,7 @@ void Game::update()
 	default:
 		break;
 	}
+
 }
 
 void Game::subSystemUpdate()
@@ -307,9 +315,8 @@ void Game::clean()
 }
 
 
-
-
 void Game::initEnts(Entity &t_ent,Vector2 t_pos,Vector2 t_size, std::string t_str, bool t_isAnim, const char* t_audioStr,bool t_botMode)
+
 
 {
 	t_ent.addComponent<BotComponent>();
@@ -323,7 +330,7 @@ void Game::initEnts(Entity &t_ent,Vector2 t_pos,Vector2 t_size, std::string t_st
 	t_ent.getComponent< SpriteComponent>().setPathAndScreen(t_str, m_renderer, t_isAnim);
 	t_ent.getComponent< SpriteComponent>().setPosAndSize(t_ent.getComponent<PositionComponent>().getPosition().X(), t_ent.getComponent<PositionComponent>().getPosition().Y(),
 	t_ent.getComponent<BodyComponent>().getSize().X(), t_ent.getComponent<BodyComponent>().getSize().Y());
-	t_ent.getComponent<AudioComponent>().LoadMusicFile(t_audioStr);
+	//t_ent.getComponent<AudioComponent>().LoadMusicFile(t_audioStr);
 
 }
 

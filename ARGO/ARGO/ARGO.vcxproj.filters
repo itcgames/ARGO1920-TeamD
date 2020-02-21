@@ -269,6 +269,12 @@
     <ClInclude Include="BotComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="ClientStuff\Client.h">
       <Filter>Client Files</Filter>
     </ClInclude>

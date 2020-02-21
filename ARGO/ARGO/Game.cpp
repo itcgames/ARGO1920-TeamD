@@ -15,8 +15,8 @@ auto& bot(manager.addEntity("bot"));
 
 Game::Game()
 {
-	//m_factory->createCat(newPlayer, Vector2(480, 120), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav");
-	//m_factory->createFlag(flag, Vector2(240, 240), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, "ASSETS/AUDIO/temp.wav");
+	m_factory->createCatAudio(newPlayer, "ASSETS/AUDIO/temp.wav");
+	m_factory->createFlagAudio(flag, "ASSETS/AUDIO/temp.wav");
 }
 
 Game::~Game()
@@ -26,12 +26,12 @@ Game::~Game()
 
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
-	initEnts(newPlayer, Vector2(480, 120), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav");
-	initEnts(flag, Vector2(240, 240), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, "ASSETS/AUDIO/temp.wav");
-	initEnts(rock, Vector2(360, 360), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true, "ASSETS/AUDIO/temp.wav");
-	initEnts(platform, Vector2(240, 480), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true, "ASSETS/AUDIO/temp.wav");
-	initEnts(cactus, Vector2(600, 480), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, "ASSETS/AUDIO/temp.wav");
-	initEnts(bot, Vector2(650, 480), Vector2(120, 120), "ASSETS/IMAGES/bot.bmp", true, "ASSETS/AUDIO/temp.wav");
+	initEnts(newPlayer, Vector2(480, 120), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true/*, "ASSETS/AUDIO/temp.wav"*/);
+	initEnts(flag, Vector2(240, 240), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true/*, "ASSETS/AUDIO/temp.wav"*/);
+	initEnts(rock, Vector2(360, 360), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true/*, "ASSETS/AUDIO/temp.wav"*/);
+	initEnts(platform, Vector2(240, 480), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true/*, "ASSETS/AUDIO/temp.wav"*/);
+	initEnts(cactus, Vector2(600, 480), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true/*, "ASSETS/AUDIO/temp.wav"*/);
+	initEnts(bot, Vector2(650, 480), Vector2(120, 120), "ASSETS/IMAGES/bot.bmp", true/*, "ASSETS/AUDIO/temp.wav"*/);
 	lastString = "ASSETS/IMAGES/states.bmp";
 	Entity *arr[]{ &newPlayer,&flag,&platform,&cactus,&rock };
 
@@ -317,7 +317,9 @@ void Game::clean()
 
 
 
-void Game::initEnts(Entity &t_ent,Vector2 t_pos,Vector2 t_size, std::string t_str, bool t_isAnim, const char* t_audioStr)
+
+
+void Game::initEnts(Entity &t_ent,Vector2 t_pos,Vector2 t_size, std::string t_str, bool t_isAnim/*, const char* t_audioStr*/)
 
 {
 	t_ent.addComponent<PositionComponent>();
@@ -329,7 +331,7 @@ void Game::initEnts(Entity &t_ent,Vector2 t_pos,Vector2 t_size, std::string t_st
 	t_ent.getComponent< SpriteComponent>().setPathAndScreen(t_str, m_renderer, t_isAnim);
 	t_ent.getComponent< SpriteComponent>().setPosAndSize(t_ent.getComponent<PositionComponent>().getPosition().X(), t_ent.getComponent<PositionComponent>().getPosition().Y(),
 	t_ent.getComponent<BodyComponent>().getSize().X(), t_ent.getComponent<BodyComponent>().getSize().Y());
-	t_ent.getComponent<AudioComponent>().LoadMusicFile(t_audioStr);
+	//t_ent.getComponent<AudioComponent>().LoadMusicFile(t_audioStr);
 
 }
 

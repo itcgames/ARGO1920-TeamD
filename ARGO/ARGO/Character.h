@@ -3,12 +3,13 @@
 #include <iostream>
 #include "Entity.h"
 #include "Vector2.h"
+#include "AudioComponent.h"
 class Character
 {
 public:
 	Character() {}
 	virtual ~Character() {}
-	virtual void draw() = 0;
+	virtual void addAudio() = 0;
 };
 #endif // CHARACTER
 
@@ -18,7 +19,7 @@ class Cat: public Character
 {
 
 public:
-	void draw() { std::cout << "drawing cat" << std::endl; }
+	void addAudio() { std::cout << "drawing cat" << std::endl; }
 };
 #endif
 
@@ -28,6 +29,6 @@ class Flag: public Character
 {
 
 public:
-	void draw() { std::cout << "drawing flag" << std::endl; }
+	void addAudio() { std::cout << "drawing flag" << std::endl; }
 };
 #endif

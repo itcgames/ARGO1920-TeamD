@@ -16,7 +16,7 @@ Game::Game()
 {
 
 	//m_factory->createCatAudio(newPlayer, "ASSETS/AUDIO/temp.wav");
-	m_factory->createFlagAudio(flag, "ASSETS/AUDIO/temp.wav");
+
 }
 
 Game::~Game()
@@ -51,7 +51,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	m_currentLevel = tempMap.getLevelNum();
 	m_characterVectorArray.push_back(m_factory->initEntityCat(newPlayer, Vector2(tempMap.getPlayerPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));
 	m_characterVectorArray.push_back(m_factory->initEntityFlag(flag, Vector2(tempMap.getFlagPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));
-	m_characterVectorArray.push_back(m_factory->initEntityRock(rock, Vector2(tempMap.getRockPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));
+	m_characterVectorArray.push_back(m_factory->initEntityRock(rock, Vector2(tempMap.getClockPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));
 	m_characterVectorArray.push_back(m_factory->initEntityPlatform(platform, Vector2(tempMap.getPlatformPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));
 	m_characterVectorArray.push_back(m_factory->initEntityCactus(cactus, Vector2(tempMap.getcactusPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));
 

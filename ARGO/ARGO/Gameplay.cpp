@@ -42,11 +42,20 @@ void Gameplay::update()
 	if (myClient.isMessage)
 	{
 		myClient.isMessage = false;
-		m_ghosts.update(myClient.newMessage);
+		if (m_ghosts.update(myClient.newMessage, playerNum) == playerNum)
+		{
+			playerNum++;
+		}
 		//m_pauseMenu.otherUIRules(myClient.newMessage);
 	}
-	
-	myClient.SendString(mess);
+	std::istringstream input;
+	input.str(mess);
+	std::string message = "";
+	std::getline(input, message, ':');
+	if (std::stoi(message) == playerNum)
+	{
+		myClient.SendString(mess);
+	}
 	std::cout << mess << std::endl;
 	/*for (auto current : m_pauseMenu.getChanges())
 	{

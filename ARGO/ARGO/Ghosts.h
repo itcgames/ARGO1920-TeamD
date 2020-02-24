@@ -8,7 +8,7 @@ class Ghost
 public:
 	Ghost();
 	void setUp(SDL_Renderer* t_screen);
-	int update(std::string t_pos);
+	int update(std::string t_pos, int t_mainPlayerNum);
 	void render();
 	const static int MAX_GHOSTS = 10;
 private:

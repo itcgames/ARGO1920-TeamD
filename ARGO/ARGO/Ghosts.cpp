@@ -19,7 +19,7 @@ void Ghost::setUp(SDL_Renderer* t_screen)
 	m_texture = SDL_CreateTextureFromSurface(m_screen, m_loadedSurface);
 }
 
-int Ghost::update(std::string t_pos)
+int Ghost::update(std::string t_pos, int t_mainPlayerNum)
 {
 	/*mess = std::to_string(playerNum) + ":Cat-" + std::to_string(int(m_map.getCatPos().x)) + "," + std::to_string(int(m_map.getCatPos().y)) + ","
 		+ "Clock-" + std::to_string(int(m_map.getClockPos().x)) + "," + std::to_string(int(m_map.getClockPos().y)) + ","
@@ -32,7 +32,15 @@ int Ghost::update(std::string t_pos)
 	std::string message = "";
 	std::getline(input, message, ':');
 	int playerNum = std::stoi(message);
-	int index = 0;
+	int index;
+	if (playerNum == 1 || (t_mainPlayerNum = 1 && playerNum == 2))
+	{
+		index = 0;
+	}
+	else
+	{
+		index = 5;
+	}
 	while (std::getline(input, message, '-'))
 	{
 		std::getline(input, message, ',');
@@ -40,6 +48,11 @@ int Ghost::update(std::string t_pos)
 		std::getline(input, message, ',');
 		dstrect[index].y = std::stoi(message);
 		index++;
+	}
+	index -= 5;
+	for (int i = index; i < index + 5; i++)
+	{
+		srcrect[i].x = (playerNum-1) * 120;
 	}
 	return playerNum;
 }

@@ -29,28 +29,32 @@ void Gameplay::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t
 		gamestate = GameState::mainMenu;
 	}
 	m_pauseMenu.input(t_event, t_stick);
+	if (SDL_JoystickGetButton(t_stick.getStick(), 0) != 0)
+	{
+		myClient.SendString(mess);
+	}
 }
 
 void Gameplay::update()
 {
 	m_pauseMenu.update();
-	std::string mess = "";
+	mess = "";
 	if (myClient.isMessage)
 	{
-		std::istringstream input;
+		/*std::istringstream input; 
 		input.str(myClient.newMessage);
 		std::getline(input, mess,'.');
 		std::getline(input, mess, '.');
 		if (std::stoi(mess) == playerNum)
 		{
 			playerNum++;
-		}
-		std::cout << "Hi player " + mess + ".I'm player " + std::to_string(playerNum) << std::endl;
+		}*/
+		std::cout << myClient.newMessage << std::endl;
+		m_pauseMenu.otherUIRules(myClient.newMessage);
 	}
-	else
+	for (auto current : m_pauseMenu.getChanges())
 	{
-		mess = "I'm playing the game." + std::to_string(playerNum) + ".";
-		myClient.SendString(mess);
+		mess += (current + ",");
 	}
 }
 

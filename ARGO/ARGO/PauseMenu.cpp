@@ -214,7 +214,7 @@ std::vector<std::string> PauseMenu::getChanges()
 		}
 		else if (srcrect[box].y == 120)
 		{
-			rules.push_back("ball");
+			rules.push_back("clock");
 		}
 		else if(srcrect[box].y == 240)
 		{
@@ -278,7 +278,7 @@ void PauseMenu::setUIRules(int t_index, std::string t_type)
 {
 	if (t_type == "cat" || t_type == "player")
 		srcrect[t_index].y = 0;
-	else if (t_type == "ball" || t_type == "goal")
+	else if (t_type == "clock" || t_type == "goal")
 		srcrect[t_index].y = 120;
 	else if (t_type == "platform" || t_type == "stop")
 		srcrect[t_index].y = 240;
@@ -286,5 +286,18 @@ void PauseMenu::setUIRules(int t_index, std::string t_type)
 		srcrect[t_index].y = 360;
 	else if (t_type == "cactus" || t_type == "spiky")
 		srcrect[t_index].y = 480;
+}
+
+void PauseMenu::otherUIRules(std::string t_rules)
+{
+	std::istringstream input;
+	input.str(t_rules);
+	std::string currentText = "";
+	int currentBox = 0;
+	while (getline(input, currentText, ','))
+	{
+		setUIRules(currentBox, currentText);
+		currentBox++;
+	}
 }
 

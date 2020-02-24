@@ -57,20 +57,7 @@ void Gameplay::update()
 		myClient.SendString(mess);
 	}
 	std::cout << mess << std::endl;
-	/*for (auto current : m_pauseMenu.getChanges())
-	{
-		mess += (current + ",");
-	}
-	if (m_pauseMenu.hasRulesChanged())
-	{
-		myClient.SendString(mess);
-	}
-	else if (myClient.isMessage)
-	{
-		myClient.isMessage = false;
-		std::cout << myClient.newMessage << std::endl;
-		m_pauseMenu.otherUIRules(myClient.newMessage);
-	}*/
+
 }
 
 void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)

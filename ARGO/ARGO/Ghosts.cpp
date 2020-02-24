@@ -33,7 +33,7 @@ int Ghost::update(std::string t_pos, int t_mainPlayerNum)
 	std::getline(input, message, ':');
 	int playerNum = std::stoi(message);
 	int index;
-	if (playerNum == 1 || (t_mainPlayerNum = 1 && playerNum == 2))
+	if (playerNum == 1 || (t_mainPlayerNum == 1 && playerNum == 2))
 	{
 		index = 0;
 	}

@@ -111,6 +111,10 @@
     <ClInclude Include="VelocityComponent.h" />
     <ClInclude Include="Wall.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="ASSETS\MAP\Level1.txt" />
+    <Text Include="ASSETS\MAP\Level2.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{0E5674C2-7181-4265-A9B9-FFC7AD3EFE79}</ProjectGuid>

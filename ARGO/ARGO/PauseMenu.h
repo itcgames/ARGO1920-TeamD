@@ -19,6 +19,7 @@ public:
 	std::vector<std::string> getChanges();
 	void setRules(int t_levelNum);
 	void setUIRules(int t_index,std::string t_type);
+	void otherUIRules(std::string t_rules);
 
 	static const int MAX_TIME = 30;
 

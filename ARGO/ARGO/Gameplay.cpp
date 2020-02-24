@@ -2,7 +2,7 @@
 #include <fstream>
 #include <sstream>
 Gameplay::Gameplay() :
-	myClient("bleh", 1111)
+	myClient("149.153.106.148Ho", 1111)
 {
 	if (!myClient.Connect()) //If client fails to connect...
 	{

@@ -25,9 +25,6 @@ Game::~Game()
 
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
-
-
-
 	int flags = 0;
 	if (fullscreen)
 	{

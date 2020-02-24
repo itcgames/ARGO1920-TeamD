@@ -3,10 +3,10 @@
 MainMenu::MainMenu()
 {
 	m_backgroundRect = { 0,0, 3840, 2160 };
-	m_playRect = { 1200,100,643 * 2,215 * 2 };
-	m_optionsRect = { 1200,650,643 * 2,215 * 2};
-	m_helpRect = { 1200,1200,643 * 2,215 * 2};
-	m_quitRect = { 1200,1750,643 * 2,215 * 2 };
+	m_playRect = { 1670,800,100 * 5,38 * 5 };
+	m_optionsRect = { 1670,1100,100 * 5,38 * 5 };
+	m_helpRect = { 1670,1400,100 * 5,38 * 5 };
+	m_quitRect = { 1670,1700,100 * 5,38 * 5 };
 	m_selectorRect = m_playRect;
 
 	loadedSurface = NULL;

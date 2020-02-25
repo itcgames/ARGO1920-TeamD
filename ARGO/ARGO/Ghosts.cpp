@@ -5,7 +5,7 @@ Ghost::Ghost()
 {
 	for (int i = 0; i < MAX_GHOSTS; i++)
 	{
-		dstrect[i] = { 0, 0, 120, 120 };
+		dstrect[i] = { 0, -120, 120, 120 };
 		srcrect[i] = { 0, i*120, 120, 120 };
 		if (i >= 5)
 			srcrect[i].y -= 600;

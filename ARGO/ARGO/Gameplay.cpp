@@ -55,7 +55,7 @@ void Gameplay::update()
 	{
 		myClient.SendString(mess);
 	}
-	myClient.GetIPAddr();
+	std::string ip = myClient.GetIPAddr();
 }
 
 void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)

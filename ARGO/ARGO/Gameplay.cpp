@@ -58,7 +58,7 @@ void Gameplay::update()
 	}
 	std::cout << mess << std::endl;
 
-	m_map.BFS(Vector2(1,1));
+	m_map.BFS(Vector2(4,4));
 }
 
 void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
@@ -85,7 +85,7 @@ void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 		}
 	}
 	m_pauseMenu.render(t_renderer);
-	m_ghosts.render();
+	//m_ghosts.render();
 }
 
 void Gameplay::clean(SDL_Renderer*& t_renderer, SDL_Window* t_window)

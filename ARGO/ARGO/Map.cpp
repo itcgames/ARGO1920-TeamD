@@ -47,7 +47,7 @@ void Map::init(SDL_Renderer*& t_renderer, int t_levelNum)
 				tile[i][j].init(platformStr, t_renderer);
 				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
 			}
-
+			
 			//19, 16, 17, 18, 20,
 			//16=cactus 17=flag 18=platform 19=cat 20 = clock
 			//cactus 16, cat 19, flag 17, clock 20, shelf 18 
@@ -102,15 +102,17 @@ void Map::BFS(Vector2 goalPos)
 
 	std::list<mapTile*> queue;
 
-	for (auto& t : tile)
+	for (int i = 0; i < 32; i++)
 	{
-		t->setStart(false);
-		t->setGoal(false);
-		t->setPath(false);
-		t->setVisited(false);
-		t->setCost(0);
+		for (int j = 0; j < 15; j++)
+		{
+			tile[i][j].setStart(false);
+			tile[i][j].setGoal(false);
+			tile[i][j].setPath(false);
+			tile[i][j].setVisited(false);
+			tile[i][j].setCost(0);
+		}
 	}
-
 	goal->setGoal(true);
 	goal->setVisited(true);
 	queue.push_back(goal);
@@ -134,15 +136,25 @@ void Map::BFS(Vector2 goalPos)
 		}
 		queue.pop_front();
 	}
-	for (auto& t : tile)
+
+	for (int i = 0; i < 32; i++)
 	{
-		if (t->getPrevious() && t->getWall() == false)
+		for (int j = 0; j < 15; j++)
 		{
-			t->setEnd(t->getPrevious()->getCenter());
+			if (tile[i][j].getPrevious() && tile[i][j].getWall() == false)
+			{
+				tile[i][j].setEnd(tile[i][j].getPrevious()->getCenter());
+			}
 		}
 	}
 
-
+	//for (auto& t : tile)
+	//{
+	//	if (t->getPrevious() && t->getWall() == false)
+	//	{
+	//		t->setEnd(t->getPrevious()->getCenter());
+	//	}
+	//}
 }
 
 void Map::ToggleDrawVector()
@@ -195,16 +207,16 @@ void Map::setLevelNum(int t_level)
 
 void Map::setAdjacents()
 {
-	for (int i = 0; i < 15; i++)
+	for (int i = 0; i < 31; i++)
 	{
-		for (int j = 0; j < 32; j++)
+		for (int j = 0; j < 15; j++)
 		{
 			if (i > 0)
 			{
 				tile[i][j].addEdge(tile[i - 1][j]);
 			}
 
-			if (i + 1 < 15)
+			if (i + 1 < 32)
 			{
 				tile[i][j].addEdge(tile[i + 1][j]);
 			}
@@ -214,7 +226,7 @@ void Map::setAdjacents()
 				tile[i][j].addEdge(tile[i][j - 1]);
 			}
 
-			if (j < 32)
+			if (j < 15)
 			{
 				tile[i][j].addEdge(tile[i][j + 1]);
 			}

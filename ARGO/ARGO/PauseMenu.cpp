@@ -5,6 +5,7 @@
 PauseMenu::PauseMenu()
 {
 	m_lockValue = NUM_OF_BOXES;
+	m_rulesChanged = false;
 }
 
 PauseMenu::~PauseMenu()
@@ -44,7 +45,7 @@ void PauseMenu::init()
 	
 	currentBox = 1;
 	m_slectOffset = Vector2(5, 5);
-	dstrectSelect = { int(selectBox[currentBox].X() - m_slectOffset.x), int(selectBox[currentBox].Y() - m_slectOffset.y), 250, 130 };
+	dstrectSelect = { int(selectBox[currentBox].X() - m_slectOffset.x), int(selectBox[currentBox].Y() - m_slectOffset.y), 250, 170 };
 	dstrectSelect2 = { int(selectBox[currentBox].X()- (m_slectOffset.x/2)), int(selectBox[currentBox].Y()- (m_slectOffset.y / 2)), 244, 124 };
 }
 
@@ -59,7 +60,12 @@ void PauseMenu::input(SDL_Event& t_event, Joystick t_stick)
 				if (!anyActive() && dstrectSelect.x + m_slectOffset.x == selectBox[box].X() && dstrectSelect.y + m_slectOffset.y == selectBox[box].Y())
 				{
 					boxSelected[box] = true;
+					currentBox += 2;
 					timer = 0;
+					if (currentBox >= m_lockValue)
+					{
+						currentBox -= m_lockValue;
+					}
 				}
 				else if (dstrectSelect.x + m_slectOffset.x == selectBox[box].X() && dstrectSelect.y + m_slectOffset.y == selectBox[box].Y())
 				{
@@ -78,15 +84,10 @@ void PauseMenu::input(SDL_Event& t_event, Joystick t_stick)
 								srcrect[box].y = tempCut;
 								boxSelected[box2] = false;
 								m_swappedStates = true;
+								m_rulesChanged = true;
 							}
 						}
 					}
-					timer = 0;
-				}
-
-				if (false&&boxSelected[box])
-				{
-					boxSelected[box] = false;
 					timer = 0;
 				}
 			}
@@ -100,6 +101,14 @@ void PauseMenu::input(SDL_Event& t_event, Joystick t_stick)
 			{
 				currentBox -= m_lockValue;
 			}
+			if (boxSelected[currentBox])
+			{
+				currentBox += 2;
+			}
+			if (currentBox >= m_lockValue)
+			{
+				currentBox -= m_lockValue;
+			}
 		}
 		else if (SDL_JoystickGetHat(t_stick.getStick(), 0) == SDL_HAT_LEFT)
 		{
@@ -109,11 +118,19 @@ void PauseMenu::input(SDL_Event& t_event, Joystick t_stick)
 			{
 				currentBox += m_lockValue;
 			}
+			if (boxSelected[currentBox])
+			{
+				currentBox -= 2;
+			}
+			if (currentBox < 0)
+			{
+				currentBox += m_lockValue;
+			}
 		}
-		dstrectSelect = { int(selectBox[currentBox].X() - 5), int(selectBox[currentBox].Y() - 5), dstrectSelect.w, dstrectSelect.h };
+		dstrectSelect = { int(selectBox[currentBox].X() - m_slectOffset.x), int(selectBox[currentBox].Y() - m_slectOffset.y), dstrectSelect.w, dstrectSelect.h };
 		if (!anyActive())
 		{
-			dstrectSelect2 = { int(selectBox[currentBox].X() - 2), int(selectBox[currentBox].Y() - 2), dstrectSelect2.w, dstrectSelect2.h };
+			dstrectSelect2 = { int(selectBox[currentBox].X() - (m_slectOffset.x / 2)), int(selectBox[currentBox].Y() - (m_slectOffset.x / 2)), dstrectSelect2.w, dstrectSelect2.h };
 		}
 		
 	}
@@ -288,17 +305,3 @@ void PauseMenu::setUIRules(int t_index, std::string t_type)
 	else if (t_type == "cactus" || t_type == "spiky")
 		srcrect[t_index].y = 480;
 }
-
-void PauseMenu::otherUIRules(std::string t_rules)
-{
-	std::istringstream input;
-	input.str(t_rules);
-	std::string currentText = "";
-	int currentBox = 0;
-	while (getline(input, currentText, ','))
-	{
-		setUIRules(currentBox, currentText);
-		currentBox++;
-	}
-}
-

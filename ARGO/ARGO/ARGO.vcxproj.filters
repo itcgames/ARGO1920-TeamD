@@ -142,7 +142,10 @@
       <Filter>Client Files</Filter>
     </ClCompile>
     <ClCompile Include="Factory.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Client Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Ghosts.cpp">
+      <Filter>Client Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -295,6 +298,9 @@
     </ClInclude>
     <ClInclude Include="ClientStuff\PacketType.h">
       <Filter>Client Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Ghosts.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

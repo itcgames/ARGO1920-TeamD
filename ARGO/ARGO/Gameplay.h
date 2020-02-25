@@ -11,6 +11,8 @@
 #include "CollisionSystem.h"
 #include "ClientStuff/Client.h"
 #include "MainMenu.h"
+#include "Ghosts.h"
+
 class Gameplay
 {
 public:
@@ -28,6 +30,7 @@ public:
 	void fixedUpdate(EntityManager& t_entMan);
 	int getCurrentLevel() { return newLevel; }
 	bool getSwappedStates();
+	void updatePositions(std::vector<Vector2> t_pos);
 private:
 	Map m_map;
 	PauseMenu m_pauseMenu;
@@ -43,4 +46,5 @@ private:
 	std::string mess = "";
 	int newLevel = 0;
 	bool m_stateSwapped = false;
+	Ghost m_ghosts;
 };

@@ -41,6 +41,7 @@
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Gameplay.cpp" />
+    <ClCompile Include="Ghosts.cpp" />
     <ClCompile Include="help.cpp" />
     <ClCompile Include="Intro.cpp" />
     <ClCompile Include="Joystick.cpp" />
@@ -87,6 +88,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Gameplay.h" />
     <ClInclude Include="Gamestate.h" />
+    <ClInclude Include="Ghosts.h" />
     <ClInclude Include="help.h" />
     <ClInclude Include="Intro.h" />
     <ClInclude Include="Joystick.h" />

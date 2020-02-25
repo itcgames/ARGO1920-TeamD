@@ -52,4 +52,5 @@ private:
 	Vector2 m_slectOffset;
 	int m_lockValue;
 	bool m_swappedStates = false;
+	bool m_rulesChanged;
 };

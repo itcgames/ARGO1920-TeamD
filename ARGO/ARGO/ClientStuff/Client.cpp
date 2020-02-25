@@ -97,6 +97,32 @@ bool Client::RequestFile(const std::string & fileName)
 	return true;
 }
 
+std::string Client::GetIPAddr()
+{
+	std::string line,ans;
+	std::ifstream IPFile;
+	int offset;
+	char* search0 = _strdup("IPv4 Address. . . . . . . . . . . :");      // search pattern
+
+	system("ipconfig > ip.txt");
+
+	IPFile.open("ip.txt");
+	if (IPFile.is_open())
+	{
+		while (!IPFile.eof())
+		{
+			getline(IPFile, line);
+			if ((offset = line.find(search0, 0)) != std::string::npos)
+			{ 
+				line.erase(0, 39);
+				ans = line;
+				IPFile.close();
+			}
+		}
+	}
+	return ans;
+}
+
 void Client::PacketSenderThread(Client & client) //Thread for all outgoing packets
 {
 	while (true)

@@ -2,7 +2,7 @@
 #include "SpriteComponent.h"
 Entity::Entity()
 {
-	//uniqueID = componentIDCounter++;
+
 }
 
 bool Entity::getAlive()
@@ -14,11 +14,6 @@ void Entity::destroy()
 {
 	alive = false;
 }
-
-//int Entity::getUniqueID()
-//{
-//	return uniqueID;
-//}
 
 void Entity::update()
 {

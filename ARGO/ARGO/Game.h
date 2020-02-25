@@ -22,6 +22,7 @@
 #include "AudioComponent.h"
 #include "Factory.h"
 #include "BotComponent.h"
+#include "Gameplay.h"
 
 class Game
 {
@@ -68,6 +69,8 @@ private:
 	
 	
 
+	bool initialiseOnce = false;
+
 	Entity*  entArr[5];
 
 	/// <summary>
@@ -78,8 +81,9 @@ private:
 
 	void initEnts(Entity &t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim, const char* t_audioStr, bool t_botMode);
 
-	std::vector<std::string> answer2;
 	void updateEnts(Entity& t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim, bool t_botMode);
 	std::string lastString;
 	bool botPresent=true;
+	int  currBiggestStack=0;
+	bool firstRun = false;
 };

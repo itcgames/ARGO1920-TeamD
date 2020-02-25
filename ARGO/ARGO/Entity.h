@@ -31,8 +31,6 @@ class Entity
 private:
 	bool alive = true;
 	std::vector<std::unique_ptr<Component>> components;
-	//int componentIDCounter = 0;
-	//int uniqueID;
 	ComponentArray componentArray;
 	ComponentBitSet componentBitset;
 	std::string ComponentTag;
@@ -41,7 +39,6 @@ public:
 	Entity();
 	bool getAlive();
 	void destroy();
-	//int getUniqueID();
 	void update();
 	void render(SDL_Renderer* t_screen);
 

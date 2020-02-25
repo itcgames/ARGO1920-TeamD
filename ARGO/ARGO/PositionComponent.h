@@ -18,6 +18,9 @@ public:
 	void init() override;
 	void update() override;
 	void render() override;
+	int getStackSize();
+	void resetStack();
+	void popPreviousPosition();
 private:
 	Vector2 m_position;
 	std::stack<Vector2> m_prevPositions;

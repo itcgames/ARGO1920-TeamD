@@ -97,6 +97,12 @@ bool Client::RequestFile(const std::string & fileName)
 	return true;
 }
 
+std::string Client::GetIPAddr()
+{
+	m_addr;
+	return std::string();
+}
+
 void Client::PacketSenderThread(Client & client) //Thread for all outgoing packets
 {
 	while (true)

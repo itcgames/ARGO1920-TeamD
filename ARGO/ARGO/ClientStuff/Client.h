@@ -12,6 +12,7 @@ public: //Public functions
 	void Disconnect();
 	void SendString(const std::string & str);
 	bool RequestFile(const std::string & fileName);
+	std::string GetIPAddr();
 	~Client();
 	std::string newMessage;
 	bool isMessage;

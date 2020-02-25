@@ -19,22 +19,18 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 			{
 				if (stick.Y() == 1)
 				{
-					//handleMove(tempE, "down");
 					handleMove(tempE, m_down.execute());
 				}
 				else if (stick.X() == 1 || (tempE.getComponent<BotComponent>().getBotMode() && tempE.getComponent<BotComponent>().getFakeStickX()==1))
 				{
-					//handleMove(tempE, "right");
 					handleMove(tempE, m_right.execute());
 				}
 				else if (stick.X() == -1 || (tempE.getComponent<BotComponent>().getBotMode() && tempE.getComponent<BotComponent>().getFakeStickX() == -1))
 				{
-					//handleMove(tempE, "left");
 					handleMove(tempE, m_left.execute());
 				}
 				else if (stick.Y() == -1)
 				{
-					//handleMove(tempE, "up");
 					handleMove(tempE, m_up.execute());
 				}
 				handleBoundary(tempE, t_mapsize.at(0), t_mapsize.at(1));
@@ -42,23 +38,20 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 			}
 			if (SDL_JoystickGetButton(stick.getStick(), 4) != 0)
 			{
-				
-					int tempEnumX = tempE.getComponent<PositionComponent>().getPreviousPosition().X();
-					int tempEnumY = tempE.getComponent<PositionComponent>().getPreviousPosition().Y();
-					tempEnumX = tempEnumX % 120;
-					tempEnumY = tempEnumY % 120;
+				int tempEnumX = tempE.getComponent<PositionComponent>().getPreviousPosition().X();
+				int tempEnumY = tempE.getComponent<PositionComponent>().getPreviousPosition().Y();
+				tempEnumX = tempEnumX % 120;
+				tempEnumY = tempEnumY % 120;
 
-					if (!tempEnumX == 0 || !tempEnumY == 0)
-					{
-						tempE.getComponent<PositionComponent>().popPreviousPosition();
-					}
-					else
-					{
-						tempE.getComponent<PositionComponent>().setToPreviousPos();
-					}
-				
-				
-				//tempE.getComponent<PositionComponent>().setToPreviousPos();
+				if (!tempEnumX == 0 || !tempEnumY == 0)
+				{
+					tempE.getComponent<PositionComponent>().popPreviousPosition();
+				}
+				else
+				{
+					tempE.getComponent<PositionComponent>().setToPreviousPos();
+				}
+
 				if (!tempE.getComponent<PositionComponent>().isEmpty())
 				{
 					m_moveThisFrame = true;
@@ -72,7 +65,6 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 					tempE.getComponent<PositionComponent>().getPosition().Y(),
 					tempE.getComponent<BodyComponent>().getSize().X(),
 					tempE.getComponent<BodyComponent>().getSize().Y());
-				//tempE.getComponent<SpriteComponent>().updateState(PlayerStates::IdlePlayer);
 			}
 			if (tempE.getComponentString() == "stop" || tempE.getComponentString() == "move")
 			{
@@ -247,23 +239,6 @@ int EntityManager::handleWin(int t_levelNum)
 	return t_levelNum;
 }
 
-//int EntityManager::getHighestStackSize()
-//{
-//	int currBig = 0;
-//	for (auto& e : entities)
-//	{
-//		Entity& tempE = *e.get();
-//		if (tempE.getComponent<PositionComponent>().getStackSize() >= currBig)
-//		{
-//			currBig = tempE.getComponent<PositionComponent>().getStackSize();
-//		}
-//		
-//	}
-//	return currBig;
-//}
-
-
-
 void EntityManager::handleBoundary(Entity& t_ent, Vector2 t_mapTopLeft, Vector2 t_mapBottomRight)
 {
 	Vector2 tempPos = m_boundSys.hitBoundary(t_ent.getComponent<PositionComponent>().getPosition(), t_ent.getComponent<BodyComponent>().getSize(), t_mapTopLeft, t_mapBottomRight);
@@ -311,11 +286,7 @@ void EntityManager::movement()
 		if (m_startOfInput)
 		{
 			Vector2 tempVec = tempE.getComponent<PositionComponent>().getPosition();
-			
 			tempE.getComponent<PositionComponent>().setPreviousPosition(Vector2((int((tempVec.x + 60) / 120)) * 120, (int((tempVec.y + 60) / 120)) * 120));
-			
-			
-			//tempE.getComponent<PositionComponent>().setPreviousPosition(tempE.getComponent<PositionComponent>().getPosition());
 		}
 	}
 	m_startOfInput = false;

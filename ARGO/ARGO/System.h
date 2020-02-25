@@ -13,7 +13,6 @@ public:
 	void movementDown();
 	void movementLeft();
 	void movementRight();
-	void platformCollision();
 
 	void wallCol();
 private:

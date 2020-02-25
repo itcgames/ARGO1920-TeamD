@@ -304,27 +304,3 @@ void PauseMenu::setUIRules(int t_index, std::string t_type)
 	else if (t_type == "cactus" || t_type == "spiky")
 		srcrect[t_index].y = 480;
 }
-
-void PauseMenu::otherUIRules(std::string t_rules)
-{
-	std::istringstream input;
-	input.str(t_rules);
-	std::string currentText = "";
-	int currentBox = 0;
-	while (getline(input, currentText, ','))
-	{
-		setUIRules(currentBox, currentText);
-		currentBox++;
-	}
-}
-
-bool PauseMenu::hasRulesChanged()
-{
-	if (m_rulesChanged)
-	{
-		m_rulesChanged = false;
-		return true;
-	}
-	return false;
-}
-

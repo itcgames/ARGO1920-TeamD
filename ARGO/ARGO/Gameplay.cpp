@@ -46,7 +46,6 @@ void Gameplay::update()
 		{
 			playerNum++;
 		}
-		//m_pauseMenu.otherUIRules(myClient.newMessage);
 	}
 	std::istringstream input;
 	input.str(mess);
@@ -68,7 +67,6 @@ void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 		std::string temp = "ASSETS/IMAGES/level" + std::to_string(m_map.getLevelNum()) + "back.bmp";
 		m_loadedSurfaceBack = SDL_LoadBMP(temp.c_str());
 		m_textureBack = SDL_CreateTextureFromSurface(t_renderer, m_loadedSurfaceBack);
-		//t_entMan.resetStacks();
 	}
 	SDL_Rect dstrect = { 120, 120, m_map.getMapCorners().at(1).x-120,  m_map.getMapCorners().at(1).y-120};
 

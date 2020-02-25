@@ -46,7 +46,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	m_gamePlayScr.init(m_renderer);
 
 	Map tempMap = m_gamePlayScr.getMap();
-	m_currentLevel = 0;// tempMap.getLevelNum();
+	m_currentLevel = 0;
 
 	initEnts(newPlayer, Vector2(tempMap.getCatPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(flag, Vector2(tempMap.getFlagPos()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, "ASSETS/AUDIO/temp.wav", false);
@@ -69,7 +69,6 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	flag.addComponent<AudioComponent>().closeAudio();
 
 	answer = m_gamePlayScr.getChanges();
-	answer2 = answer;
 }
 
 void Game::handleEvents()
@@ -132,13 +131,8 @@ void Game::handleEvents()
 	case GameState::mainMenu:
 		m_mainMenuScr.handleEvents(m_event, m_currentMode, stick);
 		break;
-	//case GameState::gameplay://no process events for this screen
-	//	if ((m_event.type == SDL_JOYBUTTONDOWN || m_event.type == SDL_JOYAXISMOTION) && !m_gamePlayScr.isPaused())
-	//	{
-	//		manager.handleEvents(stick, m_gamePlayScr.getMapCorners());
-	//	}
-	//	m_gamePlayScr.handleEvents(m_event, m_currentMode, stick);
-	//	break;
+	case GameState::gameplay://no process events for this screen here
+		break;
 	case GameState::options:
 		m_optionsScr.handleEvents(m_event, m_currentMode, stick);
 		break;
@@ -153,10 +147,6 @@ void Game::handleEvents()
 
 void Game::update()
 {
-	//newPlayer.destroy();
-	//flag.destroy();
-
-	//manager.refresh();
 	answer = m_gamePlayScr.getChanges();
 
 
@@ -165,8 +155,6 @@ void Game::update()
 	platform.setComponentString(answer[5]);
 	flag.setComponentString(answer[7]);
 	cactus.setComponentString(answer[9]);
-
-	//updateEnts(bot, Vector2(bot.getComponent<PositionComponent>().getPosition().X(), bot.getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/bot.bmp", true);
 
 	Map tempMap = m_gamePlayScr.getMap();
 	Vector2 savedPos[5];
@@ -222,11 +210,6 @@ void Game::update()
 	}
 
 	m_currentLevel = tempMap.getLevelNum();
-	/*updateEnts(rock2, Vector2(480, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav");
-	updateEnts(rock3, Vector2(600, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav");
-	updateEnts(rock4, Vector2(720, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav");
-	updateEnts(rock5, Vector2(840, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav");*/
-	m_currentLevel = tempMap.getLevelNum();
 
 	std::vector<Vector2> passIn;
 	for (int i = 0;i<5;i++)
@@ -281,7 +264,6 @@ void Game::subSystemUpdate()
 	default:
 		break;
 	}
-	//manager.update();
 	m_gamePlayScr.fixedUpdate(manager);
 }
 
@@ -333,8 +315,6 @@ void Game::clean()
 
 
 void Game::initEnts(Entity &t_ent,Vector2 t_pos,Vector2 t_size, std::string t_str, bool t_isAnim, const char* t_audioStr,bool t_botMode)
-
-
 {
 	t_ent.addComponent<BotComponent>();
 	t_ent.getComponent<BotComponent>().setBotMode(t_botMode);
@@ -353,7 +333,6 @@ void Game::initEnts(Entity &t_ent,Vector2 t_pos,Vector2 t_size, std::string t_st
 
 void Game::updateEnts(Entity& t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim,bool t_botMode)
 {
-	//t_ent.deleteComp<SpriteComponent>(&t_ent.getComponent<SpriteComponent>());
 	t_ent.getComponent<BotComponent>().setBotMode(t_botMode);
 	t_ent.getComponent<SpriteComponent>().resetSprite();
 	t_ent.getComponent<PositionComponent>().setPosition(t_pos);

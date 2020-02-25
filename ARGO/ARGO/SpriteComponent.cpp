@@ -113,7 +113,7 @@ void SpriteComponent::update()
 	{
 		timer = 0;
 		xOffset += 120;
-		if (xOffset == 600)//to be changed for actually spritesheet
+		if (xOffset == 600)
 		{
 			xOffset = 0;
 		}
@@ -142,10 +142,7 @@ void SpriteComponent::render()
 	SDL_Rect dstrect = { m_x, m_y, m_width, m_height };
 
 	SDL_Rect srcrect = { xOffset, yOffset, 120, 120 };
-	if (m_paths.size() == 2 && m_paths.at(0) == "ASSETS/IMAGES/cactus.bmp" && m_paths.at(1) == "ASSETS/IMAGES/states.bmp")
-	{
-		int t = 0;// SDL_RenderCopy(m_screen, SDL_CreateTextureFromSurface(m_screen, loadedSurface.at(m_currentTex)), &srcrect, &dstrect);
-	}
+
 	while (loadedSurface.size() < m_paths.size())
 	{
 		loadedSurface.push_back(SDL_LoadBMP(m_paths.at(loadedSurface.size()).c_str()));
@@ -155,13 +152,5 @@ void SpriteComponent::render()
 	{
 		srcrect.y = 0;
 	}
-
-	if (m_currentTex == 0 && m_paths.size()==2&&m_paths.at(0) == "ASSETS/IMAGES/cactus.bmp" && m_paths.at(1) == "ASSETS/IMAGES/states.bmp")
-	{
-		SDL_RenderCopy(m_screen, SDL_CreateTextureFromSurface(m_screen, loadedSurface.at(m_currentTex)), &srcrect, &dstrect);
-	}
-	else
-	{
-		SDL_RenderCopy(m_screen, m_texture.at(m_currentTex), &srcrect, &dstrect);
-	}
+	SDL_RenderCopy(m_screen, m_texture.at(m_currentTex), &srcrect, &dstrect);
 }

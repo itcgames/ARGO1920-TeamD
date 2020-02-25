@@ -113,11 +113,8 @@ std::string Client::GetIPAddr()
 		{
 			getline(IPFile, line);
 			if ((offset = line.find(search0, 0)) != std::string::npos)
-			{
-				//   IPv4 Address. . . . . . . . . . . : 1
-				//1234567890123456789012345678901234567890     
+			{ 
 				line.erase(0, 39);
-				std::cout << line << std::endl;
 				ans = line;
 				IPFile.close();
 			}

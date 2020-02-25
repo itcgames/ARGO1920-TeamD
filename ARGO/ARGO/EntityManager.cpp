@@ -84,6 +84,7 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 								tempE.getComponent<BodyComponent>().getSize().X(),
 								tempE.getComponent<BodyComponent>().getSize().Y());
 							tempF.getComponent<SpriteComponent>().updateState(PlayerStates::DyingPlayer);
+							m_diedToCactus = true;
 						}
 					}
 				}
@@ -202,7 +203,9 @@ int EntityManager::handleWin(int t_levelNum)
 					if (m_colSys.collides(tempE.getComponent<PositionComponent>().getPosition(), tempE.getComponent<BodyComponent>().getSize(),
 						tempE2.getComponent<PositionComponent>().getPosition(), tempE2.getComponent<BodyComponent>().getSize()))
 					{
+						
 						t_levelNum++;
+						
 					}
 				}
 			}
@@ -210,6 +213,8 @@ int EntityManager::handleWin(int t_levelNum)
 	}
 	return t_levelNum;
 }
+
+
 
 
 

@@ -60,7 +60,7 @@ void Gameplay::update()
 
 void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 {
-	int newLevel = t_entMan.handleWin(m_map.getLevelNum());
+	 newLevel = t_entMan.handleWin(m_map.getLevelNum());
 	if (m_map.getLevelNum() != newLevel)
 	{
 		m_map.init(t_renderer,newLevel);
@@ -142,6 +142,14 @@ void Gameplay::fixedUpdate(EntityManager& t_entMan)
 			t_entMan.mapCol(m_map.tile[i][j].vec, temp);
 		}
 	}
+
+	
+}
+
+bool Gameplay::getSwappedStates()
+{
+	m_stateSwapped = m_pauseMenu.getStatesSwapped();
+	return m_stateSwapped;
 }
 
 void Gameplay::setupRowCol(int t_row, int t_col, int t_MaxRow,int t_MaxCol)

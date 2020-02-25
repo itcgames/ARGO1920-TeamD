@@ -1,6 +1,6 @@
 #include "Game.h"
 
-GameState Game::m_currentMode{ GameState::splash };
+GameState Game::m_currentMode{ GameState::mainMenu };
 EntityManager manager;
 auto& newPlayer(manager.addEntity("player"));
 auto& flag(manager.addEntity("goal"));
@@ -54,8 +54,6 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	m_characterVectorArray.push_back(m_factory->initEntityRock(rock, Vector2(tempMap.getClockPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));
 	m_characterVectorArray.push_back(m_factory->initEntityPlatform(platform, Vector2(tempMap.getPlatformPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));
 	m_characterVectorArray.push_back(m_factory->initEntityCactus(cactus, Vector2(tempMap.getcactusPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));
-
-
 	/*initEnts(newPlayer, Vector2(tempMap.getPlayerPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(flag, Vector2(tempMap.getRockPos()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(rock, Vector2(tempMap.getFlagPos()), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true, "ASSETS/AUDIO/temp.wav", false);
@@ -78,6 +76,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 	answer = m_gamePlayScr.getChanges();
 	answer2 = answer;
+	
 }
 
 void Game::handleEvents()
@@ -176,8 +175,13 @@ void Game::update()
 	flag.setComponentString(answer[7]);
 	cactus.setComponentString(answer[9]);
 
+	if (m_gamePlayScr.getCurrentLevel() -1 > m_optionsScr.getAchievementCount())
+	{
+		m_optionsScr.increaseAchievementCount(m_renderer);
+	}
 	//updateEnts(bot, Vector2(bot.getComponent<PositionComponent>().getPosition().X(), bot.getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/bot.bmp", true);
-
+	m_optionsScr.setCatHurtAchievement(manager.GetDeathToCactus());
+	m_optionsScr.setCatStateAchievement(m_gamePlayScr.getSwappedStates());
 	Map tempMap = m_gamePlayScr.getMap();
 	for (int i = 0, j = 0; i < 5; i++, j += 2)
 	{
@@ -255,7 +259,7 @@ void Game::update()
 	default:
 		break;
 	}
-
+	
 }
 
 void Game::subSystemUpdate()
@@ -322,6 +326,8 @@ void Game::clean()
 	SDL_DestroyRenderer(m_renderer);
 	SDL_Quit();
 }
+
+
 
 
 void Game::initEnts(Entity &t_ent,Vector2 t_pos,Vector2 t_size, std::string t_str, bool t_isAnim, const char* t_audioStr,bool t_botMode)

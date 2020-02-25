@@ -77,6 +77,7 @@ void PauseMenu::input(SDL_Event& t_event, Joystick t_stick)
 								srcrect[box2].y = srcrect[box].y;
 								srcrect[box].y = tempCut;
 								boxSelected[box2] = false;
+								m_swappedStates = true;
 							}
 						}
 					}

@@ -10,6 +10,7 @@
 #include "OctTree.h"
 #include "CollisionSystem.h"
 #include "ClientStuff/Client.h"
+#include "MainMenu.h"
 class Gameplay
 {
 public:
@@ -25,6 +26,8 @@ public:
 	Map getMap();
 	std::vector<Vector2> getMapCorners();
 	void fixedUpdate(EntityManager& t_entMan);
+	int getCurrentLevel() { return newLevel; }
+	bool getSwappedStates();
 private:
 	Map m_map;
 	PauseMenu m_pauseMenu;
@@ -38,4 +41,6 @@ private:
 	Client myClient;
 	int playerNum = 1;
 	std::string mess = "";
+	int newLevel = 0;
+	bool m_stateSwapped = false;
 };

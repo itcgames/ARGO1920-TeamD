@@ -35,6 +35,7 @@ public:
 	void subSystemUpdate();
 	void render();
 	void clean();
+
 	
 
 	bool running() { return isRunning; }
@@ -57,9 +58,13 @@ private:
 	Joystick stick;
 	bool keyTest = false;
 	bool temp = false;
+	bool m_gotAchievment = false;
+
+	
 	Entity* m_cat;
 	Factory* m_factory = new CharacterFactory();
 	std::vector<Character*> m_characterVectorArray;
+
 	
 	
 

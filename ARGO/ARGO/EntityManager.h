@@ -27,6 +27,7 @@ private:
 	bool m_moveThisFrame = false;
 	bool m_inputThisFrame = false;
 	bool m_startOfInput = false;
+	bool m_diedToCactus = false;
 	std::string m_direction = "";
 
 	UpCommand m_up;
@@ -48,6 +49,9 @@ public:
 	void pushing();
 	void dying();
 	int handleWin(int t_levelNum);
+	bool GetDeathToCactus() { return m_diedToCactus; }
+	
+	
 	//Entity getEnt(int t_arrPos);
 	
 	CollisionSystem m_colSys;

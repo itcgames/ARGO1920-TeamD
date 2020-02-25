@@ -65,7 +65,7 @@ void Map::init(SDL_Renderer*& t_renderer, int t_levelNum)
 			}
 			else if (mapArray[arrayIndex] == 19)
 			{
-				playerPos = Vector2(0 + (120 * i), 0 + (120 * j));
+				catPos = Vector2(0 + (120 * i), 0 + (120 * j));
 			}
 			else if (mapArray[arrayIndex] == 20)
 			{
@@ -116,4 +116,9 @@ std::vector<Vector2> Map::getMapCorners()
 int Map::getLevelNum()
 {
 	return levelNum;
+}
+
+void Map::setLevelNum(int t_level)
+{
+	levelNum = t_level;
 }

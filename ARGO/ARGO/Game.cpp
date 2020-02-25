@@ -47,11 +47,11 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	Map tempMap = m_gamePlayScr.getMap();
 	m_currentLevel = 0;// tempMap.getLevelNum();
 	
-	initEnts(newPlayer, Vector2(tempMap.getPlayerPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(newPlayer, Vector2(tempMap.getCatPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(flag, Vector2(tempMap.getFlagPos()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(rock, Vector2(tempMap.getClockPos()), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(platform, Vector2(tempMap.getPlatformPos()), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(cactus, Vector2(tempMap.getcactusPos()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(cactus, Vector2(tempMap.getCactusPos()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	
 
 	lastString = "ASSETS/IMAGES/states.bmp";
@@ -167,6 +167,7 @@ void Game::update()
 	//updateEnts(bot, Vector2(bot.getComponent<PositionComponent>().getPosition().X(), bot.getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/bot.bmp", true);
 
 	Map tempMap = m_gamePlayScr.getMap();
+	Vector2 savedPos[5];
 	for (int i = 0, j = 0; i < 5; i++, j += 2)
 	{
 		if (entArr[i] != NULL)
@@ -182,38 +183,49 @@ void Game::update()
 					lastString = "ASSETS/IMAGES/states2.bmp";
 				}
 				if (m_currentLevel != tempMap.getLevelNum())
-					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getPlayerPos());
+					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getCatPos());
 			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), lastString, true, false);
+			savedPos[0] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			else if (answer[j] == "flag")
 			{
 				if (m_currentLevel != tempMap.getLevelNum())
 					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getFlagPos());
 				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, false);
+				savedPos[3] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			else if (answer[j] == "cactus")
 			{
 				if (m_currentLevel != tempMap.getLevelNum())
-					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getcactusPos());
+					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getCactusPos());
 				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, false);
+				savedPos[4] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			else if (answer[j] == "clock")
 			{
 				if (m_currentLevel != tempMap.getLevelNum())
 					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getClockPos());
 				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true,false);
+				savedPos[1] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			else if (answer[j] == "platform")
 			{
 				if (m_currentLevel != tempMap.getLevelNum())
 					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getPlatformPos());
 				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/book.bmp", true, false);
+				savedPos[2] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			entArr[i]->setComponentString(answer[j+1]);
 		}
 	}
 	m_currentLevel = tempMap.getLevelNum();
 
+	std::vector<Vector2> passIn;
+	for (int i = 0;i<5;i++)
+	{
+		passIn.push_back(savedPos[i]);
+	}
+	m_gamePlayScr.updatePositions(passIn);
 	switch (m_currentMode)//gamestate
 	{
 	case GameState::intro:

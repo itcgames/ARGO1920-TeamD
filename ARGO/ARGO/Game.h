@@ -62,6 +62,8 @@ private:
 	Character* m_catFactoryPointer;
 	Character* m_flagFactoryPointer;
 
+	bool initialiseOnce = false;
+
 	Entity*  entArr[5];
 
 	/// <summary>

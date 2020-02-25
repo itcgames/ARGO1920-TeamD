@@ -27,6 +27,27 @@ void PositionComponent::render()
 {
 }
 
+int PositionComponent::getStackSize()
+{
+	int varToRet = m_prevPositions.size();
+	return varToRet;
+}
+void PositionComponent::resetStack()
+{
+	while (!m_prevPositions.empty())
+	{
+		m_prevPositions.pop();
+	}
+}
+void PositionComponent::popPreviousPosition()
+{
+	if (!m_prevPositions.empty())
+	{
+		
+		m_prevPositions.pop();
+	}
+}
+
 void PositionComponent::setPosition(Vector2 position)
 {
 	m_position = position;
@@ -39,7 +60,15 @@ void PositionComponent::setPreviousPosition(Vector2 position)
 
 Vector2 PositionComponent::getPreviousPosition()
 {
-	return m_prevPositions.top();
+	if (!m_prevPositions.empty())
+	{
+		return m_prevPositions.top();
+	}
+	else
+	{
+		return m_position;
+	}
+	
 }
 
 void PositionComponent::setToPreviousPos()

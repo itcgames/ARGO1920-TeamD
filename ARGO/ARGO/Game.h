@@ -76,4 +76,6 @@ private:
 	void updateEnts(Entity& t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim, bool t_botMode);
 	std::string lastString;
 	bool botPresent=true;
+	int  currBiggestStack=0;
+	bool firstRun = false;
 };

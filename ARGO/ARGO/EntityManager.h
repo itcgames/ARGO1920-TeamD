@@ -33,7 +33,8 @@ private:
 	DownCommand m_down;
 	LeftCommand m_left;
 	RightCommand m_right;
-
+	static int  currBiggestStack;
+	bool firstRun = false;
 public:
 	void handleEvents(Joystick &stick,std::vector<Vector2> t_mapsize);
 	void update();
@@ -61,7 +62,7 @@ public:
 			};
 		}
 	}
-
+	
 	static const int MAX_TIME = 10;
 	int fakeStickXVal = -1;
 };

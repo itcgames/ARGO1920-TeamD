@@ -61,7 +61,6 @@ void Gameplay::update()
 void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 {
 	int newLevel = t_entMan.handleWin(m_map.getLevelNum());
-	newLevel = 2;
 	if (m_map.getLevelNum() != newLevel)
 	{
 		m_map.init(t_renderer,newLevel);

@@ -80,11 +80,81 @@ void Map::init(SDL_Renderer*& t_renderer, int t_levelNum)
 
 		}
 	}
+	drawVectors = true;
+	setAdjacents();
 }
 
 void Map::drawTile(SDL_Renderer*& t_renderer, int i, int j)
 {
 	tile[i][j].m_tile.render();
+	if (drawVectors)
+	{
+		tile[i][j].renderVector(t_renderer);
+	}
+}
+
+void Map::BFS(Vector2 goalPos)
+{
+	int x = goalPos.X(); int y = goalPos.Y();
+	mapTile* goal = &tile[x][y];
+
+	bool goalReached = false;
+
+	std::list<mapTile*> queue;
+
+	for (auto& t : tile)
+	{
+		t->setStart(false);
+		t->setGoal(false);
+		t->setPath(false);
+		t->setVisited(false);
+		t->setCost(0);
+	}
+
+	goal->setGoal(true);
+	goal->setVisited(true);
+	queue.push_back(goal);
+
+	while (!queue.empty())
+	{
+		int originCost = queue.front()->getCost();
+
+		for (auto& e : queue.front()->getAdjacent())
+		{
+			if (e->getVisited() == false)
+			{
+				e->setVisited(true);
+				if (e->getWall() == false)
+				{
+					e->setCost(originCost + 1);
+					e->setPreviousTile(*queue.front());
+					queue.push_back(e);
+				}
+			}
+		}
+		queue.pop_front();
+	}
+	for (auto& t : tile)
+	{
+		if (t->getPrevious() && t->getWall() == false)
+		{
+			t->setEnd(t->getPrevious()->getCenter());
+		}
+	}
+
+
+}
+
+void Map::ToggleDrawVector()
+{
+	if (drawVectors)
+	{
+		drawVectors = false;
+	}
+	else
+	{
+		drawVectors = true;
+	}
 }
 
 void Map::render(SDL_Renderer*& t_renderer, int i, int j)
@@ -121,4 +191,33 @@ int Map::getLevelNum()
 void Map::setLevelNum(int t_level)
 {
 	levelNum = t_level;
+}
+
+void Map::setAdjacents()
+{
+	for (int i = 0; i < 15; i++)
+	{
+		for (int j = 0; j < 32; j++)
+		{
+			if (i > 0)
+			{
+				tile[i][j].addEdge(tile[i - 1][j]);
+			}
+
+			if (i + 1 < 15)
+			{
+				tile[i][j].addEdge(tile[i + 1][j]);
+			}
+
+			if (j > 0)
+			{
+				tile[i][j].addEdge(tile[i][j - 1]);
+			}
+
+			if (j < 32)
+			{
+				tile[i][j].addEdge(tile[i][j + 1]);
+			}
+		}
+	}
 }

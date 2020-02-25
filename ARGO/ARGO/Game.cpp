@@ -1,6 +1,6 @@
 #include "Game.h"
 
-GameState Game::m_currentMode{ GameState::splash };
+GameState Game::m_currentMode{ GameState::gameplay };
 EntityManager manager;
 auto& newPlayer(manager.addEntity("player"));
 auto& flag(manager.addEntity("goal"));
@@ -242,6 +242,7 @@ void Game::update()
 		break;
 	case GameState::gameplay://no process events for this screen
 		m_gamePlayScr.update();
+		
 		break;
 	case GameState::options://no process events for this screen
 		m_optionsScr.update();

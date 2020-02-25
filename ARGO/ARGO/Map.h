@@ -1,6 +1,7 @@
 #pragma once
 #include "MapTile.h"
 #include  "MapHolder.h"
+#include <list>
 class Map
 {
 public:
@@ -15,6 +16,7 @@ public:
 	int getLevelNum();
 	void setLevelNum(int t_level);
 
+	void setAdjacents();
 	
 	Vector2 getCatPos() { return catPos; };
 	Vector2 getFlagPos() { return flagPos; };
@@ -26,11 +28,13 @@ public:
 	void setClockPos(Vector2 t_clockPos) { clockPos = t_clockPos; };
 	void setPlatformPos(Vector2 t_platformPos) { platformPos = t_platformPos; };
 	void setCactusPos(Vector2 t_cactusPos) { cactusPos = t_cactusPos; };
-
+	void BFS(Vector2 goalPos);
+	void ToggleDrawVector();
 private:
 	Vector2 mapArr[32][15];
 	std::string platformStr, wallStr;
 	int levelNum;
 	void drawTile(SDL_Renderer*& t_renderer,int i,int j);
+	bool drawVectors;
 	Vector2 catPos, flagPos, clockPos, platformPos, cactusPos;
 };

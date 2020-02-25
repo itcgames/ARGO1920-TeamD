@@ -58,6 +58,7 @@ void Gameplay::update()
 	}
 	std::cout << mess << std::endl;
 
+	m_map.BFS(Vector2(1,1));
 }
 
 void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)

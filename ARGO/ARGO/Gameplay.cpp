@@ -102,12 +102,19 @@ void Gameplay::fixedUpdate(EntityManager& t_entMan)
 			}
 		}
 	}
+	bool updateCalled = false;
 	for (int j = row; j < maxRow; j++)
 	{
 		for (int i = col; i < maxCol; i++)
 		{
 			Vector2 temp(120, 120);
 			t_entMan.mapCol(m_map.tile[i][j].vec, temp);
+			if (!updateCalled)
+			{
+				t_entMan.update();
+				updateCalled = true;
+			}
+			
 		}
 	}
 }

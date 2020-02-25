@@ -9,9 +9,13 @@
 #include "Gamestate.h"
 #include "OctTree.h"
 #include "CollisionSystem.h"
+#include "ClientStuff/Client.h"
+#include "Ghosts.h"
 class Gameplay
 {
 public:
+	Gameplay();
+
 	void init(SDL_Renderer*& t_renderer);
 	void handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t_stick);
 	void update();
@@ -22,6 +26,7 @@ public:
 	Map getMap();
 	std::vector<Vector2> getMapCorners();
 	void fixedUpdate(EntityManager& t_entMan);
+	void updatePositions(std::vector<Vector2> t_pos);
 private:
 	Map m_map;
 	PauseMenu m_pauseMenu;
@@ -32,4 +37,8 @@ private:
 	CollisionSystem gameplayCol;
 	SDL_Surface* m_loadedSurfaceBack;
 	SDL_Texture* m_textureBack;
+	Client myClient;
+	int playerNum = 1;
+	std::string mess = "";
+	Ghost m_ghosts;
 };

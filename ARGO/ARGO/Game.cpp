@@ -1,12 +1,11 @@
 #include "Game.h"
 
-GameState Game::m_currentMode{ GameState::gameplay };
-LevelState Game::m_currentLevel{ LevelState::Level1 };
+GameState Game::m_currentMode{ GameState::mainMenu };
 EntityManager manager;
 auto& newPlayer(manager.addEntity("player"));
 auto& flag(manager.addEntity("goal"));
 auto& platform(manager.addEntity("stop"));
-auto& cactus(manager.addEntity("spikey"));
+auto& cactus(manager.addEntity("spiky"));
 auto& rock(manager.addEntity("move"));
 auto& rock2(manager.addEntity("move"));
 auto& rock3(manager.addEntity("move"));
@@ -14,9 +13,13 @@ auto& rock4(manager.addEntity("move"));
 auto& rock5(manager.addEntity("move"));
 
 
+
+
+
 Game::Game()
 {
-
+	//m_factory->createCatAudio(newPlayer, "ASSETS/AUDIO/temp.wav");
+	m_factory->createFlagAudio(flag, "ASSETS/AUDIO/temp.wav");
 }
 
 Game::~Game()
@@ -26,7 +29,6 @@ Game::~Game()
 
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
-	
 	int flags = 0;
 	if (fullscreen)
 	{
@@ -46,26 +48,19 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	}
 
 	m_gamePlayScr.init(m_renderer);
-<<<<<<< Updated upstream
-	initEnts(newPlayer, Vector2(m_gamePlayScr.getMap().getPlayerPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(flag, Vector2(m_gamePlayScr.getMap().getRockPos()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock, Vector2(m_gamePlayScr.getMap().getFlagPos()), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(platform, Vector2(m_gamePlayScr.getMap().getPlatformPos()), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(cactus, Vector2(m_gamePlayScr.getMap().getcactusPos()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-=======
+
 	Map tempMap = m_gamePlayScr.getMap();
 	m_currentLevel = 0;// tempMap.getLevelNum();
-	
-	initEnts(newPlayer, Vector2(tempMap.getPlayerPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+
+	initEnts(newPlayer, Vector2(tempMap.getCatPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(flag, Vector2(tempMap.getFlagPos()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(rock, Vector2(tempMap.getClockPos()), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(platform, Vector2(tempMap.getPlatformPos()), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(cactus, Vector2(tempMap.getcactusPos()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(cactus, Vector2(tempMap.getCactusPos()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(rock2, Vector2(480,480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(rock3, Vector2(600, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(rock4, Vector2(720, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(rock5, Vector2(840, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
->>>>>>> Stashed changes
 
 	lastString = "ASSETS/IMAGES/states.bmp";
 	Entity* arr[]{ &newPlayer,&flag,&platform,&cactus,&rock };
@@ -73,7 +68,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	std::copy(std::begin(arr), std::end(arr), std::begin(entArr));
 	stick.init();
 
-	
+
 	flag.addComponent<AudioComponent>().playAudio();
 	flag.addComponent<AudioComponent>().closeAudio();
 
@@ -132,7 +127,7 @@ void Game::handleEvents()
 		}
 		break;
 	}
-	
+
 	switch (m_currentMode)//gamestate
 	{
 	case GameState::splash:
@@ -179,63 +174,72 @@ void Game::update()
 
 	//updateEnts(bot, Vector2(bot.getComponent<PositionComponent>().getPosition().X(), bot.getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/bot.bmp", true);
 
-	for (int i = 0, j = 0, k = 1; i < 5; i++, j += 2, k += 2)
+	Map tempMap = m_gamePlayScr.getMap();
+	Vector2 savedPos[5];
+	for (int i = 0, j = 0; i < 5; i++, j += 2)
 	{
-
 		if (entArr[i] != NULL)
 		{
 			if (answer[j] == "cat")
 			{
-				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), lastString, true, false);
 				if (stick.X()==1)
 				{
 					lastString = "ASSETS/IMAGES/states.bmp";
-					updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), lastString, true, false);
 				}
 				else if (stick.X() == -1)
 				{
 					lastString = "ASSETS/IMAGES/states2.bmp";
-					updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), lastString, true, false);
 				}
-				
-				entArr[i]->setComponentString(answer[k]);
+				if (m_currentLevel != tempMap.getLevelNum())
+					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getCatPos());
+			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), lastString, true, false);
+			savedPos[0] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
-			if (answer[j] == "flag")
+			else if (answer[j] == "flag")
 			{
+				if (m_currentLevel != tempMap.getLevelNum())
+					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getFlagPos());
 				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, false);
-				entArr[i]->setComponentString(answer[k]);
-
+				savedPos[3] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
-			if (answer[j] == "cactus")
+			else if (answer[j] == "cactus")
 			{
+				if (m_currentLevel != tempMap.getLevelNum())
+					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getCactusPos());
 				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, false);
-				entArr[i]->setComponentString(answer[k]);
+				savedPos[4] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
-			if (answer[j] == "ball")
+			else if (answer[j] == "clock")
 			{
-				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true,false);
-				entArr[i]->setComponentString(answer[k]);
-
+				if (m_currentLevel != tempMap.getLevelNum())
+					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getClockPos());
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true,false);
+				savedPos[1] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
-			if (answer[j] == "platform")
+			else if (answer[j] == "platform")
 			{
+				if (m_currentLevel != tempMap.getLevelNum())
+					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getPlatformPos());
 				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/book.bmp", true, false);
-				entArr[i]->setComponentString(answer[k]);
+				savedPos[2] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
+			entArr[i]->setComponentString(answer[j+1]);
 		}
 	}
-<<<<<<< Updated upstream
 
-	
-
-	
-=======
 	m_currentLevel = tempMap.getLevelNum();
 	/*updateEnts(rock2, Vector2(480, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav");
 	updateEnts(rock3, Vector2(600, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav");
 	updateEnts(rock4, Vector2(720, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav");
 	updateEnts(rock5, Vector2(840, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav");*/
->>>>>>> Stashed changes
+	m_currentLevel = tempMap.getLevelNum();
+
+	std::vector<Vector2> passIn;
+	for (int i = 0;i<5;i++)
+	{
+		passIn.push_back(savedPos[i]);
+	}
+	m_gamePlayScr.updatePositions(passIn);
 	switch (m_currentMode)//gamestate
 	{
 	case GameState::intro:
@@ -265,14 +269,14 @@ void Game::update()
 	default:
 		break;
 	}
-	//>>>>>>> master
+
 }
 
 void Game::subSystemUpdate()
 {
 	switch (m_currentMode)//gamestate
 	{
-	
+
 	case GameState::gameplay://no process events for this screen
 		if ((m_event.type == SDL_JOYBUTTONDOWN || m_event.type == SDL_JOYAXISMOTION))
 		{
@@ -334,9 +338,8 @@ void Game::clean()
 }
 
 
-
-
 void Game::initEnts(Entity &t_ent,Vector2 t_pos,Vector2 t_size, std::string t_str, bool t_isAnim, const char* t_audioStr,bool t_botMode)
+
 
 {
 	t_ent.addComponent<BotComponent>();
@@ -350,7 +353,7 @@ void Game::initEnts(Entity &t_ent,Vector2 t_pos,Vector2 t_size, std::string t_st
 	t_ent.getComponent< SpriteComponent>().setPathAndScreen(t_str, m_renderer, t_isAnim);
 	t_ent.getComponent< SpriteComponent>().setPosAndSize(t_ent.getComponent<PositionComponent>().getPosition().X(), t_ent.getComponent<PositionComponent>().getPosition().Y(),
 	t_ent.getComponent<BodyComponent>().getSize().X(), t_ent.getComponent<BodyComponent>().getSize().Y());
-	t_ent.getComponent<AudioComponent>().LoadMusicFile(t_audioStr);
+	//t_ent.getComponent<AudioComponent>().LoadMusicFile(t_audioStr);
 
 }
 

@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Client Files">
+      <UniqueIdentifier>{098f78e2-605f-4d7e-98ff-4b35f25469a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Levels">
+      <UniqueIdentifier>{3c812efd-cb23-4aeb-a083-b7e1c60fffc9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -112,6 +118,30 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BotComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientStuff\Client.cpp">
+      <Filter>Client Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientStuff\ClientIni.cpp">
+      <Filter>Client Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientStuff\Packet.cpp">
+      <Filter>Client Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientStuff\PacketManager.cpp">
+      <Filter>Client Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientStuff\PacketStructs.cpp">
+      <Filter>Client Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientStuff\SendGetMethods.cpp">
+      <Filter>Client Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientStuff\Source.cpp">
+      <Filter>Client Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Ghosts.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -242,6 +272,33 @@
     <ClInclude Include="BotComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientStuff\Client.h">
+      <Filter>Client Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientStuff\FileTransferData.h">
+      <Filter>Client Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientStuff\Packet.h">
+      <Filter>Client Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientStuff\PacketManager.h">
+      <Filter>Client Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientStuff\PacketStructs.h">
+      <Filter>Client Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientStuff\PacketType.h">
+      <Filter>Client Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Ghosts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp" />
@@ -272,5 +329,13 @@
     <ClInclude Include="System.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="VelocityComponent.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ASSETS\MAP\Level1.txt">
+      <Filter>Levels</Filter>
+    </Text>
+    <Text Include="ASSETS\MAP\Level2.txt">
+      <Filter>Levels</Filter>
+    </Text>
   </ItemGroup>
 </Project>

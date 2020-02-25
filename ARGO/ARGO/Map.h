@@ -13,24 +13,24 @@ public:
 	void render(SDL_Renderer*& t_renderer, int i, int j);
 	std::vector<Vector2> getMapCorners();
 	int getLevelNum();
-	
+	void setLevelNum(int t_level);
 
 	
-	Vector2 getPlayerPos() { return playerPos; };
+	Vector2 getCatPos() { return catPos; };
 	Vector2 getFlagPos() { return flagPos; };
-	Vector2 getRockPos() { return rockPos; };
+	Vector2 getClockPos() { return clockPos; };
 	Vector2 getPlatformPos() { return platformPos; };
-	Vector2 getcactusPos() { return cactusPos; };
-	void setPlayerPos(Vector2 t_playerPos) { playerPos = t_playerPos; };
+	Vector2 getCactusPos() { return cactusPos; };
+	void setPlayerPos(Vector2 t_playerPos) { catPos = t_playerPos; };
 	void setFlagPos(Vector2 t_flagPos) { flagPos = t_flagPos; };
-	void setRockPos(Vector2 t_rockPos) { rockPos = t_rockPos; };
+	void setClockPos(Vector2 t_clockPos) { clockPos = t_clockPos; };
 	void setPlatformPos(Vector2 t_platformPos) { platformPos = t_platformPos; };
 	void setCactusPos(Vector2 t_cactusPos) { cactusPos = t_cactusPos; };
 
 private:
 	Vector2 mapArr[32][15];
-	std::string catStr, flagStr, platformStr, wallStr, yarnStr;
+	std::string platformStr, wallStr;
 	int levelNum;
 	void drawTile(SDL_Renderer*& t_renderer,int i,int j);
-	Vector2 playerPos, flagPos, rockPos, platformPos, cactusPos;
+	Vector2 catPos, flagPos, clockPos, platformPos, cactusPos;
 };

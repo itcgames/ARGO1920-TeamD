@@ -16,11 +16,8 @@ void Map::init(SDL_Renderer*& t_renderer, int t_levelNum)
 	{
 		levelNum = t_levelNum;
 	}
-	catStr = "ASSETS/IMAGES/bananaCat.bmp";
-	flagStr = "ASSETS/IMAGES/flag.bmp";
 	platformStr = "ASSETS/IMAGES/platform.bmp";
 	wallStr = "ASSETS/IMAGES/Wall.bmp";
-	yarnStr = "ASSETS/IMAGES/yarn.bmp";
 
 	std::string line;
 	std::ifstream myfile("ASSETS/MAP/level" + std::to_string(levelNum) + ".txt");
@@ -50,25 +47,10 @@ void Map::init(SDL_Renderer*& t_renderer, int t_levelNum)
 				tile[i][j].init(platformStr, t_renderer);
 				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
 			}
-			else if (mapArray[arrayIndex] == 15) {
-				m_mapHolder.mapDoubleArray[i][j] = mapArray[arrayIndex];
-				tile[i][j].init(yarnStr, t_renderer);
-				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
-			}
-			else if (mapArray[arrayIndex] == 11) {
-				m_mapHolder.mapDoubleArray[i][j] = mapArray[arrayIndex];
-				tile[i][j].init(catStr, t_renderer);
-				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
-			}
-			else if (mapArray[arrayIndex] == 12)
-			{
-				m_mapHolder.mapDoubleArray[i][j] = mapArray[arrayIndex];
-				tile[i][j].init(flagStr, t_renderer);
-				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
-			}
 
 			//19, 16, 17, 18, 20,
-			//16=cactus 17=flag 18=platform 19=cat 20 = rock
+			//16=cactus 17=flag 18=platform 19=cat 20 = clock
+			//cactus 16, cat 19, flag 17, clock 20, shelf 18 
 			else if (mapArray[arrayIndex] == 16)
 			{
 				cactusPos = Vector2(0 + (120 * i), 0 + (120 * j));
@@ -83,11 +65,11 @@ void Map::init(SDL_Renderer*& t_renderer, int t_levelNum)
 			}
 			else if (mapArray[arrayIndex] == 19)
 			{
-				playerPos = Vector2(0 + (120 * i), 0 + (120 * j));
+				catPos = Vector2(0 + (120 * i), 0 + (120 * j));
 			}
 			else if (mapArray[arrayIndex] == 20)
 			{
-				rockPos = Vector2(0 + (120 * i), 0 + (120 * j));
+				clockPos = Vector2(0 + (120 * i), 0 + (120 * j));
 			}
 			else {
 				m_mapHolder.mapDoubleArray[i][j] = 0;
@@ -134,4 +116,9 @@ std::vector<Vector2> Map::getMapCorners()
 int Map::getLevelNum()
 {
 	return levelNum;
+}
+
+void Map::setLevelNum(int t_level)
+{
+	levelNum = t_level;
 }

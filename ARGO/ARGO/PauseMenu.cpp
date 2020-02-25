@@ -4,6 +4,8 @@
 #include <iostream>
 PauseMenu::PauseMenu()
 {
+	m_lockValue = NUM_OF_BOXES;
+	m_rulesChanged = false;
 }
 
 PauseMenu::~PauseMenu()
@@ -14,7 +16,8 @@ void PauseMenu::init()
 {
 	loadedSurfaceBack = SDL_LoadBMP("ASSETS/IMAGES/pauseBack.bmp");
 	loadedSurfaceObj = SDL_LoadBMP("ASSETS/IMAGES/objects.bmp");
-	loadedSurfaceAdjec = SDL_LoadBMP("ASSETS/IMAGES/adjectives.bmp");
+	loadedSurfaceAdjecUnlock = SDL_LoadBMP("ASSETS/IMAGES/adjectivesUnlocked.bmp");
+	loadedSurfaceAdjecLock = SDL_LoadBMP("ASSETS/IMAGES/adjectivesLocked.bmp");
 	loadedSurfaceSelect = SDL_LoadBMP("ASSETS/IMAGES/selector.bmp");
 	loadedSurfaceSelect2 = SDL_LoadBMP("ASSETS/IMAGES/selected.bmp");
 
@@ -38,12 +41,11 @@ void PauseMenu::init()
 			srcrect[box] = { 0, srcrect[box].y, 240, 120 };
 		boxRectSliced[box] = { int(selectBox[box].X()), int(selectBox[box].Y()), srcrect[box].w, 120 };
 	}
-	m_lockValue = 0;
 	dstrectBack = { 0, 1800, 3840, 360 };
 	
 	currentBox = 1;
 	m_slectOffset = Vector2(5, 5);
-	dstrectSelect = { int(selectBox[currentBox].X() - m_slectOffset.x), int(selectBox[currentBox].Y() - m_slectOffset.y), 250, 130 };
+	dstrectSelect = { int(selectBox[currentBox].X() - m_slectOffset.x), int(selectBox[currentBox].Y() - m_slectOffset.y), 250, 170 };
 	dstrectSelect2 = { int(selectBox[currentBox].X()- (m_slectOffset.x/2)), int(selectBox[currentBox].Y()- (m_slectOffset.y / 2)), 244, 124 };
 }
 
@@ -76,6 +78,7 @@ void PauseMenu::input(SDL_Event& t_event, Joystick t_stick)
 								srcrect[box2].y = srcrect[box].y;
 								srcrect[box].y = tempCut;
 								boxSelected[box2] = false;
+								m_rulesChanged = true;
 							}
 						}
 					}
@@ -94,9 +97,9 @@ void PauseMenu::input(SDL_Event& t_event, Joystick t_stick)
 		{
 			currentBox += 2;
 			timer = 0;
-			if (currentBox >= NUM_OF_BOXES)
+			if (currentBox >= m_lockValue)
 			{
-				currentBox -= NUM_OF_BOXES;
+				currentBox -= m_lockValue;
 			}
 		}
 		else if (SDL_JoystickGetHat(t_stick.getStick(), 0) == SDL_HAT_LEFT)
@@ -105,7 +108,7 @@ void PauseMenu::input(SDL_Event& t_event, Joystick t_stick)
 			timer = 0;
 			if (currentBox < 0)
 			{
-				currentBox += NUM_OF_BOXES;
+				currentBox += m_lockValue;
 			}
 		}
 		dstrectSelect = { int(selectBox[currentBox].X() - 5), int(selectBox[currentBox].Y() - 5), dstrectSelect.w, dstrectSelect.h };
@@ -138,9 +141,13 @@ void PauseMenu::render(SDL_Renderer*& t_renderer)
 		m_textureObj = SDL_CreateTextureFromSurface(t_renderer, loadedSurfaceObj);
 	}
 
-	if (m_textureAdjec == NULL)
+	if (m_textureAdjecUnlock == NULL)
 	{
-		m_textureAdjec = SDL_CreateTextureFromSurface(t_renderer, loadedSurfaceAdjec);
+		m_textureAdjecUnlock = SDL_CreateTextureFromSurface(t_renderer, loadedSurfaceAdjecUnlock);
+	}
+	if (m_textureAdjecLock == NULL)
+	{
+		m_textureAdjecLock = SDL_CreateTextureFromSurface(t_renderer, loadedSurfaceAdjecLock);
 	}
 
 	SDL_Texture* forAllTexture;
@@ -150,9 +157,13 @@ void PauseMenu::render(SDL_Renderer*& t_renderer)
 		{
 			forAllTexture = m_textureObj;
 		}
+		else if (box < m_lockValue)
+		{
+			forAllTexture = m_textureAdjecUnlock;
+		}
 		else
 		{
-			forAllTexture = m_textureAdjec;
+			forAllTexture = m_textureAdjecLock;
 		}
 		SDL_RenderCopy(t_renderer, forAllTexture, &srcrect[box], &boxRectSliced[box]);
 	}
@@ -205,7 +216,7 @@ std::vector<std::string> PauseMenu::getChanges()
 		}
 		else if (srcrect[box].y == 120)
 		{
-			rules.push_back("ball");
+			rules.push_back("clock");
 		}
 		else if(srcrect[box].y == 240)
 		{
@@ -252,49 +263,53 @@ void PauseMenu::setRules(int t_levelNum)
 	int currentBox = 0;
 	while (getline(myfile, currentText, '-'))
 	{
-		if (currentText == "cat")
+		setUIRules(currentBox, currentText);
+		if (currentText == "lock")
 		{
-			srcrect[currentBox].y = 0;
-		}
-		else if (currentText == "ball")
-		{
-			srcrect[currentBox].y = 120;
-		}
-		else if (currentText == "platform")
-		{
-			srcrect[currentBox].y = 240;
-		}
-		else if (currentText == "flag")
-		{
-			srcrect[currentBox].y = 360;
-		}
-		else if (currentText == "cactus")
-		{
-			srcrect[currentBox].y = 480;
+			m_lockValue = currentBox;
+			currentBox -= 2;
 		}
 		currentBox++;
 		getline(myfile, currentText, ',');
-		if (currentText == "player")
-		{
-			srcrect[currentBox].y = 0;
-		}
-		else if (currentText == "goal")
-		{
-			srcrect[currentBox].y = 120;
-		}
-		else if (currentText == "stop")
-		{
-			srcrect[currentBox].y = 240;
-		}
-		else if (currentText == "move")
-		{
-			srcrect[currentBox].y = 360;
-		}
-		else if (currentText == "spiky")
-		{
-			srcrect[currentBox].y = 480;
-		}
+		setUIRules(currentBox, currentText);
 		currentBox++;
 	}
+}
+
+void PauseMenu::setUIRules(int t_index, std::string t_type)
+{
+	if (t_type == "cat" || t_type == "player")
+		srcrect[t_index].y = 0;
+	else if (t_type == "clock" || t_type == "goal")
+		srcrect[t_index].y = 120;
+	else if (t_type == "platform" || t_type == "stop")
+		srcrect[t_index].y = 240;
+	else if (t_type == "flag" || t_type == "move")
+		srcrect[t_index].y = 360;
+	else if (t_type == "cactus" || t_type == "spiky")
+		srcrect[t_index].y = 480;
+}
+
+void PauseMenu::otherUIRules(std::string t_rules)
+{
+	std::istringstream input;
+	input.str(t_rules);
+	std::string currentText = "";
+	int currentBox = 0;
+	while (getline(input, currentText, ','))
+	{
+		setUIRules(currentBox, currentText);
+		currentBox++;
+	}
+}
+
+bool PauseMenu::hasRulesChanged()
+{
+	if (m_rulesChanged)
+	{
+		m_rulesChanged = false;
+		return true;
+	}
+	return false;
 }
 

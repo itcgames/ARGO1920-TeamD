@@ -20,6 +20,7 @@
 #include "Joystick.h"
 #include "MovementSystem.h"
 #include "AudioComponent.h"
+#include "Factory.h"
 #include "BotComponent.h"
 
 class Game
@@ -34,10 +35,11 @@ public:
 	void subSystemUpdate();
 	void render();
 	void clean();
+	
 
 	bool running() { return isRunning; }
 	static GameState m_currentMode;
-	static LevelState m_currentLevel;
+	int m_currentLevel;
 
 	SDL_Renderer* m_renderer;
 	SDL_Event m_event;
@@ -56,6 +58,9 @@ private:
 	bool keyTest = false;
 	bool temp = false;
 	Entity* m_cat;
+	Factory* m_factory = new CharacterFactory();
+	Character* m_catFactoryPointer;
+	Character* m_flagFactoryPointer;
 
 	Entity*  entArr[5];
 

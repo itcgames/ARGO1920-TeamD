@@ -1,8 +1,20 @@
 #include "Gameplay.h"
+#include <fstream>
+#include <sstream>
+Gameplay::Gameplay() :
+	myClient("Q", 1111)//149.153.106.148
+{
+	if (!myClient.Connect()) //If client fails to connect...
+	{
+		std::cout << "Failed to connect to server..." << std::endl;
+	}
+	mess = "";
+}
 
 void Gameplay::init(SDL_Renderer*& t_renderer)
 {
 	m_map.init(t_renderer);
+	m_map.setLevelNum(1);
 	m_pauseMenu.setRules(m_map.getLevelNum());
 	std::string temp = "ASSETS/IMAGES/level" + std::to_string(m_map.getLevelNum()) + "back.bmp";
 	m_loadedSurfaceBack = SDL_LoadBMP(temp.c_str());
@@ -10,6 +22,8 @@ void Gameplay::init(SDL_Renderer*& t_renderer)
 	m_pauseMenu.init();
 	timer = 0;
 	m_OTree.initTree(Vector2(0, 0), Vector2(960, 1080), Vector2(960, 0), Vector2(1920, 0), Vector2(2840, 0), Vector2(0, 900), Vector2(960, 900), Vector2(1920, 900), Vector2(2840, 900));
+
+	m_ghosts.setUp(t_renderer);
 }
 
 void Gameplay::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t_stick)
@@ -24,6 +38,26 @@ void Gameplay::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t
 void Gameplay::update()
 {
 	m_pauseMenu.update();
+	
+	if (myClient.isMessage)
+	{
+		myClient.isMessage = false;
+		if (m_ghosts.update(myClient.newMessage, playerNum) == playerNum)
+		{
+			playerNum++;
+		}
+		//m_pauseMenu.otherUIRules(myClient.newMessage);
+	}
+	std::istringstream input;
+	input.str(mess);
+	std::string message = "";
+	std::getline(input, message, ':');
+	if (std::stoi(message) == playerNum)
+	{
+		myClient.SendString(mess);
+	}
+	std::cout << mess << std::endl;
+
 }
 
 void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
@@ -50,6 +84,7 @@ void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 		}
 	}
 	m_pauseMenu.render(t_renderer);
+	m_ghosts.render();
 }
 
 void Gameplay::clean(SDL_Renderer*& t_renderer, SDL_Window* t_window)
@@ -117,6 +152,15 @@ void Gameplay::fixedUpdate(EntityManager& t_entMan)
 			
 		}
 	}
+}
+
+void Gameplay::updatePositions(std::vector<Vector2> t_pos)
+{
+	mess = std::to_string(playerNum) + ":Cat-" + std::to_string(int(t_pos.at(0).x)) + "," + std::to_string(int(t_pos.at(0).y)) + ","
+		+ "Clock-" + std::to_string(int(t_pos.at(1).x)) + "," + std::to_string(int(t_pos.at(1).y)) + ","
+		+ "Book-" + std::to_string(int(t_pos.at(2).x)) + "," + std::to_string(int(t_pos.at(2).y)) + ","
+		+ "Flag-" + std::to_string(int(t_pos.at(3).x)) + "," + std::to_string(int(t_pos.at(3).y)) + ","
+		+ "Cactus-" + std::to_string(int(t_pos.at(4).x)) + "," + std::to_string(int(t_pos.at(4).y)) + ",";
 }
 
 void Gameplay::setupRowCol(int t_row, int t_col, int t_MaxRow,int t_MaxCol)

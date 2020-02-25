@@ -1,6 +1,6 @@
 #include "Game.h"
 
-GameState Game::m_currentMode{ GameState::splash };
+GameState Game::m_currentMode{ GameState::gameplay };
 EntityManager manager;
 auto& newPlayer(manager.addEntity("player"));
 auto& flag(manager.addEntity("goal"));
@@ -9,13 +9,9 @@ auto& cactus(manager.addEntity("spiky"));
 auto& rock(manager.addEntity("move"));
 
 
-
-
-
 Game::Game()
 {
-	//m_factory->createCatAudio(newPlayer, "ASSETS/AUDIO/temp.wav");
-	m_factory->createFlagAudio(flag, "ASSETS/AUDIO/temp.wav");
+
 }
 
 Game::~Game()
@@ -83,13 +79,11 @@ void Game::handleEvents()
 			{
 				if (m_event.jaxis.value < -20000)
 				{
-
-					stick.setX(-1);
+					stick.setX(-1);	std::cout << "left" << std::endl;
 				}
 				else if (m_event.jaxis.value > 20000)
 				{
-					stick.setX(1);
-
+					stick.setX(1); std::cout << "right" << std::endl;
 				}
 				else {
 					stick.setX(0);
@@ -100,11 +94,11 @@ void Game::handleEvents()
 			{
 				if (m_event.jaxis.value < -stick.getDeadZone())
 				{
-					stick.setY(-1);
+					stick.setY(-1); std::cout << "up" << std::endl;
 				}
 				else if (m_event.jaxis.value > stick.getDeadZone())
 				{
-					stick.setY(1);
+					stick.setY(1); std::cout << "down" << std::endl;
 				}
 				else {
 					stick.setY(0);

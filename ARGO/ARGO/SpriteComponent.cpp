@@ -142,20 +142,26 @@ void SpriteComponent::render()
 	SDL_Rect dstrect = { m_x, m_y, m_width, m_height };
 
 	SDL_Rect srcrect = { xOffset, yOffset, 120, 120 };
-
+	if (m_paths.size() == 2 && m_paths.at(0) == "ASSETS/IMAGES/cactus.bmp" && m_paths.at(1) == "ASSETS/IMAGES/states.bmp")
+	{
+		int t = 0;// SDL_RenderCopy(m_screen, SDL_CreateTextureFromSurface(m_screen, loadedSurface.at(m_currentTex)), &srcrect, &dstrect);
+	}
 	while (loadedSurface.size() < m_paths.size())
 	{
-		SDL_Surface* newSurface = SDL_LoadBMP(m_paths.at(m_currentTex).c_str());
-		loadedSurface.push_back(newSurface);
+		loadedSurface.push_back(SDL_LoadBMP(m_paths.at(loadedSurface.size()).c_str()));
 		m_texture.push_back(SDL_CreateTextureFromSurface(m_screen, loadedSurface.at(m_texture.size())));
-		if (m_currentTex == 1)
-		{
-			int t = 0;
-		}
 	}
 	if (loadedSurface.at(m_currentTex)->clip_rect.h - srcrect.h < srcrect.y)
 	{
 		srcrect.y = 0;
 	}
-	SDL_RenderCopy(m_screen, m_texture.at(m_currentTex), &srcrect, &dstrect);
+
+	if (m_currentTex == 0 && m_paths.size()==2&&m_paths.at(0) == "ASSETS/IMAGES/cactus.bmp" && m_paths.at(1) == "ASSETS/IMAGES/states.bmp")
+	{
+		SDL_RenderCopy(m_screen, SDL_CreateTextureFromSurface(m_screen, loadedSurface.at(m_currentTex)), &srcrect, &dstrect);
+	}
+	else
+	{
+		SDL_RenderCopy(m_screen, m_texture.at(m_currentTex), &srcrect, &dstrect);
+	}
 }

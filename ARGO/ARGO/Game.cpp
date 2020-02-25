@@ -1,6 +1,6 @@
 #include "Game.h"
 
-GameState Game::m_currentMode{ GameState::mainMenu };
+GameState Game::m_currentMode{ GameState::gameplay };
 EntityManager manager;
 auto& newPlayer(manager.addEntity("player"));
 auto& flag(manager.addEntity("goal"));
@@ -9,13 +9,9 @@ auto& cactus(manager.addEntity("spiky"));
 auto& rock(manager.addEntity("move"));
 
 
-
-
-
 Game::Game()
 {
-	//m_factory->createCatAudio(newPlayer, "ASSETS/AUDIO/temp.wav");
-	m_factory->createFlagAudio(flag, "ASSETS/AUDIO/temp.wav");
+
 }
 
 Game::~Game()
@@ -46,13 +42,13 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	m_gamePlayScr.init(m_renderer);
 	Map tempMap = m_gamePlayScr.getMap();
 	m_currentLevel = 0;// tempMap.getLevelNum();
-	
+
 	initEnts(newPlayer, Vector2(tempMap.getCatPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(flag, Vector2(tempMap.getFlagPos()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(rock, Vector2(tempMap.getClockPos()), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(platform, Vector2(tempMap.getPlatformPos()), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(cactus, Vector2(tempMap.getCactusPos()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	
+
 
 	lastString = "ASSETS/IMAGES/states.bmp";
 	Entity* arr[]{ &newPlayer,&flag,&platform,&cactus,&rock };
@@ -60,7 +56,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	std::copy(std::begin(arr), std::end(arr), std::begin(entArr));
 	stick.init();
 
-	
+
 	flag.addComponent<AudioComponent>().playAudio();
 	flag.addComponent<AudioComponent>().closeAudio();
 
@@ -83,13 +79,11 @@ void Game::handleEvents()
 			{
 				if (m_event.jaxis.value < -20000)
 				{
-
-					stick.setX(-1);
+					stick.setX(-1);	std::cout << "left" << std::endl;
 				}
 				else if (m_event.jaxis.value > 20000)
 				{
-					stick.setX(1);
-
+					stick.setX(1); std::cout << "right" << std::endl;
 				}
 				else {
 					stick.setX(0);
@@ -100,11 +94,11 @@ void Game::handleEvents()
 			{
 				if (m_event.jaxis.value < -stick.getDeadZone())
 				{
-					stick.setY(-1);
+					stick.setY(-1); std::cout << "up" << std::endl;
 				}
 				else if (m_event.jaxis.value > stick.getDeadZone())
 				{
-					stick.setY(1);
+					stick.setY(1); std::cout << "down" << std::endl;
 				}
 				else {
 					stick.setY(0);
@@ -119,7 +113,7 @@ void Game::handleEvents()
 		}
 		break;
 	}
-	
+
 	switch (m_currentMode)//gamestate
 	{
 	case GameState::splash:
@@ -173,7 +167,7 @@ void Game::update()
 		if (entArr[i] != NULL)
 		{
 			if (answer[j] == "cat")
-			{				
+			{
 				if (stick.X()==1)
 				{
 					lastString = "ASSETS/IMAGES/states.bmp";
@@ -262,7 +256,7 @@ void Game::subSystemUpdate()
 {
 	switch (m_currentMode)//gamestate
 	{
-	
+
 	case GameState::gameplay://no process events for this screen
 		if ((m_event.type == SDL_JOYBUTTONDOWN || m_event.type == SDL_JOYAXISMOTION))
 		{

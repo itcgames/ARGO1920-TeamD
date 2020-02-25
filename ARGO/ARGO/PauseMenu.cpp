@@ -60,7 +60,12 @@ void PauseMenu::input(SDL_Event& t_event, Joystick t_stick)
 				if (!anyActive() && dstrectSelect.x + m_slectOffset.x == selectBox[box].X() && dstrectSelect.y + m_slectOffset.y == selectBox[box].Y())
 				{
 					boxSelected[box] = true;
+					currentBox += 2;
 					timer = 0;
+					if (currentBox >= m_lockValue)
+					{
+						currentBox -= m_lockValue;
+					}
 				}
 				else if (dstrectSelect.x + m_slectOffset.x == selectBox[box].X() && dstrectSelect.y + m_slectOffset.y == selectBox[box].Y())
 				{
@@ -84,12 +89,6 @@ void PauseMenu::input(SDL_Event& t_event, Joystick t_stick)
 					}
 					timer = 0;
 				}
-
-				if (false&&boxSelected[box])
-				{
-					boxSelected[box] = false;
-					timer = 0;
-				}
 			}
 		}
 		
@@ -97,6 +96,14 @@ void PauseMenu::input(SDL_Event& t_event, Joystick t_stick)
 		{
 			currentBox += 2;
 			timer = 0;
+			if (currentBox >= m_lockValue)
+			{
+				currentBox -= m_lockValue;
+			}
+			if (boxSelected[currentBox])
+			{
+				currentBox += 2;
+			}
 			if (currentBox >= m_lockValue)
 			{
 				currentBox -= m_lockValue;
@@ -110,11 +117,19 @@ void PauseMenu::input(SDL_Event& t_event, Joystick t_stick)
 			{
 				currentBox += m_lockValue;
 			}
+			if (boxSelected[currentBox])
+			{
+				currentBox -= 2;
+			}
+			if (currentBox < 0)
+			{
+				currentBox += m_lockValue;
+			}
 		}
-		dstrectSelect = { int(selectBox[currentBox].X() - 5), int(selectBox[currentBox].Y() - 5), dstrectSelect.w, dstrectSelect.h };
+		dstrectSelect = { int(selectBox[currentBox].X() - m_slectOffset.x), int(selectBox[currentBox].Y() - m_slectOffset.y), dstrectSelect.w, dstrectSelect.h };
 		if (!anyActive())
 		{
-			dstrectSelect2 = { int(selectBox[currentBox].X() - 2), int(selectBox[currentBox].Y() - 2), dstrectSelect2.w, dstrectSelect2.h };
+			dstrectSelect2 = { int(selectBox[currentBox].X() - (m_slectOffset.x / 2)), int(selectBox[currentBox].Y() - (m_slectOffset.x / 2)), dstrectSelect2.w, dstrectSelect2.h };
 		}
 		
 	}

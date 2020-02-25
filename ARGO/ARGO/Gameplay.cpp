@@ -13,7 +13,7 @@ Gameplay::Gameplay() :
 
 void Gameplay::init(SDL_Renderer*& t_renderer)
 {
-	m_map.init(t_renderer);
+	m_map.init(t_renderer,1);
 	m_map.setLevelNum(1);
 	m_pauseMenu.setRules(m_map.getLevelNum());
 	std::string temp = "ASSETS/IMAGES/level" + std::to_string(m_map.getLevelNum()) + "back.bmp";
@@ -56,8 +56,6 @@ void Gameplay::update()
 	{
 		myClient.SendString(mess);
 	}
-	std::cout << mess << std::endl;
-
 }
 
 void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)

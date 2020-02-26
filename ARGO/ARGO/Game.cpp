@@ -267,8 +267,9 @@ void Game::subSystemUpdate()
 	case GameState::gameplay://no process events for this screen
 		if ((m_event.type == SDL_JOYBUTTONDOWN || m_event.type == SDL_JOYAXISMOTION))
 		{
-			manager.handleEvents(stick, m_gamePlayScr.getMapCorners());
+			
 		}
+		manager.handleEvents(stick, m_gamePlayScr.getMapCorners());
 		m_gamePlayScr.handleEvents(m_event, m_currentMode, stick);
 		break;
 	default:

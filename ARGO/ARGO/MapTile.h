@@ -37,6 +37,7 @@ public:
 	bool getVisited();
 	Vector2 getEnd();
 	Vector2 getCenter();
+	void setCentre(Vector2 t_centre);
 	std::list<mapTile*>& getAdjacent();
 
 private:

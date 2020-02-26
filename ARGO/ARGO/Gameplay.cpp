@@ -58,7 +58,7 @@ void Gameplay::update()
 	}
 	std::cout << mess << std::endl;
 
-	m_map.BFS(Vector2(1,1));
+	//m_map.BFS(Vector2(int(m_map.getCatPos().x / 120), int(m_map.getCatPos().y / 120)));
 }
 
 void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
@@ -98,9 +98,9 @@ std::vector<std::string> Gameplay::getChanges()
 	return m_pauseMenu.getChanges();
 }
 
-Map Gameplay::getMap()
+Map* Gameplay::getMap()
 {
-	return m_map;
+	return &m_map;
 }
 
 std::vector<Vector2> Gameplay::getMapCorners()
@@ -142,8 +142,11 @@ void Gameplay::fixedUpdate(EntityManager& t_entMan)
 	{
 		for (int i = col; i < maxCol; i++)
 		{
-			Vector2 temp(120, 120);
-			t_entMan.mapCol(m_map.tile[i][j].vec, temp);
+			if (m_map.tile[i][j].getWall())
+			{
+				Vector2 temp(120, 120);
+				t_entMan.mapCol(m_map.tile[i][j].vec, temp);
+			}
 		}
 	}
 }

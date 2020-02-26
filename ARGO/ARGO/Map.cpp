@@ -84,6 +84,7 @@ void Map::init(SDL_Renderer*& t_renderer, int t_levelNum)
 				m_mapHolder.mapDoubleArray[i][j] = 0;
 				tile[i][j].init(wallStr, t_renderer);
 				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
+				tile[i][j].setCentre(Vector2(60 + (120 * i), 60 + (120 * j)));
 			}
 			arrayIndex++;
 
@@ -105,7 +106,8 @@ void Map::drawTile(SDL_Renderer*& t_renderer, int i, int j)
 
 void Map::BFS(Vector2 goalPos)
 {
-	int x = goalPos.X(); int y = goalPos.Y();
+	int x = goalPos.x; int y = goalPos.y;
+	tile[x][y].setCentre(Vector2(60 + (120 * x), 60 + (120 * y)));
 	mapTile* goal = &tile[x][y];
 
 	bool goalReached = false;
@@ -171,6 +173,15 @@ void Map::ToggleDrawVector()
 	{
 		drawVectors = true;
 	}
+}
+
+Vector2 Map::getDirection(Vector2 t_botPos)
+{
+	Vector2 ans;
+	int posX = t_botPos.x / 120;
+	int posY = t_botPos.y / 120;
+	ans = tile[posX][posY].getEnd() - tile[posX][posY].getCenter();
+	return ans;
 }
 
 void Map::render(SDL_Renderer*& t_renderer, int i, int j)

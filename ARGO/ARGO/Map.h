@@ -30,6 +30,7 @@ public:
 	void setCactusPos(Vector2 t_cactusPos) { cactusPos = t_cactusPos; };
 	void BFS(Vector2 goalPos);
 	void ToggleDrawVector();
+	Vector2 getDirection(Vector2 t_botPos);
 private:
 	Vector2 mapArr[32][15];
 	std::string platformStr, wallStr;

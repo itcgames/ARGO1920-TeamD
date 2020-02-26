@@ -8,6 +8,7 @@
 #include "SpriteComponent.h"
 #include "BoundarySystem.h"
 #include "BotComponent.h"
+#include "Map.h"
 
 #include"Up.h"
 #include"Down.h"
@@ -48,6 +49,7 @@ public:
 	void pushing();
 	void dying();
 	int handleWin(int t_levelNum);
+	void botMove(Map* t_map);
 	//Entity getEnt(int t_arrPos);
 	
 	CollisionSystem m_colSys;

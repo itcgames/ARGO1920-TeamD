@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Gamestate.h"
 #include "Joystick.h"
+#include <vector>
 
 enum OptionsButtonState
 {
@@ -19,6 +20,12 @@ public:
 	void render(SDL_Renderer* t_renderer);
 	void clean(SDL_Renderer& t_renderer, SDL_Window& t_window);
 	void loadSprites(SDL_Renderer* renderer);
+	void setAchievementUnlocked(bool t_achievment);
+	bool getAchievementUnlocked() { return m_achievementUnlocked; }
+	void increaseAchievementCount(SDL_Renderer* t_renderer);
+	int getAchievementCount() { return m_achievementCount; }
+	void setCatHurtAchievement(bool t_hurt);
+	void setCatStateAchievement(bool t_hurt);
 private:
 	SDL_Surface* loadedSurface;
 	SDL_Texture* m_backgroundTexture;
@@ -30,4 +37,18 @@ private:
 
 	OptionsButtonState currentState;
 	int count;
+
+	std::vector<SDL_Texture*> m_achievementCats;
+	SDL_Surface* m_catAchievementSurface;
+	SDL_Texture* m_catHurtTexture;
+	SDL_Surface* m_catAcvievementHurt;
+	SDL_Surface* m_catAchievementStates;
+	SDL_Texture* m_catStateTexture;
+	bool m_achievementUnlocked = false;
+	bool m_hurtAchievementUnlocked = false;
+	bool m_swapStatesAchievementUnlocked = false;
+	int m_achievementCount = 0;
+	SDL_Rect m_catAchievmentPos;
+	SDL_Rect m_catHurtPos = { 1000, 950, 400,400 };
+	SDL_Rect m_statesPos = { 1000,1650,400,400 };
 };

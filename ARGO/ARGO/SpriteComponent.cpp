@@ -113,7 +113,7 @@ void SpriteComponent::update()
 	{
 		timer = 0;
 		xOffset += 120;
-		if (xOffset == 600)//to be changed for actually spritesheet
+		if (xOffset == 600)
 		{
 			xOffset = 0;
 		}
@@ -145,13 +145,8 @@ void SpriteComponent::render()
 
 	while (loadedSurface.size() < m_paths.size())
 	{
-		SDL_Surface* newSurface = SDL_LoadBMP(m_paths.at(m_currentTex).c_str());
-		loadedSurface.push_back(newSurface);
+		loadedSurface.push_back(SDL_LoadBMP(m_paths.at(loadedSurface.size()).c_str()));
 		m_texture.push_back(SDL_CreateTextureFromSurface(m_screen, loadedSurface.at(m_texture.size())));
-		if (m_currentTex == 1)
-		{
-			int t = 0;
-		}
 	}
 	if (loadedSurface.at(m_currentTex)->clip_rect.h - srcrect.h < srcrect.y)
 	{

@@ -22,6 +22,7 @@
 #include "AudioComponent.h"
 #include "Factory.h"
 #include "BotComponent.h"
+#include "Gameplay.h"
 
 class Game
 {
@@ -35,6 +36,7 @@ public:
 	void subSystemUpdate();
 	void render();
 	void clean();
+
 	
 
 	bool running() { return isRunning; }
@@ -57,10 +59,17 @@ private:
 	Joystick stick;
 	bool keyTest = false;
 	bool temp = false;
+	bool m_gotAchievment = false;
+
+	
 	Entity* m_cat;
 	Factory* m_factory = new CharacterFactory();
-	Character* m_catFactoryPointer;
-	Character* m_flagFactoryPointer;
+	std::vector<Character*> m_characterVectorArray;
+
+	
+	
+
+	bool initialiseOnce = false;
 
 	Entity*  entArr[5];
 
@@ -72,7 +81,6 @@ private:
 
 	void initEnts(Entity &t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim, const char* t_audioStr, bool t_botMode);
 
-	std::vector<std::string> answer2;
 	void updateEnts(Entity& t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim, bool t_botMode);
 	std::string lastString;
 	bool botPresent=true;

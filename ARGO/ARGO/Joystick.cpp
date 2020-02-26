@@ -20,7 +20,7 @@ void Joystick::init()
 	}
 	else
 	{
-		m_controller = SDL_JoystickOpen(0);
+		m_controller = SDL_JoystickOpen(0); 
 		if (m_controller == NULL)
 		{
 			//Error opening controller

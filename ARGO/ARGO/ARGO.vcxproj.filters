@@ -141,8 +141,11 @@
     <ClCompile Include="ClientStuff\Source.cpp">
       <Filter>Client Files</Filter>
     </ClCompile>
+    <ClCompile Include="Factory.cpp">
+      <Filter>Client Files</Filter>
+    </ClCompile>
     <ClCompile Include="Ghosts.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Client Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -2,7 +2,7 @@
 #include <fstream>
 #include <sstream>
 Gameplay::Gameplay() :
-	myClient("Q", 1111)//149.153.106.148
+	myClient("149.153.106.148", 1111)//149.153.106.148
 {
 	if (!myClient.Connect()) //If client fails to connect...
 	{
@@ -13,11 +13,9 @@ Gameplay::Gameplay() :
 
 void Gameplay::init(SDL_Renderer*& t_renderer)
 {
-<<<<<<< Updated upstream
-	m_map.init(t_renderer);
-=======
+
+
 	m_map.init(t_renderer,1);
->>>>>>> Stashed changes
 	m_map.setLevelNum(1);
 	m_pauseMenu.setRules(m_map.getLevelNum());
 	std::string temp = "ASSETS/IMAGES/level" + std::to_string(m_map.getLevelNum()) + "back.bmp";
@@ -42,7 +40,7 @@ void Gameplay::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t
 void Gameplay::update()
 {
 	m_pauseMenu.update();
-	
+
 	if (myClient.isMessage)
 	{
 		myClient.isMessage = false;
@@ -50,7 +48,6 @@ void Gameplay::update()
 		{
 			playerNum++;
 		}
-		//m_pauseMenu.otherUIRules(myClient.newMessage);
 	}
 	std::istringstream input;
 	input.str(mess);
@@ -60,13 +57,12 @@ void Gameplay::update()
 	{
 		myClient.SendString(mess);
 	}
-	std::cout << mess << std::endl;
-
+	std::string ip = myClient.GetIPAddr();
 }
 
 void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 {
-	int newLevel = t_entMan.handleWin(m_map.getLevelNum());
+	 newLevel = t_entMan.handleWin(m_map.getLevelNum());
 	if (m_map.getLevelNum() != newLevel)
 	{
 		m_map.init(t_renderer,newLevel);
@@ -74,7 +70,6 @@ void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 		std::string temp = "ASSETS/IMAGES/level" + std::to_string(m_map.getLevelNum()) + "back.bmp";
 		m_loadedSurfaceBack = SDL_LoadBMP(temp.c_str());
 		m_textureBack = SDL_CreateTextureFromSurface(t_renderer, m_loadedSurfaceBack);
-		//t_entMan.resetStacks();
 	}
 	SDL_Rect dstrect = { 120, 120, m_map.getMapCorners().at(1).x-120,  m_map.getMapCorners().at(1).y-120};
 
@@ -115,7 +110,7 @@ std::vector<Vector2> Gameplay::getMapCorners()
 void Gameplay::fixedUpdate(EntityManager& t_entMan)
 {
 	Vector2 PlayerPos = t_entMan.getPlayerPos();
-	
+
 	int xVal, yVal, wVal, hVal;
 	xVal = (PlayerPos.X() - 240) / 120;
 	yVal = (PlayerPos.Y() - 240) / 120;
@@ -150,9 +145,17 @@ void Gameplay::fixedUpdate(EntityManager& t_entMan)
 				t_entMan.update(yVal, xVal, hVal, wVal);
 				updateCalled = true;
 			}
-			
+
 		}
 	}
+
+
+}
+
+bool Gameplay::getSwappedStates()
+{
+	m_stateSwapped = m_pauseMenu.getStatesSwapped();
+	return m_stateSwapped;
 }
 
 void Gameplay::updatePositions(std::vector<Vector2> t_pos)

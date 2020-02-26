@@ -27,7 +27,7 @@ AudioComponent::~AudioComponent()
 void AudioComponent::LoadMusicFile(const char* t_string)
 {
 	m_music = Mix_LoadMUS(t_string);
-	m_chunk = Mix_LoadWAV("ASSETS/AUDIO/temp.wav");
+	//m_chunk = Mix_LoadWAV("ASSETS/AUDIO/temp.wav");
 	if (m_music == nullptr)
 	{
 		std::cout << "error loading file in audio" << std::endl;

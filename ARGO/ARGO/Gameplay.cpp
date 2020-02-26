@@ -14,8 +14,6 @@ Gameplay::Gameplay() :
 
 void Gameplay::init(SDL_Renderer*& t_renderer)
 {
-
-
 	m_map.init(t_renderer,1);
 	m_map.setLevelNum(1);
 	m_pauseMenu.setRules(m_map.getLevelNum());
@@ -152,8 +150,6 @@ void Gameplay::fixedUpdate(EntityManager& t_entMan)
 
 		}
 	}
-
-
 }
 
 bool Gameplay::getSwappedStates()

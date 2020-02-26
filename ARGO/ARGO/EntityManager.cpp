@@ -309,9 +309,7 @@ int EntityManager::handleWin(int t_levelNum)
 					if (m_colSys.collides(tempE.getComponent<PositionComponent>().getPosition(), tempE.getComponent<BodyComponent>().getSize(),
 						tempE2.getComponent<PositionComponent>().getPosition(), tempE2.getComponent<BodyComponent>().getSize()))
 					{
-
 						t_levelNum++;
-
 					}
 				}
 			}

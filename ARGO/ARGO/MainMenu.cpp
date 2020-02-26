@@ -7,8 +7,9 @@ MainMenu::MainMenu()
 	m_optionsRect = { 1670,1100,100 * 5,38 * 5 };
 	m_helpRect = { 1670,1400,100 * 5,38 * 5 };
 	m_quitRect = { 1670,1700,100 * 5,38 * 5 };
-	m_selectorRect = { m_playRect.x,m_playRect.y,m_playRect.w,((m_playRect.h / 5) + 105) * 5 };
 
+	m_selectorRect = m_playRect;
+	//m_selectorRect = { m_playRect.x,m_playRect.y,m_playRect.w,((m_playRect.h / 5) + 105) * 5 };
 	loadedSurface = NULL;
 	m_backgroundTexture = NULL;
 
@@ -114,6 +115,7 @@ void MainMenu::update()
 	default:
 		break;
 	}
+	
 }
 
 void MainMenu::render(SDL_Renderer* t_renderer)
@@ -126,6 +128,8 @@ void MainMenu::render(SDL_Renderer* t_renderer)
 	SDL_RenderCopy(t_renderer, m_helpTexture, NULL, &m_helpRect);
 	SDL_RenderCopy(t_renderer, m_quitTexture, NULL, &m_quitRect);
 	SDL_RenderCopy(t_renderer, m_selectorTexture, NULL, &m_selectorRect);
+
+
 	SDL_RenderPresent(t_renderer);
 }
 
@@ -150,7 +154,12 @@ void MainMenu::loadSprites(SDL_Renderer* renderer)
 		m_quitTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
 		loadedSurface = SDL_LoadBMP("ASSETS/IMAGES/selector.bmp");
 		m_selectorTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
+		
 		SDL_FreeSurface(loadedSurface);
 
 	}
 }
+
+
+
+

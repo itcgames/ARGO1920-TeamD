@@ -86,11 +86,11 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 	Map tempMap = m_gamePlayScr.getMap();
 	m_currentLevel = tempMap.getLevelNum();
-	m_characterVectorArray.push_back(m_factory->initEntityCat(newPlayer, Vector2(tempMap.getCatPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));
+	/*m_characterVectorArray.push_back(m_factory->initEntityCat(newPlayer, Vector2(tempMap.getCatPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));
 	m_characterVectorArray.push_back(m_factory->initEntityFlag(flag, Vector2(tempMap.getFlagPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));
 	m_characterVectorArray.push_back(m_factory->initEntityRock(rock, Vector2(tempMap.getClockPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));
 	m_characterVectorArray.push_back(m_factory->initEntityPlatform(platform, Vector2(tempMap.getPlatformPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));
-	m_characterVectorArray.push_back(m_factory->initEntityCactus(cactus, Vector2(tempMap.getCactusPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));
+	m_characterVectorArray.push_back(m_factory->initEntityCactus(cactus, Vector2(tempMap.getCactusPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));*/
 	/*initEnts(newPlayer, Vector2(tempMap.getPlayerPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(flag, Vector2(tempMap.getRockPos()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(rock, Vector2(tempMap.getFlagPos()), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true, "ASSETS/AUDIO/temp.wav", false);
@@ -107,10 +107,6 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	initEnts(rock, Vector2(tempMap.getClockPos()), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(platform, Vector2(tempMap.getPlatformPos()), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(cactus, Vector2(tempMap.getCactusPos()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-
-	initEnts(rock2, Vector2(7200,480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock3, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock2.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-
 	initEnts(rock2, Vector2(7200,480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(rock3, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(rock4, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);

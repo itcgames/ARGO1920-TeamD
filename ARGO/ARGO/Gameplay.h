@@ -26,7 +26,7 @@ public:
 
 	void clean(SDL_Renderer*& t_renderer, SDL_Window* t_window);
 	std::vector<std::string> getChanges();
-	Map getMap();
+	Map* getMap();
 	std::vector<Vector2> getMapCorners();
 	void fixedUpdate(EntityManager& t_entMan);
 	int getCurrentLevel() { return newLevel; }

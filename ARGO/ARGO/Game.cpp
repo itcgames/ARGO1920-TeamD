@@ -57,10 +57,54 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	initEnts(rock, Vector2(tempMap.getClockPos()), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(platform, Vector2(tempMap.getPlatformPos()), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(cactus, Vector2(tempMap.getCactusPos()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+<<<<<<< Updated upstream
 	initEnts(rock2, Vector2(480,480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(rock3, Vector2(600, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(rock4, Vector2(720, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(rock5, Vector2(840, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+=======
+	initEnts(rock2, Vector2(7200,480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock3, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock2.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock4, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock5, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock6, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock7, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock8, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock9, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock10, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock11, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock12, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock13, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock14, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock15, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock16, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+
+	initEnts(rock17, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock18, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock19, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock20, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock21, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock22, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock23, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock24, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+
+	initEnts(rock25, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock26, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock27, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock28, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock29, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock30, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock2.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock31, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+
+	initEnts(rock32, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock33, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock34, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+
+	initEnts(rock35, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock36, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock37, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+
+>>>>>>> Stashed changes
 
 	lastString = "ASSETS/IMAGES/states.bmp";
 	Entity* arr[]{ &newPlayer,&flag,&platform,&cactus,&rock };
@@ -225,6 +269,55 @@ void Game::update()
 			}
 			entArr[i]->setComponentString(answer[j+1]);
 		}
+<<<<<<< Updated upstream
+=======
+
+		if ((m_gamePlayScr.getMap().getLevelNum() == 3) && !initialiseOnce)
+		{
+			updateEnts(rock2, Vector2(120, 1440), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock3, Vector2(240, 1440), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock4, Vector2(480, 1440), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock5, Vector2(600, 1440), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock6, Vector2(240, 1320), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock7, Vector2(480, 1320), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock8, Vector2(360, 1320), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock9, Vector2(600, 1200), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock10, Vector2(120, 1200), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock11, Vector2(480, 1080), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock12, Vector2(360, 1080), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock13, Vector2(240, 1080), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock14, Vector2(960, 1320), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock15, Vector2(1080, 1320), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock16, Vector2(1200, 1320), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+
+			updateEnts(rock17, Vector2(1080, 720), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock18, Vector2(960, 600), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock19, Vector2(1200, 600), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock20, Vector2(1080, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock21, Vector2(960, 360), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock22, Vector2(1200, 360), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock23, Vector2(1080, 240), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock24, Vector2(1200, 120), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+
+			updateEnts(rock25, Vector2(1560, 1200), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock26, Vector2(1440, 1080), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock27, Vector2(1680, 1080), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock28, Vector2(1560, 960), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock29, Vector2(1440, 840), Vector2(120, 120), "ASSETS/IMAGES/clock2.bmp", true, false);
+			updateEnts(rock30, Vector2(1680, 840), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock31, Vector2(1560, 720), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+
+			updateEnts(rock32, Vector2(2160, 240), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock33, Vector2(2280, 240), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock34, Vector2(2520, 360), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+
+			updateEnts(rock35, Vector2(2160, 1440), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock36, Vector2(2280, 1440), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock37, Vector2(2400, 1440), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+
+			initialiseOnce = true;
+		}
+>>>>>>> Stashed changes
 	}
 
 	m_currentLevel = tempMap.getLevelNum();

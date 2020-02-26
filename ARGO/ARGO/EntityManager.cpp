@@ -3,20 +3,36 @@
 void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsize)
 {
 
+	Entity& tempG = *entities[0];
+	Vector2 playerPos;
+	for (auto& e : entities)
+	{
+		Entity& tempG = *e.get();
+		if (tempG.getComponentString() == "player")
+		{
+			playerPos = tempG.getComponent<PositionComponent>().getPosition();
+		}
+
+	}
 	m_moveThisFrame = false;
 	m_startOfInput = false;
 	for (auto& e : entities)
 	{
 		Entity &tempE = *e.get();
-		if (tempE.getAlive())
+		for (auto& f : entities)
 		{
-			if (tempE.getComponent<BotComponent>().getBotMode())
+			int xVal, yVal, wVal, hVal;
+			xVal = (playerPos.X() - 120);
+			yVal = (playerPos.Y() - 120);
+			wVal = (playerPos.X() + 240);
+			hVal = (playerPos.Y() + 240);
+			if (xVal < 0)
 			{
-				tempE.getComponent<BotComponent>().setFakeStickX(fakeStickXVal);
+				xVal = 0;
 			}
-			if (tempE.getComponentString() == "player" && tempE.getComponent<PositionComponent>().getPosition()!=Vector2(230000, 20000) &&
-				tempE.getComponent<SpriteComponent>().getCurrentState() == PlayerStates::IdlePlayer)
+			if (yVal < 0)
 			{
+<<<<<<< Updated upstream
 				if (stick.Y() == 1)
 				{
 					//handleMove(tempE, "down");
@@ -39,9 +55,13 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 				}
 				handleBoundary(tempE, t_mapsize.at(0), t_mapsize.at(1));
 				
+=======
+				yVal = 0;
+>>>>>>> Stashed changes
 			}
-			if (SDL_JoystickGetButton(stick.getStick(), 4) != 0)
+			if (wVal > 3840)
 			{
+<<<<<<< Updated upstream
 				
 					int tempEnumX = tempE.getComponent<PositionComponent>().getPreviousPosition().X();
 					int tempEnumY = tempE.getComponent<PositionComponent>().getPreviousPosition().Y();
@@ -73,59 +93,130 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 					tempE.getComponent<BodyComponent>().getSize().X(),
 					tempE.getComponent<BodyComponent>().getSize().Y());
 				//tempE.getComponent<SpriteComponent>().updateState(PlayerStates::IdlePlayer);
+=======
+				wVal = 3840;
 			}
-			if (tempE.getComponentString() == "stop" || tempE.getComponentString() == "move")
+			if (hVal > 1800)
 			{
-				for (auto& f : entities)
-				{
-					Entity& tempF = *f.get();
-					if (tempF.getComponentString() == "player" || (tempE.getComponentString() == "move")&& tempF.getComponentString() =="move" && (tempE.getComponent<PositionComponent>().getPosition()!= tempF.getComponent<PositionComponent>().getPosition()))
-					{
-						if (m_colSys.collides(tempE.getComponent<PositionComponent>().getPosition(),
-							tempE.getComponent<BodyComponent>().getSize(),
-							tempF.getComponent<PositionComponent>().getPosition(),
-							tempF.getComponent<BodyComponent>().getSize()))
-						{
-							
-							tempE.getComponent<SpriteComponent>().setPosAndSize(tempE.getComponent<PositionComponent>().getPosition().X(),
-								tempE.getComponent<PositionComponent>().getPosition().Y(),
-								tempE.getComponent<BodyComponent>().getSize().X(),
-								tempE.getComponent<BodyComponent>().getSize().Y());
-							
-								tempF.getComponent<PositionComponent>().setToPreviousPos();
-							
-							tempF.getComponent<SpriteComponent>().updateState(PlayerStates::IdlePlayer);
-						}
-					}
-				}
+				hVal = 1800;
+>>>>>>> Stashed changes
 			}
-			if (tempE.getComponentString() == "spiky" && !SDL_JoystickGetButton(stick.getStick(), 4) != 0)
+			Entity& tempF = *f.get();
+			if (xVal + 360 > tempF.getComponent<PositionComponent>().getPosition().x && xVal < tempF.getComponent<PositionComponent>().getPosition().x + 360 &&
+				yVal + 360 > tempF.getComponent<PositionComponent>().getPosition().y && yVal < tempF.getComponent<PositionComponent>().getPosition().y + tempF.getComponent<PositionComponent>().getPosition().x)
 			{
-				for (auto& f : entities)
-				{
-					Entity& tempF = *f.get();
-					if (tempF.getComponentString() == "player")
-					{
-						if (m_colSys.collides(tempE.getComponent<PositionComponent>().getPosition(),
-							tempE.getComponent<BodyComponent>().getSize(),
-							tempF.getComponent<PositionComponent>().getPosition(),
-							tempF.getComponent<BodyComponent>().getSize()))
-						{
-							tempE.getComponent<PositionComponent>().setPosition(Vector2(240000, 20000));
-							tempE.getComponent<SpriteComponent>().setPosAndSize(tempE.getComponent<PositionComponent>().getPosition().X(),
-								tempE.getComponent<PositionComponent>().getPosition().Y(),
-								tempE.getComponent<BodyComponent>().getSize().X(),
-								tempE.getComponent<BodyComponent>().getSize().Y());
-							tempF.getComponent<SpriteComponent>().updateState(PlayerStates::DyingPlayer);
-						}
-					}
-				}
-			}
 
+				if (tempE.getAlive())
+				{
+					if (tempE.getComponent<BotComponent>().getBotMode())
+					{
+						tempE.getComponent<BotComponent>().setFakeStickX(fakeStickXVal);
+					}
+					if (tempE.getComponentString() == "player" && tempE.getComponent<PositionComponent>().getPosition() != Vector2(230000, 20000) &&
+						tempE.getComponent<SpriteComponent>().getCurrentState() == PlayerStates::IdlePlayer)
+					{
+						if (stick.Y() == 1)
+						{
+							handleMove(tempE, m_down.execute());
+						}
+						else if (stick.X() == 1 || (tempE.getComponent<BotComponent>().getBotMode() && tempE.getComponent<BotComponent>().getFakeStickX() == 1))
+						{
+							handleMove(tempE, m_right.execute());
+						}
+						else if (stick.X() == -1 || (tempE.getComponent<BotComponent>().getBotMode() && tempE.getComponent<BotComponent>().getFakeStickX() == -1))
+						{
+							handleMove(tempE, m_left.execute());
+						}
+						else if (stick.Y() == -1)
+						{
+							handleMove(tempE, m_up.execute());
+						}
+						handleBoundary(tempE, t_mapsize.at(0), t_mapsize.at(1));
+
+					}
+					if (SDL_JoystickGetButton(stick.getStick(), 4) != 0)
+					{
+						int tempEnumX = tempE.getComponent<PositionComponent>().getPreviousPosition().X();
+						int tempEnumY = tempE.getComponent<PositionComponent>().getPreviousPosition().Y();
+						tempEnumX = tempEnumX % 120;
+						tempEnumY = tempEnumY % 120;
+
+						if (!tempEnumX == 0 || !tempEnumY == 0)
+						{
+							tempE.getComponent<PositionComponent>().popPreviousPosition();
+						}
+						else
+						{
+							tempE.getComponent<PositionComponent>().setToPreviousPos();
+						}
+
+						if (!tempE.getComponent<PositionComponent>().isEmpty())
+						{
+							m_moveThisFrame = true;
+						}
+						if (tempE.getComponentString() == "player")
+						{
+							tempE.getComponent<SpriteComponent>().updateState(PlayerStates::IdlePlayer);
+						}
+
+						tempE.getComponent<SpriteComponent>().setPosAndSize(tempE.getComponent<PositionComponent>().getPosition().X(),
+							tempE.getComponent<PositionComponent>().getPosition().Y(),
+							tempE.getComponent<BodyComponent>().getSize().X(),
+							tempE.getComponent<BodyComponent>().getSize().Y());
+					}
+					if (tempE.getComponentString() == "stop" || tempE.getComponentString() == "move")
+					{
+						
+							
+							if (tempF.getComponentString() == "player" || (tempE.getComponentString() == "move") && tempF.getComponentString() == "move" && (tempE.getComponent<PositionComponent>().getPosition() != tempF.getComponent<PositionComponent>().getPosition()))
+							{
+								if (m_colSys.collides(tempE.getComponent<PositionComponent>().getPosition(),
+									tempE.getComponent<BodyComponent>().getSize(),
+									tempF.getComponent<PositionComponent>().getPosition(),
+									tempF.getComponent<BodyComponent>().getSize()))
+								{
+
+									tempE.getComponent<SpriteComponent>().setPosAndSize(tempE.getComponent<PositionComponent>().getPosition().X(),
+										tempE.getComponent<PositionComponent>().getPosition().Y(),
+										tempE.getComponent<BodyComponent>().getSize().X(),
+										tempE.getComponent<BodyComponent>().getSize().Y());
+
+									tempF.getComponent<PositionComponent>().setToPreviousPos();
+
+									tempF.getComponent<SpriteComponent>().updateState(PlayerStates::IdlePlayer);
+								}
+							}
+						
+					}
+					if (tempE.getComponentString() == "spiky" && !SDL_JoystickGetButton(stick.getStick(), 4) != 0)
+					{
+						
+						
+							if (tempF.getComponentString() == "player")
+							{
+								if (m_colSys.collides(tempE.getComponent<PositionComponent>().getPosition(),
+									tempE.getComponent<BodyComponent>().getSize(),
+									tempF.getComponent<PositionComponent>().getPosition(),
+									tempF.getComponent<BodyComponent>().getSize()))
+								{
+									tempE.getComponent<PositionComponent>().setPosition(Vector2(240000, 20000));
+									tempE.getComponent<SpriteComponent>().setPosAndSize(tempE.getComponent<PositionComponent>().getPosition().X(),
+										tempE.getComponent<PositionComponent>().getPosition().Y(),
+										tempE.getComponent<BodyComponent>().getSize().X(),
+										tempE.getComponent<BodyComponent>().getSize().Y());
+									tempF.getComponent<SpriteComponent>().updateState(PlayerStates::DyingPlayer);
+								}
+							}
+						}
+					}
+
+
+			}
 		}
-
-
 	}
+
+
+	
 	if (m_moveThisFrame)
 	{
 		if (newTimer < (MAX_TIME*0.5f))
@@ -140,9 +231,19 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 	}
 }
 
-void EntityManager::update()
+void EntityManager::update(int yVal, int xVal, int hVal, int wVal)
 {
-	
+	Entity& tempE=*entities[0];
+	Vector2 playerPos;
+	for (auto& e : entities)
+	{
+		Entity& tempE = *e.get();
+		if (tempE.getComponentString() == "player")
+		{
+			playerPos = tempE.getComponent<PositionComponent>().getPosition();
+		}
+
+	}
 	if (timer < MAX_TIME)
 		timer++;
 	if (!m_inputThisFrame)
@@ -150,9 +251,37 @@ void EntityManager::update()
 		newTimer = 1;
 	}
 	m_inputThisFrame = false;
-	for (auto& e : entities)
+	for (auto& f : entities)
 	{
-		e->update();
+		int xVal, yVal, wVal, hVal;
+		xVal = (playerPos.X() - 120);
+		yVal = (playerPos.Y()-120);
+		wVal = (playerPos.X() + 240);
+		hVal = (playerPos.Y() + 240);
+		if (xVal < 0)
+		{
+			xVal = 0;
+		}
+		if (yVal < 0)
+		{
+			yVal = 0;
+		}
+		if (wVal > 3840)
+		{
+			wVal = 3840;
+		}
+		if (hVal > 1800)
+		{
+			hVal = 1800;
+		}
+		Entity& tempF = *f.get();
+		if (xVal + 360 > tempF.getComponent<PositionComponent>().getPosition().x && xVal < tempF.getComponent<PositionComponent>().getPosition().x +360 &&
+			yVal + 360 > tempF.getComponent<PositionComponent>().getPosition().y && yVal < tempF.getComponent<PositionComponent>().getPosition().y + tempF.getComponent<PositionComponent>().getPosition().x)
+		{
+			f->update();
+			
+		}
+		
 		
 	}
 	movement();

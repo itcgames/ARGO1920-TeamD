@@ -13,7 +13,11 @@ Gameplay::Gameplay() :
 
 void Gameplay::init(SDL_Renderer*& t_renderer)
 {
+<<<<<<< Updated upstream
 	m_map.init(t_renderer);
+=======
+	m_map.init(t_renderer,1);
+>>>>>>> Stashed changes
 	m_map.setLevelNum(1);
 	m_pauseMenu.setRules(m_map.getLevelNum());
 	std::string temp = "ASSETS/IMAGES/level" + std::to_string(m_map.getLevelNum()) + "back.bmp";
@@ -113,8 +117,8 @@ void Gameplay::fixedUpdate(EntityManager& t_entMan)
 	Vector2 PlayerPos = t_entMan.getPlayerPos();
 	
 	int xVal, yVal, wVal, hVal;
-	xVal = (PlayerPos.X() - 360) / 120;
-	yVal = (PlayerPos.Y() - 360) / 120;
+	xVal = (PlayerPos.X() - 240) / 120;
+	yVal = (PlayerPos.Y() - 240) / 120;
 	wVal = (PlayerPos.X() + 360) / 120;
 	hVal = (PlayerPos.Y() + 360) / 120;
 	if (xVal < 0)
@@ -143,7 +147,7 @@ void Gameplay::fixedUpdate(EntityManager& t_entMan)
 			t_entMan.mapCol(m_map.tile[i][j].vec, temp);
 			if (!updateCalled)
 			{
-				t_entMan.update();
+				t_entMan.update(yVal, xVal, hVal, wVal);
 				updateCalled = true;
 			}
 			

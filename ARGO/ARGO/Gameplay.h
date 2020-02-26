@@ -47,4 +47,5 @@ private:
 	int newLevel = 0;
 	bool m_stateSwapped = false;
 	Ghost m_ghosts;
+	std::string m_IPAddr;
 };

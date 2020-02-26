@@ -435,6 +435,7 @@ void EntityManager::dying()
 				tempE.getComponent<PositionComponent>().getPosition().Y(),
 				tempE.getComponent<BodyComponent>().getSize().X(),
 				tempE.getComponent<BodyComponent>().getSize().Y());
+			tempE.getComponent<SpriteComponent>().updateState(PlayerStates::IdlePlayer);
 		}
 	}
 }

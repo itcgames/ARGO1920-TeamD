@@ -9,6 +9,7 @@ Gameplay::Gameplay() :
 		std::cout << "Failed to connect to server..." << std::endl;
 	}
 	mess = "";
+	m_IPAddr = "";
 }
 
 void Gameplay::init(SDL_Renderer*& t_renderer)
@@ -41,7 +42,7 @@ void Gameplay::update()
 {
 	m_pauseMenu.update();
 
-	/*if (myClient.isMessage)
+	if (myClient.isMessage)
 	{
 		myClient.isMessage = false;
 		if (m_ghosts.update(myClient.newMessage, playerNum) == playerNum)
@@ -57,7 +58,10 @@ void Gameplay::update()
 	{
 		myClient.SendString(mess);
 	}
-	std::string ip = myClient.GetIPAddr();*/
+	if (m_IPAddr == "")
+	{
+		m_IPAddr = myClient.GetIPAddr();
+	}
 }
 
 void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)

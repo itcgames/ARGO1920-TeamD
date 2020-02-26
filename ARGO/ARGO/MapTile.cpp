@@ -11,8 +11,11 @@ mapTile::~mapTile()
 
 void mapTile::renderVector(SDL_Renderer*& t_renderer)
 {
-	m_center = Vector2(vec.X() + 60, vec.Y() + 60);
-	SDL_RenderDrawLine(t_renderer, m_center.X(), m_center.Y(), m_lineEnd.X(), m_lineEnd.Y());
+	if (!getWall() && m_lineEnd.X() != 0)
+	{
+		m_center = Vector2(vec.X() + 60, vec.Y() + 60);
+		SDL_RenderDrawLine(t_renderer, m_center.X(), m_center.Y(), m_lineEnd.X(), m_lineEnd.Y());
+	}
 }
 
 void mapTile::setCost(int cost)
@@ -52,6 +55,7 @@ void mapTile::setVisited(bool v)
 
 void mapTile::setEnd(Vector2 end)
 {
+
 	m_lineEnd = end;
 }
 

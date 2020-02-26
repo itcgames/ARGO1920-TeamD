@@ -41,11 +41,15 @@ void Map::init(SDL_Renderer*& t_renderer, int t_levelNum)
 				m_mapHolder.mapDoubleArray[i][j] = mapArray[arrayIndex];
 				tile[i][j].init(wallStr, t_renderer);
 				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
+				tile[i][j].setCost(999);
+				tile[i][j].setWall(true);
 			}
 			else if (mapArray[arrayIndex] == 13) {
 				m_mapHolder.mapDoubleArray[i][j] = mapArray[arrayIndex];
 				tile[i][j].init(platformStr, t_renderer);
 				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
+
+				tile[i][j].setWall(true);
 			}
 			
 			//19, 16, 17, 18, 20,
@@ -53,27 +57,33 @@ void Map::init(SDL_Renderer*& t_renderer, int t_levelNum)
 			//cactus 16, cat 19, flag 17, clock 20, shelf 18 
 			else if (mapArray[arrayIndex] == 16)
 			{
+				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
 				cactusPos = Vector2(0 + (120 * i), 0 + (120 * j));
 			}
 			else if (mapArray[arrayIndex] == 17)
 			{
+				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
 				flagPos = Vector2(0 + (120 * i), 0 + (120 * j));
 			}
 			else if (mapArray[arrayIndex] == 18)
 			{
+				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
 				platformPos = Vector2(0 + (120 * i), 0 + (120 * j));
 			}
 			else if (mapArray[arrayIndex] == 19)
 			{
+				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
 				catPos = Vector2(0 + (120 * i), 0 + (120 * j));
 			}
 			else if (mapArray[arrayIndex] == 20)
 			{
+				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
 				clockPos = Vector2(0 + (120 * i), 0 + (120 * j));
 			}
 			else {
 				m_mapHolder.mapDoubleArray[i][j] = 0;
-
+				tile[i][j].init(wallStr, t_renderer);
+				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
 			}
 			arrayIndex++;
 
@@ -143,18 +153,12 @@ void Map::BFS(Vector2 goalPos)
 		{
 			if (tile[i][j].getPrevious() && tile[i][j].getWall() == false)
 			{
-				tile[i][j].setEnd(tile[i][j].getPrevious()->getCenter());
+				//b-a)/3)+a
+				Vector2 tempV(((tile[i][j].getPrevious()->getCenter()- tile[i][j].getCenter()) /3) + tile[i][j].getCenter());
+				tile[i][j].setEnd(tempV);
 			}
 		}
 	}
-
-	//for (auto& t : tile)
-	//{
-	//	if (t->getPrevious() && t->getWall() == false)
-	//	{
-	//		t->setEnd(t->getPrevious()->getCenter());
-	//	}
-	//}
 }
 
 void Map::ToggleDrawVector()
@@ -181,7 +185,7 @@ void Map::render(SDL_Renderer*& t_renderer, int i, int j)
 	}
 	else
 	{
-		//do nothing
+		tile[i][j].renderVector(t_renderer);
 	}
 }
 
@@ -230,6 +234,23 @@ void Map::setAdjacents()
 			{
 				tile[i][j].addEdge(tile[i][j + 1]);
 			}
+
+		/*	if (i > 0 && j > 0)
+			{
+				tile[i][j].addEdge(tile[i - 1][j - 1]);
+			}
+			if (i + 1 < 32 && j > 15)
+			{
+				tile[i][j].addEdge(tile[i + 1][j + 1]);
+			}
+			if (i + 1 < 32 && j > 0)
+			{
+				tile[i][j].addEdge(tile[i + 1][j - 1]);
+			}
+			if (i + 1 < 32 && j > 0)
+			{
+				tile[i][j].addEdge(tile[i + 1][j - 1]);
+			}*/
 		}
 	}
 }

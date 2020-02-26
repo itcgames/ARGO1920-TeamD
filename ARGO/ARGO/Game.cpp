@@ -80,17 +80,17 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 		isRunning = true;
 	}
-	
-	
+
+
 	m_gamePlayScr.init(m_renderer);
 
 	Map tempMap = m_gamePlayScr.getMap();
 	m_currentLevel = tempMap.getLevelNum();
-	m_characterVectorArray.push_back(m_factory->initEntityCat(newPlayer, Vector2(tempMap.getCatPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));
+	/*m_characterVectorArray.push_back(m_factory->initEntityCat(newPlayer, Vector2(tempMap.getCatPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));
 	m_characterVectorArray.push_back(m_factory->initEntityFlag(flag, Vector2(tempMap.getFlagPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));
 	m_characterVectorArray.push_back(m_factory->initEntityRock(rock, Vector2(tempMap.getClockPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));
 	m_characterVectorArray.push_back(m_factory->initEntityPlatform(platform, Vector2(tempMap.getPlatformPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));
-	m_characterVectorArray.push_back(m_factory->initEntityCactus(cactus, Vector2(tempMap.getCactusPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));
+	m_characterVectorArray.push_back(m_factory->initEntityCactus(cactus, Vector2(tempMap.getCactusPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));*/
 	/*initEnts(newPlayer, Vector2(tempMap.getPlayerPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(flag, Vector2(tempMap.getRockPos()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(rock, Vector2(tempMap.getFlagPos()), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true, "ASSETS/AUDIO/temp.wav", false);
@@ -98,7 +98,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	initEnts(cactus, Vector2(tempMap.getcactusPos()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, "ASSETS/AUDIO/temp.wav", false);*/
 
 	m_currentLevel = 0;// tempMap.getLevelNum();
-	
+
 
 
 
@@ -138,6 +138,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	initEnts(rock28, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(rock29, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(rock30, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+
 	initEnts(rock31, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 
 	initEnts(rock32, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
@@ -163,7 +164,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	answer = m_gamePlayScr.getChanges();
 
 
-	
+
 
 }
 
@@ -313,6 +314,7 @@ void Game::update()
 			entArr[i]->setComponentString(answer[j+1]);
 		}
 
+
 		if ((m_gamePlayScr.getMap().getLevelNum() == 3) && !initialiseOnce)
 		{
 			updateEnts(rock2, Vector2(120, 1440), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
@@ -344,7 +346,9 @@ void Game::update()
 			updateEnts(rock26, Vector2(1440, 1080), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
 			updateEnts(rock27, Vector2(1680, 1080), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
 			updateEnts(rock28, Vector2(1560, 960), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+
 			updateEnts(rock29, Vector2(1440, 840), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+
 			updateEnts(rock30, Vector2(1680, 840), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
 			updateEnts(rock31, Vector2(1560, 720), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
 
@@ -358,6 +362,7 @@ void Game::update()
 
 			initialiseOnce = true;
 		}
+
 	}
 
 	m_currentLevel = tempMap.getLevelNum();
@@ -397,7 +402,7 @@ void Game::update()
 	default:
 		break;
 	}
-	
+
 }
 
 void Game::subSystemUpdate()

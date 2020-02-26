@@ -14,8 +14,10 @@ Gameplay::Gameplay() :
 
 void Gameplay::init(SDL_Renderer*& t_renderer)
 {
-	m_map.init(t_renderer,3);
-	m_map.setLevelNum(3);
+
+
+	m_map.init(t_renderer,1);
+	m_map.setLevelNum(1);
 	m_pauseMenu.setRules(m_map.getLevelNum());
 	std::string temp = "ASSETS/IMAGES/level" + std::to_string(m_map.getLevelNum()) + "back.bmp";
 	m_loadedSurfaceBack = SDL_LoadBMP(temp.c_str());
@@ -39,7 +41,7 @@ void Gameplay::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t
 void Gameplay::update()
 {
 	m_pauseMenu.update();
-	
+
 	if (myClient.isMessage)
 	{
 		myClient.isMessage = false;
@@ -112,10 +114,10 @@ std::vector<Vector2> Gameplay::getMapCorners()
 void Gameplay::fixedUpdate(EntityManager& t_entMan)
 {
 	Vector2 PlayerPos = t_entMan.getPlayerPos();
-	
+
 	int xVal, yVal, wVal, hVal;
-	xVal = (PlayerPos.X() - 360) / 120;
-	yVal = (PlayerPos.Y() - 360) / 120;
+	xVal = (PlayerPos.X() - 240) / 120;
+	yVal = (PlayerPos.Y() - 240) / 120;
 	wVal = (PlayerPos.X() + 360) / 120;
 	hVal = (PlayerPos.Y() + 360) / 120;
 	if (xVal < 0)
@@ -144,14 +146,14 @@ void Gameplay::fixedUpdate(EntityManager& t_entMan)
 			t_entMan.mapCol(m_map.tile[i][j].vec, temp);
 			if (!updateCalled)
 			{
-				t_entMan.update();
+				t_entMan.update(yVal, xVal, hVal, wVal);
 				updateCalled = true;
 			}
-			
+
 		}
 	}
 
-	
+
 }
 
 bool Gameplay::getSwappedStates()

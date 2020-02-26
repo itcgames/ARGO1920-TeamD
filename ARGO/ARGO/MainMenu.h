@@ -5,6 +5,7 @@
 #include <iostream>
 #include "Gamestate.h"
 #include "Joystick.h"
+
 enum ButtonState
 {
 	play,
@@ -23,6 +24,7 @@ public:
 	void clean(SDL_Renderer& t_renderer, SDL_Window& t_window);
 	void loadSprites(SDL_Renderer* renderer);
 	static const int MAX_TIME = 20;
+	
 private:
 	SDL_Surface* loadedSurface;
 	SDL_Texture* m_backgroundTexture;
@@ -37,8 +39,10 @@ private:
 	SDL_Rect m_helpRect;
 	SDL_Rect m_quitRect;
 	SDL_Rect m_selectorRect;
+	
 
 	ButtonState currentState;
 	bool keyHeld;
 	int count;
+	
 };

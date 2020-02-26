@@ -2,7 +2,7 @@
 #include <fstream>
 #include <sstream>
 Gameplay::Gameplay() :
-	myClient("Q", 1111)//149.153.106.148
+	myClient("149.153.106.148", 1111)//149.153.106.148
 {
 	if (!myClient.Connect()) //If client fails to connect...
 	{
@@ -55,11 +55,12 @@ void Gameplay::update()
 	{
 		myClient.SendString(mess);
 	}
+	std::string ip = myClient.GetIPAddr();
 }
 
 void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 {
-	int newLevel = t_entMan.handleWin(m_map.getLevelNum());
+	 newLevel = t_entMan.handleWin(m_map.getLevelNum());
 	if (m_map.getLevelNum() != newLevel)
 	{
 		m_map.init(t_renderer,newLevel);
@@ -145,6 +146,14 @@ void Gameplay::fixedUpdate(EntityManager& t_entMan)
 			
 		}
 	}
+
+	
+}
+
+bool Gameplay::getSwappedStates()
+{
+	m_stateSwapped = m_pauseMenu.getStatesSwapped();
+	return m_stateSwapped;
 }
 
 void Gameplay::updatePositions(std::vector<Vector2> t_pos)

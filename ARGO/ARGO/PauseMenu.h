@@ -19,6 +19,8 @@ public:
 	std::vector<std::string> getChanges();
 	void setRules(int t_levelNum);
 	void setUIRules(int t_index,std::string t_type);
+	void otherUIRules(std::string t_rules);
+	bool getStatesSwapped() { return m_swappedStates; }
 
 	static const int MAX_TIME = 30;
 
@@ -49,5 +51,6 @@ private:
 	int currentBox;
 	Vector2 m_slectOffset;
 	int m_lockValue;
+	bool m_swappedStates = false;
 	bool m_rulesChanged;
 };

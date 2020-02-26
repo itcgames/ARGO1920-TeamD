@@ -12,6 +12,7 @@
 #include "ClientStuff/Client.h"
 #include "MainMenu.h"
 #include "Ghosts.h"
+#include<string>
 
 class Gameplay
 {

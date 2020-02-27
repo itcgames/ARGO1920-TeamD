@@ -41,14 +41,17 @@ private:
 	std::vector<SDL_Texture*> m_achievementCats;
 	SDL_Surface* m_catAchievementSurface;
 	SDL_Texture* m_catHurtTexture;
-	SDL_Surface* m_catAcvievementHurt;
+	SDL_Surface* m_catAchievementHurt;
 	SDL_Surface* m_catAchievementStates;
 	SDL_Texture* m_catStateTexture;
+	
 	bool m_achievementUnlocked = false;
 	bool m_hurtAchievementUnlocked = false;
 	bool m_swapStatesAchievementUnlocked = false;
 	int m_achievementCount = 0;
+	
 	SDL_Rect m_catAchievmentPos;
 	SDL_Rect m_catHurtPos = { 1000, 950, 400,400 };
 	SDL_Rect m_statesPos = { 1000,1650,400,400 };
+
 };

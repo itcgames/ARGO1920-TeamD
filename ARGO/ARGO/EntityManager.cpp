@@ -12,7 +12,7 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 		{
 			playerPos = tempG.getComponent<PositionComponent>().getPosition();
 		}
-	
+
 
 	}
 	m_moveThisFrame = false;
@@ -43,7 +43,7 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 			{
 				hVal = 1800;
 			}
-			
+
 			Entity& tempF = *f.get();
 			if (xVal + 360 > tempF.getComponent<PositionComponent>().getPosition().x && xVal < tempF.getComponent<PositionComponent>().getPosition().x + 360 &&
 				yVal + 360 > tempF.getComponent<PositionComponent>().getPosition().y && yVal < tempF.getComponent<PositionComponent>().getPosition().y + tempF.getComponent<PositionComponent>().getPosition().x)
@@ -70,7 +70,7 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 					handleBoundary(tempE, t_mapsize.at(0), t_mapsize.at(1));
 
 				}
-				
+
 				if (tempE.getComponentString() == "stop" || tempE.getComponentString() == "move")
 				{
 
@@ -115,12 +115,8 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 							m_diedToCactus = true;
 						}
 					}
-
 				}
-
-
 			}
-
 		}
 	}
 
@@ -285,7 +281,60 @@ int EntityManager::handleWin(int t_levelNum)
 	return t_levelNum;
 }
 
-void EntityManager::botMove(Map* t_map)
+void EntityManager::botMove(Map* t_map, int currentLv)
+{
+	switch (currentLv)
+	{
+	case 1:
+		lv1BehaviourTree(t_map);
+		break;
+	case 2:
+		lv2BehaviourTree(t_map);
+		break;
+	case 3:
+	//	lv3BehaviourTree(t_map);
+		break;
+	case 4:
+		lv4BehaviourTree(t_map);
+		break;
+	default:
+		break;
+	}
+	//for (auto& e : entities)
+	//{
+	//	Entity& tempE = *e.get();
+	//	if (tempE.getAlive())
+	//	{
+	//		if (tempE.getComponentString() == "goal")//tempE.getComponent<BotComponent>().getBotMode())
+	//		{
+	//			t_map->BFS(Vector2(int(tempE.getComponent<PositionComponent>().getPosition().x/120), int(tempE.getComponent<PositionComponent>().getPosition().y / 120)));
+	//		}
+
+	//		if (tempE.getComponent<BotComponent>().getBotMode() && tempE.getComponent<PositionComponent>().getPosition().x<4000)
+	//		{
+	//			Vector2 ans = t_map->getDirection(tempE.getComponent<PositionComponent>().getPosition());
+	//			if (ans.x > 0)
+	//			{
+	//				tempE.getComponent<BotComponent>().setFakeStickX(1); tempE.getComponent<BotComponent>().setFakeStickY(0);
+	//			}
+	//			else if (ans.x < 0)
+	//			{
+	//				tempE.getComponent<BotComponent>().setFakeStickX(-1); tempE.getComponent<BotComponent>().setFakeStickY(0);
+	//			}
+	//			if (ans.y > 0)
+	//			{
+	//				tempE.getComponent<BotComponent>().setFakeStickY(1); tempE.getComponent<BotComponent>().setFakeStickX(0);
+	//			}
+	//			else if (ans.y < 0)
+	//			{
+	//				tempE.getComponent<BotComponent>().setFakeStickY(-1); tempE.getComponent<BotComponent>().setFakeStickX(0);
+	//			}
+	//		}
+	//	}
+	//}
+}
+
+void EntityManager::goToGoal(Map* t_map)
 {
 	for (auto& e : entities)
 	{
@@ -294,11 +343,48 @@ void EntityManager::botMove(Map* t_map)
 		{
 			if (tempE.getComponentString() == "goal")//tempE.getComponent<BotComponent>().getBotMode())
 			{
-				t_map->BFS(Vector2(int(tempE.getComponent<PositionComponent>().getPosition().x/120), int(tempE.getComponent<PositionComponent>().getPosition().y / 120)));
+				t_map->BFS(Vector2(int(tempE.getComponent<PositionComponent>().getPosition().x / 120), int(tempE.getComponent<PositionComponent>().getPosition().y / 120)));
 			}
-			if (tempE.getComponent<BotComponent>().getBotMode() && tempE.getComponent<PositionComponent>().getPosition().x<4000)
+
+			if (tempE.getComponent<BotComponent>().getBotMode() && tempE.getComponent<PositionComponent>().getPosition().x < 4000)
 			{
-				Vector2 ans = t_map->getDirection(tempE.getComponent<PositionComponent>().getPosition());					
+				Vector2 ans = t_map->getDirection(tempE.getComponent<PositionComponent>().getPosition());
+				if (ans.x > 0)
+				{
+					tempE.getComponent<BotComponent>().setFakeStickX(1); tempE.getComponent<BotComponent>().setFakeStickY(0);
+				}
+				else if (ans.x < 0)
+				{
+					tempE.getComponent<BotComponent>().setFakeStickX(-1); tempE.getComponent<BotComponent>().setFakeStickY(0);
+				}
+				if (ans.y > 0)
+				{
+					tempE.getComponent<BotComponent>().setFakeStickY(1); tempE.getComponent<BotComponent>().setFakeStickX(0);
+				}
+				else if (ans.y < 0)
+				{
+					tempE.getComponent<BotComponent>().setFakeStickY(-1); tempE.getComponent<BotComponent>().setFakeStickX(0);
+				}
+			}
+		}
+	}
+}
+
+void EntityManager::goToSpiky(Map* t_map)
+{
+	for (auto& e : entities)
+	{
+		Entity& tempE = *e.get();
+		if (tempE.getAlive())
+		{
+			if (tempE.getComponentString() == "spiky" && tempE.getComponent<PositionComponent>().getPosition().x < 4000)//tempE.getComponent<BotComponent>().getBotMode())
+			{
+				t_map->BFS(Vector2(int(tempE.getComponent<PositionComponent>().getPosition().x / 120), int(tempE.getComponent<PositionComponent>().getPosition().y / 120)));
+			}
+
+			if (tempE.getComponent<BotComponent>().getBotMode() && tempE.getComponent<PositionComponent>().getPosition().x < 4000)
+			{
+				Vector2 ans = t_map->getDirection(tempE.getComponent<PositionComponent>().getPosition());
 				if (ans.x > 0)
 				{
 					tempE.getComponent<BotComponent>().setFakeStickX(1); tempE.getComponent<BotComponent>().setFakeStickY(0);
@@ -334,7 +420,7 @@ void EntityManager::reset(bool resetAll, bool resetSome)
 	for (auto& e : entities)
 	{
 		Entity& tempE = *e.get();
-		
+
 		if (resetSome)
 		{
 			int tempEnumX = tempE.getComponent<PositionComponent>().getPreviousPosition().X();
@@ -383,7 +469,62 @@ void EntityManager::reset(bool resetAll, bool resetSome)
 				tempE.getComponent<BodyComponent>().getSize().X(),
 				tempE.getComponent<BodyComponent>().getSize().Y());
 		}
+	}
+}
 
+void EntityManager::lv1BehaviourTree(Map* t_map)
+{
+	static int rnd = rand() % 3;
+	switch (rnd)
+	{
+	case 0:
+		goToSpiky(t_map);
+		//fail
+		break;
+	case 1:
+		goToGoal(t_map);
+		//fail
+		break;
+	case 2:
+		break;
+	default:
+		break;
+	}
+}
+
+void EntityManager::lv2BehaviourTree(Map* t_map)
+{
+	static int rnd = rand() % 2;
+	switch (rnd)
+	{
+	case 0:
+		goToGoal(t_map);
+		//fail
+		break;
+	case 1:
+
+		//win
+		break;
+	default:
+		break;
+	}
+}
+
+void EntityManager::lv4BehaviourTree(Map* t_map)
+{
+	static int rnd = rand() % 2;
+	switch (rnd)
+	{
+	case 0:
+		goToGoal(t_map);
+		//fail
+		break;
+	case 1:
+
+		//win
+		break;
+	default:
+		break;
 	}
 }
 
@@ -483,7 +624,7 @@ void EntityManager::pushing()
 					}
 				}
 			}
-			
+
 		}
 	}
 }

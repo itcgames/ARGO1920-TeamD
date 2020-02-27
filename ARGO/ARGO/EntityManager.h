@@ -52,7 +52,13 @@ public:
 	void dying();
 	int handleWin(int t_levelNum);
 	bool GetDeathToCactus() { return m_diedToCactus; }
-	void botMove(Map* t_map);
+	void botMove(Map* t_map, int currentLv);
+	void goToGoal(Map* t_map);
+	void goToSpiky(Map* t_map);
+	void lv1BehaviourTree(Map* t_map);
+	void lv2BehaviourTree(Map* t_map);
+	void lv3BehaviourTree(Map* t_map);
+	void lv4BehaviourTree(Map* t_map);
 	//Entity getEnt(int t_arrPos);
 
 	void popAllPositions();

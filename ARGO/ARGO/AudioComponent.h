@@ -11,14 +11,23 @@ public:
 	AudioComponent();
 	~AudioComponent();
 	void LoadMusicFile( const char * t_string);
-	void playAudio();
+	void LoadMusicFileBG(const char* t_string);
+	void LoadMusicFileDeath(const char* t_string);
+	void loadMusicFileLevel(const char* t_string);
+	void playAudioBG();
+	void playAudioCat();
+	void playAudioDeath();
+	void playAudioLevel();
 	void closeAudio();
 	void init() override;
 	void update() override;
 	void render() override;
 private:
-	Mix_Music* m_music;
 	Mix_Chunk* m_chunk;
-	bool doOnce = false;
+	Mix_Music* m_musicBG;
+	Mix_Chunk* m_deathChunk;
+	Mix_Chunk* m_levelChunk;
+	bool doOnceDie = false;
+	bool doOnceBG = false;
 };
 #endif // !AUDIOCOMPONENT

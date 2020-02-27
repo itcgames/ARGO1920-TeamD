@@ -2,24 +2,28 @@
 #include <fstream>
 #include <sstream>
 Gameplay::Gameplay() :
-	myClient(/*"149.153.106.148"*/"ahahahahhahah", 1111)//149.153.106.148
+
+
+	myClient("Q", 1111)//149.153.106.148
+
 {
 	if (!myClient.Connect()) //If client fails to connect...
 	{
 		std::cout << "Failed to connect to server..." << std::endl;
 	}
 	mess = "";
+	m_IPAddr = "";
 }
 
 void Gameplay::init(SDL_Renderer*& t_renderer)
 {
+
 	m_catAchDisplayHurt = SDL_LoadBMP("ASSETS/IMAGES/CactusAchievement.bmp");
 	m_dispCatHurtAch = SDL_CreateTextureFromSurface(t_renderer, m_catAchDisplayHurt);
 	m_catAchDisplayStates = SDL_LoadBMP("ASSETS/IMAGES/StatesAchievement.bmp");
 	m_dispCatStatesAch = SDL_CreateTextureFromSurface(t_renderer, m_catAchDisplayStates);
 	m_catAchPassLevel = SDL_LoadBMP("ASSETS/IMAGES/LevelCompleteGeneric.bmp");
 	m_dispPassLevel = SDL_CreateTextureFromSurface(t_renderer, m_catAchPassLevel);
-
 	m_map.init(t_renderer,1);
 	m_map.setLevelNum(1);
 	m_pauseMenu.setRules(m_map.getLevelNum());
@@ -45,11 +49,13 @@ void Gameplay::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t
 void Gameplay::update()
 {
 	m_pauseMenu.update();
-	
+	m_ghosts.update(&playerNum);
+	m_ghosts.posUpdate(mess, playerNum);
+
 	if (myClient.isMessage)
 	{
 		myClient.isMessage = false;
-		if (m_ghosts.update(myClient.newMessage, playerNum) == playerNum)
+		if (m_ghosts.posUpdate(myClient.newMessage, playerNum) == playerNum)
 		{
 			playerNum++;
 		}
@@ -62,7 +68,11 @@ void Gameplay::update()
 	{
 		myClient.SendString(mess);
 	}
-	std::string ip = myClient.GetIPAddr();
+
+	if (m_IPAddr == "")
+	{
+		m_IPAddr = myClient.GetIPAddr();
+	}
 }
 
 void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
@@ -95,6 +105,7 @@ void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 		}
 		m_statesAchTimer += m_timeTracker;
 	}
+		std::cout << m_levelCount << "versus" << newLevel << std::endl;
 	if (m_levelCount == newLevel)
 	{
 		if (m_levelPassTimerAch < m_achDisplayTime)
@@ -119,7 +130,7 @@ void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 		}
 	}
 	m_pauseMenu.render(t_renderer);
-	m_ghosts.render();
+	m_ghosts.render(playerNum);
 }
 
 void Gameplay::clean(SDL_Renderer*& t_renderer, SDL_Window* t_window)
@@ -132,9 +143,9 @@ std::vector<std::string> Gameplay::getChanges()
 	return m_pauseMenu.getChanges();
 }
 
-Map Gameplay::getMap()
+Map* Gameplay::getMap()
 {
-	return m_map;
+	return &m_map;
 }
 
 std::vector<Vector2> Gameplay::getMapCorners()
@@ -145,10 +156,10 @@ std::vector<Vector2> Gameplay::getMapCorners()
 void Gameplay::fixedUpdate(EntityManager& t_entMan)
 {
 	Vector2 PlayerPos = t_entMan.getPlayerPos();
-	
+
 	int xVal, yVal, wVal, hVal;
-	xVal = (PlayerPos.X() - 360) / 120;
-	yVal = (PlayerPos.Y() - 360) / 120;
+	xVal = (PlayerPos.X() - 240) / 120;
+	yVal = (PlayerPos.Y() - 240) / 120;
 	wVal = (PlayerPos.X() + 360) / 120;
 	hVal = (PlayerPos.Y() + 360) / 120;
 	if (xVal < 0)
@@ -173,18 +184,18 @@ void Gameplay::fixedUpdate(EntityManager& t_entMan)
 	{
 		for (int i = col; i < maxCol; i++)
 		{
-			Vector2 temp(120, 120);
-			t_entMan.mapCol(m_map.tile[i][j].vec, temp);
 			if (!updateCalled)
 			{
-				t_entMan.update();
+				t_entMan.update(yVal, xVal, hVal, wVal);
 				updateCalled = true;
 			}
-			
+			if (m_map.tile[i][j].getWall())
+			{
+				Vector2 temp(120, 120);
+				t_entMan.mapCol(m_map.tile[i][j].vec, temp);
+			}
 		}
 	}
-
-	
 }
 
 bool Gameplay::getSwappedStates()

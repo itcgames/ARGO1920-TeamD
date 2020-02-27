@@ -8,6 +8,7 @@
 #include "SpriteComponent.h"
 #include "BoundarySystem.h"
 #include "BotComponent.h"
+#include "Map.h"
 
 #include"Up.h"
 #include"Down.h"
@@ -37,8 +38,8 @@ private:
 	static int  currBiggestStack;
 	bool firstRun = false;
 public:
-	void handleEvents(Joystick &stick,std::vector<Vector2> t_mapsize);
-	void update();
+	void handleEvents(Joystick &stick,std::vector<Vector2> t_mapsize, bool resetAll, bool resetSome);
+	void update(int yVal, int xVal, int hVal, int wVal);
 	void draw(SDL_Renderer* t_screen);
 	void refresh();
 	Entity& addEntity(std::string t_identifier);
@@ -51,8 +52,7 @@ public:
 	void dying();
 	int handleWin(int t_levelNum);
 	bool GetDeathToCactus() { return m_diedToCactus; }
-	
-	
+	void botMove(Map* t_map);
 	//Entity getEnt(int t_arrPos);
 
 

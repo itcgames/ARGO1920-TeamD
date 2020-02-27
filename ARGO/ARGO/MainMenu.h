@@ -24,7 +24,7 @@ public:
 	void clean(SDL_Renderer& t_renderer, SDL_Window& t_window);
 	void loadSprites(SDL_Renderer* renderer);
 	static const int MAX_TIME = 20;
-	
+	bool quitState();
 private:
 	SDL_Surface* loadedSurface;
 	SDL_Texture* m_backgroundTexture;
@@ -39,6 +39,7 @@ private:
 	SDL_Rect m_helpRect;
 	SDL_Rect m_quitRect;
 	SDL_Rect m_selectorRect;
+	bool quit = false;
 	
 
 	ButtonState currentState;

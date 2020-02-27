@@ -1,6 +1,5 @@
 #include "Game.h"
 
-
 GameState Game::m_currentMode{ GameState::gameplay };
 EntityManager manager;
 auto& newPlayer(manager.addEntity("player"));
@@ -81,12 +80,13 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 		isRunning = true;
 	}
-	
-	
+
+
 	m_gamePlayScr.init(m_renderer);
 
-	Map tempMap = m_gamePlayScr.getMap();
+	Map tempMap = *m_gamePlayScr.getMap();
 	m_currentLevel = tempMap.getLevelNum();
+
 	m_characterVectorArray.push_back(m_factory->initEntityCat(newPlayer, Vector2(tempMap.getCatPos()), Vector2(120, 120), "ASSETS/IMAGES/states.bmp", true, "ASSETS/AUDIO/meow.wav", false, *m_renderer));
 	m_characterVectorArray.push_back(m_factory->initEntityFlag(flag, Vector2(tempMap.getFlagPos()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, "ASSETS/AUDIO/levelPass.mp3", false, *m_renderer));
 	m_characterVectorArray.push_back(m_factory->initEntityCactus(cactus,Vector2(tempMap.getCactusPos()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, "ASSETS/AUDIO/deathNoise.wav", false, *m_renderer));
@@ -94,7 +94,8 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 	initEnts(rock, Vector2(tempMap.getFlagPos()), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
 	m_currentLevel = 0;// tempMap.getLevelNum();
-	
+
+
 
 
 
@@ -141,6 +142,8 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 
 
+
+
 	lastString = "ASSETS/IMAGES/states.bmp";
 	Entity* arr[]{ &newPlayer,&flag,&platform,&cactus,&rock };
 
@@ -159,7 +162,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	answer = m_gamePlayScr.getChanges();
 
 
-	
+
 
 }
 
@@ -178,11 +181,11 @@ void Game::handleEvents()
 			{
 				if (m_event.jaxis.value < -20000)
 				{
-					stick.setX(-1);	std::cout << "left" << std::endl;
+					stick.setX(-1);
 				}
 				else if (m_event.jaxis.value > 20000)
 				{
-					stick.setX(1); std::cout << "right" << std::endl;
+					stick.setX(1);
 				}
 				else {
 					stick.setX(0);
@@ -193,11 +196,11 @@ void Game::handleEvents()
 			{
 				if (m_event.jaxis.value < -stick.getDeadZone())
 				{
-					stick.setY(-1); std::cout << "up" << std::endl;
+					stick.setY(-1);
 				}
 				else if (m_event.jaxis.value > stick.getDeadZone())
 				{
-					stick.setY(1); std::cout << "down" << std::endl;
+					stick.setY(1);
 				}
 				else {
 					stick.setY(0);
@@ -206,10 +209,7 @@ void Game::handleEvents()
 		}
 		break;
 	case SDL_JOYBUTTONDOWN:
-		if (SDL_JoystickGetButton(stick.getStick(), 5) != 0)
-		{
-			isRunning = false;
-		}
+
 		break;
 	}
 
@@ -265,13 +265,16 @@ void Game::update()
 	m_optionsScr.setCatHurtAchievement(manager.GetDeathToCactus());
 	m_optionsScr.setCatStateAchievement(m_gamePlayScr.getSwappedStates());
 
+
 	if (manager.GetDeathToCactus())
 	{
 		m_gamePlayScr.setHurtByCactus(manager.GetDeathToCactus());
 		cactus.getComponent< AudioComponent>().playAudioDeath();
 	}
 
-	Map tempMap = m_gamePlayScr.getMap();
+
+	Map tempMap = *m_gamePlayScr.getMap();
+
 	Vector2 savedPos[5];
 	for (int i = 0, j = 0; i < 5; i++, j += 2)
 	{
@@ -288,90 +291,117 @@ void Game::update()
 					lastString = "ASSETS/IMAGES/states2.bmp";
 				}
 				if (m_currentLevel != tempMap.getLevelNum())
+				{
 					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getCatPos());
+					entArr[i]->getComponent<PositionComponent>().popAllPositions();
+				}
+
 			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), lastString, true, false);
 			savedPos[0] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			else if (answer[j] == "flag")
 			{
 				if (m_currentLevel != tempMap.getLevelNum())
+				{
 					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getFlagPos());
+					entArr[i]->getComponent<PositionComponent>().popAllPositions();
+				}
+
 				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, false);
 				savedPos[3] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			else if (answer[j] == "cactus")
 			{
 				if (m_currentLevel != tempMap.getLevelNum())
+				{
+
+
 					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getCactusPos());
+					entArr[i]->getComponent<PositionComponent>().popAllPositions();
+				}
 				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, false);
 				savedPos[4] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			else if (answer[j] == "clock")
 			{
 				if (m_currentLevel != tempMap.getLevelNum())
+				{
+
+
 					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getClockPos());
+					entArr[i]->getComponent<PositionComponent>().popAllPositions();
+				}
 				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true,false);
 				savedPos[1] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			else if (answer[j] == "platform")
 			{
 				if (m_currentLevel != tempMap.getLevelNum())
+				{
+
+
 					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getPlatformPos());
+					entArr[i]->getComponent<PositionComponent>().popAllPositions();
+				}
 				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/book.bmp", true, false);
 				savedPos[2] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			entArr[i]->setComponentString(answer[j+1]);
 		}
 
-		if ((m_gamePlayScr.getMap().getLevelNum() == 3) && !initialiseOnce)
+
+		if ((m_gamePlayScr.getMap()->getLevelNum() == 3) && !initialiseOnce)
 		{
-			updateEnts(rock2, Vector2(120, 1440), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-			updateEnts(rock3, Vector2(240, 1440), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-			updateEnts(rock4, Vector2(480, 1440), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-			updateEnts(rock5, Vector2(600, 1440), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-			updateEnts(rock6, Vector2(240, 1320), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-			updateEnts(rock7, Vector2(480, 1320), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-			updateEnts(rock8, Vector2(360, 1320), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-			updateEnts(rock9, Vector2(600, 1200), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-			updateEnts(rock10, Vector2(120, 1200), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-			updateEnts(rock11, Vector2(480, 1080), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-			updateEnts(rock12, Vector2(360, 1080), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-			updateEnts(rock13, Vector2(240, 1080), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-			updateEnts(rock14, Vector2(960, 1320), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-			updateEnts(rock15, Vector2(1080, 1320), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-			updateEnts(rock16, Vector2(1200, 1320), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock2, Vector2(120, 1440), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock3, Vector2(240, 1440), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock4, Vector2(480, 1440), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock5, Vector2(600, 1440), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock6, Vector2(240, 1320), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock7, Vector2(480, 1320), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock8, Vector2(360, 1320), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock9, Vector2(600, 1200), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock10, Vector2(120, 1200), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock11, Vector2(480, 1080), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock12, Vector2(360, 1080), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock13, Vector2(240, 1080), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock14, Vector2(960, 1320), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock15, Vector2(1080, 1320), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock16, Vector2(1200, 1320), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
 
-			updateEnts(rock17, Vector2(1080, 720), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-			updateEnts(rock18, Vector2(960, 600), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-			updateEnts(rock19, Vector2(1200, 600), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-			updateEnts(rock20, Vector2(1080, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-			updateEnts(rock21, Vector2(960, 360), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-			updateEnts(rock22, Vector2(1200, 360), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-			updateEnts(rock23, Vector2(1080, 240), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-			updateEnts(rock24, Vector2(1200, 120), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock17, Vector2(1080, 720), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock18, Vector2(960, 600), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock19, Vector2(1200, 600), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock20, Vector2(1080, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock21, Vector2(960, 360), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock22, Vector2(1200, 360), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock23, Vector2(1080, 240), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock24, Vector2(1200, 120), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
 
-			updateEnts(rock25, Vector2(1560, 1200), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-			updateEnts(rock26, Vector2(1440, 1080), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-			updateEnts(rock27, Vector2(1680, 1080), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-			updateEnts(rock28, Vector2(1560, 960), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-			updateEnts(rock29, Vector2(1440, 840), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-			updateEnts(rock30, Vector2(1680, 840), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-			updateEnts(rock31, Vector2(1560, 720), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock25, Vector2(1560, 1200), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock26, Vector2(1440, 1080), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock27, Vector2(1680, 1080), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock28, Vector2(1560, 960), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
 
-			updateEnts(rock32, Vector2(2160, 240), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-			updateEnts(rock33, Vector2(2280, 240), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-			updateEnts(rock34, Vector2(2520, 360), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock29, Vector2(1440, 840), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
 
-			updateEnts(rock35, Vector2(2160, 1440), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-			updateEnts(rock36, Vector2(2280, 1440), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-			updateEnts(rock37, Vector2(2400, 1440), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+			updateEnts(rock30, Vector2(1680, 840), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock31, Vector2(1560, 720), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+
+			updateEnts(rock32, Vector2(2160, 240), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock33, Vector2(2280, 240), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock34, Vector2(2520, 360), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+
+			updateEnts(rock35, Vector2(2160, 1440), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock36, Vector2(2280, 1440), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock37, Vector2(2400, 1440), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
 
 			initialiseOnce = true;
 		}
+
 	}
 
 	m_currentLevel = tempMap.getLevelNum();
-
+	manager.botMove(m_gamePlayScr.getMap());
 	std::vector<Vector2> passIn;
 	for (int i = 0;i<5;i++)
 	{
@@ -394,6 +424,7 @@ void Game::update()
 		break;
 	case GameState::gameplay://no process events for this screen
 		m_gamePlayScr.update();
+
 		break;
 	case GameState::options://no process events for this screen
 		m_optionsScr.update();
@@ -407,7 +438,7 @@ void Game::update()
 	default:
 		break;
 	}
-	
+
 }
 
 void Game::subSystemUpdate()
@@ -418,8 +449,9 @@ void Game::subSystemUpdate()
 	case GameState::gameplay://no process events for this screen
 		if ((m_event.type == SDL_JOYBUTTONDOWN || m_event.type == SDL_JOYAXISMOTION))
 		{
-			manager.handleEvents(stick, m_gamePlayScr.getMapCorners());
+
 		}
+		manager.handleEvents(stick, m_gamePlayScr.getMapCorners(),m_gamePlayScr.getPauseMenu().getRewindALot(), m_gamePlayScr.getPauseMenu().getRewindALittle());
 		m_gamePlayScr.handleEvents(m_event, m_currentMode, stick);
 		break;
 	default:

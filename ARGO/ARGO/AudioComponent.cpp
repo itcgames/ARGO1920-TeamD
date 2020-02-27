@@ -29,7 +29,9 @@ void AudioComponent::LoadMusicFile(const char* t_string)
 	
 		
 		m_chunk = Mix_LoadWAV(t_string);
-	
+
+
+
 	if (m_chunk == nullptr)
 	{
 		std::cout << "error loading file in audio:" << t_string  << std::endl;

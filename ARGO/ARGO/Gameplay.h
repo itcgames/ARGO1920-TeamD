@@ -12,6 +12,7 @@
 #include "ClientStuff/Client.h"
 #include "MainMenu.h"
 #include "Ghosts.h"
+#include<string>
 
 class Gameplay
 {
@@ -25,13 +26,14 @@ public:
 
 	void clean(SDL_Renderer*& t_renderer, SDL_Window* t_window);
 	std::vector<std::string> getChanges();
-	Map getMap();
+	Map* getMap();
 	std::vector<Vector2> getMapCorners();
 	void fixedUpdate(EntityManager& t_entMan);
 	int getCurrentLevel() { return newLevel; }
 	bool getSwappedStates();
 	void updatePositions(std::vector<Vector2> t_pos);
 	void setHurtByCactus(bool t_cactus);
+	PauseMenu getPauseMenu(){ return m_pauseMenu; };
 private:
 	Map m_map;
 	PauseMenu m_pauseMenu;
@@ -53,7 +55,7 @@ private:
 	float m_statesAchTimer = 0.f;
 	float m_deathAchTimer = 0.f;
 	float m_levelPassTimerAch = 0.f;
-	int m_achDisplayTime = 2;
+	int m_achDisplayTime = 0.5;
 	SDL_Surface* m_catAchDisplayHurt;
 	SDL_Texture* m_dispCatHurtAch;
 	SDL_Surface* m_catAchDisplayStates;
@@ -61,5 +63,6 @@ private:
 	SDL_Surface* m_catAchPassLevel;
 	SDL_Texture* m_dispPassLevel;
 	SDL_Rect m_promptAchievementPos = { 100,100,800,400 };
-	float m_levelCount = 0.5f;
+	int m_levelCount = 1;
+	std::string m_IPAddr;
 };

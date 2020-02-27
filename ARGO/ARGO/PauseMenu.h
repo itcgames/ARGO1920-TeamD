@@ -23,7 +23,8 @@ public:
 	bool getStatesSwapped() { return m_swappedStates; }
 
 	static const int MAX_TIME = 30;
-
+	bool getRewindALittle() { return resetALittle; };
+	bool getRewindALot() { return ResetAll; };
 private:
 	SDL_Surface* loadedSurfaceBack;
 	SDL_Surface* loadedSurfaceObj;
@@ -31,26 +32,34 @@ private:
 	SDL_Surface* loadedSurfaceAdjecLock;
 	SDL_Surface* loadedSurfaceSelect;
 	SDL_Surface* loadedSurfaceSelect2;
+	SDL_Surface* loadedSurfaceRewind;
+	SDL_Surface* loadedSurfaceNotRewind;
 	SDL_Texture* m_textureBack;
 	SDL_Texture* m_textureObj;
 	SDL_Texture* m_textureAdjecUnlock;
 	SDL_Texture* m_textureAdjecLock;
 	SDL_Texture* m_textureSelect;
 	SDL_Texture* m_textureSelect2;
+	SDL_Texture* m_textureRewind;
+	SDL_Texture* m_textureNotRewind;
 	SDL_Rect dstrectBack;
 	SDL_Rect dstrectSelect;
 	SDL_Rect dstrectSelect2;
-
+	SDL_Texture* forAllTexture;
 	static const int NUM_OF_BOXES = 10;
 	SDL_Rect boxRectSliced[NUM_OF_BOXES];
 	Vector2 selectBox[NUM_OF_BOXES];
+	Vector2 rewindBox;
 	bool boxSelected[NUM_OF_BOXES];
 	SDL_Rect srcrect[NUM_OF_BOXES];
-
+	SDL_Rect rect;
 	int timer;
 	int currentBox;
 	Vector2 m_slectOffset;
 	int m_lockValue;
 	bool m_swappedStates = false;
 	bool m_rulesChanged;
+
+	bool ResetAll = false;
+	bool resetALittle = false;
 };

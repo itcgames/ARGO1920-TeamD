@@ -46,14 +46,12 @@ bool Client::GetPacketType(PacketType & packetType)
 
 void Client::SendString(const std::string & str)
 {
-	//std::cout << "Client::SendString" << std::endl;
 	PS::ChatMessage cm(str);
 	m_pm.Append(cm.toPacket());
 }
 
 bool Client::GetString(std::string & str)
 {
-	std::cout << "Client::GetString" << std::endl;
 	int32_t bufferlength; //Holds length of the message
 	if (!Getint32_t(bufferlength)) //Get length of buffer and store it in variable: bufferlength
 		return false; //If get int fails, return false

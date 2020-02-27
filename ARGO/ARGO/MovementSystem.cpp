@@ -11,7 +11,7 @@ MovementSystem::~MovementSystem()
 Vector2 const MovementSystem::move(PositionComponent pos, std::string t_dir)
 {
 	Vector2 temp = pos.getPosition();
-	float speedControl = 15.0f;//(MAX_TIME * 5)in sprite
+	float speedControl = 10.0f;//(MAX_TIME * 5)in sprite
 	if (t_dir == "up")
 	{
 		temp = Vector2(temp.X(), temp.Y() - (120.0f / speedControl));

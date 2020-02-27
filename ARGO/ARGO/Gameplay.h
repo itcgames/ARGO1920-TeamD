@@ -12,6 +12,7 @@
 #include "ClientStuff/Client.h"
 #include "MainMenu.h"
 #include "Ghosts.h"
+#include<string>
 
 class Gameplay
 {
@@ -25,7 +26,7 @@ public:
 
 	void clean(SDL_Renderer*& t_renderer, SDL_Window* t_window);
 	std::vector<std::string> getChanges();
-	Map getMap();
+	Map* getMap();
 	std::vector<Vector2> getMapCorners();
 	void fixedUpdate(EntityManager& t_entMan);
 	int getCurrentLevel() { return newLevel; }
@@ -47,4 +48,5 @@ private:
 	int newLevel = 0;
 	bool m_stateSwapped = false;
 	Ghost m_ghosts;
+	std::string m_IPAddr;
 };

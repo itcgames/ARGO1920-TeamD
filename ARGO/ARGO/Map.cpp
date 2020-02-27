@@ -36,55 +36,151 @@ void Map::init(SDL_Renderer*& t_renderer, int t_levelNum)
 	{
 		for (int i = 0; i < 32; i++)
 		{
+			tile[i][j].setWall(false);
 			tile[i][j].setPos(Vector2(0, 0));
 			if (mapArray[arrayIndex] == 14) {
 				m_mapHolder.mapDoubleArray[i][j] = mapArray[arrayIndex];
 				tile[i][j].init(wallStr, t_renderer);
 				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
+				tile[i][j].setCost(999);
+				tile[i][j].setWall(true);
 			}
 			else if (mapArray[arrayIndex] == 13) {
 				m_mapHolder.mapDoubleArray[i][j] = mapArray[arrayIndex];
 				tile[i][j].init(platformStr, t_renderer);
 				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
-			}
 
+				tile[i][j].setWall(true);
+			}
+			
 			//19, 16, 17, 18, 20,
 			//16=cactus 17=flag 18=platform 19=cat 20 = clock
 			//cactus 16, cat 19, flag 17, clock 20, shelf 18 
 			else if (mapArray[arrayIndex] == 16)
 			{
+				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
 				cactusPos = Vector2(0 + (120 * i), 0 + (120 * j));
 			}
 			else if (mapArray[arrayIndex] == 17)
 			{
+				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
 				flagPos = Vector2(0 + (120 * i), 0 + (120 * j));
 			}
 			else if (mapArray[arrayIndex] == 18)
 			{
+				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
 				platformPos = Vector2(0 + (120 * i), 0 + (120 * j));
 			}
 			else if (mapArray[arrayIndex] == 19)
 			{
+				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
 				catPos = Vector2(0 + (120 * i), 0 + (120 * j));
 			}
 			else if (mapArray[arrayIndex] == 20)
 			{
+				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
 				clockPos = Vector2(0 + (120 * i), 0 + (120 * j));
 			}
 			else {
 				m_mapHolder.mapDoubleArray[i][j] = 0;
-
+				tile[i][j].init(wallStr, t_renderer);
+				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
+				tile[i][j].setCentre(Vector2(60 + (120 * i), 60 + (120 * j)));
 			}
 			arrayIndex++;
-
-
 		}
 	}
+	drawVectors = true;
+	setAdjacents();
 }
 
 void Map::drawTile(SDL_Renderer*& t_renderer, int i, int j)
 {
 	tile[i][j].m_tile.render();
+	if (drawVectors)
+	{
+		tile[i][j].renderVector(t_renderer);
+	}
+}
+
+void Map::BFS(Vector2 goalPos)
+{
+	int x = goalPos.x; int y = goalPos.y;
+	tile[x][y].setCentre(Vector2(60 + (120 * x), 60 + (120 * y)));
+	mapTile* goal = &tile[x][y];
+
+	bool goalReached = false;
+
+	std::list<mapTile*> queue;
+
+	for (int i = 0; i < 32; i++)
+	{
+		for (int j = 0; j < 15; j++)
+		{
+			tile[i][j].setStart(false);
+			tile[i][j].setGoal(false);
+			tile[i][j].setPath(false);
+			tile[i][j].setVisited(false);
+			tile[i][j].setCost(0);
+		}
+	}
+	goal->setGoal(true);
+	goal->setVisited(true);
+	queue.push_back(goal);
+
+	while (!queue.empty())
+	{
+		int originCost = queue.front()->getCost();
+
+		for (auto& e : queue.front()->getAdjacent())
+		{
+			if (e->getVisited() == false)
+			{
+				e->setVisited(true);
+				if (e->getWall() == false)
+				{
+					e->setCost(originCost + 1);
+					e->setPreviousTile(*queue.front());
+					queue.push_back(e);
+				}
+			}
+		}
+		queue.pop_front();
+	}
+
+	for (int i = 0; i < 32; i++)
+	{
+		for (int j = 0; j < 15; j++)
+		{
+			if (tile[i][j].getPrevious() && tile[i][j].getWall() == false)
+			{
+				//b-a)/3)+a
+				Vector2 tempV(((tile[i][j].getPrevious()->getCenter()- tile[i][j].getCenter()) /3) + tile[i][j].getCenter());
+				tile[i][j].setEnd(tempV);
+			}
+		}
+	}
+}
+
+void Map::ToggleDrawVector()
+{
+	if (drawVectors)
+	{
+		drawVectors = false;
+	}
+	else
+	{
+		drawVectors = true;
+	}
+}
+
+Vector2 Map::getDirection(Vector2 t_botPos)
+{
+	Vector2 ans;
+	int posX = t_botPos.x / 120;
+	int posY = t_botPos.y / 120;
+	ans = tile[posX][posY].getEnd() - tile[posX][posY].getCenter();
+	return ans;
 }
 
 void Map::render(SDL_Renderer*& t_renderer, int i, int j)
@@ -99,7 +195,7 @@ void Map::render(SDL_Renderer*& t_renderer, int i, int j)
 	}
 	else
 	{
-		//do nothing
+		tile[i][j].renderVector(t_renderer);
 	}
 }
 
@@ -121,4 +217,50 @@ int Map::getLevelNum()
 void Map::setLevelNum(int t_level)
 {
 	levelNum = t_level;
+}
+
+void Map::setAdjacents()
+{
+	for (int i = 0; i < 31; i++)
+	{
+		for (int j = 0; j < 15; j++)
+		{
+			if (i > 0)
+			{
+				tile[i][j].addEdge(tile[i - 1][j]);
+			}
+
+			if (i + 1 < 32)
+			{
+				tile[i][j].addEdge(tile[i + 1][j]);
+			}
+
+			if (j > 0)
+			{
+				tile[i][j].addEdge(tile[i][j - 1]);
+			}
+
+			if (j < 15)
+			{
+				tile[i][j].addEdge(tile[i][j + 1]);
+			}
+
+		/*	if (i > 0 && j > 0)
+			{
+				tile[i][j].addEdge(tile[i - 1][j - 1]);
+			}
+			if (i + 1 < 32 && j > 15)
+			{
+				tile[i][j].addEdge(tile[i + 1][j + 1]);
+			}
+			if (i + 1 < 32 && j > 0)
+			{
+				tile[i][j].addEdge(tile[i + 1][j - 1]);
+			}
+			if (i + 1 < 32 && j > 0)
+			{
+				tile[i][j].addEdge(tile[i + 1][j - 1]);
+			}*/
+		}
+	}
 }

@@ -8,6 +8,7 @@
 #include "SpriteComponent.h"
 #include "BoundarySystem.h"
 #include "BotComponent.h"
+#include "Map.h"
 
 #include"Up.h"
 #include"Down.h"
@@ -51,8 +52,7 @@ public:
 	void dying();
 	int handleWin(int t_levelNum);
 	bool GetDeathToCactus() { return m_diedToCactus; }
-	
-	
+	void botMove(Map* t_map);
 	//Entity getEnt(int t_arrPos);
 
 

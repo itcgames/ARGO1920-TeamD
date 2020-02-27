@@ -47,15 +47,10 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 			if (xVal + 360 > tempF.getComponent<PositionComponent>().getPosition().x && xVal < tempF.getComponent<PositionComponent>().getPosition().x + 360 &&
 				yVal + 360 > tempF.getComponent<PositionComponent>().getPosition().y && yVal < tempF.getComponent<PositionComponent>().getPosition().y + tempF.getComponent<PositionComponent>().getPosition().x)
 			{
-
-				if (tempE.getComponent<BotComponent>().getBotMode())
-				{
-					tempE.getComponent<BotComponent>().setFakeStickX(fakeStickXVal);
-				}
 				if (tempE.getComponentString() == "player" && tempE.getComponent<PositionComponent>().getPosition() != Vector2(230000, 20000) &&
 					tempE.getComponent<SpriteComponent>().getCurrentState() == PlayerStates::IdlePlayer)
 				{
-					if (stick.Y() == 1)
+					if (stick.Y() == 1 || (tempE.getComponent<BotComponent>().getBotMode() && tempE.getComponent<BotComponent>().getFakeStickY() == 1))
 					{
 						handleMove(tempE, m_down.execute());
 					}
@@ -67,7 +62,7 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 					{
 						handleMove(tempE, m_left.execute());
 					}
-					else if (stick.Y() == -1)
+					else if (stick.Y() == -1 || (tempE.getComponent<BotComponent>().getBotMode() && tempE.getComponent<BotComponent>().getFakeStickY() == -1))
 					{
 						handleMove(tempE, m_up.execute());
 					}
@@ -94,6 +89,24 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 					{
 						m_moveThisFrame = true;
 					}
+					if (tempE.getComponentString() == "player")
+					{
+						tempE.getComponent<SpriteComponent>().updateState(PlayerStates::IdlePlayer);
+					}
+
+					tempE.getComponent<SpriteComponent>().setPosAndSize(tempE.getComponent<PositionComponent>().getPosition().X(),
+						tempE.getComponent<PositionComponent>().getPosition().Y(),
+						tempE.getComponent<BodyComponent>().getSize().X(),
+						tempE.getComponent<BodyComponent>().getSize().Y());
+				}
+				if (SDL_JoystickGetButton(stick.getStick(), 5) != 0)
+				{
+					
+					
+						tempE.getComponent<PositionComponent>().completeReset();
+					
+
+					
 					if (tempE.getComponentString() == "player")
 					{
 						tempE.getComponent<SpriteComponent>().updateState(PlayerStates::IdlePlayer);
@@ -309,15 +322,50 @@ int EntityManager::handleWin(int t_levelNum)
 					if (m_colSys.collides(tempE.getComponent<PositionComponent>().getPosition(), tempE.getComponent<BodyComponent>().getSize(),
 						tempE2.getComponent<PositionComponent>().getPosition(), tempE2.getComponent<BodyComponent>().getSize()))
 					{
-
 						t_levelNum++;
-
 					}
 				}
 			}
 		}
 	}
 	return t_levelNum;
+}
+
+void EntityManager::botMove(Map* t_map)
+{
+	for (auto& e : entities)
+	{
+		Entity& tempE = *e.get();
+		if (tempE.getAlive())
+		{
+			if (tempE.getComponentString() == "goal")//tempE.getComponent<BotComponent>().getBotMode())
+			{
+				t_map->BFS(Vector2(int(tempE.getComponent<PositionComponent>().getPosition().x/120), int(tempE.getComponent<PositionComponent>().getPosition().y / 120)));
+			}
+			if (tempE.getComponent<BotComponent>().getBotMode())
+			{
+				Vector2 ans = t_map->getDirection(tempE.getComponent<PositionComponent>().getPosition());
+				
+				
+				if (ans.x > 0)
+				{
+					tempE.getComponent<BotComponent>().setFakeStickX(1); tempE.getComponent<BotComponent>().setFakeStickY(0);
+				}
+				else if (ans.x < 0)
+				{
+					tempE.getComponent<BotComponent>().setFakeStickX(-1); tempE.getComponent<BotComponent>().setFakeStickY(0);
+				}
+				if (ans.y > 0)
+				{
+					tempE.getComponent<BotComponent>().setFakeStickY(1); tempE.getComponent<BotComponent>().setFakeStickX(0);
+				}
+				else if (ans.y < 0)
+				{
+					tempE.getComponent<BotComponent>().setFakeStickY(-1); tempE.getComponent<BotComponent>().setFakeStickX(0);
+				}
+			}
+		}
+	}
 }
 
 
@@ -435,6 +483,7 @@ void EntityManager::dying()
 				tempE.getComponent<PositionComponent>().getPosition().Y(),
 				tempE.getComponent<BodyComponent>().getSize().X(),
 				tempE.getComponent<BodyComponent>().getSize().Y());
+			tempE.getComponent<SpriteComponent>().updateState(PlayerStates::IdlePlayer);
 		}
 	}
 }

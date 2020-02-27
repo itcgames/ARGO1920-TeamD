@@ -1,7 +1,6 @@
 #include "Game.h"
 
 GameState Game::m_currentMode{ GameState::gameplay };
-
 EntityManager manager;
 auto& newPlayer(manager.addEntity("player"));
 auto& flag(manager.addEntity("goal"));
@@ -84,7 +83,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 	m_gamePlayScr.init(m_renderer);
 
-	Map tempMap = m_gamePlayScr.getMap();
+	Map tempMap = *m_gamePlayScr.getMap();
 	m_currentLevel = tempMap.getLevelNum();
 	/*m_characterVectorArray.push_back(m_factory->initEntityCat(newPlayer, Vector2(tempMap.getCatPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));
 	m_characterVectorArray.push_back(m_factory->initEntityFlag(flag, Vector2(tempMap.getFlagPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));
@@ -107,7 +106,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	initEnts(rock, Vector2(tempMap.getClockPos()), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(platform, Vector2(tempMap.getPlatformPos()), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(cactus, Vector2(tempMap.getCactusPos()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock2, Vector2(7200,480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock2, Vector2(7200,480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(rock3, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(rock4, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(rock5, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
@@ -211,10 +210,7 @@ void Game::handleEvents()
 		}
 		break;
 	case SDL_JOYBUTTONDOWN:
-		if (SDL_JoystickGetButton(stick.getStick(), 5) != 0)
-		{
-			isRunning = false;
-		}
+		
 		break;
 	}
 
@@ -262,7 +258,7 @@ void Game::update()
 	m_optionsScr.setCatHurtAchievement(manager.GetDeathToCactus());
 	m_optionsScr.setCatStateAchievement(m_gamePlayScr.getSwappedStates());
 
-	Map tempMap = m_gamePlayScr.getMap();
+	Map tempMap = *m_gamePlayScr.getMap();
 	Vector2 savedPos[5];
 	for (int i = 0, j = 0; i < 5; i++, j += 2)
 	{
@@ -279,35 +275,58 @@ void Game::update()
 					lastString = "ASSETS/IMAGES/states2.bmp";
 				}
 				if (m_currentLevel != tempMap.getLevelNum())
+				{
 					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getCatPos());
+					entArr[i]->getComponent<PositionComponent>().popAllPositions();
+				}
+					
 			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), lastString, true, false);
 			savedPos[0] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			else if (answer[j] == "flag")
 			{
 				if (m_currentLevel != tempMap.getLevelNum())
+				{
 					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getFlagPos());
+					entArr[i]->getComponent<PositionComponent>().popAllPositions();
+				}
+					
 				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, false);
 				savedPos[3] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			else if (answer[j] == "cactus")
 			{
 				if (m_currentLevel != tempMap.getLevelNum())
+				{
+
+
 					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getCactusPos());
+					entArr[i]->getComponent<PositionComponent>().popAllPositions();
+				}
 				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, false);
 				savedPos[4] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			else if (answer[j] == "clock")
 			{
 				if (m_currentLevel != tempMap.getLevelNum())
+				{
+
+
 					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getClockPos());
+					entArr[i]->getComponent<PositionComponent>().popAllPositions();
+				}
 				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true,false);
 				savedPos[1] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			else if (answer[j] == "platform")
 			{
 				if (m_currentLevel != tempMap.getLevelNum())
+				{
+
+
 					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getPlatformPos());
+					entArr[i]->getComponent<PositionComponent>().popAllPositions();
+				}
 				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/book.bmp", true, false);
 				savedPos[2] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
@@ -315,7 +334,7 @@ void Game::update()
 		}
 
 
-		if ((m_gamePlayScr.getMap().getLevelNum() == 3) && !initialiseOnce)
+		if ((m_gamePlayScr.getMap()->getLevelNum() == 3) && !initialiseOnce)
 		{
 			updateEnts(rock2, Vector2(120, 1440), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
 			updateEnts(rock3, Vector2(240, 1440), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
@@ -366,7 +385,7 @@ void Game::update()
 	}
 
 	m_currentLevel = tempMap.getLevelNum();
-
+	manager.botMove(m_gamePlayScr.getMap());
 	std::vector<Vector2> passIn;
 	for (int i = 0;i<5;i++)
 	{
@@ -389,6 +408,7 @@ void Game::update()
 		break;
 	case GameState::gameplay://no process events for this screen
 		m_gamePlayScr.update();
+		
 		break;
 	case GameState::options://no process events for this screen
 		m_optionsScr.update();
@@ -413,8 +433,9 @@ void Game::subSystemUpdate()
 	case GameState::gameplay://no process events for this screen
 		if ((m_event.type == SDL_JOYBUTTONDOWN || m_event.type == SDL_JOYAXISMOTION))
 		{
-			manager.handleEvents(stick, m_gamePlayScr.getMapCorners());
+			
 		}
+		manager.handleEvents(stick, m_gamePlayScr.getMapCorners());
 		m_gamePlayScr.handleEvents(m_event, m_currentMode, stick);
 		break;
 	default:

@@ -9,12 +9,11 @@ Gameplay::Gameplay() :
 		std::cout << "Failed to connect to server..." << std::endl;
 	}
 	mess = "";
+	m_IPAddr = "";
 }
 
 void Gameplay::init(SDL_Renderer*& t_renderer)
 {
-
-
 	m_map.init(t_renderer,1);
 	m_map.setLevelNum(1);
 	m_pauseMenu.setRules(m_map.getLevelNum());
@@ -41,7 +40,7 @@ void Gameplay::update()
 {
 	m_pauseMenu.update();
 
-	/*if (myClient.isMessage)
+	if (myClient.isMessage)
 	{
 		myClient.isMessage = false;
 		if (m_ghosts.update(myClient.newMessage, playerNum) == playerNum)
@@ -57,7 +56,11 @@ void Gameplay::update()
 	{
 		myClient.SendString(mess);
 	}
-	std::string ip = myClient.GetIPAddr();*/
+
+	if (m_IPAddr == "")
+	{
+		m_IPAddr = myClient.GetIPAddr();
+	}
 }
 
 void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
@@ -84,7 +87,7 @@ void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 		}
 	}
 	m_pauseMenu.render(t_renderer);
-	m_ghosts.render();
+	//m_ghosts.render();
 }
 
 void Gameplay::clean(SDL_Renderer*& t_renderer, SDL_Window* t_window)
@@ -97,9 +100,9 @@ std::vector<std::string> Gameplay::getChanges()
 	return m_pauseMenu.getChanges();
 }
 
-Map Gameplay::getMap()
+Map* Gameplay::getMap()
 {
-	return m_map;
+	return &m_map;
 }
 
 std::vector<Vector2> Gameplay::getMapCorners()
@@ -138,18 +141,18 @@ void Gameplay::fixedUpdate(EntityManager& t_entMan)
 	{
 		for (int i = col; i < maxCol; i++)
 		{
-			Vector2 temp(120, 120);
-			t_entMan.mapCol(m_map.tile[i][j].vec, temp);
 			if (!updateCalled)
 			{
 				t_entMan.update(yVal, xVal, hVal, wVal);
 				updateCalled = true;
 			}
-
+			if (m_map.tile[i][j].getWall())
+			{
+				Vector2 temp(120, 120);
+				t_entMan.mapCol(m_map.tile[i][j].vec, temp);
+			}
 		}
 	}
-
-
 }
 
 bool Gameplay::getSwappedStates()

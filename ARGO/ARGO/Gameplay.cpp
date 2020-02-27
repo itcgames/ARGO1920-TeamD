@@ -17,7 +17,6 @@ Gameplay::Gameplay() :
 
 void Gameplay::init(SDL_Renderer*& t_renderer)
 {
-
 	m_catAchDisplayHurt = SDL_LoadBMP("ASSETS/IMAGES/CactusAchievement.bmp");
 	m_dispCatHurtAch = SDL_CreateTextureFromSurface(t_renderer, m_catAchDisplayHurt);
 	m_catAchDisplayStates = SDL_LoadBMP("ASSETS/IMAGES/StatesAchievement.bmp");
@@ -26,6 +25,7 @@ void Gameplay::init(SDL_Renderer*& t_renderer)
 	m_dispPassLevel = SDL_CreateTextureFromSurface(t_renderer, m_catAchPassLevel);
 	m_map.init(t_renderer,1);
 	m_map.setLevelNum(1);
+
 	m_pauseMenu.setRules(m_map.getLevelNum());
 	std::string temp = "ASSETS/IMAGES/level" + std::to_string(m_map.getLevelNum()) + "back.bmp";
 	m_loadedSurfaceBack = SDL_LoadBMP(temp.c_str());

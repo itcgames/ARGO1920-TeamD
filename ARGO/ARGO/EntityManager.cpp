@@ -342,11 +342,9 @@ void EntityManager::botMove(Map* t_map)
 			{
 				t_map->BFS(Vector2(int(tempE.getComponent<PositionComponent>().getPosition().x/120), int(tempE.getComponent<PositionComponent>().getPosition().y / 120)));
 			}
-			if (tempE.getComponent<BotComponent>().getBotMode())
+			if (tempE.getComponent<BotComponent>().getBotMode() && tempE.getComponent<PositionComponent>().getPosition().x<4000)
 			{
-				Vector2 ans = t_map->getDirection(tempE.getComponent<PositionComponent>().getPosition());
-				
-				
+				Vector2 ans = t_map->getDirection(tempE.getComponent<PositionComponent>().getPosition());					
 				if (ans.x > 0)
 				{
 					tempE.getComponent<BotComponent>().setFakeStickX(1); tempE.getComponent<BotComponent>().setFakeStickY(0);

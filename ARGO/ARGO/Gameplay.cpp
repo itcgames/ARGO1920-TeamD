@@ -56,6 +56,7 @@ void Gameplay::update()
 	{
 		myClient.SendString(mess);
 	}
+
 	if (m_IPAddr == "")
 	{
 		m_IPAddr = myClient.GetIPAddr();
@@ -86,7 +87,7 @@ void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 		}
 	}
 	m_pauseMenu.render(t_renderer);
-	m_ghosts.render();
+	//m_ghosts.render();
 }
 
 void Gameplay::clean(SDL_Renderer*& t_renderer, SDL_Window* t_window)
@@ -99,9 +100,9 @@ std::vector<std::string> Gameplay::getChanges()
 	return m_pauseMenu.getChanges();
 }
 
-Map Gameplay::getMap()
+Map* Gameplay::getMap()
 {
-	return m_map;
+	return &m_map;
 }
 
 std::vector<Vector2> Gameplay::getMapCorners()
@@ -140,14 +141,16 @@ void Gameplay::fixedUpdate(EntityManager& t_entMan)
 	{
 		for (int i = col; i < maxCol; i++)
 		{
-			Vector2 temp(120, 120);
-			t_entMan.mapCol(m_map.tile[i][j].vec, temp);
 			if (!updateCalled)
 			{
 				t_entMan.update(yVal, xVal, hVal, wVal);
 				updateCalled = true;
 			}
-
+			if (m_map.tile[i][j].getWall())
+			{
+				Vector2 temp(120, 120);
+				t_entMan.mapCol(m_map.tile[i][j].vec, temp);
+			}
 		}
 	}
 }

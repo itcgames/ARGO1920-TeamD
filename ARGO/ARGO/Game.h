@@ -61,6 +61,11 @@ private:
 	bool temp = false;
 	bool m_gotAchievment = false;
 
+	float m_timer = 0.0f;
+	float m_frames = 1.0f / 60.0f;
+	
+
+
 	
 	Entity* m_cat;
 	Factory* m_factory = new CharacterFactory();
@@ -79,7 +84,7 @@ private:
 	MovementSystem m_moveSys;
 	std::vector<std::string> answer;
 
-	void initEnts(Entity &t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim, const char* t_audioStr, bool t_botMode);
+	void initEnts(Entity &t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim, bool t_botMode);
 
 	void updateEnts(Entity& t_ent, Vector2 t_pos, Vector2 t_size, std::string t_str, bool t_isAnim, bool t_botMode);
 	std::string lastString;

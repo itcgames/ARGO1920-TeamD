@@ -41,9 +41,27 @@ void PositionComponent::resetStack()
 }
 void PositionComponent::popPreviousPosition()
 {
-	if (!m_prevPositions.empty())
+	if(!m_prevPositions.empty())
 	{
 		
+		m_prevPositions.pop();
+	}
+}
+
+void PositionComponent::popAllPositions()
+{
+	while(!m_prevPositions.empty())
+	{
+
+		m_prevPositions.pop();
+	}
+}
+
+void PositionComponent::completeReset()
+{
+	while(!m_prevPositions.empty())
+	{
+		m_position = m_prevPositions.top();
 		m_prevPositions.pop();
 	}
 }

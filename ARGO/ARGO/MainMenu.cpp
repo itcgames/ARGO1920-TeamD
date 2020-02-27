@@ -83,7 +83,7 @@ void MainMenu::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t
 				gamestate = GameState::help;
 				break;
 			case ButtonState::quit:
-				SDL_Quit();
+				quit = true;
 				break;
 			default:
 				break;
@@ -158,6 +158,11 @@ void MainMenu::loadSprites(SDL_Renderer* renderer)
 		SDL_FreeSurface(loadedSurface);
 
 	}
+}
+
+bool MainMenu::quitState()
+{
+	return quit;
 }
 
 

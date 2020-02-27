@@ -1,6 +1,6 @@
 #include "EntityManager.h"
 
-void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsize)
+void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsize,bool resetAll,bool resetSome)
 {
 
 	Entity& tempG = *entities[0];
@@ -69,7 +69,7 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 					handleBoundary(tempE, t_mapsize.at(0), t_mapsize.at(1));
 
 				}
-				if (SDL_JoystickGetButton(stick.getStick(), 4) != 0)
+				if (resetSome)
 				{
 					int tempEnumX = tempE.getComponent<PositionComponent>().getPreviousPosition().X();
 					int tempEnumY = tempE.getComponent<PositionComponent>().getPreviousPosition().Y();
@@ -89,6 +89,24 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 					{
 						m_moveThisFrame = true;
 					}
+					if (tempE.getComponentString() == "player")
+					{
+						tempE.getComponent<SpriteComponent>().updateState(PlayerStates::IdlePlayer);
+					}
+
+					tempE.getComponent<SpriteComponent>().setPosAndSize(tempE.getComponent<PositionComponent>().getPosition().X(),
+						tempE.getComponent<PositionComponent>().getPosition().Y(),
+						tempE.getComponent<BodyComponent>().getSize().X(),
+						tempE.getComponent<BodyComponent>().getSize().Y());
+				}
+				if (resetAll)
+				{
+					
+					
+						tempE.getComponent<PositionComponent>().completeReset();
+					
+
+					
 					if (tempE.getComponentString() == "player")
 					{
 						tempE.getComponent<SpriteComponent>().updateState(PlayerStates::IdlePlayer);

@@ -49,7 +49,7 @@ Character* CharacterFactory::initEntityFlag(Entity& t_ent, Vector2 t_pos, Vector
 	t_ent.getComponent< SpriteComponent>().setPathAndScreen(t_str, &t_renderer, t_isAnim);
 	t_ent.getComponent< SpriteComponent>().setPosAndSize(t_ent.getComponent<PositionComponent>().getPosition().X(), t_ent.getComponent<PositionComponent>().getPosition().Y(),
 		t_ent.getComponent<BodyComponent>().getSize().X(), t_ent.getComponent<BodyComponent>().getSize().Y());
-	t_ent.getComponent<AudioComponent>().LoadMusicFile(t_audioStr);
+	t_ent.getComponent<AudioComponent>().loadMusicFileLevel(t_audioStr);
 	return m_test;
 }
 
@@ -66,7 +66,7 @@ Character* CharacterFactory::initEntityPlatform(Entity& t_ent, Vector2 t_pos, Ve
 	t_ent.getComponent< SpriteComponent>().setPathAndScreen(t_str, &t_renderer, t_isAnim);
 	t_ent.getComponent< SpriteComponent>().setPosAndSize(t_ent.getComponent<PositionComponent>().getPosition().X(), t_ent.getComponent<PositionComponent>().getPosition().Y(),
 		t_ent.getComponent<BodyComponent>().getSize().X(), t_ent.getComponent<BodyComponent>().getSize().Y());
-	t_ent.getComponent<AudioComponent>().LoadMusicFile(t_audioStr);
+	t_ent.getComponent<AudioComponent>().LoadMusicFileBG(t_audioStr);
 	return m_test;
 }
 
@@ -83,6 +83,6 @@ Character* CharacterFactory::initEntityCactus(Entity& t_ent, Vector2 t_pos, Vect
 	t_ent.getComponent< SpriteComponent>().setPathAndScreen(t_str, &t_renderer, t_isAnim);
 	t_ent.getComponent< SpriteComponent>().setPosAndSize(t_ent.getComponent<PositionComponent>().getPosition().X(), t_ent.getComponent<PositionComponent>().getPosition().Y(),
 	t_ent.getComponent<BodyComponent>().getSize().X(), t_ent.getComponent<BodyComponent>().getSize().Y());
-	t_ent.getComponent<AudioComponent>().LoadMusicFile(t_audioStr);
+	t_ent.getComponent<AudioComponent>().LoadMusicFileDeath(t_audioStr);
 	return m_test;
 }

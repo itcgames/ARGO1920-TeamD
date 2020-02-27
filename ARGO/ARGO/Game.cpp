@@ -61,6 +61,7 @@ Game::~Game()
 
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
+	
 
 	int flags = 0;
 	if (fullscreen)
@@ -85,68 +86,61 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 	Map tempMap = *m_gamePlayScr.getMap();
 	m_currentLevel = tempMap.getLevelNum();
-	/*m_characterVectorArray.push_back(m_factory->initEntityCat(newPlayer, Vector2(tempMap.getCatPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));
-	m_characterVectorArray.push_back(m_factory->initEntityFlag(flag, Vector2(tempMap.getFlagPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));
-	m_characterVectorArray.push_back(m_factory->initEntityRock(rock, Vector2(tempMap.getClockPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));
-	m_characterVectorArray.push_back(m_factory->initEntityPlatform(platform, Vector2(tempMap.getPlatformPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));
-	m_characterVectorArray.push_back(m_factory->initEntityCactus(cactus, Vector2(tempMap.getCactusPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));*/
-	/*initEnts(newPlayer, Vector2(tempMap.getPlayerPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(flag, Vector2(tempMap.getRockPos()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock, Vector2(tempMap.getFlagPos()), Vector2(120, 120), "ASSETS/IMAGES/yarn.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(platform, Vector2(tempMap.getPlatformPos()), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(cactus, Vector2(tempMap.getcactusPos()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, "ASSETS/AUDIO/temp.wav", false);*/
 
+	m_characterVectorArray.push_back(m_factory->initEntityCat(newPlayer, Vector2(tempMap.getCatPos()), Vector2(120, 120), "ASSETS/IMAGES/states.bmp", true, "ASSETS/AUDIO/meow.wav", false, *m_renderer));
+	m_characterVectorArray.push_back(m_factory->initEntityFlag(flag, Vector2(tempMap.getFlagPos()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, "ASSETS/AUDIO/levelPass.mp3", false, *m_renderer));
+	m_characterVectorArray.push_back(m_factory->initEntityCactus(cactus,Vector2(tempMap.getCactusPos()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, "ASSETS/AUDIO/deathNoise.wav", false, *m_renderer));
+	m_characterVectorArray.push_back(m_factory->initEntityPlatform(platform, Vector2(tempMap.getPlatformPos()), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));
+
+	initEnts(rock, Vector2(tempMap.getFlagPos()), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
 	m_currentLevel = 0;// tempMap.getLevelNum();
 
 
 
 
-	initEnts(newPlayer, Vector2(tempMap.getCatPos()), Vector2(120, 120), "ASSETS/IMAGES/dance.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(flag, Vector2(tempMap.getFlagPos()), Vector2(120, 120), "ASSETS/IMAGES/catFood.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock, Vector2(tempMap.getClockPos()), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(platform, Vector2(tempMap.getPlatformPos()), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(cactus, Vector2(tempMap.getCactusPos()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock2, Vector2(7200,480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock3, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock4, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock5, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock6, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock7, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock8, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock9, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock10, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock11, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock12, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock13, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock14, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock15, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock16, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 
-	initEnts(rock17, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock18, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock19, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock20, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock21, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock22, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock23, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock24, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock2, Vector2(7200,480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock3, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock4, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true,  false);
+	initEnts(rock5, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock6, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock7, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock8, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true,  false);
+	initEnts(rock9, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true,  false);
+	initEnts(rock10, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock11, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock12, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock13, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock14, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock15, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock16, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
 
-	initEnts(rock25, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock26, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock27, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock28, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock29, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock30, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock17, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock18, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock19, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock20, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock21, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock22, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock23, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock24, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
 
-	initEnts(rock31, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock25, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock26, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock27, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock28, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock29, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock30, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock31, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
 
-	initEnts(rock32, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock33, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock34, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock32, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock33, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock34, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
 
-	initEnts(rock35, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock36, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock37, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock35, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock36, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock37, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+
+
 
 
 
@@ -157,8 +151,13 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	stick.init();
 
 
-	flag.addComponent<AudioComponent>().playAudio();
-	flag.addComponent<AudioComponent>().closeAudio();
+
+	platform.getComponent<AudioComponent>().playAudioBG();
+	newPlayer.getComponent<AudioComponent>().playAudioCat();
+
+	//flag.getComponent<AudioComponent>().closeAudio();
+
+
 
 	answer = m_gamePlayScr.getChanges();
 
@@ -182,11 +181,11 @@ void Game::handleEvents()
 			{
 				if (m_event.jaxis.value < -20000)
 				{
-					stick.setX(-1);	std::cout << "left" << std::endl;
+					stick.setX(-1);
 				}
 				else if (m_event.jaxis.value > 20000)
 				{
-					stick.setX(1); std::cout << "right" << std::endl;
+					stick.setX(1);
 				}
 				else {
 					stick.setX(0);
@@ -197,11 +196,11 @@ void Game::handleEvents()
 			{
 				if (m_event.jaxis.value < -stick.getDeadZone())
 				{
-					stick.setY(-1); std::cout << "up" << std::endl;
+					stick.setY(-1);
 				}
 				else if (m_event.jaxis.value > stick.getDeadZone())
 				{
-					stick.setY(1); std::cout << "down" << std::endl;
+					stick.setY(1);
 				}
 				else {
 					stick.setY(0);
@@ -210,10 +209,7 @@ void Game::handleEvents()
 		}
 		break;
 	case SDL_JOYBUTTONDOWN:
-		if (SDL_JoystickGetButton(stick.getStick(), 5) != 0)
-		{
-			isRunning = false;
-		}
+
 		break;
 	}
 
@@ -252,16 +248,33 @@ void Game::update()
 	flag.setComponentString(answer[7]);
 	cactus.setComponentString(answer[9]);
 
+	m_timer += m_frames;
+	if (m_timer >= 5)
+	{
+		newPlayer.getComponent<AudioComponent>().playAudioCat();
+		m_timer = 0;
+	}
 
 	if (m_gamePlayScr.getCurrentLevel() -1 > m_optionsScr.getAchievementCount())
 	{
+		
 		m_optionsScr.increaseAchievementCount(m_renderer);
+		flag.getComponent<AudioComponent>().playAudioLevel();
 	}
 	//updateEnts(bot, Vector2(bot.getComponent<PositionComponent>().getPosition().X(), bot.getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/bot.bmp", true);
 	m_optionsScr.setCatHurtAchievement(manager.GetDeathToCactus());
 	m_optionsScr.setCatStateAchievement(m_gamePlayScr.getSwappedStates());
 
+
+	if (manager.GetDeathToCactus())
+	{
+		m_gamePlayScr.setHurtByCactus(manager.GetDeathToCactus());
+		cactus.getComponent< AudioComponent>().playAudioDeath();
+	}
+
+
 	Map tempMap = *m_gamePlayScr.getMap();
+
 	Vector2 savedPos[5];
 	for (int i = 0, j = 0; i < 5; i++, j += 2)
 	{
@@ -278,36 +291,60 @@ void Game::update()
 					lastString = "ASSETS/IMAGES/states2.bmp";
 				}
 				if (m_currentLevel != tempMap.getLevelNum())
+				{
 					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getCatPos());
+					entArr[i]->getComponent<PositionComponent>().popAllPositions();
+				}
+
 			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), lastString, true, false);
 			savedPos[0] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			else if (answer[j] == "flag")
 			{
 				if (m_currentLevel != tempMap.getLevelNum())
+				{
 					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getFlagPos());
-				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/catFood.bmp", true, false);
+					entArr[i]->getComponent<PositionComponent>().popAllPositions();
+				}
+
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, false);
 				savedPos[3] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			else if (answer[j] == "cactus")
 			{
 				if (m_currentLevel != tempMap.getLevelNum())
+				{
+
+
 					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getCactusPos());
+					entArr[i]->getComponent<PositionComponent>().popAllPositions();
+				}
 				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, false);
 				savedPos[4] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			else if (answer[j] == "clock")
 			{
 				if (m_currentLevel != tempMap.getLevelNum())
+				{
+
+
 					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getClockPos());
+					entArr[i]->getComponent<PositionComponent>().popAllPositions();
+				}
 				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true,false);
 				savedPos[1] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			else if (answer[j] == "platform")
 			{
 				if (m_currentLevel != tempMap.getLevelNum())
+				{
+
+
 					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getPlatformPos());
-				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/book.bmp", true, true);
+					entArr[i]->getComponent<PositionComponent>().popAllPositions();
+				}
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/book.bmp", true, false);
+
 				savedPos[2] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			entArr[i]->setComponentString(answer[j+1]);
@@ -388,7 +425,7 @@ void Game::update()
 		break;
 	case GameState::gameplay://no process events for this screen
 		m_gamePlayScr.update();
-		
+
 		break;
 	case GameState::options://no process events for this screen
 		m_optionsScr.update();
@@ -413,9 +450,9 @@ void Game::subSystemUpdate()
 	case GameState::gameplay://no process events for this screen
 		if ((m_event.type == SDL_JOYBUTTONDOWN || m_event.type == SDL_JOYAXISMOTION))
 		{
-			
+
 		}
-		manager.handleEvents(stick, m_gamePlayScr.getMapCorners());
+		manager.handleEvents(stick, m_gamePlayScr.getMapCorners(),m_gamePlayScr.getPauseMenu().getRewindALot(), m_gamePlayScr.getPauseMenu().getRewindALittle());
 		m_gamePlayScr.handleEvents(m_event, m_currentMode, stick);
 		break;
 	default:
@@ -473,7 +510,7 @@ void Game::clean()
 
 
 
-void Game::initEnts(Entity &t_ent,Vector2 t_pos,Vector2 t_size, std::string t_str, bool t_isAnim, const char* t_audioStr,bool t_botMode)
+void Game::initEnts(Entity &t_ent,Vector2 t_pos,Vector2 t_size, std::string t_str, bool t_isAnim,bool t_botMode)
 {
 	t_ent.addComponent<BotComponent>();
 	t_ent.getComponent<BotComponent>().setBotMode(t_botMode);
@@ -486,7 +523,7 @@ void Game::initEnts(Entity &t_ent,Vector2 t_pos,Vector2 t_size, std::string t_st
 	t_ent.getComponent< SpriteComponent>().setPathAndScreen(t_str, m_renderer, t_isAnim);
 	t_ent.getComponent< SpriteComponent>().setPosAndSize(t_ent.getComponent<PositionComponent>().getPosition().X(), t_ent.getComponent<PositionComponent>().getPosition().Y(),
 	t_ent.getComponent<BodyComponent>().getSize().X(), t_ent.getComponent<BodyComponent>().getSize().Y());
-	t_ent.getComponent<AudioComponent>().LoadMusicFile(t_audioStr);
+
 
 }
 

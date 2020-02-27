@@ -21,6 +21,8 @@ public:
 	int getStackSize();
 	void resetStack();
 	void popPreviousPosition();
+	void popAllPositions();
+	void completeReset();
 private:
 	Vector2 m_position;
 	std::stack<Vector2> m_prevPositions;

@@ -38,7 +38,7 @@ private:
 	static int  currBiggestStack;
 	bool firstRun = false;
 public:
-	void handleEvents(Joystick &stick,std::vector<Vector2> t_mapsize);
+	void handleEvents(Joystick &stick,std::vector<Vector2> t_mapsize, bool resetAll, bool resetSome);
 	void update(int yVal, int xVal, int hVal, int wVal);
 	void draw(SDL_Renderer* t_screen);
 	void refresh();

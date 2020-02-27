@@ -2,7 +2,7 @@
 #include <fstream>
 #include <sstream>
 Gameplay::Gameplay() :
-	myClient("149.153.106.148", 1111)//149.153.106.148
+	myClient(/*"149.153.106.148"*/"ahahahahhahah", 1111)//149.153.106.148
 {
 	if (!myClient.Connect()) //If client fails to connect...
 	{
@@ -13,8 +13,15 @@ Gameplay::Gameplay() :
 
 void Gameplay::init(SDL_Renderer*& t_renderer)
 {
-	m_map.init(t_renderer,3);
-	m_map.setLevelNum(3);
+	m_catAchDisplayHurt = SDL_LoadBMP("ASSETS/IMAGES/CactusAchievement.bmp");
+	m_dispCatHurtAch = SDL_CreateTextureFromSurface(t_renderer, m_catAchDisplayHurt);
+	m_catAchDisplayStates = SDL_LoadBMP("ASSETS/IMAGES/StatesAchievement.bmp");
+	m_dispCatStatesAch = SDL_CreateTextureFromSurface(t_renderer, m_catAchDisplayStates);
+	m_catAchPassLevel = SDL_LoadBMP("ASSETS/IMAGES/LevelCompleteGeneric.bmp");
+	m_dispPassLevel = SDL_CreateTextureFromSurface(t_renderer, m_catAchPassLevel);
+
+	m_map.init(t_renderer,1);
+	m_map.setLevelNum(1);
 	m_pauseMenu.setRules(m_map.getLevelNum());
 	std::string temp = "ASSETS/IMAGES/level" + std::to_string(m_map.getLevelNum()) + "back.bmp";
 	m_loadedSurfaceBack = SDL_LoadBMP(temp.c_str());
@@ -72,6 +79,36 @@ void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 	SDL_Rect dstrect = { 120, 120, m_map.getMapCorners().at(1).x-120,  m_map.getMapCorners().at(1).y-120};
 
 	SDL_RenderCopy(t_renderer, m_textureBack, NULL, &dstrect);
+	if (m_hurtByCactus)
+	{
+		if (m_deathAchTimer <= m_achDisplayTime)
+		{
+			SDL_RenderCopy(t_renderer, m_dispCatHurtAch, NULL, &m_promptAchievementPos);
+		}
+		m_deathAchTimer += m_timeTracker;
+	}
+	if (m_stateSwapped)
+	{
+		if (m_statesAchTimer <= m_achDisplayTime)
+		{
+			SDL_RenderCopy(t_renderer, m_dispCatStatesAch, NULL, &m_promptAchievementPos);
+		}
+		m_statesAchTimer += m_timeTracker;
+	}
+	if (m_levelCount == newLevel)
+	{
+		if (m_levelPassTimerAch < m_achDisplayTime)
+		{
+			SDL_RenderCopy(t_renderer, m_dispPassLevel, NULL, &m_promptAchievementPos);
+		}
+		else
+		{
+			m_levelCount++;
+			m_levelPassTimerAch = 0;
+		}
+		m_levelPassTimerAch += m_timeTracker;
+	}
+
 	for (int j=0; j < 15; j++)
 	{
 		for (int i=0; i < 32; i++)
@@ -163,6 +200,11 @@ void Gameplay::updatePositions(std::vector<Vector2> t_pos)
 		+ "Book-" + std::to_string(int(t_pos.at(2).x)) + "," + std::to_string(int(t_pos.at(2).y)) + ","
 		+ "Flag-" + std::to_string(int(t_pos.at(3).x)) + "," + std::to_string(int(t_pos.at(3).y)) + ","
 		+ "Cactus-" + std::to_string(int(t_pos.at(4).x)) + "," + std::to_string(int(t_pos.at(4).y)) + ",";
+}
+
+void Gameplay::setHurtByCactus(bool t_cactus)
+{
+	m_hurtByCactus = t_cactus;
 }
 
 void Gameplay::setupRowCol(int t_row, int t_col, int t_MaxRow,int t_MaxCol)

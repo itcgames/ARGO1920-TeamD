@@ -31,6 +31,7 @@ public:
 	int getCurrentLevel() { return newLevel; }
 	bool getSwappedStates();
 	void updatePositions(std::vector<Vector2> t_pos);
+	void setHurtByCactus(bool t_cactus);
 private:
 	Map m_map;
 	PauseMenu m_pauseMenu;
@@ -46,5 +47,19 @@ private:
 	std::string mess = "";
 	int newLevel = 0;
 	bool m_stateSwapped = false;
+	bool m_hurtByCactus = false;
 	Ghost m_ghosts;
+	float m_timeTracker = 1.f / 60.f;
+	float m_statesAchTimer = 0.f;
+	float m_deathAchTimer = 0.f;
+	float m_levelPassTimerAch = 0.f;
+	int m_achDisplayTime = 2;
+	SDL_Surface* m_catAchDisplayHurt;
+	SDL_Texture* m_dispCatHurtAch;
+	SDL_Surface* m_catAchDisplayStates;
+	SDL_Texture* m_dispCatStatesAch;
+	SDL_Surface* m_catAchPassLevel;
+	SDL_Texture* m_dispPassLevel;
+	SDL_Rect m_promptAchievementPos = { 100,100,800,400 };
+	float m_levelCount = 0.5f;
 };

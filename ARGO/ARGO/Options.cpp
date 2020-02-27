@@ -88,10 +88,11 @@ void Options::loadSprites(SDL_Renderer* renderer)
 		loadedSurface = SDL_LoadBMP("ASSETS/IMAGES/Back.bmp");
 		m_backBtnTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
 		m_catAchievementSurface = SDL_LoadBMP("ASSETS/IMAGES/AchievmentCat.bmp");
-		m_catAcvievementHurt = SDL_LoadBMP("ASSETS/IMAGES/AchievmentCatCactus.bmp");
-		m_catHurtTexture = SDL_CreateTextureFromSurface(renderer, m_catAcvievementHurt);
+		m_catAchievementHurt = SDL_LoadBMP("ASSETS/IMAGES/AchievmentCatCactus.bmp");
+		m_catHurtTexture = SDL_CreateTextureFromSurface(renderer, m_catAchievementHurt);
 		m_catAchievementStates = SDL_LoadBMP("ASSETS/IMAGES/AchievmentCatSwapStates.bmp");
 		m_catStateTexture = SDL_CreateTextureFromSurface(renderer, m_catAchievementStates);
+		
 		SDL_FreeSurface(loadedSurface);
 	}
 }

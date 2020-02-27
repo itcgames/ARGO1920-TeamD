@@ -107,7 +107,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	initEnts(rock, Vector2(tempMap.getClockPos()), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(platform, Vector2(tempMap.getPlatformPos()), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(cactus, Vector2(tempMap.getCactusPos()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, "ASSETS/AUDIO/temp.wav", false);
-	initEnts(rock2, Vector2(7200,480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
+	initEnts(rock2, Vector2(7200,480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(rock3, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(rock4, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
 	initEnts(rock5, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, "ASSETS/AUDIO/temp.wav", false);
@@ -211,10 +211,7 @@ void Game::handleEvents()
 		}
 		break;
 	case SDL_JOYBUTTONDOWN:
-		if (SDL_JoystickGetButton(stick.getStick(), 5) != 0)
-		{
-			isRunning = false;
-		}
+		
 		break;
 	}
 
@@ -279,35 +276,58 @@ void Game::update()
 					lastString = "ASSETS/IMAGES/states2.bmp";
 				}
 				if (m_currentLevel != tempMap.getLevelNum())
+				{
 					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getCatPos());
+					entArr[i]->getComponent<PositionComponent>().popAllPositions();
+				}
+					
 			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), lastString, true, false);
 			savedPos[0] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			else if (answer[j] == "flag")
 			{
 				if (m_currentLevel != tempMap.getLevelNum())
+				{
 					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getFlagPos());
+					entArr[i]->getComponent<PositionComponent>().popAllPositions();
+				}
+					
 				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, false);
 				savedPos[3] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			else if (answer[j] == "cactus")
 			{
 				if (m_currentLevel != tempMap.getLevelNum())
+				{
+
+
 					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getCactusPos());
+					entArr[i]->getComponent<PositionComponent>().popAllPositions();
+				}
 				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, false);
 				savedPos[4] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			else if (answer[j] == "clock")
 			{
 				if (m_currentLevel != tempMap.getLevelNum())
+				{
+
+
 					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getClockPos());
+					entArr[i]->getComponent<PositionComponent>().popAllPositions();
+				}
 				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true,false);
 				savedPos[1] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			else if (answer[j] == "platform")
 			{
 				if (m_currentLevel != tempMap.getLevelNum())
+				{
+
+
 					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getPlatformPos());
+					entArr[i]->getComponent<PositionComponent>().popAllPositions();
+				}
 				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/book.bmp", true, false);
 				savedPos[2] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}

@@ -104,6 +104,24 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 						tempE.getComponent<BodyComponent>().getSize().X(),
 						tempE.getComponent<BodyComponent>().getSize().Y());
 				}
+				if (SDL_JoystickGetButton(stick.getStick(), 5) != 0)
+				{
+					
+					
+						tempE.getComponent<PositionComponent>().completeReset();
+					
+
+					
+					if (tempE.getComponentString() == "player")
+					{
+						tempE.getComponent<SpriteComponent>().updateState(PlayerStates::IdlePlayer);
+					}
+
+					tempE.getComponent<SpriteComponent>().setPosAndSize(tempE.getComponent<PositionComponent>().getPosition().X(),
+						tempE.getComponent<PositionComponent>().getPosition().Y(),
+						tempE.getComponent<BodyComponent>().getSize().X(),
+						tempE.getComponent<BodyComponent>().getSize().Y());
+				}
 				if (tempE.getComponentString() == "stop" || tempE.getComponentString() == "move")
 				{
 

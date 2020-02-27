@@ -105,7 +105,7 @@ void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 		}
 		m_statesAchTimer += m_timeTracker;
 	}
-		std::cout << m_levelCount << "versus" << newLevel << std::endl;
+
 	if (m_levelCount == newLevel)
 	{
 		if (m_levelPassTimerAch < m_achDisplayTime)

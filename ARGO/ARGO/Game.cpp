@@ -260,6 +260,7 @@ void Game::update()
 		
 		m_optionsScr.increaseAchievementCount(m_renderer);
 		flag.getComponent<AudioComponent>().playAudioLevel();
+		m_gamePlayScr.addToLevelCount();
 	}
 	//updateEnts(bot, Vector2(bot.getComponent<PositionComponent>().getPosition().X(), bot.getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/bot.bmp", true);
 	m_optionsScr.setCatHurtAchievement(manager.GetDeathToCactus());

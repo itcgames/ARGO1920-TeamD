@@ -67,6 +67,7 @@ void PauseMenu::input(SDL_Event& t_event, Joystick t_stick)
 						if (!boxSelected[box])
 						{
 							boxSelected[box] = true;
+							m_swappedStates = true;
 							forAllTexture = m_textureObj;
 							for (int box2 = 0; box2 < NUM_OF_BOXES; box2++)
 							{
@@ -92,7 +93,6 @@ void PauseMenu::input(SDL_Event& t_event, Joystick t_stick)
 									srcrect[box].y = tempCut;
 									forAllTexture = m_textureObj;
 									boxSelected[box2] = false;
-									m_swappedStates = true;
 									m_rulesChanged = true;
 								}
 							}

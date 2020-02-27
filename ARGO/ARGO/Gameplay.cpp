@@ -89,6 +89,19 @@ void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 	SDL_Rect dstrect = { 120, 120, m_map.getMapCorners().at(1).x-120,  m_map.getMapCorners().at(1).y-120};
 
 	SDL_RenderCopy(t_renderer, m_textureBack, NULL, &dstrect);
+
+
+	for (int j=0; j < 15; j++)
+	{
+		for (int i=0; i < 32; i++)
+		{
+			m_map.render(t_renderer, i, j);
+			Vector2 temp(120, 120);
+
+		}
+	}
+	m_pauseMenu.render(t_renderer);
+	m_ghosts.render(playerNum);
 	if (m_hurtByCactus)
 	{
 		if (m_deathAchTimer <= m_achDisplayTime)
@@ -105,32 +118,20 @@ void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 		}
 		m_statesAchTimer += m_timeTracker;
 	}
-
-	if (m_levelCount == newLevel)
+	if (m_passLevel)
 	{
-		if (m_levelPassTimerAch < m_achDisplayTime)
+		if (m_levelPassTimerAch <= m_achDisplayTime)
 		{
 			SDL_RenderCopy(t_renderer, m_dispPassLevel, NULL, &m_promptAchievementPos);
 		}
 		else
 		{
+			m_passLevel = false;
 			m_levelCount++;
 			m_levelPassTimerAch = 0;
 		}
 		m_levelPassTimerAch += m_timeTracker;
 	}
-
-	for (int j=0; j < 15; j++)
-	{
-		for (int i=0; i < 32; i++)
-		{
-			m_map.render(t_renderer, i, j);
-			Vector2 temp(120, 120);
-
-		}
-	}
-	m_pauseMenu.render(t_renderer);
-	m_ghosts.render(playerNum);
 }
 
 void Gameplay::clean(SDL_Renderer*& t_renderer, SDL_Window* t_window)

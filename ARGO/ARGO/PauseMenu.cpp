@@ -20,12 +20,14 @@ void PauseMenu::init()
 	loadedSurfaceAdjecLock = SDL_LoadBMP("ASSETS/IMAGES/adjectivesLocked.bmp");
 	loadedSurfaceSelect = SDL_LoadBMP("ASSETS/IMAGES/selector.bmp");
 	loadedSurfaceSelect2 = SDL_LoadBMP("ASSETS/IMAGES/selected.bmp");
-
-	selectBox[0] = Vector2(1200, 1900);
+	loadedSurfaceNotRewind= SDL_LoadBMP("ASSETS/IMAGES/pauseUnselect.bmp");
+	loadedSurfaceRewind= SDL_LoadBMP("ASSETS/IMAGES/pauseSelect.bmp");
+	selectBox[0] = Vector2(1200, 1860);
 	selectBox[1] = Vector2(selectBox[0].X()+240, 1900);
 	selectBox[2] = Vector2(selectBox[0].X() +480,selectBox[0].Y());
 	selectBox[3] = Vector2(selectBox[0].X() + 720,selectBox[1].Y());
 	selectBox[4] = Vector2(selectBox[0].X() +960,selectBox[0].Y());
+	rewindBox = Vector2(selectBox[0].X(), selectBox[0].Y() + 150);
 	/*selectBox[5] = Vector2(1200, 1900);
 	selectBox[6] = Vector2(selectBox[0].X() + 240, 1900);
 	selectBox[7] = Vector2(selectBox[0].X() + 480, selectBox[0].Y());
@@ -42,7 +44,7 @@ void PauseMenu::init()
 		boxRectSliced[box] = { int(selectBox[box].X()), int(selectBox[box].Y()), srcrect[box].w, 120 };
 	}
 	dstrectBack = { 0, 1800, 3840, 360 };
-	
+	rect = { int(rewindBox.X()+480),int(rewindBox.Y()),120,120 };
 	currentBox = 0;
 	m_slectOffset = Vector2(5, 5);
 	dstrectSelect = { int(selectBox[currentBox].X() - m_slectOffset.x), int(selectBox[currentBox].Y() - m_slectOffset.y), 125, 170 };
@@ -57,9 +59,9 @@ void PauseMenu::input(SDL_Event& t_event, Joystick t_stick)
 		{
 			for (int box = 0; box < NUM_OF_BOXES; box++)
 			{
-				if (box < m_lockValue)
+				if (box <= m_lockValue)
 				{
-
+					
 					if (dstrectSelect.x + m_slectOffset.x == selectBox[box].X() && dstrectSelect.y + m_slectOffset.y == selectBox[box].Y())
 					{
 						if (!boxSelected[box])
@@ -95,12 +97,19 @@ void PauseMenu::input(SDL_Event& t_event, Joystick t_stick)
 								}
 							}
 						}
+						if (box == m_lockValue)
+						{
+							forAllTexture = m_textureRewind;
+						}
 						timer = 0;
 					}
 				}
 			}
 		}
+		resetALittle = false;
+		ResetAll = false;
 		
+		forAllTexture = m_textureNotRewind;
 		if (SDL_JoystickGetHat(t_stick.getStick(), 0) == SDL_HAT_RIGHT)
 		{
 			currentBox += 2;
@@ -135,6 +144,17 @@ void PauseMenu::input(SDL_Event& t_event, Joystick t_stick)
 				currentBox += m_lockValue;
 			}
 		}
+		else if (SDL_JoystickGetHat(t_stick.getStick(), 0) == SDL_HAT_UP )
+		{
+			ResetAll = true;
+			forAllTexture = m_textureRewind;
+		}
+		else if(SDL_JoystickGetHat(t_stick.getStick(), 0) == SDL_HAT_DOWN)
+		{
+			resetALittle = true;
+			forAllTexture = m_textureRewind;
+		}
+		
 		dstrectSelect = { int(selectBox[currentBox].X() - m_slectOffset.x), int(selectBox[currentBox].Y() - m_slectOffset.y), dstrectSelect.w, dstrectSelect.h };
 		/*if (!anyActive())
 		{
@@ -150,6 +170,7 @@ void PauseMenu::update()
 	{
 		timer++;
 	}
+	rewindBox=selectBox[m_lockValue];
 }
 
 void PauseMenu::render(SDL_Renderer*& t_renderer)
@@ -173,10 +194,24 @@ void PauseMenu::render(SDL_Renderer*& t_renderer)
 	{
 		m_textureAdjecLock = SDL_CreateTextureFromSurface(t_renderer, loadedSurfaceAdjecLock);
 	}
+	if (m_textureRewind == NULL)
+	{
+		m_textureRewind = SDL_CreateTextureFromSurface(t_renderer, loadedSurfaceRewind);
+	}
+	if (resetALittle||ResetAll)
+	{
+		m_textureRewind = SDL_CreateTextureFromSurface(t_renderer, loadedSurfaceRewind);
+		
 
+	}
+	else
+	{
+		m_textureRewind = SDL_CreateTextureFromSurface(t_renderer, loadedSurfaceNotRewind);
+	}
 	
 	for (int box = NUM_OF_BOXES-1; box >= 0; box--)
 	{
+		
 		if (boxSelected[box] )
 		{
 			forAllTexture = m_textureObj;
@@ -185,10 +220,12 @@ void PauseMenu::render(SDL_Renderer*& t_renderer)
 		{
 			forAllTexture = m_textureAdjecUnlock;
 		}
-		if(box >= m_lockValue)
+		if(box > m_lockValue)
 		{
 			forAllTexture = NULL;
 		}
+		
+		
 		
 		SDL_RenderCopy(t_renderer, forAllTexture, &srcrect[box], &boxRectSliced[box]);
 	}
@@ -205,6 +242,9 @@ void PauseMenu::render(SDL_Renderer*& t_renderer)
 	{
 		SDL_RenderCopy(t_renderer, m_textureSelect2, NULL, &dstrectSelect2);	
 	}
+	
+	
+	SDL_RenderCopy(t_renderer, m_textureRewind, NULL, &rect);
 }
 
 bool PauseMenu::anyActive()

@@ -436,7 +436,7 @@ void Game::subSystemUpdate()
 		{
 
 		}
-		manager.handleEvents(stick, m_gamePlayScr.getMapCorners());
+		manager.handleEvents(stick, m_gamePlayScr.getMapCorners(),m_gamePlayScr.getPauseMenu().getRewindALot(), m_gamePlayScr.getPauseMenu().getRewindALittle());
 		m_gamePlayScr.handleEvents(m_event, m_currentMode, stick);
 		break;
 	default:

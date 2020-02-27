@@ -32,6 +32,7 @@ public:
 	int getCurrentLevel() { return newLevel; }
 	bool getSwappedStates();
 	void updatePositions(std::vector<Vector2> t_pos);
+	PauseMenu getPauseMenu(){ return m_pauseMenu; };
 private:
 	Map m_map;
 	PauseMenu m_pauseMenu;

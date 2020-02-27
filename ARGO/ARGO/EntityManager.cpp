@@ -1,6 +1,6 @@
 #include "EntityManager.h"
 
-void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsize)
+void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsize,bool resetAll,bool resetSome)
 {
 
 	Entity& tempG = *entities[0];
@@ -69,7 +69,7 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 					handleBoundary(tempE, t_mapsize.at(0), t_mapsize.at(1));
 
 				}
-				if (SDL_JoystickGetButton(stick.getStick(), 4) != 0)
+				if (resetSome)
 				{
 					int tempEnumX = tempE.getComponent<PositionComponent>().getPreviousPosition().X();
 					int tempEnumY = tempE.getComponent<PositionComponent>().getPreviousPosition().Y();
@@ -99,7 +99,7 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 						tempE.getComponent<BodyComponent>().getSize().X(),
 						tempE.getComponent<BodyComponent>().getSize().Y());
 				}
-				if (SDL_JoystickGetButton(stick.getStick(), 5) != 0)
+				if (resetAll)
 				{
 					
 					

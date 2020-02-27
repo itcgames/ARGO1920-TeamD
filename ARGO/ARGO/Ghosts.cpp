@@ -19,7 +19,7 @@ void Ghost::setUp(SDL_Renderer* t_screen)
 	m_texture = SDL_CreateTextureFromSurface(m_screen, m_loadedSurface);
 }
 
-int Ghost::update(std::string t_pos, int t_mainPlayerNum)
+int Ghost::posUpdate(std::string t_pos, int t_mainPlayerNum)
 {
 	/*mess = std::to_string(playerNum) + ":Cat-" + std::to_string(int(m_map.getCatPos().x)) + "," + std::to_string(int(m_map.getCatPos().y)) + ","
 		+ "Clock-" + std::to_string(int(m_map.getClockPos().x)) + "," + std::to_string(int(m_map.getClockPos().y)) + ","
@@ -27,40 +27,85 @@ int Ghost::update(std::string t_pos, int t_mainPlayerNum)
 		+ "Flag-" + std::to_string(int(m_map.getPlatformPos().x)) + "," + std::to_string(int(m_map.getPlatformPos().y)) + ","
 		+ "Cactus-" + std::to_string(int(m_map.getCactusPos().x)) + "," + std::to_string(int(m_map.getCactusPos().y)) + ",";
 		*/
+	//reset();
 	std::istringstream input;
 	input.str(t_pos);
 	std::string message = "";
 	std::getline(input, message, ':');
 	int playerNum = std::stoi(message);
-	int index;
-	if (playerNum == 1 || (t_mainPlayerNum == 1 && playerNum == 2))
+	int index = 0;
+	if (playerNum*5 > dstrect2.size())
 	{
-		index = 0;
+		while (std::getline(input, message, '-'))
+		{
+			SDL_Rect temp = { 0, -120, 120, 120 };
+			std::getline(input, message, ',');
+			temp.x = std::stoi(message);
+			std::getline(input, message, ',');
+			temp.y = std::stoi(message);
+			dstrect2.push_back(temp);	
+		}
+		ghostsSignal.push_back(int(100));
 	}
 	else
 	{
-		index = 5;
+		while (std::getline(input, message, '-'))
+		{
+			SDL_Rect temp = { 0, -120, 120, 120 };
+			std::getline(input, message, ',');
+			temp.x = std::stoi(message);
+			std::getline(input, message, ',');
+			temp.y = std::stoi(message);
+			dstrect2.at(((playerNum-1)*5)+index) = temp;
+			index++;
+		}
+		ghostsSignal.at(playerNum - 1) = 100;
 	}
-	while (std::getline(input, message, '-'))
-	{
-		std::getline(input, message, ',');
-		dstrect[index].x = std::stoi(message);
-		std::getline(input, message, ',');
-		dstrect[index].y = std::stoi(message);
-		index++;
-	}
-	index -= 5;
-	for (int i = index; i < index + 5; i++)
-	{
-		srcrect[i].x = (playerNum-1) * 120;
-	}
-	return playerNum;
+	return playerNum; 
 }
 
-void Ghost::render()
+void Ghost::update(int* t_mainPlayerNum)
+{
+	int index = 0;
+	for (auto currentGhostSignal : ghostsSignal)
+	{
+		ghostsSignal.at(index) -= 1;
+		if(currentGhostSignal <=0)
+		{
+			reset(index+1, t_mainPlayerNum);
+			ghostsSignal.erase(ghostsSignal.begin() + index);
+			index--;
+		}
+		index++;
+	}
+	
+}
+
+void Ghost::render(int t_currentPlayerNum)
 {
 	for (int i = 0; i < MAX_GHOSTS; i++)
 	{
-		SDL_RenderCopy(m_screen, m_texture, &srcrect[i], &dstrect[i]);
+		//SDL_RenderCopy(m_screen, m_texture, &srcrect[i], &dstrect[i]);
+		//dstrect[i].y = -120;
+	}
+	int index = 0;
+	for (auto currentDstrect : dstrect2)
+	{
+		if (index/5!= t_currentPlayerNum-1)
+		{
+			SDL_RenderCopy(m_screen, m_texture, &srcrect[index % 5], &currentDstrect);
+		}
+		index++;
+	}
+}
+
+void Ghost::reset(int t_leftPlayer, int* t_mainPlayerNum)
+{
+	std::cout << "delete";
+	int playerStart = (t_leftPlayer-1) * 5;
+	dstrect2.erase(dstrect2.begin()+ playerStart, dstrect2.begin() + playerStart+5);
+	if (*t_mainPlayerNum > t_leftPlayer)
+	{
+		(*t_mainPlayerNum)--;
 	}
 }

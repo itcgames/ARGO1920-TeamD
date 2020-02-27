@@ -69,7 +69,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	}
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
-		m_window = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
+		m_window = SDL_CreateWindow(title, xpos, ypos, width/3, height/3, flags);
 
 		m_renderer = SDL_CreateRenderer(m_window, -1, 0);
 		if (m_renderer)
@@ -182,11 +182,11 @@ void Game::handleEvents()
 			{
 				if (m_event.jaxis.value < -20000)
 				{
-					stick.setX(-1);	std::cout << "left" << std::endl;
+					stick.setX(-1);
 				}
 				else if (m_event.jaxis.value > 20000)
 				{
-					stick.setX(1); std::cout << "right" << std::endl;
+					stick.setX(1);
 				}
 				else {
 					stick.setX(0);
@@ -197,11 +197,11 @@ void Game::handleEvents()
 			{
 				if (m_event.jaxis.value < -stick.getDeadZone())
 				{
-					stick.setY(-1); std::cout << "up" << std::endl;
+					stick.setY(-1); 
 				}
 				else if (m_event.jaxis.value > stick.getDeadZone())
 				{
-					stick.setY(1); std::cout << "down" << std::endl;
+					stick.setY(1);
 				}
 				else {
 					stick.setY(0);

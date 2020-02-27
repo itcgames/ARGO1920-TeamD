@@ -39,11 +39,13 @@ void Gameplay::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t
 void Gameplay::update()
 {
 	m_pauseMenu.update();
-
+	m_ghosts.update(&playerNum);
+	m_ghosts.posUpdate(mess, playerNum);
+	
 	if (myClient.isMessage)
 	{
 		myClient.isMessage = false;
-		if (m_ghosts.update(myClient.newMessage, playerNum) == playerNum)
+		if (m_ghosts.posUpdate(myClient.newMessage, playerNum) == playerNum)
 		{
 			playerNum++;
 		}
@@ -61,6 +63,8 @@ void Gameplay::update()
 	{
 		m_IPAddr = myClient.GetIPAddr();
 	}
+	
+	std::cout << playerNum << std::endl;
 }
 
 void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
@@ -87,7 +91,7 @@ void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 		}
 	}
 	m_pauseMenu.render(t_renderer);
-	//m_ghosts.render();
+	m_ghosts.render(playerNum);
 }
 
 void Gameplay::clean(SDL_Renderer*& t_renderer, SDL_Window* t_window)

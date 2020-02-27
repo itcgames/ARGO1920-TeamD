@@ -40,7 +40,7 @@ private:
 	SDL_Rect dstrectBack;
 	SDL_Rect dstrectSelect;
 	SDL_Rect dstrectSelect2;
-
+	SDL_Texture* forAllTexture;
 	static const int NUM_OF_BOXES = 10;
 	SDL_Rect boxRectSliced[NUM_OF_BOXES];
 	Vector2 selectBox[NUM_OF_BOXES];

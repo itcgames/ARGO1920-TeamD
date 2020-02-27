@@ -101,7 +101,6 @@ void Ghost::render(int t_currentPlayerNum)
 
 void Ghost::reset(int t_leftPlayer, int* t_mainPlayerNum)
 {
-	std::cout << "delete";
 	int playerStart = (t_leftPlayer-1) * 5;
 	dstrect2.erase(dstrect2.begin()+ playerStart, dstrect2.begin() + playerStart+5);
 	if (*t_mainPlayerNum > t_leftPlayer)

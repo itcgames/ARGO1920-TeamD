@@ -69,7 +69,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	}
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
-		m_window = SDL_CreateWindow(title, xpos, ypos, width/3, height/3, flags);
+		m_window = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
 
 		m_renderer = SDL_CreateRenderer(m_window, -1, 0);
 		if (m_renderer)

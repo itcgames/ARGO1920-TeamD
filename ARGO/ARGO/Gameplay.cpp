@@ -2,7 +2,7 @@
 #include <fstream>
 #include <sstream>
 Gameplay::Gameplay() :
-	myClient("149.153.106.148", 1111)//149.153.106.148
+	myClient("placeholder", 1111)//149.153.106.148
 {
 	if (!myClient.Connect()) //If client fails to connect...
 	{
@@ -63,8 +63,6 @@ void Gameplay::update()
 	{
 		m_IPAddr = myClient.GetIPAddr();
 	}
-	
-	std::cout << playerNum << std::endl;
 }
 
 void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)

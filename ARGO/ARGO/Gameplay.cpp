@@ -2,7 +2,8 @@
 #include <fstream>
 #include <sstream>
 Gameplay::Gameplay() :
-	myClient("placeholder", 1111)//149.153.106.148
+
+	myClient("Q", 1111)//149.153.106.148
 {
 	if (!myClient.Connect()) //If client fails to connect...
 	{
@@ -41,7 +42,7 @@ void Gameplay::update()
 	m_pauseMenu.update();
 	m_ghosts.update(&playerNum);
 	m_ghosts.posUpdate(mess, playerNum);
-	
+
 	if (myClient.isMessage)
 	{
 		myClient.isMessage = false;

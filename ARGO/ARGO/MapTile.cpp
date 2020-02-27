@@ -98,7 +98,8 @@ Vector2 mapTile::getEnd()
 {
 	return m_lineEnd;
 }
-
+
+
 void mapTile::setCentre(Vector2 t_centre)
 {
 	m_center = t_centre;

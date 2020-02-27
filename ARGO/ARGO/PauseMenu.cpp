@@ -110,6 +110,14 @@ void PauseMenu::input(SDL_Event& t_event, Joystick t_stick)
 		ResetAll = false;
 		
 		forAllTexture = m_textureNotRewind;
+		if (currentBox >= m_lockValue)
+		{
+			currentBox = 0;
+			for (int box = 0; box < NUM_OF_BOXES; box++)
+			{
+				boxSelected[box] = false;
+			}
+		}
 		if (SDL_JoystickGetHat(t_stick.getStick(), 0) == SDL_HAT_RIGHT)
 		{
 			currentBox += 2;
@@ -220,7 +228,7 @@ void PauseMenu::render(SDL_Renderer*& t_renderer)
 		{
 			forAllTexture = m_textureAdjecUnlock;
 		}
-		if(box > m_lockValue)
+		if(box >= m_lockValue)
 		{
 			forAllTexture = NULL;
 		}

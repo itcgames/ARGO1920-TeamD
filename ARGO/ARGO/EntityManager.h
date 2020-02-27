@@ -38,7 +38,7 @@ private:
 	static int  currBiggestStack;
 	bool firstRun = false;
 public:
-	void handleEvents(Joystick &stick,std::vector<Vector2> t_mapsize, bool resetAll, bool resetSome);
+	void handleEvents(Joystick &stick,std::vector<Vector2> t_mapsize);
 	void update(int yVal, int xVal, int hVal, int wVal);
 	void draw(SDL_Renderer* t_screen);
 	void refresh();
@@ -55,7 +55,8 @@ public:
 	void botMove(Map* t_map);
 	//Entity getEnt(int t_arrPos);
 
-
+	void popAllPositions();
+	void reset(bool resetAll, bool resetSome);
 	
 	CollisionSystem m_colSys;
 	Vector2 getPlayerPos() {

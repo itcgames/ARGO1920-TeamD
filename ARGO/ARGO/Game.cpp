@@ -337,6 +337,7 @@ void Game::update()
 
 		if ((m_gamePlayScr.getMap()->getLevelNum() == 3) && !initialiseOnce)
 		{
+			manager.popAllPositions();
 			updateEnts(rock2, Vector2(120, 1440), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
 			updateEnts(rock3, Vector2(240, 1440), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
 			updateEnts(rock4, Vector2(480, 1440), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
@@ -409,7 +410,7 @@ void Game::update()
 		break;
 	case GameState::gameplay://no process events for this screen
 		m_gamePlayScr.update();
-
+		manager.reset(m_gamePlayScr.getPauseMenu().getRewindALot(), m_gamePlayScr.getPauseMenu().getRewindALittle());
 		break;
 	case GameState::options://no process events for this screen
 		m_optionsScr.update();
@@ -436,7 +437,7 @@ void Game::subSystemUpdate()
 		{
 
 		}
-		manager.handleEvents(stick, m_gamePlayScr.getMapCorners(),m_gamePlayScr.getPauseMenu().getRewindALot(), m_gamePlayScr.getPauseMenu().getRewindALittle());
+		manager.handleEvents(stick, m_gamePlayScr.getMapCorners());
 		m_gamePlayScr.handleEvents(m_event, m_currentMode, stick);
 		break;
 	default:

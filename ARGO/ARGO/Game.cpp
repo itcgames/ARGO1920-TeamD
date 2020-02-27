@@ -307,7 +307,7 @@ void Game::update()
 			{
 				if (m_currentLevel != tempMap.getLevelNum())
 					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getPlatformPos());
-				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/book.bmp", true, false);
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/book.bmp", true, true);
 				savedPos[2] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			entArr[i]->setComponentString(answer[j+1]);
@@ -365,7 +365,7 @@ void Game::update()
 	}
 
 	m_currentLevel = tempMap.getLevelNum();
-	manager.botMove(m_gamePlayScr.getMap());
+	manager.botMove(m_gamePlayScr.getMap(), m_currentLevel);
 	std::vector<Vector2> passIn;
 	for (int i = 0;i<5;i++)
 	{

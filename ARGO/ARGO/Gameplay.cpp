@@ -14,8 +14,8 @@ Gameplay::Gameplay() :
 
 void Gameplay::init(SDL_Renderer*& t_renderer)
 {
-	m_map.init(t_renderer,3);
-	m_map.setLevelNum(3);
+	m_map.init(t_renderer,4);
+	m_map.setLevelNum(4);
 	m_pauseMenu.setRules(m_map.getLevelNum());
 	std::string temp = "ASSETS/IMAGES/level" + std::to_string(m_map.getLevelNum()) + "back.bmp";
 	m_loadedSurfaceBack = SDL_LoadBMP(temp.c_str());

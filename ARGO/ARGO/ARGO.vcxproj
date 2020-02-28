@@ -116,6 +116,8 @@
   <ItemGroup>
     <Text Include="ASSETS\MAP\Level1.txt" />
     <Text Include="ASSETS\MAP\Level2.txt" />
+    <Text Include="ASSETS\MAP\Level4.txt" />
+    <Text Include="ASSETS\MAP\Level5.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -340,5 +340,11 @@
     <Text Include="ASSETS\MAP\Level2.txt">
       <Filter>Levels</Filter>
     </Text>
+    <Text Include="ASSETS\MAP\Level4.txt">
+      <Filter>Levels</Filter>
+    </Text>
+    <Text Include="ASSETS\MAP\Level5.txt">
+      <Filter>Levels</Filter>
+    </Text>
   </ItemGroup>
 </Project>

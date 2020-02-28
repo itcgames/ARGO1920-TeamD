@@ -52,10 +52,10 @@ void Map::init(SDL_Renderer*& t_renderer, int t_levelNum)
 
 				tile[i][j].setWall(true);
 			}
-			
+
 			//19, 16, 17, 18, 20,
 			//16=cactus 17=flag 18=platform 19=cat 20 = clock
-			//cactus 16, cat 19, flag 17, clock 20, shelf 18 
+			//cactus 16, cat 19, flag 17, clock 20, shelf 18
 			else if (mapArray[arrayIndex] == 16)
 			{
 				tile[i][j].setPos(Vector2(0 + (60 * i), 0 + (60 * j)));
@@ -96,7 +96,9 @@ void Map::init(SDL_Renderer*& t_renderer, int t_levelNum)
 
 void Map::drawTile(SDL_Renderer*& t_renderer, int i, int j)
 {
-	tile[i][j].m_tile.render();
+	Vector2 tilePos = Vector2(0 + (120 * i), 0 + (120 * j));
+	if(tilePos != cactusPos && tilePos != flagPos && tilePos != platformPos && tilePos != catPos && tilePos != clockPos)
+		tile[i][j].m_tile.render();
 	if (drawVectors)
 	{
 		tile[i][j].renderVector(t_renderer);

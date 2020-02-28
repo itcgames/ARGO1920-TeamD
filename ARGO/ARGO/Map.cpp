@@ -59,7 +59,7 @@ void Map::init(SDL_Renderer*& t_renderer, int t_levelNum)
 			else if (mapArray[arrayIndex] == 16)
 			{
 				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
-				cactusPos = Vector2(0 + (120 * i), 0 + (120 * j));
+				cactusPos = Vector2(0 + (120 * i), 0 + (120 * j)); 
 			}
 			else if (mapArray[arrayIndex] == 17)
 			{
@@ -96,7 +96,9 @@ void Map::init(SDL_Renderer*& t_renderer, int t_levelNum)
 
 void Map::drawTile(SDL_Renderer*& t_renderer, int i, int j)
 {
-	tile[i][j].m_tile.render();
+	Vector2 tilePos = Vector2(0 + (120 * i), 0 + (120 * j));
+	if(tilePos != cactusPos && tilePos != flagPos && tilePos != platformPos && tilePos != catPos && tilePos != clockPos)
+		tile[i][j].m_tile.render();
 	if (drawVectors)
 	{
 		tile[i][j].renderVector(t_renderer);

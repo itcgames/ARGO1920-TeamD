@@ -21,10 +21,11 @@ public:
 	void setUIRules(int t_index,std::string t_type);
 	void otherUIRules(std::string t_rules);
 	bool getStatesSwapped() { return m_swappedStates; }
-
+	
 	static const int MAX_TIME = 30;
 	bool getRewindALittle() { return resetALittle; };
 	bool getRewindALot() { return ResetAll; };
+	void botSwitch();
 private:
 	SDL_Surface* loadedSurfaceBack;
 	SDL_Surface* loadedSurfaceObj;

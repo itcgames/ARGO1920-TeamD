@@ -2,11 +2,11 @@
 
 MainMenu::MainMenu()
 {
-	m_backgroundRect = { 0,0, 3840, 2160 };
-	m_playRect = { 1670,800,100 * 5,38 * 5 };
-	m_optionsRect = { 1670,1100,100 * 5,38 * 5 };
-	m_helpRect = { 1670,1400,100 * 5,38 * 5 };
-	m_quitRect = { 1670,1700,100 * 5,38 * 5 };
+	m_backgroundRect = { 0,0, 3840/2, 2160/2 };
+	m_playRect = { 1670/2,800/2,(100 * 5)/2,(38 * 5)/2 };
+	m_optionsRect = { 1670/2,1100/2,(100 * 5)/2,(38 * 5)/2 };
+	m_helpRect = { 1670/2,1400/2,(100 * 5)/2,(38 * 5)/2 };
+	m_quitRect = { 1670/2,1700/2,(100 * 5)/2,(38 * 5)/2 };
 
 	m_selectorRect = m_playRect;
 	//m_selectorRect = { m_playRect.x,m_playRect.y,m_playRect.w,((m_playRect.h / 5) + 105) * 5 };
@@ -101,16 +101,16 @@ void MainMenu::update()
 	switch (currentState)
 	{
 	case ButtonState::play:
-		m_selectorRect = { m_playRect.x,m_playRect.y-5,m_playRect.w,((m_playRect.h / 5) + 15) * 5 };
+		m_selectorRect = { m_playRect.x,m_playRect.y-5,m_playRect.w,((m_playRect.h / 5) + 7) * 5 };
 		break;
 	case ButtonState::optionsBTN:
-		m_selectorRect = { m_optionsRect.x,m_optionsRect.y-5,m_optionsRect.w,((m_optionsRect.h / 5) + 15) * 5 };
+		m_selectorRect = { m_optionsRect.x,m_optionsRect.y-5,m_optionsRect.w,((m_optionsRect.h / 5) +7) * 5 };
 		break;
 	case ButtonState::helpBTN:
-		m_selectorRect = { m_helpRect.x,m_helpRect.y-5,m_helpRect.w,((m_helpRect.h / 5) + 15) * 5 };
+		m_selectorRect = { m_helpRect.x,m_helpRect.y-5,m_helpRect.w,((m_helpRect.h / 5) + 7) * 5 };
 		break;
 	case ButtonState::quit:
-		m_selectorRect = { m_quitRect.x,m_quitRect.y-5,m_quitRect.w,((m_quitRect.h / 5) + 15) * 5 };
+		m_selectorRect = { m_quitRect.x,m_quitRect.y-5,m_quitRect.w,((m_quitRect.h / 5) + 7) * 5 };
 		break;
 	default:
 		break;

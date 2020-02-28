@@ -14,19 +14,19 @@ Vector2 const MovementSystem::move(PositionComponent pos, std::string t_dir)
 	float speedControl = 10.0f;//(MAX_TIME * 5)in sprite
 	if (t_dir == "up")
 	{
-		temp = Vector2(temp.X(), temp.Y() - (120.0f / speedControl));
+		temp = Vector2(temp.X(), temp.Y() - (60.0f / speedControl));
 	}
 	else if (t_dir == "left")
 	{
-		temp = Vector2(temp.X()- (120.0f / speedControl), temp.Y());
+		temp = Vector2(temp.X()- (60.0f / speedControl), temp.Y());
 	}
 	else if (t_dir == "right")
 	{
-		temp = Vector2(temp.X()+ (120.0f / speedControl), temp.Y());
+		temp = Vector2(temp.X()+ (60.0f / speedControl), temp.Y());
 	}
 	else if (t_dir == "down")
 	{
-		temp = Vector2(temp.X(), temp.Y() + (120.0f / speedControl));
+		temp = Vector2(temp.X(), temp.Y() + (60.0f / speedControl));
 	}
 	return temp;
 }

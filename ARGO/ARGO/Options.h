@@ -51,7 +51,7 @@ private:
 	int m_achievementCount = 0;
 	
 	SDL_Rect m_catAchievmentPos;
-	SDL_Rect m_catHurtPos = { 1000, 950, 400,400 };
-	SDL_Rect m_statesPos = { 1000,1650,400,400 };
+	SDL_Rect m_catHurtPos = { 500, 475, 200,200 };
+	SDL_Rect m_statesPos = { 500,1650/2,200,200 };
 
 };

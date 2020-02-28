@@ -2,12 +2,12 @@
 
 Help::Help()
 {
-	m_mainMenuTutorialRect = { 0, 0, 1200, 800 };
-	m_movementTutorialRect = { 1300, 0, 1200, 800 };
-	m_wordsUITutorialRect = { 0, 850, 1200, 800 };
-	m_reverseTutorialRect = { 1300, 850, 1200, 800 };
-	m_backgroundRect = { 0,0, 3840, 2160 };
-	m_backBtnRect = { 3200,1600, 500,500 };
+	m_mainMenuTutorialRect = { 0, 0, 1200/2, 800/2 };
+	m_movementTutorialRect = { 1300/2, 0, 1200/2, 800/2 };
+	m_wordsUITutorialRect = { 0, 850/2, 1200/2, 800/2 };
+	m_reverseTutorialRect = { 1300/2, 850/2, 1200/2, 800/2 };
+	m_backgroundRect = { 0,0, 3840/2, 2160/2 };
+	m_backBtnRect = { 3200/2,1600/2, 500/2,500/2 };
 	m_selectorRect = m_backBtnRect;
 	loadedSurface = NULL;
 	m_backgroundTexture = NULL;

@@ -22,12 +22,12 @@ void PauseMenu::init()
 	loadedSurfaceSelect2 = SDL_LoadBMP("ASSETS/IMAGES/selected.bmp");
 	loadedSurfaceNotRewind= SDL_LoadBMP("ASSETS/IMAGES/pauseUnselect.bmp");
 	loadedSurfaceRewind= SDL_LoadBMP("ASSETS/IMAGES/pauseSelect.bmp");
-	selectBox[0] = Vector2(1200, 1860);
-	selectBox[1] = Vector2(selectBox[0].X()+240, 1900);
-	selectBox[2] = Vector2(selectBox[0].X() +480,selectBox[0].Y());
-	selectBox[3] = Vector2(selectBox[0].X() + 720,selectBox[1].Y());
-	selectBox[4] = Vector2(selectBox[0].X() +960,selectBox[0].Y());
-	rewindBox = Vector2(selectBox[0].X(), selectBox[0].Y() + 150);
+	selectBox[0] = Vector2(1200/2, 1860/2);
+	selectBox[1] = Vector2(selectBox[0].X()+120, 1900/2);
+	selectBox[2] = Vector2(selectBox[0].X() +240,selectBox[0].Y());
+	selectBox[3] = Vector2(selectBox[0].X() + 360,selectBox[1].Y());
+	selectBox[4] = Vector2(selectBox[0].X() +480,selectBox[0].Y());
+	rewindBox = Vector2(selectBox[0].X(), selectBox[0].Y() + 75);
 	/*selectBox[5] = Vector2(1200, 1900);
 	selectBox[6] = Vector2(selectBox[0].X() + 240, 1900);
 	selectBox[7] = Vector2(selectBox[0].X() + 480, selectBox[0].Y());
@@ -38,17 +38,18 @@ void PauseMenu::init()
 	{
 		boxSelected[box] = false;
 		if(box%2==0)
-			srcrect[box] = { 0, srcrect[box].y, 120, 120 };
+			srcrect[box] = { 0, srcrect[box].y, 60, 60 };
 		else
-			srcrect[box] = { 120, srcrect[box].y, 120, 120 };
-		boxRectSliced[box] = { int(selectBox[box].X()), int(selectBox[box].Y()), srcrect[box].w, 120 };
+			srcrect[box] = { 60, srcrect[box].y, 60, 60 };
+		boxRectSliced[box] = { int(selectBox[box].X()), int(selectBox[box].Y()), srcrect[box].w, 60 };
 	}
-	dstrectBack = { 0, 1800, 3840, 360 };
-	rect = { int(rewindBox.X()+480),int(rewindBox.Y()),120,120 };
+	dstrectBack = { 0, 900, 1920, 180 };
+	rect = { int(rewindBox.X()+240),int(rewindBox.Y()),60,60 };
 	currentBox = 0;
 	m_slectOffset = Vector2(5, 5);
-	dstrectSelect = { int(selectBox[currentBox].X() - m_slectOffset.x), int(selectBox[currentBox].Y() - m_slectOffset.y), 125, 170 };
+	dstrectSelect = { int(selectBox[currentBox].X() - m_slectOffset.x), int(selectBox[currentBox].Y() - m_slectOffset.y), 62, 85 };
 	//dstrectSelect2 = { int(selectBox[currentBox].X()- (m_slectOffset.x/2)), int(selectBox[currentBox].Y()- (m_slectOffset.y / 2)), 125, 124 };
+	boxSelected[0] = true;
 }
 
 void PauseMenu::input(SDL_Event& t_event, Joystick t_stick)
@@ -295,15 +296,15 @@ std::vector<std::string> PauseMenu::getChanges()
 		{
 			rules.push_back("cat");
 		}
-		else if (srcrect[box].y == 120)
+		else if (srcrect[box].y == 60)
 		{
 			rules.push_back("clock");
 		}
-		else if(srcrect[box].y == 240)
+		else if(srcrect[box].y == 120)
 		{
 			rules.push_back("platform");
 		}
-		else if (srcrect[box].y == 360)
+		else if (srcrect[box].y == 180)
 		{
 			rules.push_back("flag");
 		}
@@ -315,15 +316,15 @@ std::vector<std::string> PauseMenu::getChanges()
 		{
 			rules.push_back("player");
 		}
-		else if (!boxSelected)
-		{
-			rules.push_back("move");
-		}
-		else if (srcrect[box + 1].y == 240)
+		else if (box<6)
 		{
 			rules.push_back("stop");
 		}
 		else if (srcrect[box + 1].y == 120)
+		{
+			rules.push_back("move");
+		}
+		else if (srcrect[box + 1].y == 60)
 		{
 			rules.push_back("goal");
 		}
@@ -362,11 +363,28 @@ void PauseMenu::setUIRules(int t_index, std::string t_type)
 	if (t_type == "cat" || t_type == "player")
 		srcrect[t_index].y = 0;
 	else if (t_type == "clock" || t_type == "goal")
-		srcrect[t_index].y = 120;
+		srcrect[t_index].y = 60;
 	else if (t_type == "platform" || t_type == "stop")
-		srcrect[t_index].y = 240;
+		srcrect[t_index].y = 120;
 	else if (t_type == "flag" || t_type == "move")
-		srcrect[t_index].y = 360;
+		srcrect[t_index].y = 180;
 	else if (t_type == "cactus" || t_type == "spiky")
-		srcrect[t_index].y = 480;
+		srcrect[t_index].y = 240;
+}
+
+void PauseMenu::botSwitch()
+{
+	boxSelected[currentBox] = false;
+	currentBox += 2;
+	timer = 0;
+	if (currentBox >= m_lockValue)
+	{
+		currentBox=0;
+	}
+	/*if (boxSelected[currentBox])
+	{
+		currentBox += 2;
+	}*/
+	
+	boxSelected[currentBox] = true;
 }

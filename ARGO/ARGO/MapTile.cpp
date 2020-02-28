@@ -2,7 +2,7 @@
 
 mapTile::mapTile()
 {
- 	m_center = Vector2(vec.X() + 60, vec.Y() + 60);
+ 	m_center = Vector2(vec.X() + 30, vec.Y() + 30);
 }
 
 mapTile::~mapTile()
@@ -13,7 +13,7 @@ void mapTile::renderVector(SDL_Renderer*& t_renderer)
 {
 	if (!getWall() && m_lineEnd.X() != 0)
 	{
-		m_center = Vector2(vec.X() + 60, vec.Y() + 60);
+		m_center = Vector2(vec.X() + 30, vec.Y() + 30);
 		SDL_RenderDrawLine(t_renderer, m_center.X(), m_center.Y(), m_lineEnd.X(), m_lineEnd.Y());
 	}
 }

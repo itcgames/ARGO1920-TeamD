@@ -33,6 +33,7 @@ public:
 	bool getSwappedStates();
 	void updatePositions(std::vector<Vector2> t_pos);
 	void setHurtByCactus(bool t_cactus);
+	PauseMenu& getPause() { return m_pauseMenu; };
 	void addToLevelCount() { m_levelCount++; m_passLevel = true; }
 	PauseMenu getPauseMenu(){ return m_pauseMenu; };
 private:
@@ -64,7 +65,7 @@ private:
 	SDL_Texture* m_dispCatStatesAch;
 	SDL_Surface* m_catAchPassLevel;
 	SDL_Texture* m_dispPassLevel;
-	SDL_Rect m_promptAchievementPos = { 100,100,800,400 };
+	SDL_Rect m_promptAchievementPos = { 50,50,400,200 };
 	int m_levelCount = 0;
 	std::string m_IPAddr;
 };

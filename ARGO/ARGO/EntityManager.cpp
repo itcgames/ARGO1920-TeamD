@@ -1,5 +1,5 @@
 #include "EntityManager.h"
-
+#include "PauseMenu.h"
 void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsize)
 {
 
@@ -23,10 +23,10 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 		for (auto& f : entities)
 		{
 			int xVal, yVal, wVal, hVal;
-			xVal = (playerPos.X() - 120);
-			yVal = (playerPos.Y() - 120);
-			wVal = (playerPos.X() + 240);
-			hVal = (playerPos.Y() + 240);
+			xVal = (playerPos.X() - 60);
+			yVal = (playerPos.Y() - 60);
+			wVal = (playerPos.X() + 120);
+			hVal = (playerPos.Y() + 120);
 			if (xVal < 0)
 			{
 				xVal = 0;
@@ -35,18 +35,18 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 			{
 				yVal = 0;
 			}
-			if (wVal > 3840)
+			if (wVal > 1920)
 			{
-				wVal = 3840;
+				wVal = 1920;
 			}
-			if (hVal > 1800)
+			if (hVal > 900)
 			{
-				hVal = 1800;
+				hVal = 900;
 			}
 
 			Entity& tempF = *f.get();
-			if (xVal + 360 > tempF.getComponent<PositionComponent>().getPosition().x && xVal < tempF.getComponent<PositionComponent>().getPosition().x + 360 &&
-				yVal + 360 > tempF.getComponent<PositionComponent>().getPosition().y && yVal < tempF.getComponent<PositionComponent>().getPosition().y + tempF.getComponent<PositionComponent>().getPosition().x)
+			if (xVal + 180 > tempF.getComponent<PositionComponent>().getPosition().x && xVal < tempF.getComponent<PositionComponent>().getPosition().x + 180 &&
+				yVal + 180 > tempF.getComponent<PositionComponent>().getPosition().y && yVal < tempF.getComponent<PositionComponent>().getPosition().y + tempF.getComponent<PositionComponent>().getPosition().x)
 			{
 				if (tempE.getComponentString() == "player" && tempE.getComponent<PositionComponent>().getPosition() != Vector2(230000, 20000) &&
 					tempE.getComponent<SpriteComponent>().getCurrentState() == PlayerStates::IdlePlayer)
@@ -159,10 +159,10 @@ void EntityManager::update(int yVal, int xVal, int hVal, int wVal)
 	for (auto& f : entities)
 	{
 		int xVal, yVal, wVal, hVal;
-		xVal = (playerPos.X() - 120);
-		yVal = (playerPos.Y()-120);
-		wVal = (playerPos.X() + 240);
-		hVal = (playerPos.Y() + 240);
+		xVal = (playerPos.X() - 60);
+		yVal = (playerPos.Y()-60);
+		wVal = (playerPos.X() + 120);
+		hVal = (playerPos.Y() + 120);
 		if (xVal < 0)
 		{
 			xVal = 0;
@@ -171,17 +171,17 @@ void EntityManager::update(int yVal, int xVal, int hVal, int wVal)
 		{
 			yVal = 0;
 		}
-		if (wVal > 3840)
+		if (wVal > 1920)
 		{
-			wVal = 3840;
+			wVal = 1920;
 		}
-		if (hVal > 1800)
+		if (hVal > 900)
 		{
-			hVal = 1800;
+			hVal = 900;
 		}
 		Entity& tempF = *f.get();
-		if (xVal + 360 > tempF.getComponent<PositionComponent>().getPosition().x && xVal < tempF.getComponent<PositionComponent>().getPosition().x +360 &&
-			yVal + 360 > tempF.getComponent<PositionComponent>().getPosition().y && yVal < tempF.getComponent<PositionComponent>().getPosition().y + tempF.getComponent<PositionComponent>().getPosition().x)
+		if (xVal + 180 > tempF.getComponent<PositionComponent>().getPosition().x && xVal < tempF.getComponent<PositionComponent>().getPosition().x +180 &&
+			yVal + 180 > tempF.getComponent<PositionComponent>().getPosition().y && yVal < tempF.getComponent<PositionComponent>().getPosition().y + tempF.getComponent<PositionComponent>().getPosition().x)
 		{
 			f->update();
 
@@ -281,21 +281,24 @@ int EntityManager::handleWin(int t_levelNum)
 	return t_levelNum;
 }
 
-void EntityManager::botMove(Map* t_map, int currentLv)
+
+
+void EntityManager::botMove(Map* t_map, int currentLv, PauseMenu& t_pause)
 {
+	//int test=0;
 	switch (currentLv)
 	{
 	case 1:
-		lv1BehaviourTree(t_map);
+		lv1BehaviourTree(t_map, t_pause);
 		break;
 	case 2:
-		lv2BehaviourTree(t_map);
+		lv2BehaviourTree(t_map, t_pause);
 		break;
 	case 3:
-	//	lv3BehaviourTree(t_map);
+		//	lv3BehaviourTree(t_map);
 		break;
 	case 4:
-		lv4BehaviourTree(t_map);
+		lv4BehaviourTree(t_map, t_pause);
 		break;
 	default:
 		break;
@@ -343,7 +346,7 @@ void EntityManager::goToGoal(Map* t_map)
 		{
 			if (tempE.getComponentString() == "goal")//tempE.getComponent<BotComponent>().getBotMode())
 			{
-				t_map->BFS(Vector2(int(tempE.getComponent<PositionComponent>().getPosition().x / 120), int(tempE.getComponent<PositionComponent>().getPosition().y / 120)));
+				t_map->BFS(Vector2(int(tempE.getComponent<PositionComponent>().getPosition().x / 60), int(tempE.getComponent<PositionComponent>().getPosition().y / 60)));
 			}
 
 			if (tempE.getComponent<BotComponent>().getBotMode() && tempE.getComponent<PositionComponent>().getPosition().x < 4000)
@@ -379,7 +382,7 @@ void EntityManager::goToSpiky(Map* t_map)
 		{
 			if (tempE.getComponentString() == "spiky" && tempE.getComponent<PositionComponent>().getPosition().x < 4000)//tempE.getComponent<BotComponent>().getBotMode())
 			{
-				t_map->BFS(Vector2(int(tempE.getComponent<PositionComponent>().getPosition().x / 120), int(tempE.getComponent<PositionComponent>().getPosition().y / 120)));
+				t_map->BFS(Vector2(int(tempE.getComponent<PositionComponent>().getPosition().x / 60), int(tempE.getComponent<PositionComponent>().getPosition().y / 60)));
 			}
 
 			if (tempE.getComponent<BotComponent>().getBotMode() && tempE.getComponent<PositionComponent>().getPosition().x < 4000)
@@ -425,8 +428,8 @@ void EntityManager::reset(bool resetAll, bool resetSome)
 		{
 			int tempEnumX = tempE.getComponent<PositionComponent>().getPreviousPosition().X();
 			int tempEnumY = tempE.getComponent<PositionComponent>().getPreviousPosition().Y();
-			tempEnumX = tempEnumX % 120;
-			tempEnumY = tempEnumY % 120;
+			tempEnumX = tempEnumX % 60;
+			tempEnumY = tempEnumY % 60;
 
 			if (!tempEnumX == 0 || !tempEnumY == 0)
 			{
@@ -472,29 +475,75 @@ void EntityManager::reset(bool resetAll, bool resetSome)
 	}
 }
 
-void EntityManager::lv1BehaviourTree(Map* t_map)
+void EntityManager::lv1BehaviourTree(Map* t_map,PauseMenu& t_pause)
 {
-	static int rnd = rand() % 3;
+	if (!swap)
+	{
+		swap = true;
+		behaviorCounter = 0;
+		rnd = rand() % 3;
+		if (rnd > 2)
+		{
+			rnd = 0;
+		}
+	}
+	
 	switch (rnd)
 	{
 	case 0:
-		goToSpiky(t_map);
+		if (!died)
+		{
+			goToSpiky(t_map);
+			
+		}
+		else
+		{
+			rnd++;
+		}
 		//fail
+		if (m_diedToCactus)
+		{
+			died = true;
+		}
 		break;
 	case 1:
 		goToGoal(t_map);
 		//fail
+		
 		break;
 	case 2:
+		
+		rnd = 0;
 		break;
 	default:
 		break;
 	}
+	if (swap)
+	{
+		
+		behaviorCounter++;
+	}
+	if (behaviorCounter >= 250)
+	{
+		t_pause.botSwitch();
+		std::cout << rnd << std::endl;
+		swap = false;
+	}
 }
 
-void EntityManager::lv2BehaviourTree(Map* t_map)
+void EntityManager::lv2BehaviourTree(Map* t_map,PauseMenu& t_pause)
 {
-	static int rnd = rand() % 2;
+	if (!swap)
+	{
+		swap = true;
+		behaviorCounter = 0;
+		rnd = rand() % 2;
+		if (rnd > 1)
+		{
+			rnd = 0;
+		}
+	}
+	
 	switch (rnd)
 	{
 	case 0:
@@ -502,17 +551,39 @@ void EntityManager::lv2BehaviourTree(Map* t_map)
 		//fail
 		break;
 	case 1:
-
+		
+		rnd = 0;
 		//win
 		break;
 	default:
 		break;
 	}
+	if (swap)
+	{
+
+		behaviorCounter++;
+	}
+	if (behaviorCounter >= 250)
+	{
+		t_pause.botSwitch();
+		std::cout << rnd << std::endl;
+		swap = false;
+	}
 }
 
-void EntityManager::lv4BehaviourTree(Map* t_map)
+void EntityManager::lv4BehaviourTree(Map* t_map,PauseMenu& t_pause)
 {
-	static int rnd = rand() % 2;
+	if (!swap)
+	{
+		swap = true;
+		behaviorCounter = 0;
+		rnd = rand() % 2;
+		if (rnd > 1)
+		{
+			rnd = 0;
+		}
+	}
+	
 	switch (rnd)
 	{
 	case 0:
@@ -520,11 +591,23 @@ void EntityManager::lv4BehaviourTree(Map* t_map)
 		//fail
 		break;
 	case 1:
-
+		
+		rnd = 0;
 		//win
 		break;
 	default:
 		break;
+	}
+	if (swap)
+	{
+
+		behaviorCounter++;
+	}
+	if (behaviorCounter >= 250)
+	{
+		t_pause.botSwitch();
+		std::cout << rnd << std::endl;
+		swap = false;
 	}
 }
 
@@ -564,7 +647,7 @@ void EntityManager::movement()
 			if (tempE.getComponent<SpriteComponent>().finishedAnime())
 			{
 				tempVec = tempE.getComponent<PositionComponent>().getPosition();
-				tempVec = Vector2((int((tempVec.x + 60) / 120)) * 120, (int((tempVec.y + 60) / 120)) * 120);
+				tempVec = Vector2((int((tempVec.x + 30) / 60)) * 60, (int((tempVec.y + 30) / 60)) * 60);
 				tempE.getComponent<SpriteComponent>().updateState(PlayerStates::IdlePlayer);
 			}
 			tempE.getComponent<PositionComponent>().setPosition(tempVec);
@@ -576,7 +659,7 @@ void EntityManager::movement()
 		if (m_startOfInput)
 		{
 			Vector2 tempVec = tempE.getComponent<PositionComponent>().getPosition();
-			tempE.getComponent<PositionComponent>().setPreviousPosition(Vector2((int((tempVec.x + 60) / 120)) * 120, (int((tempVec.y + 60) / 120)) * 120));
+			tempE.getComponent<PositionComponent>().setPreviousPosition(Vector2((int((tempVec.x + 30) / 60)) * 60, (int((tempVec.y + 30) / 60)) * 60));
 		}
 	}
 	m_startOfInput = false;
@@ -615,7 +698,7 @@ void EntityManager::pushing()
 						if (tempF.getComponent<SpriteComponent>().finishedAnime())
 						{
 							Vector2 tempVec = tempE.getComponent<PositionComponent>().getPosition();
-							tempVec = Vector2((int((tempVec.x + 60) / 120)) * 120, (int((tempVec.y + 60) / 120)) * 120);
+							tempVec = Vector2((int((tempVec.x + 30) / 60)) * 60, (int((tempVec.y + 30) / 60)) * 60);
 							/*tempE.getComponent<PositionComponent>().setPosition(tempVec);
 							tempE.getComponent<SpriteComponent>().setPosAndSize(tempE.getComponent<PositionComponent>().getPosition().X(), tempE.getComponent<PositionComponent>().getPosition().Y(),
 								tempE.getComponent<BodyComponent>().getSize().X(), tempE.getComponent<BodyComponent>().getSize().Y());*/

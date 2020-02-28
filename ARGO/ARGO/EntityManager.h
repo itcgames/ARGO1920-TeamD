@@ -9,7 +9,7 @@
 #include "BoundarySystem.h"
 #include "BotComponent.h"
 #include "Map.h"
-
+#include "PauseMenu.h"
 #include"Up.h"
 #include"Down.h"
 #include"Left.h"
@@ -52,13 +52,13 @@ public:
 	void dying();
 	int handleWin(int t_levelNum);
 	bool GetDeathToCactus() { return m_diedToCactus; }
-	void botMove(Map* t_map, int currentLv);
+	void botMove(Map* t_map, int currentLv,PauseMenu& t_pause);
 	void goToGoal(Map* t_map);
 	void goToSpiky(Map* t_map);
-	void lv1BehaviourTree(Map* t_map);
-	void lv2BehaviourTree(Map* t_map);
-	void lv3BehaviourTree(Map* t_map);
-	void lv4BehaviourTree(Map* t_map);
+	void lv1BehaviourTree(Map* t_map,PauseMenu& t_pause);
+	void lv2BehaviourTree(Map* t_map,PauseMenu& t_pause);
+	//void lv3BehaviourTree(Map* t_map,PauseMenu& t_pause);
+	void lv4BehaviourTree(Map* t_map,PauseMenu& t_pause);
 	//Entity getEnt(int t_arrPos);
 
 	void popAllPositions();
@@ -75,7 +75,10 @@ public:
 			};
 		}
 	}
-	
+	bool swap=false;
+	bool died=false;
+	int rnd=-1;
+	int behaviorCounter = 0;
 	static const int MAX_TIME = 10;
 	int fakeStickXVal = -1;
 };

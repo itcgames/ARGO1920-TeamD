@@ -4,8 +4,8 @@ Splash::Splash()
 {
 	m_x = 0;
 	m_y = 0;
-	m_width = 3840;
-	m_height = 2160;
+	m_width = 3840/2;
+	m_height = 2160/2;
 	loadedSurface = NULL;
 	m_texture = NULL;
 	m_count = 0;

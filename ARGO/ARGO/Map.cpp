@@ -41,14 +41,14 @@ void Map::init(SDL_Renderer*& t_renderer, int t_levelNum)
 			if (mapArray[arrayIndex] == 14) {
 				m_mapHolder.mapDoubleArray[i][j] = mapArray[arrayIndex];
 				tile[i][j].init(wallStr, t_renderer);
-				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
+				tile[i][j].setPos(Vector2(0 + (60 * i), 0 + (60 * j)));
 				tile[i][j].setCost(999);
 				tile[i][j].setWall(true);
 			}
 			else if (mapArray[arrayIndex] == 13) {
 				m_mapHolder.mapDoubleArray[i][j] = mapArray[arrayIndex];
 				tile[i][j].init(platformStr, t_renderer);
-				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
+				tile[i][j].setPos(Vector2(0 + (60 * i), 0 + (60 * j)));
 
 				tile[i][j].setWall(true);
 			}
@@ -58,34 +58,34 @@ void Map::init(SDL_Renderer*& t_renderer, int t_levelNum)
 			//cactus 16, cat 19, flag 17, clock 20, shelf 18 
 			else if (mapArray[arrayIndex] == 16)
 			{
-				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
-				cactusPos = Vector2(0 + (120 * i), 0 + (120 * j));
+				tile[i][j].setPos(Vector2(0 + (60 * i), 0 + (60 * j)));
+				cactusPos = Vector2(0 + (60 * i), 0 + (60 * j));
 			}
 			else if (mapArray[arrayIndex] == 17)
 			{
-				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
-				flagPos = Vector2(0 + (120 * i), 0 + (120 * j));
+				tile[i][j].setPos(Vector2(0 + (60 * i), 0 + (60 * j)));
+				flagPos = Vector2(0 + (60 * i), 0 + (60 * j));
 			}
 			else if (mapArray[arrayIndex] == 18)
 			{
-				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
-				platformPos = Vector2(0 + (120 * i), 0 + (120 * j));
+				tile[i][j].setPos(Vector2(0 + (60 * i), 0 + (60 * j)));
+				platformPos = Vector2(0 + (60 * i), 0 + (60 * j));
 			}
 			else if (mapArray[arrayIndex] == 19)
 			{
-				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
-				catPos = Vector2(0 + (120 * i), 0 + (120 * j));
+				tile[i][j].setPos(Vector2(0 + (60 * i), 0 + (60 * j)));
+				catPos = Vector2(0 + (60 * i), 0 + (60 * j));
 			}
 			else if (mapArray[arrayIndex] == 20)
 			{
-				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
-				clockPos = Vector2(0 + (120 * i), 0 + (120 * j));
+				tile[i][j].setPos(Vector2(0 + (60 * i), 0 + (60 * j)));
+				clockPos = Vector2(0 + (60 * i), 0 + (60 * j));
 			}
 			else {
 				m_mapHolder.mapDoubleArray[i][j] = 0;
 				tile[i][j].init(wallStr, t_renderer);
-				tile[i][j].setPos(Vector2(0 + (120 * i), 0 + (120 * j)));
-				tile[i][j].setCentre(Vector2(60 + (120 * i), 60 + (120 * j)));
+				tile[i][j].setPos(Vector2(0 + (60 * i), 0 + (60 * j)));
+				tile[i][j].setCentre(Vector2(30 + (60 * i), 30 + (60 * j)));
 			}
 			arrayIndex++;
 		}
@@ -106,7 +106,7 @@ void Map::drawTile(SDL_Renderer*& t_renderer, int i, int j)
 void Map::BFS(Vector2 goalPos)
 {
 	int x = goalPos.x; int y = goalPos.y;
-	tile[x][y].setCentre(Vector2(60 + (120 * x), 60 + (120 * y)));
+	tile[x][y].setCentre(Vector2(30 + (60 * x), 30 + (60 * y)));
 	mapTile* goal = &tile[x][y];
 
 	bool goalReached = false;
@@ -177,8 +177,8 @@ void Map::ToggleDrawVector()
 Vector2 Map::getDirection(Vector2 t_botPos)
 {
 	Vector2 ans;
-	int posX = t_botPos.x / 120;
-	int posY = t_botPos.y / 120;
+	int posX = t_botPos.x / 60;
+	int posY = t_botPos.y / 60;
 	ans = tile[posX][posY].getEnd() - tile[posX][posY].getCenter();
 	return ans;
 }
@@ -202,8 +202,8 @@ void Map::render(SDL_Renderer*& t_renderer, int i, int j)
 std::vector<Vector2> Map::getMapCorners()
 {
 	std::vector<Vector2> corners;
-	Vector2 topLeft(0 + (120 * 1), 0 + (120 * 1));
-	Vector2 bottomRight(0 + (120 * 31), 0 + (120 * 14));
+	Vector2 topLeft(0 + (60 * 1), 0 + (60 * 1));
+	Vector2 bottomRight(0 + (60 * 31), 0 + (60 * 14));
 	corners.push_back(topLeft);
 	corners.push_back(bottomRight);
 	return corners;

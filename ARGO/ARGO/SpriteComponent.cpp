@@ -2,10 +2,10 @@
 
 SpriteComponent::SpriteComponent()
 {
-	m_x = 120;
-	m_y = 120;
-	m_width = 120;
-	m_height = 120;
+	m_x = 60;
+	m_y = 60;
+	m_width = 60;
+	m_height = 60;
 	xOffset = 0;
 	yOffset = 0;
 	timer = 0;
@@ -16,10 +16,10 @@ SpriteComponent::SpriteComponent()
 
 void SpriteComponent::resetSprite()
 {
-	m_x = 120;
-	m_y = 120;
-	m_width = 120;
-	m_height = 120;
+	m_x = 60;
+	m_y = 60;
+	m_width = 60;
+	m_height = 60;
 	m_animed = false;
 }
 
@@ -81,7 +81,7 @@ void SpriteComponent::updateState(PlayerStates t_newState)
 		if (changeCheck != m_animeStates.getCurrent())
 		{
 			m_currentState = t_newState;
-			xOffset = 480;
+			xOffset = 240;
 			timer = MAX_TIME;
 		}
 
@@ -95,7 +95,7 @@ PlayerStates SpriteComponent::getCurrentState()
 
 bool SpriteComponent::finishedAnime()
 {
-	if (timer >= MAX_TIME-1 && xOffset >= 480)
+	if (timer >= MAX_TIME-1 && xOffset >= 240)
 	{
 		return true;
 	}
@@ -112,8 +112,8 @@ void SpriteComponent::update()
 	if (m_animed && timer >= MAX_TIME)
 	{
 		timer = 0;
-		xOffset += 120;
-		if (xOffset == 600)
+		xOffset += 60;
+		if (xOffset == 300)
 		{
 			xOffset = 0;
 		}
@@ -123,13 +123,13 @@ void SpriteComponent::update()
 			yOffset = 0;
 			break;
 		case MovingPlayer:
-			yOffset = 120;
+			yOffset = 60;
 			break;
 		case PushingPlayer:
-			yOffset = 240;
+			yOffset = 120;
 			break;
 		case DyingPlayer:
-			yOffset = 360;
+			yOffset = 180;
 			break;
 		default:
 			break;
@@ -141,7 +141,7 @@ void SpriteComponent::render()
 {
 	SDL_Rect dstrect = { m_x, m_y, m_width, m_height };
 
-	SDL_Rect srcrect = { xOffset, yOffset, 120, 120 };
+	SDL_Rect srcrect = { xOffset, yOffset, 60, 60 };
 
 	while (loadedSurface.size() < m_paths.size())
 	{

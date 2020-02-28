@@ -2,10 +2,10 @@
 
 Credits::Credits()
 {
-	m_x = 1250;
-	m_y = 2100;
-	m_width = 1500;
-	m_height = 1000;
+	m_x = 1250/2;
+	m_y = 2100/2;
+	m_width = 1500/2;
+	m_height = 1000/2;
 	loadedSurface = NULL;
 	m_texture = NULL;
 	m_count = 0;

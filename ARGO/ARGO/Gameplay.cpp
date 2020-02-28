@@ -32,7 +32,7 @@ void Gameplay::init(SDL_Renderer*& t_renderer)
 	m_textureBack = SDL_CreateTextureFromSurface(t_renderer, m_loadedSurfaceBack);
 	m_pauseMenu.init();
 	timer = 0;
-	m_OTree.initTree(Vector2(0, 0), Vector2(960, 1080));
+	m_OTree.initTree(Vector2(0, 0), Vector2(960/2, 1080/2));
 
 	m_ghosts.setUp(t_renderer);
 }
@@ -86,7 +86,7 @@ void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 		m_loadedSurfaceBack = SDL_LoadBMP(temp.c_str());
 		m_textureBack = SDL_CreateTextureFromSurface(t_renderer, m_loadedSurfaceBack);
 	}
-	SDL_Rect dstrect = { 120, 120, m_map.getMapCorners().at(1).x-120,  m_map.getMapCorners().at(1).y-120};
+	SDL_Rect dstrect = { 60, 60, m_map.getMapCorners().at(1).x-60,  m_map.getMapCorners().at(1).y-60};
 
 	SDL_RenderCopy(t_renderer, m_textureBack, NULL, &dstrect);
 
@@ -96,7 +96,7 @@ void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 		for (int i=0; i < 32; i++)
 		{
 			m_map.render(t_renderer, i, j);
-			Vector2 temp(120, 120);
+			Vector2 temp(60, 60);
 
 		}
 	}
@@ -159,10 +159,10 @@ void Gameplay::fixedUpdate(EntityManager& t_entMan)
 	Vector2 PlayerPos = t_entMan.getPlayerPos();
 
 	int xVal, yVal, wVal, hVal;
-	xVal = (PlayerPos.X() - 240) / 120;
-	yVal = (PlayerPos.Y() - 240) / 120;
-	wVal = (PlayerPos.X() + 360) / 120;
-	hVal = (PlayerPos.Y() + 360) / 120;
+	xVal = (PlayerPos.X() - 240/2) / 60;
+	yVal = (PlayerPos.Y() - 240/2) / 60;
+	wVal = (PlayerPos.X() + 360/2) / 60;
+	hVal = (PlayerPos.Y() + 360/2) / 60;
 	if (xVal < 0)
 	{
 		xVal = 0;
@@ -192,7 +192,7 @@ void Gameplay::fixedUpdate(EntityManager& t_entMan)
 			}
 			if (m_map.tile[i][j].getWall())
 			{
-				Vector2 temp(120, 120);
+				Vector2 temp(60, 60);
 				t_entMan.mapCol(m_map.tile[i][j].vec, temp);
 			}
 		}

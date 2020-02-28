@@ -2,8 +2,8 @@
 
 Options::Options()
 {
-	m_backgroundRect = { 0,0, 3840, 2160 };
-	m_backBtnRect = { 3200,1600, 500,500 };
+	m_backgroundRect = { 0,0, 3840/2, 2160/2 };
+	m_backBtnRect = { 3200/2,1600/2, 500/2,500/2 };
 	m_selectorRect = m_backBtnRect;
 	loadedSurface = NULL;
 	m_backgroundTexture = NULL;
@@ -62,7 +62,7 @@ void Options::render(SDL_Renderer* t_renderer)
 		for (int i = 0; i < m_achievementCount; i++)
 		{
 
-			m_catAchievmentPos = { 400 + 400 * i,260,400,400 };
+			m_catAchievmentPos = { (400 + 400 * i)/2,260/2,400/2,400/2 };
 			std::cout << "gotta draw cat " << i << std::endl;
 			m_achievementCats.at(i) = SDL_CreateTextureFromSurface(t_renderer, m_catAchievementSurface);
 			SDL_RenderCopy(t_renderer, m_achievementCats.at(i), NULL, &m_catAchievmentPos);

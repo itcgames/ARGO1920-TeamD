@@ -14,7 +14,7 @@ public:
 	void init(std::string t_spriteToLoad, SDL_Renderer*& t_renderer) {
 		m_tile.setPathAndScreen(t_spriteToLoad, t_renderer);
 	}
-	void setPos(Vector2 t_vec) { vec = t_vec; m_tile.setPosAndSize(vec.x, vec.y, 120, 120); };
+	void setPos(Vector2 t_vec) { vec = t_vec; m_tile.setPosAndSize(vec.x, vec.y, 60, 60); };
 	void render(SDL_Renderer*& t_renderer) { m_tile.render(); };
 	void renderVector(SDL_Renderer*& t_renderer);
 	void setCost(int cost);

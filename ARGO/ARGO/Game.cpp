@@ -87,58 +87,58 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	Map tempMap = *m_gamePlayScr.getMap();
 	m_currentLevel = tempMap.getLevelNum();
 
-	m_characterVectorArray.push_back(m_factory->initEntityCat(newPlayer, Vector2(tempMap.getCatPos()), Vector2(120, 120), "ASSETS/IMAGES/states.bmp", true, "ASSETS/AUDIO/meow.wav", false, *m_renderer));
-	m_characterVectorArray.push_back(m_factory->initEntityFlag(flag, Vector2(tempMap.getFlagPos()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, "ASSETS/AUDIO/levelPass.mp3", false, *m_renderer));
-	m_characterVectorArray.push_back(m_factory->initEntityCactus(cactus,Vector2(tempMap.getCactusPos()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, "ASSETS/AUDIO/deathNoise.wav", false, *m_renderer));
-	m_characterVectorArray.push_back(m_factory->initEntityPlatform(platform, Vector2(tempMap.getPlatformPos()), Vector2(120, 120), "ASSETS/IMAGES/platform.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));
+	m_characterVectorArray.push_back(m_factory->initEntityCat(newPlayer, Vector2(tempMap.getCatPos()), Vector2(60, 60), "ASSETS/IMAGES/states.bmp", true, "ASSETS/AUDIO/meow.wav", false, *m_renderer));
+	m_characterVectorArray.push_back(m_factory->initEntityFlag(flag, Vector2(tempMap.getFlagPos()), Vector2(60, 60), "ASSETS/IMAGES/flag.bmp", true, "ASSETS/AUDIO/levelPass.mp3", false, *m_renderer));
+	m_characterVectorArray.push_back(m_factory->initEntityCactus(cactus,Vector2(tempMap.getCactusPos()), Vector2(60, 60), "ASSETS/IMAGES/cactus.bmp", true, "ASSETS/AUDIO/deathNoise.wav", false, *m_renderer));
+	m_characterVectorArray.push_back(m_factory->initEntityPlatform(platform, Vector2(tempMap.getPlatformPos()), Vector2(60, 60), "ASSETS/IMAGES/platform.bmp", true, "ASSETS/AUDIO/temp.wav", false, *m_renderer));
 
-	initEnts(rock, Vector2(tempMap.getFlagPos()), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock, Vector2(tempMap.getFlagPos()), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
 	m_currentLevel = 0;// tempMap.getLevelNum();
 
 
 
 
 
-	initEnts(rock2, Vector2(7200,480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-	initEnts(rock3, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-	initEnts(rock4, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true,  false);
-	initEnts(rock5, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-	initEnts(rock6, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-	initEnts(rock7, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-	initEnts(rock8, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true,  false);
-	initEnts(rock9, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true,  false);
-	initEnts(rock10, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-	initEnts(rock11, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-	initEnts(rock12, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-	initEnts(rock13, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-	initEnts(rock14, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-	initEnts(rock15, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-	initEnts(rock16, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock2, Vector2(7200,480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock3, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock4, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true,  false);
+	initEnts(rock5, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock6, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock7, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock8, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true,  false);
+	initEnts(rock9, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true,  false);
+	initEnts(rock10, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock11, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock12, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock13, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock14, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock15, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock16, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
 
-	initEnts(rock17, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-	initEnts(rock18, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-	initEnts(rock19, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-	initEnts(rock20, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-	initEnts(rock21, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-	initEnts(rock22, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-	initEnts(rock23, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-	initEnts(rock24, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock17, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock18, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock19, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock20, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock21, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock22, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock23, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock24, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
 
-	initEnts(rock25, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-	initEnts(rock26, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-	initEnts(rock27, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-	initEnts(rock28, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-	initEnts(rock29, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-	initEnts(rock30, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-	initEnts(rock31, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock25, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock26, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock27, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock28, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock29, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock30, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock31, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
 
-	initEnts(rock32, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-	initEnts(rock33, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-	initEnts(rock34, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock32, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock33, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock34, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
 
-	initEnts(rock35, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-	initEnts(rock36, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
-	initEnts(rock37, Vector2(7200, 480), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock35, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock36, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
+	initEnts(rock37, Vector2(7200, 480), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, false);
 
 
 
@@ -297,7 +297,7 @@ void Game::update()
 					entArr[i]->getComponent<PositionComponent>().popAllPositions();
 				}
 
-			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), lastString, true, false);
+			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(60, 60), lastString, true, true);
 			savedPos[0] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			else if (answer[j] == "flag")
@@ -308,7 +308,7 @@ void Game::update()
 					entArr[i]->getComponent<PositionComponent>().popAllPositions();
 				}
 
-				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/flag.bmp", true, false);
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(60, 60), "ASSETS/IMAGES/flag.bmp", true, true);
 				savedPos[3] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			else if (answer[j] == "cactus")
@@ -320,7 +320,7 @@ void Game::update()
 					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getCactusPos());
 					entArr[i]->getComponent<PositionComponent>().popAllPositions();
 				}
-				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/cactus.bmp", true, false);
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(60, 60), "ASSETS/IMAGES/cactus.bmp", true, true);
 				savedPos[4] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			else if (answer[j] == "clock")
@@ -332,7 +332,7 @@ void Game::update()
 					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getClockPos());
 					entArr[i]->getComponent<PositionComponent>().popAllPositions();
 				}
-				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/clock.bmp", true,false);
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true,true);
 				savedPos[1] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			else if (answer[j] == "platform")
@@ -344,7 +344,7 @@ void Game::update()
 					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getPlatformPos());
 					entArr[i]->getComponent<PositionComponent>().popAllPositions();
 				}
-				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(120, 120), "ASSETS/IMAGES/book.bmp", true, false);
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(60, 60), "ASSETS/IMAGES/book.bmp", true, true);
 
 				savedPos[2] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
@@ -355,56 +355,57 @@ void Game::update()
 		if ((m_gamePlayScr.getMap()->getLevelNum() == 3) && !initialiseOnce)
 		{
 			manager.popAllPositions();
-			updateEnts(rock2, Vector2(120, 1440), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
-			updateEnts(rock3, Vector2(240, 1440), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
-			updateEnts(rock4, Vector2(480, 1440), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
-			updateEnts(rock5, Vector2(600, 1440), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
-			updateEnts(rock6, Vector2(240, 1320), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
-			updateEnts(rock7, Vector2(480, 1320), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
-			updateEnts(rock8, Vector2(360, 1320), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
-			updateEnts(rock9, Vector2(600, 1200), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
-			updateEnts(rock10, Vector2(120, 1200), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
-			updateEnts(rock11, Vector2(480, 1080), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
-			updateEnts(rock12, Vector2(360, 1080), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
-			updateEnts(rock13, Vector2(240, 1080), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
-			updateEnts(rock14, Vector2(960, 1320), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
-			updateEnts(rock15, Vector2(1080, 1320), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
-			updateEnts(rock16, Vector2(1200, 1320), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock2, Vector2(120/2, 1440/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock3, Vector2(240.2, 1440/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock4, Vector2(480/2, 1440/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock5, Vector2(600/2, 1440/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock6, Vector2(240/2, 1320/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock7, Vector2(480/2, 1320/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock8, Vector2(360/2, 1320/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock9, Vector2(600/2, 1200/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock10, Vector2(120/2, 1200/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock11, Vector2(480/2, 1080/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock12, Vector2(360/2, 1080/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock13, Vector2(240/2, 1080/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock14, Vector2(960/2, 1320/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock15, Vector2(1080/2, 1320/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock16, Vector2(1200/2, 1320/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
 
-			updateEnts(rock17, Vector2(1080, 720), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
-			updateEnts(rock18, Vector2(960, 600), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
-			updateEnts(rock19, Vector2(1200, 600), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
-			updateEnts(rock20, Vector2(1080, 480), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
-			updateEnts(rock21, Vector2(960, 360), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
-			updateEnts(rock22, Vector2(1200, 360), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
-			updateEnts(rock23, Vector2(1080, 240), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
-			updateEnts(rock24, Vector2(1200, 120), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock17, Vector2(1080/2, 720/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock18, Vector2(960/2, 600/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock19, Vector2(1200/2, 600/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock20, Vector2(1080/2, 480/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock21, Vector2(960/2, 360/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock22, Vector2(1200/2, 360/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock23, Vector2(1080/2, 240/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock24, Vector2(1200/2, 120/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
 
-			updateEnts(rock25, Vector2(1560, 1200), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
-			updateEnts(rock26, Vector2(1440, 1080), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
-			updateEnts(rock27, Vector2(1680, 1080), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
-			updateEnts(rock28, Vector2(1560, 960), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock25, Vector2(1560/2, 1200/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock26, Vector2(1440/2, 1080/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock27, Vector2(1680/2, 1080/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock28, Vector2(1560/2, 960/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
 
-			updateEnts(rock29, Vector2(1440, 840), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock29, Vector2(1440/2, 840/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
 
-			updateEnts(rock30, Vector2(1680, 840), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
-			updateEnts(rock31, Vector2(1560, 720), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock30, Vector2(1680/2, 840/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock31, Vector2(1560/2, 720/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
 
-			updateEnts(rock32, Vector2(2160, 240), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
-			updateEnts(rock33, Vector2(2280, 240), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
-			updateEnts(rock34, Vector2(2520, 360), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock32, Vector2(2160/2, 240/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock33, Vector2(2280/2, 240/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock34, Vector2(2520/2, 360/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
 
-			updateEnts(rock35, Vector2(2160, 1440), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
-			updateEnts(rock36, Vector2(2280, 1440), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
-			updateEnts(rock37, Vector2(2400, 1440), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock35, Vector2(2160/2, 1440/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock36, Vector2(2280/2, 1440/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock37, Vector2(2400/2, 1440/2), Vector2(60, 60), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
 
 			initialiseOnce = true;
 		}
 
 	}
-
+	
+	
 	m_currentLevel = tempMap.getLevelNum();
-	manager.botMove(m_gamePlayScr.getMap(), m_currentLevel);
+	manager.botMove(m_gamePlayScr.getMap(), m_currentLevel, m_gamePlayScr.getPause());
 	std::vector<Vector2> passIn;
 	for (int i = 0;i<5;i++)
 	{

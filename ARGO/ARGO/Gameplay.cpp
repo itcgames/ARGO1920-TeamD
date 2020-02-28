@@ -14,6 +14,7 @@ Gameplay::Gameplay() :
 	mess = "";
 	m_IPAddr = "";
 	m_gameplayLeft = false;
+	m_gameover = false;
 }
 
 void Gameplay::init(SDL_Renderer*& t_renderer)
@@ -24,8 +25,8 @@ void Gameplay::init(SDL_Renderer*& t_renderer)
 	m_dispCatStatesAch = SDL_CreateTextureFromSurface(t_renderer, m_catAchDisplayStates);
 	m_catAchPassLevel = SDL_LoadBMP("ASSETS/IMAGES/LevelCompleteGeneric.bmp");
 	m_dispPassLevel = SDL_CreateTextureFromSurface(t_renderer, m_catAchPassLevel);
-	m_map.init(t_renderer,1);
-	m_map.setLevelNum(1);
+	m_map.init(t_renderer,4);
+	m_map.setLevelNum(4);
 
 	m_pauseMenu.setRules(m_map.getLevelNum());
 	std::string temp = "ASSETS/IMAGES/level" + std::to_string(m_map.getLevelNum()) + "back.bmp";
@@ -40,10 +41,11 @@ void Gameplay::init(SDL_Renderer*& t_renderer)
 
 void Gameplay::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t_stick)
 {
-	if (SDL_JoystickGetButton(t_stick.getStick(), 6) != 0)
+	if (SDL_JoystickGetButton(t_stick.getStick(), 6) != 0 || m_gameover)
 	{
 		gamestate = GameState::mainMenu;
 		m_gameplayLeft = true;
+		m_gameover = false;
 	}
 	m_pauseMenu.input(t_event, t_stick);
 }
@@ -80,6 +82,8 @@ void Gameplay::update()
 void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 {
 	 newLevel = t_entMan.handleWin(m_map.getLevelNum());
+	 if (newLevel > 5)
+		 m_gameover = true;
 	 if (m_gameplayLeft)
 		newLevel = 1;
 	if (m_map.getLevelNum() != newLevel || m_gameplayLeft)

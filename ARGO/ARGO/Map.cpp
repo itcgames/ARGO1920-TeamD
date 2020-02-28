@@ -12,7 +12,7 @@ Map::~Map()
 }
 void Map::init(SDL_Renderer*& t_renderer, int t_levelNum)
 {
-	if (t_levelNum < 5)
+	if (t_levelNum < 6)
 	{
 		levelNum = t_levelNum;
 	}

@@ -60,7 +60,7 @@ public:
 	void goToSpiky(Map* t_map,PauseMenu& t_pause);
 	void lv1BehaviourTree(Map* t_map,PauseMenu& t_pause);
 	void lv2BehaviourTree(Map* t_map,PauseMenu& t_pause);
-	//void lv3BehaviourTree(Map* t_map,PauseMenu& t_pause);
+	void lv3BehaviourTree(Map* t_map,PauseMenu& t_pause);
 	void lv4BehaviourTree(Map* t_map,PauseMenu& t_pause);
 	//Entity getEnt(int t_arrPos);
 
@@ -85,5 +85,6 @@ public:
 	static const int MAX_TIME = 10;
 	int fakeStickXVal = -1;
 	bool swapCatOnce = false;
+	bool lvl3Died = false;
 	
 };

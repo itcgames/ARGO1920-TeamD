@@ -92,8 +92,15 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 
 							tempF.getComponent<SpriteComponent>().updateState(PlayerStates::IdlePlayer);
 							
-							tempF.getComponent<PositionComponent>().setToPreviousPos();
+							
+							if (tempE.getComponentString() == "stop")
+							{
 								t_pause.botSwitch();
+								tempF.getComponent<PositionComponent>().setToPreviousPos();
+								tempF.getComponent<PositionComponent>().setToPreviousPos();
+								tempF.getComponent<PositionComponent>().setToPreviousPos();
+							}
+								
 							
 						}
 					}
@@ -120,6 +127,7 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 							if (tempF.getComponent<SpriteComponent>().isCat())
 							{
 								reset(true, false);
+								m_diedToCactus = false;
 								t_pause.botSwitch();
 								
 							}
@@ -285,6 +293,7 @@ int EntityManager::handleWin(int t_levelNum)
 					{
 						t_levelNum++;
 						resetBehaviourCounter();
+						m_diedToCactus = false;
 					}
 				}
 			}
@@ -298,6 +307,7 @@ int EntityManager::handleWin(int t_levelNum)
 void EntityManager::botMove(Map* t_map, int currentLv, PauseMenu& t_pause)
 {
 	//int test=0;
+	
 	switch (currentLv)
 	{
 	case 1:
@@ -307,7 +317,7 @@ void EntityManager::botMove(Map* t_map, int currentLv, PauseMenu& t_pause)
 		lv2BehaviourTree(t_map, t_pause);
 		break;
 	case 3:
-		//	lv3BehaviourTree(t_map);
+		lv3BehaviourTree(t_map,t_pause);
 		break;
 	case 4:
 		lv4BehaviourTree(t_map, t_pause);
@@ -593,6 +603,64 @@ void EntityManager::lv2BehaviourTree(Map* t_map,PauseMenu& t_pause)
 	}
 }
 
+void EntityManager::lv3BehaviourTree(Map* t_map, PauseMenu& t_pause)
+{
+	
+	if (!swap)
+	{
+		swap = true;
+		behaviorCounter = 0;
+		rnd = rand() % 3;
+		if (rnd > 2)
+		{
+			rnd = 0;
+		}
+	}
+
+	switch (rnd)
+	{
+	case 0:
+		if (!lvl3Died)
+		{
+			goToSpiky(t_map, t_pause);
+
+		}
+		else
+		{
+			rnd++;
+		}
+		//fail
+		if (m_diedToCactus)
+		{
+			lvl3Died = true;
+		}
+		break;
+	case 1:
+		goToGoal(t_map, t_pause);
+		//fail
+
+		break;
+	case 2:
+
+		rnd = 0;
+		break;
+	default:
+		break;
+	}
+	if (swap)
+	{
+
+		behaviorCounter++;
+	}
+	if (behaviorCounter >= 250)
+	{
+		//died = false;
+		t_pause.botSwitch();
+		std::cout << rnd << std::endl;
+		swap = false;
+	}
+}
+
 void EntityManager::lv4BehaviourTree(Map* t_map,PauseMenu& t_pause)
 {
 	if (!swap)
@@ -609,6 +677,7 @@ void EntityManager::lv4BehaviourTree(Map* t_map,PauseMenu& t_pause)
 	switch (rnd)
 	{
 	case 0:
+		//goToSpiky(t_map, t_pause);
 		goToGoal(t_map,t_pause);
 		//fail
 		break;

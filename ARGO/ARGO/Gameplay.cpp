@@ -13,6 +13,7 @@ Gameplay::Gameplay() :
 	}
 	mess = "";
 	m_IPAddr = "";
+	m_gameplayLeft = false;
 }
 
 void Gameplay::init(SDL_Renderer*& t_renderer)
@@ -42,6 +43,7 @@ void Gameplay::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t
 	if (SDL_JoystickGetButton(t_stick.getStick(), 6) != 0)
 	{
 		gamestate = GameState::mainMenu;
+		m_gameplayLeft = true;
 	}
 	m_pauseMenu.input(t_event, t_stick);
 }
@@ -78,8 +80,11 @@ void Gameplay::update()
 void Gameplay::render(SDL_Renderer*& t_renderer, EntityManager& t_entMan)
 {
 	 newLevel = t_entMan.handleWin(m_map.getLevelNum());
-	if (m_map.getLevelNum() != newLevel)
+	 if (m_gameplayLeft)
+		newLevel = 1;
+	if (m_map.getLevelNum() != newLevel || m_gameplayLeft)
 	{
+		m_gameplayLeft = false;
 		m_map.init(t_renderer,newLevel);
 		m_pauseMenu.setRules(m_map.getLevelNum());
 		std::string temp = "ASSETS/IMAGES/level" + std::to_string(m_map.getLevelNum()) + "back.bmp";

@@ -420,6 +420,7 @@ void Game::update()
 		break;
 	case GameState::mainMenu://no process events for this screen
 		m_mainMenuScr.update();
+		m_currentLevel = 0;
 		break;
 	case GameState::gameplay://no process events for this screen
 		m_gamePlayScr.update();

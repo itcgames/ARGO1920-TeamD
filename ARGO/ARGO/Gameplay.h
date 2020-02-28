@@ -67,4 +67,5 @@ private:
 	SDL_Rect m_promptAchievementPos = { 100,100,800,400 };
 	int m_levelCount = 0;
 	std::string m_IPAddr;
+	bool m_gameplayLeft;
 };

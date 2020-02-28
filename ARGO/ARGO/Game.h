@@ -75,6 +75,7 @@ private:
 	
 
 	bool initialiseOnce = false;
+	bool m_initialiseLevelFour = false;
 
 	Entity*  entArr[5];
 

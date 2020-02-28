@@ -347,9 +347,32 @@ void Game::update()
 			}
 			entArr[i]->setComponentString(answer[j+1]);
 		}
+		if ((m_gamePlayScr.getMap()->getLevelNum() == 4) && !m_initialiseLevelFour)
+		{
+			manager.popAllPositions();
+			updateEnts(rock2, Vector2(720, 600), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock3, Vector2(840, 600), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock4, Vector2(1080, 1320), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock5, Vector2(1080, 1440), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock6, Vector2(1080, 1560), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock7, Vector2(2160, 1320), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock8, Vector2(2160, 720), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock9, Vector2(2160, 840), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock10, Vector2(2040, 720), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock11, Vector2(1080, 600), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock12, Vector2(1200, 600), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock13, Vector2(1440, 360), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock14, Vector2(2160, 240), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock15, Vector2(2040, 1440), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock16, Vector2(2400, 1320), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock17, Vector2(2520, 1320), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock18, Vector2(2640, 1320), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
+			updateEnts(rock19, Vector2(2760, 1440), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);
 
+			m_initialiseLevelFour = true;
+		}
 
-		if ((m_gamePlayScr.getMap()->getLevelNum() == 3) && !initialiseOnce)
+		if ((m_gamePlayScr.getMap()->getLevelNum() == 5) && !initialiseOnce)
 		{
 			manager.popAllPositions();
 			updateEnts(rock2, Vector2(120, 1440), Vector2(120, 120), "ASSETS/IMAGES/ToiletRoll.bmp", true, false);

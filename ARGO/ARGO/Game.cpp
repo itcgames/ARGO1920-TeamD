@@ -1,5 +1,6 @@
 #include "Game.h"
 
+
 GameState Game::m_currentMode{ GameState::mainMenu };
 EntityManager manager;
 auto& newPlayer(manager.addEntity("player"));

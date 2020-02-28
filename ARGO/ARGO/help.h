@@ -28,6 +28,9 @@ private:
 	SDL_Texture* m_movementTutorialTexture;
 	SDL_Texture* m_reverseTutorialTexture;
 	SDL_Texture* m_wordsUITutorialTexture;
+	SDL_Texture* m_helpTexture;
+	SDL_Texture* m_faceButtonTexture;
+	SDL_Texture* m_selectorTexture;
 	SDL_Rect m_backgroundRect;
 	SDL_Rect m_backBtnRect;
 	SDL_Rect m_selectorRect;
@@ -35,6 +38,8 @@ private:
 	SDL_Rect m_movementTutorialRect;
 	SDL_Rect m_reverseTutorialRect;
 	SDL_Rect m_wordsUITutorialRect;
+	SDL_Rect m_helpRect;
+	SDL_Rect m_faceButtonRect;
 
 	HelpButtonState currentState;
 	int count;

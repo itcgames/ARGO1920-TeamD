@@ -28,7 +28,7 @@ void Help::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t_sti
 	switch (t_event.type)
 	{
 	case SDL_JOYBUTTONDOWN:
-		if (SDL_JoystickGetButton(t_stick.getStick(), 0) != 0 && count > 30)
+		if (SDL_JoystickGetButton(t_stick.getStick(), 1) != 0 && count > 30)
 		{
 			count = 0;
 			switch (currentState)
@@ -58,6 +58,7 @@ void Help::render(SDL_Renderer* t_renderer)
 	SDL_RenderCopy(t_renderer, m_backBtnTexture, NULL, &m_backBtnRect);
 	SDL_RenderCopy(t_renderer, m_selectorTexture, NULL, &m_selectorRect);
 	/*SDL_RenderCopy(t_renderer, m_mainMenuTutorialTexture, NULL, &m_mainMenuTutorialRect);
+	SDL_RenderCopy(t_renderer, m_mainMenuTutorialTexture, NULL, &m_mainMenuTutorialRect);
 	SDL_RenderCopy(t_renderer, m_wordsUITutorialTexture, NULL, &m_wordsUITutorialRect);
 	SDL_RenderCopy(t_renderer, m_reverseTutorialTexture, NULL, &m_reverseTutorialRect);
 	SDL_RenderCopy(t_renderer, m_movementTutorialTexture, NULL, &m_movementTutorialRect);*/
@@ -76,8 +77,6 @@ void Help::loadSprites(SDL_Renderer* renderer)
 	{
 		loadedSurface = SDL_LoadBMP("ASSETS/IMAGES/helpTutorialBackground.bmp");
 		m_backgroundTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
-		loadedSurface = SDL_LoadBMP("ASSETS/IMAGES/selector.bmp");
-		m_selectorTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
 		loadedSurface = SDL_LoadBMP("ASSETS/IMAGES/Back.bmp");
 		m_backBtnTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
 		loadedSurface = SDL_LoadBMP("ASSETS/IMAGES/MainMenuTutorial.bmp");

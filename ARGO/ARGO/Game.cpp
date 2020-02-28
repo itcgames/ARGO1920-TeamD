@@ -1,6 +1,6 @@
 #include "Game.h"
 
-GameState Game::m_currentMode{ GameState::gameplay };
+GameState Game::m_currentMode{ GameState::mainMenu };
 EntityManager manager;
 auto& newPlayer(manager.addEntity("player"));
 auto& flag(manager.addEntity("goal"));
@@ -157,13 +157,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 	//flag.getComponent<AudioComponent>().closeAudio();
 
-
-
 	answer = m_gamePlayScr.getChanges();
-
-
-
-
 }
 
 void Game::handleEvents()
@@ -222,6 +216,8 @@ void Game::handleEvents()
 		break;
 	case GameState::mainMenu:
 		m_mainMenuScr.handleEvents(m_event, m_currentMode, stick);
+		if (m_mainMenuScr.quitState())
+			clean();
 		break;
 	case GameState::gameplay://no process events for this screen here
 		break;
@@ -506,6 +502,7 @@ void Game::clean()
 	SDL_DestroyWindow(m_window);
 	SDL_DestroyRenderer(m_renderer);
 	SDL_Quit();
+	isRunning = false;
 }
 
 

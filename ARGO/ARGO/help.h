@@ -24,7 +24,6 @@ private:
 	SDL_Surface* loadedSurface;
 	SDL_Texture* m_backgroundTexture;
 	SDL_Texture* m_backBtnTexture;
-	SDL_Texture* m_selectorTexture;
 	SDL_Texture* m_mainMenuTutorialTexture;
 	SDL_Texture* m_movementTutorialTexture;
 	SDL_Texture* m_reverseTutorialTexture;

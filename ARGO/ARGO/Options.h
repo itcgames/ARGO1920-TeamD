@@ -30,7 +30,6 @@ private:
 	SDL_Surface* loadedSurface;
 	SDL_Texture* m_backgroundTexture;
 	SDL_Texture* m_backBtnTexture;
-	SDL_Texture* m_selectorTexture;
 	SDL_Rect m_backgroundRect;
 	SDL_Rect m_backBtnRect;
 	SDL_Rect m_selectorRect;

@@ -73,10 +73,10 @@ void PositionComponent::setPosition(Vector2 position)
 
 void PositionComponent::setPreviousPosition(Vector2 position)
 {
-	if (m_prevPositions.size< MAX_STACKSIZE)
-	{
+	//if (m_prevPositions.size< MAX_STACKSIZE)
+	//{
 		m_prevPositions.push(position);
-	}
+	//}
 	
 
 }

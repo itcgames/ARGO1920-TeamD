@@ -4,7 +4,7 @@
 Gameplay::Gameplay() :
 
 
-	myClient("Q", 1111)//149.153.106.148
+	myClient("149.153.106.148", 1111)//149.153.106.148
 
 {
 	if (!myClient.Connect()) //If client fails to connect...
@@ -25,8 +25,8 @@ void Gameplay::init(SDL_Renderer*& t_renderer)
 	m_dispCatStatesAch = SDL_CreateTextureFromSurface(t_renderer, m_catAchDisplayStates);
 	m_catAchPassLevel = SDL_LoadBMP("ASSETS/IMAGES/LevelCompleteGeneric.bmp");
 	m_dispPassLevel = SDL_CreateTextureFromSurface(t_renderer, m_catAchPassLevel);
-	m_map.init(t_renderer,4);
-	m_map.setLevelNum(4);
+	m_map.init(t_renderer,1);
+	m_map.setLevelNum(1);
 
 	m_pauseMenu.setRules(m_map.getLevelNum());
 	std::string temp = "ASSETS/IMAGES/level" + std::to_string(m_map.getLevelNum()) + "back.bmp";
@@ -39,14 +39,22 @@ void Gameplay::init(SDL_Renderer*& t_renderer)
 	m_ghosts.setUp(t_renderer);
 }
 
-void Gameplay::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t_stick)
+void Gameplay::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t_stick,int t_levelNum)
 {
-	if (SDL_JoystickGetButton(t_stick.getStick(), 6) != 0 || m_gameover)
+	if (m_gameover && t_levelNum == 5)
 	{
-		gamestate = GameState::mainMenu;
+		gamestate = GameState::credits;
 		m_gameplayLeft = true;
 		m_gameover = false;
 	}
+	if (SDL_JoystickGetButton(t_stick.getStick(), 6) != 0 )
+	{
+		gamestate = GameState::mainMenu;
+		m_gameplayLeft = true;
+		//m_gameover = false;
+
+	}
+	
 	m_pauseMenu.input(t_event, t_stick);
 }
 

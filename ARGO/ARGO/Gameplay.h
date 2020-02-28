@@ -20,7 +20,7 @@ public:
 	Gameplay();
 
 	void init(SDL_Renderer*& t_renderer);
-	void handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t_stick);
+	void handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t_stick, int t_levelNum);
 	void update();
 	void render(SDL_Renderer *&t_renderer,EntityManager& t_entMan);
 

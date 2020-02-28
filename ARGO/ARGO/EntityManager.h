@@ -15,6 +15,7 @@
 #include"Left.h"
 #include"Right.h"
 
+
 class EntityManager
 {
 private:
@@ -38,6 +39,7 @@ private:
 	static int  currBiggestStack;
 	bool firstRun = false;
 public:
+	bool getBotMode();
 	void resetBehaviourCounter() { behaviorCounter = 0; };
 	void handleEvents(Joystick &stick,std::vector<Vector2> t_mapsize,PauseMenu& t_pause);
 	void update(int yVal, int xVal, int hVal, int wVal);
@@ -83,4 +85,5 @@ public:
 	static const int MAX_TIME = 10;
 	int fakeStickXVal = -1;
 	bool swapCatOnce = false;
+	
 };

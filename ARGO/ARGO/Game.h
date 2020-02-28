@@ -46,6 +46,8 @@ public:
 	SDL_Renderer* m_renderer;
 	SDL_Event m_event;
 private:
+	bool botMode = false;
+	bool botSwitch = false;
 	bool isRunning;
 	SDL_Window* m_window;
 	Splash m_splashScr;

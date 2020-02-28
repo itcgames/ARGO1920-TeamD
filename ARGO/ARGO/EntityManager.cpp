@@ -1,8 +1,9 @@
 #include "EntityManager.h"
 #include "PauseMenu.h"
+
 void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsize,PauseMenu& t_pause)
 {
-
+	
 	Entity& tempG = *entities[0];
 	Vector2 playerPos;
 	for (auto& e : entities)
@@ -12,8 +13,7 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 		{
 			playerPos = tempG.getComponent<PositionComponent>().getPosition();
 		}
-
-
+		
 	}
 	m_moveThisFrame = false;
 	m_startOfInput = false;

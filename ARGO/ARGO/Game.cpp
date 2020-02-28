@@ -204,7 +204,19 @@ void Game::handleEvents()
 		}
 		break;
 	case SDL_JOYBUTTONDOWN:
-
+		if (SDL_JoystickGetButton(stick.getStick(), 4) != 0 && !botSwitch)
+		{
+			if (botMode)
+			{
+				botMode = false;
+			}
+			else if (!botMode)
+			{
+				botMode = true;
+			}
+			botSwitch = true;
+		}
+	
 		break;
 	}
 
@@ -221,6 +233,10 @@ void Game::handleEvents()
 			clean();
 		break;
 	case GameState::gameplay://no process events for this screen here
+		if (!SDL_JoystickGetButton(stick.getStick(), 4) != 0)
+		{
+			botSwitch = false;
+		}
 		break;
 	case GameState::options:
 		m_optionsScr.handleEvents(m_event, m_currentMode, stick);
@@ -294,7 +310,7 @@ void Game::update()
 					entArr[i]->getComponent<PositionComponent>().popAllPositions();
 				}
 
-			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(60, 60), lastString, true, true);
+			updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(60, 60), lastString, true,botMode);
 			savedPos[0] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			else if (answer[j] == "flag")
@@ -305,7 +321,7 @@ void Game::update()
 					entArr[i]->getComponent<PositionComponent>().popAllPositions();
 				}
 
-				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(60, 60), "ASSETS/IMAGES/flag.bmp", true, true);
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(60, 60), "ASSETS/IMAGES/flag.bmp", true, botMode);
 				savedPos[3] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			else if (answer[j] == "cactus")
@@ -317,7 +333,7 @@ void Game::update()
 					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getCactusPos());
 					entArr[i]->getComponent<PositionComponent>().popAllPositions();
 				}
-				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(60, 60), "ASSETS/IMAGES/cactus.bmp", true, true);
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(60, 60), "ASSETS/IMAGES/cactus.bmp", true, botMode);
 				savedPos[4] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			else if (answer[j] == "clock")
@@ -329,7 +345,7 @@ void Game::update()
 					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getClockPos());
 					entArr[i]->getComponent<PositionComponent>().popAllPositions();
 				}
-				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true,true);
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(60, 60), "ASSETS/IMAGES/clock.bmp", true, botMode);
 				savedPos[1] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}
 			else if (answer[j] == "platform")
@@ -341,7 +357,7 @@ void Game::update()
 					entArr[i]->getComponent<PositionComponent>().setPosition(tempMap.getPlatformPos());
 					entArr[i]->getComponent<PositionComponent>().popAllPositions();
 				}
-				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(60, 60), "ASSETS/IMAGES/book.bmp", true, true);
+				updateEnts(*entArr[i], Vector2(entArr[i]->getComponent<PositionComponent>().getPosition().X(), entArr[i]->getComponent<PositionComponent>().getPosition().Y()), Vector2(60, 60), "ASSETS/IMAGES/book.bmp", true, botMode);
 
 				savedPos[2] = entArr[i]->getComponent<PositionComponent>().getPosition();
 			}

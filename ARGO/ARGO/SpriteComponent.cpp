@@ -102,6 +102,11 @@ bool SpriteComponent::finishedAnime()
 	return false;
 }
 
+bool SpriteComponent::isCat()
+{
+	return (m_paths.at(m_currentTex) == "ASSETS/IMAGES/states.bmp" || m_paths.at(m_currentTex) == "ASSETS/IMAGES/states2.bmp");
+}
+
 void SpriteComponent::init()
 {
 }

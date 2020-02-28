@@ -38,7 +38,8 @@ private:
 	static int  currBiggestStack;
 	bool firstRun = false;
 public:
-	void handleEvents(Joystick &stick,std::vector<Vector2> t_mapsize);
+	void resetBehaviourCounter() { behaviorCounter = 0; };
+	void handleEvents(Joystick &stick,std::vector<Vector2> t_mapsize,PauseMenu& t_pause);
 	void update(int yVal, int xVal, int hVal, int wVal);
 	void draw(SDL_Renderer* t_screen);
 	void refresh();
@@ -53,8 +54,8 @@ public:
 	int handleWin(int t_levelNum);
 	bool GetDeathToCactus() { return m_diedToCactus; }
 	void botMove(Map* t_map, int currentLv,PauseMenu& t_pause);
-	void goToGoal(Map* t_map);
-	void goToSpiky(Map* t_map);
+	void goToGoal(Map* t_map,PauseMenu& t_pause);
+	void goToSpiky(Map* t_map,PauseMenu& t_pause);
 	void lv1BehaviourTree(Map* t_map,PauseMenu& t_pause);
 	void lv2BehaviourTree(Map* t_map,PauseMenu& t_pause);
 	//void lv3BehaviourTree(Map* t_map,PauseMenu& t_pause);
@@ -81,4 +82,5 @@ public:
 	int behaviorCounter = 0;
 	static const int MAX_TIME = 10;
 	int fakeStickXVal = -1;
+	bool swapCatOnce = false;
 };

@@ -1,6 +1,6 @@
 #include "EntityManager.h"
 #include "PauseMenu.h"
-void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsize)
+void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsize,PauseMenu& t_pause)
 {
 
 	Entity& tempG = *entities[0];
@@ -91,6 +91,10 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 							tempF.getComponent<PositionComponent>().setToPreviousPos();
 
 							tempF.getComponent<SpriteComponent>().updateState(PlayerStates::IdlePlayer);
+							
+							tempF.getComponent<PositionComponent>().setToPreviousPos();
+								t_pause.botSwitch();
+							
 						}
 					}
 
@@ -113,6 +117,13 @@ void EntityManager::handleEvents( Joystick& stick, std::vector<Vector2> t_mapsiz
 								tempE.getComponent<BodyComponent>().getSize().Y());
 							tempF.getComponent<SpriteComponent>().updateState(PlayerStates::DyingPlayer);
 							m_diedToCactus = true;
+							if (tempF.getComponent<SpriteComponent>().isCat())
+							{
+								reset(true, false);
+								t_pause.botSwitch();
+								
+							}
+							
 						}
 					}
 				}
@@ -273,6 +284,7 @@ int EntityManager::handleWin(int t_levelNum)
 						tempE2.getComponent<PositionComponent>().getPosition(), tempE2.getComponent<BodyComponent>().getSize()))
 					{
 						t_levelNum++;
+						resetBehaviourCounter();
 					}
 				}
 			}
@@ -337,7 +349,7 @@ void EntityManager::botMove(Map* t_map, int currentLv, PauseMenu& t_pause)
 	//}
 }
 
-void EntityManager::goToGoal(Map* t_map)
+void EntityManager::goToGoal(Map* t_map, PauseMenu& t_pause)
 {
 	for (auto& e : entities)
 	{
@@ -373,8 +385,20 @@ void EntityManager::goToGoal(Map* t_map)
 	}
 }
 
-void EntityManager::goToSpiky(Map* t_map)
+void EntityManager::goToSpiky(Map* t_map, PauseMenu& t_pause)
 {
+	for (auto& e : entities)
+	{
+		Entity& tempE = *e.get();
+		if (tempE.getAlive())
+		{
+			if (tempE.getComponentString() == "player" && tempE.getComponent<SpriteComponent>().isCat() &&!swapCatOnce)
+			{
+				t_pause.botSwitch();
+				swapCatOnce = true;
+			}
+		}
+	}
 	for (auto& e : entities)
 	{
 		Entity& tempE = *e.get();
@@ -384,7 +408,7 @@ void EntityManager::goToSpiky(Map* t_map)
 			{
 				t_map->BFS(Vector2(int(tempE.getComponent<PositionComponent>().getPosition().x / 60), int(tempE.getComponent<PositionComponent>().getPosition().y / 60)));
 			}
-
+			
 			if (tempE.getComponent<BotComponent>().getBotMode() && tempE.getComponent<PositionComponent>().getPosition().x < 4000)
 			{
 				Vector2 ans = t_map->getDirection(tempE.getComponent<PositionComponent>().getPosition());
@@ -407,6 +431,7 @@ void EntityManager::goToSpiky(Map* t_map)
 			}
 		}
 	}
+	swapCatOnce = false;
 }
 
 void EntityManager::popAllPositions()
@@ -422,6 +447,7 @@ void EntityManager::reset(bool resetAll, bool resetSome)
 {
 	for (auto& e : entities)
 	{
+		
 		Entity& tempE = *e.get();
 
 		if (resetSome)
@@ -489,7 +515,7 @@ void EntityManager::lv1BehaviourTree(Map* t_map,PauseMenu& t_pause)
 	case 0:
 		if (!died)
 		{
-			goToSpiky(t_map);
+			goToSpiky(t_map,t_pause);
 			
 		}
 		else
@@ -503,7 +529,7 @@ void EntityManager::lv1BehaviourTree(Map* t_map,PauseMenu& t_pause)
 		}
 		break;
 	case 1:
-		goToGoal(t_map);
+		goToGoal(t_map,t_pause);
 		//fail
 		
 		break;
@@ -543,7 +569,7 @@ void EntityManager::lv2BehaviourTree(Map* t_map,PauseMenu& t_pause)
 	switch (rnd)
 	{
 	case 0:
-		goToGoal(t_map);
+		goToGoal(t_map,t_pause);
 		//fail
 		break;
 	case 1:
@@ -583,7 +609,7 @@ void EntityManager::lv4BehaviourTree(Map* t_map,PauseMenu& t_pause)
 	switch (rnd)
 	{
 	case 0:
-		goToGoal(t_map);
+		goToGoal(t_map,t_pause);
 		//fail
 		break;
 	case 1:
@@ -599,6 +625,7 @@ void EntityManager::lv4BehaviourTree(Map* t_map,PauseMenu& t_pause)
 
 		behaviorCounter++;
 	}
+	
 	if (behaviorCounter >= 250)
 	{
 		t_pause.botSwitch();
@@ -611,6 +638,7 @@ void EntityManager::lv4BehaviourTree(Map* t_map,PauseMenu& t_pause)
 void EntityManager::handleBoundary(Entity& t_ent, Vector2 t_mapTopLeft, Vector2 t_mapBottomRight)
 {
 	Vector2 tempPos = m_boundSys.hitBoundary(t_ent.getComponent<PositionComponent>().getPosition(), t_ent.getComponent<BodyComponent>().getSize(), t_mapTopLeft, t_mapBottomRight);
+	
 	t_ent.getComponent<PositionComponent>().setPosition(tempPos);
 	t_ent.getComponent<SpriteComponent>().setPosAndSize(t_ent.getComponent<PositionComponent>().getPosition().X(), t_ent.getComponent<PositionComponent>().getPosition().Y(), t_ent.getComponent<BodyComponent>().getSize().X(), t_ent.getComponent<BodyComponent>().getSize().Y());
 }

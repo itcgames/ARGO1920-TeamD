@@ -402,7 +402,7 @@ void Game::update()
 	
 	
 	m_currentLevel = tempMap.getLevelNum();
-	manager.botMove(m_gamePlayScr.getMap(), m_currentLevel, m_gamePlayScr.getPause());
+	
 	std::vector<Vector2> passIn;
 	for (int i = 0;i<5;i++)
 	{
@@ -427,6 +427,7 @@ void Game::update()
 	case GameState::gameplay://no process events for this screen
 		m_gamePlayScr.update();
 		manager.reset(m_gamePlayScr.getPauseMenu().getRewindALot(), m_gamePlayScr.getPauseMenu().getRewindALittle());
+		manager.botMove(m_gamePlayScr.getMap(), m_currentLevel, m_gamePlayScr.getPause());
 		break;
 	case GameState::options://no process events for this screen
 		m_optionsScr.update();
@@ -453,7 +454,7 @@ void Game::subSystemUpdate()
 		{
 
 		}
-		manager.handleEvents(stick, m_gamePlayScr.getMapCorners());
+		manager.handleEvents(stick, m_gamePlayScr.getMapCorners(),m_gamePlayScr.getPause());
 		m_gamePlayScr.handleEvents(m_event, m_currentMode, stick);
 		break;
 	default:

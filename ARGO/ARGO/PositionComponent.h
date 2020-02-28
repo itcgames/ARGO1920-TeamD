@@ -23,8 +23,10 @@ public:
 	void popPreviousPosition();
 	void popAllPositions();
 	void completeReset();
+	const int MAX_STACKSIZE = 256;
 private:
 	Vector2 m_position;
 	std::stack<Vector2> m_prevPositions;
+	
 };
 

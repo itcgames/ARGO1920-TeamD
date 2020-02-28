@@ -11,12 +11,12 @@ Ethernet adapter Ethernet:
 
 Ethernet adapter Npcap Loopback Adapter:
 
-   Connection-specific DNS Suffix  . : 
+   Connection-specific DNS Suffix  . :
    Autoconfiguration IPv4 Address. . : 169.254.112.89
    Subnet Mask . . . . . . . . . . . : 255.255.0.0
-   Default Gateway . . . . . . . . . : 
+   Default Gateway . . . . . . . . . :
 
 Ethernet adapter Bluetooth Network Connection:
 
    Media State . . . . . . . . . . . : Media disconnected
-   Connection-specific DNS Suffix  . : 
+   Connection-specific DNS Suffix  . :

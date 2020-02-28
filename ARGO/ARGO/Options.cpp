@@ -8,7 +8,6 @@ Options::Options()
 	loadedSurface = NULL;
 	m_backgroundTexture = NULL;
 	m_backBtnTexture = NULL;
-	m_selectorTexture = NULL;
 
 	currentState = OptionsButtonState::optionsBackBtn;
 	count = 0;
@@ -20,7 +19,7 @@ void Options::handleEvents(SDL_Event& t_event, GameState& gamestate, Joystick t_
 	switch (t_event.type)
 	{
 	case SDL_JOYBUTTONDOWN:
-		if (SDL_JoystickGetButton(t_stick.getStick(), 0) != 0 && count > 30)
+		if (SDL_JoystickGetButton(t_stick.getStick(), 1) != 0 && count > 30)
 		{
 			count = 0;
 			switch (currentState)
@@ -48,7 +47,6 @@ void Options::render(SDL_Renderer* t_renderer)
 	SDL_RenderClear(t_renderer);
 	SDL_RenderCopy(t_renderer, m_backgroundTexture, NULL, &m_backgroundRect);
 	SDL_RenderCopy(t_renderer, m_backBtnTexture, NULL, &m_backBtnRect);
-	SDL_RenderCopy(t_renderer, m_selectorTexture, NULL, &m_selectorRect);
 	if (m_hurtAchievementUnlocked)
 	{
 		SDL_RenderCopy(t_renderer, m_catHurtTexture, NULL, &m_catHurtPos);
@@ -83,8 +81,6 @@ void Options::loadSprites(SDL_Renderer* renderer)
 	{
 		loadedSurface = SDL_LoadBMP("ASSETS/IMAGES/options.bmp");
 		m_backgroundTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
-		loadedSurface = SDL_LoadBMP("ASSETS/IMAGES/selector.bmp");
-		m_selectorTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
 		loadedSurface = SDL_LoadBMP("ASSETS/IMAGES/Back.bmp");
 		m_backBtnTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
 		m_catAchievementSurface = SDL_LoadBMP("ASSETS/IMAGES/AchievmentCat.bmp");

@@ -22,6 +22,7 @@ public:
 	void updateState(PlayerStates t_newState);
 	PlayerStates getCurrentState();
 	bool finishedAnime();
+	bool isCat();
 	void init() override;
 	void update() override;
 	void render() override;

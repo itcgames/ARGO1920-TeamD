@@ -261,7 +261,7 @@ int EntityManager::handleWin(int t_levelNum)
 	{
 		Entity& tempE = *e.get();
 
-		if (tempE.getComponentString() == "player")
+		if (tempE.getComponentString() == "player" && tempE.getComponent<SpriteComponent>().isCat())
 		{
 			for (auto& e2 : entities)
 			{
@@ -456,11 +456,7 @@ void EntityManager::reset(bool resetAll, bool resetSome)
 		}
 		if (resetAll)
 		{
-
-
 			tempE.getComponent<PositionComponent>().completeReset();
-
-
 
 			if (tempE.getComponentString() == "player")
 			{
